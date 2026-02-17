@@ -1,0 +1,14 @@
+/* Claude Code brand colors */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #D97756;
+  --md-primary-fg-color--light: #E09578;
+  --md-primary-fg-color--dark: #C4623F;
+  --md-accent-fg-color: #E8956E;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #D97756;
+  --md-primary-fg-color--light: #E09578;
+  --md-primary-fg-color--dark: #C4623F;
+  --md-accent-fg-color: #E8956E;
+}
