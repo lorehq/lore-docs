@@ -7,27 +7,18 @@
   --md-primary-fg-color--dark: #E08F00;
 }
 
-/* Title glow — moonlit on dark, candlelit on light */
+/* Amber title + glow on dark mode only */
 [data-md-color-scheme="slate"] h1 {
   color: #E8B86D;
   text-shadow: 0 0 20px rgba(210, 170, 90, 0.5), 0 0 40px rgba(210, 170, 90, 0.2);
 }
 
-[data-md-color-scheme="default"] h1 {
-  color: #B8860B;
-  text-shadow: 0 0 20px rgba(200, 160, 80, 0.35), 0 0 40px rgba(200, 160, 80, 0.15);
-}
-
-/* Code block text glow */
+/* Code glow — moonlit on dark, none on light */
 [data-md-color-scheme="slate"] code {
   text-shadow: 0 0 8px rgba(180, 190, 255, 0.3);
 }
 
-[data-md-color-scheme="default"] code {
-  text-shadow: 0 0 8px rgba(200, 160, 80, 0.25);
-}
-
-/* Parchment — warm ivory background, ink-brown text, dark gold header */
+/* Parchment — warm ivory background, ink-brown text */
 [data-md-color-scheme="default"] {
   --md-default-bg-color: #FAF6F0;
   --md-default-bg-color--light: #F5F0E8;
