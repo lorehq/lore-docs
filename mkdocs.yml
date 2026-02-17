@@ -7,7 +7,7 @@ repo_name: lorehq/lore
 theme:
   name: material
   icon:
-    logo: material/compass
+    logo: material/book-open-page-variant
   palette:
     - scheme: slate
       primary: indigo
