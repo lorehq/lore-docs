@@ -6,11 +6,13 @@
 
 /* Title glow — moonlit on dark, candlelit on light */
 [data-md-color-scheme="slate"] h1 {
-  text-shadow: 0 0 20px rgba(210, 170, 90, 0.4), 0 0 40px rgba(210, 170, 90, 0.15);
+  color: #E8B86D;
+  text-shadow: 0 0 20px rgba(210, 170, 90, 0.5), 0 0 40px rgba(210, 170, 90, 0.2);
 }
 
 [data-md-color-scheme="default"] h1 {
-  text-shadow: 0 0 20px rgba(200, 160, 80, 0.3), 0 0 40px rgba(200, 160, 80, 0.1);
+  color: #B8860B;
+  text-shadow: 0 0 20px rgba(200, 160, 80, 0.35), 0 0 40px rgba(200, 160, 80, 0.15);
 }
 
 /* Parchment — warm ivory background, ink-brown text on light mode */
