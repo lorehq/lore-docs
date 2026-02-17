@@ -2,9 +2,9 @@
 [data-md-color-scheme="slate"] {
   --md-default-fg-color: rgba(220, 228, 255, 0.87);
   --md-default-fg-color--light: rgba(220, 228, 255, 0.54);
-  --md-primary-fg-color: #E8B86D;
-  --md-primary-fg-color--light: #F0CC8A;
-  --md-primary-fg-color--dark: #D4A455;
+  --md-primary-fg-color: #D09F3C;
+  --md-primary-fg-color--light: #DDB35A;
+  --md-primary-fg-color--dark: #B8890E;
 }
 
 /* Title glow — moonlit on dark, candlelit on light */
@@ -24,7 +24,7 @@
   --md-default-bg-color--light: #F5F0E8;
   --md-default-fg-color: rgba(58, 46, 36, 0.87);
   --md-default-fg-color--light: rgba(58, 46, 36, 0.54);
-  --md-primary-fg-color: #B8860B;
-  --md-primary-fg-color--light: #D4A435;
-  --md-primary-fg-color--dark: #996F00;
+  --md-primary-fg-color: #D09F3C;
+  --md-primary-fg-color--light: #DDB35A;
+  --md-primary-fg-color--dark: #B8890E;
 }
