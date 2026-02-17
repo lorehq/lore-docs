@@ -4,6 +4,15 @@
   --md-default-fg-color--light: rgba(220, 228, 255, 0.54);
 }
 
+/* Title glow — moonlit on dark, candlelit on light */
+[data-md-color-scheme="slate"] h1 {
+  text-shadow: 0 0 20px rgba(180, 190, 255, 0.4), 0 0 40px rgba(180, 190, 255, 0.15);
+}
+
+[data-md-color-scheme="default"] h1 {
+  text-shadow: 0 0 20px rgba(200, 160, 80, 0.3), 0 0 40px rgba(200, 160, 80, 0.1);
+}
+
 /* Parchment — warm ivory background, ink-brown text on light mode */
 [data-md-color-scheme="default"] {
   --md-default-bg-color: #FAF6F0;
