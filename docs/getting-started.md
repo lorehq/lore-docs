@@ -27,7 +27,7 @@ my-project/
     agents/          # Domain agents live here (created as skills accumulate)
     settings.json    # Hook configuration
   docs/
-    index.md         # Docs homepage
+    index.md         # Your project context (injected every session — customize this)
     environment/     # Environmental knowledge (filled in as you work)
     work/            # Roadmaps, plans, brainstorms
   hooks/             # Session start, tool use, and edit hooks
@@ -35,6 +35,16 @@ my-project/
   CLAUDE.md          # Agent instructions (loaded automatically)
   mkdocs.yml         # Docs site config
 ```
+
+## Customize Your Project Context
+
+Open `docs/index.md` and describe your project. This file is injected into every agent session — it replaces what you'd normally put in `CLAUDE.md` or `agents.md` for project-specific instructions:
+
+- **About** — what the project does, what domain it's in
+- **Agent Behavior** — communication style, preferences, constraints
+- **Conventions** — coding patterns, tooling choices, naming rules
+
+The agent sees this before your first prompt every session.
 
 ## First Session
 

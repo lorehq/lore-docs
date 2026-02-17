@@ -157,12 +157,15 @@ flowchart TB
 
 ## Context Efficiency
 
-A persistent knowledge base needs to be *available* every session without being *loaded* every session. Lore resolves this with **indirection** — telling the agent *where to find things* rather than loading everything into context.
+A persistent knowledge base needs to be *available* every session without being *loaded* every session. Lore resolves this with **indirection** — telling the agent *where to find things* rather than loading everything into context. At session start, the agent receives a structured banner: framework rules, your project context, and a knowledge map showing what exists. Skills and docs are loaded on-demand.
 
 | Layer | What It Contains |
 |-------|------------------|
-| Instruction file (~180 lines) | Routing map: nav trees, knowledge map, operating principles |
-| Session start reinforcement | Operating principles, active agents, active roadmaps/plans |
+| Instruction file (~180 lines) | Routing map, knowledge routing table, operating principles |
+| Session start: framework | Operating principles, active agents, active roadmaps/plans |
+| Session start: project context | Operator customization from `docs/index.md` (project identity, agent behavior, conventions) |
+| Session start: knowledge map | ASCII tree of docs/, skills/, and agents/ — current structure at a glance |
+| Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |
 | Per-prompt reinforcement | Delegation + capture reminder |
 | Skills and docs | Loaded on-demand when invoked or needed |
 
