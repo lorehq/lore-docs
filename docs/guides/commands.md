@@ -28,6 +28,17 @@ Lore uses slash commands to trigger common operations. Type them in your agent's
 
 See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow.
 
+## Instance Management
+
+| Command | What it does |
+|---------|-------------|
+| `/status` | Show Lore version, hook health, skill/agent counts, active work |
+| `/update-lore` | Pull latest framework files from GitHub without touching operator content |
+
+`/status` is the operator's diagnostic — verify Lore is loaded and healthy.
+
+`/update-lore` syncs hooks, scripts, built-in skills, and CLAUDE.md from the latest release. Your docs, custom skills, agents, and work items are never touched.
+
 ## Docs Server
 
 | Command | What it does |

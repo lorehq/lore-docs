@@ -75,6 +75,24 @@ The first few sessions are discovery-heavy. By session 5-10, meaningful context 
 
 See [How It Works](how-it-works.md) for the full picture of how knowledge compounds.
 
+## Checking Status and Updating
+
+Verify your Lore instance is healthy:
+
+```
+/status
+```
+
+This shows your Lore version, hook health, skill/agent counts, and active work items.
+
+To pull the latest framework updates without touching your docs, skills, or agents:
+
+```
+/update-lore
+```
+
+The agent will show you what changed and ask for approval before syncing.
+
 ## Browsing Your Knowledge Base
 
 Lore includes a local docs server to browse your accumulated knowledge:
