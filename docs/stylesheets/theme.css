@@ -5,6 +5,8 @@
   --md-primary-fg-color: #FFA000;
   --md-primary-fg-color--light: #FFC040;
   --md-primary-fg-color--dark: #E08F00;
+  --md-primary-bg-color: #2B1D0E;
+  --md-primary-bg-color--light: #3D2B18;
 }
 
 /* Amber title + glow on dark mode only */
@@ -29,4 +31,6 @@
   --md-primary-fg-color: #FFA000;
   --md-primary-fg-color--light: #FFC040;
   --md-primary-fg-color--dark: #E08F00;
+  --md-primary-bg-color: #2B1D0E;
+  --md-primary-bg-color--light: #3D2B18;
 }
