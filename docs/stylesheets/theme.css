@@ -6,7 +6,7 @@
 
 /* Title glow — moonlit on dark, candlelit on light */
 [data-md-color-scheme="slate"] h1 {
-  text-shadow: 0 0 20px rgba(180, 190, 255, 0.4), 0 0 40px rgba(180, 190, 255, 0.15);
+  text-shadow: 0 0 20px rgba(210, 170, 90, 0.4), 0 0 40px rgba(210, 170, 90, 0.15);
 }
 
 [data-md-color-scheme="default"] h1 {
