@@ -1,0 +1,54 @@
+site_name: Lore
+site_url: https://lorehq.github.io/lore-docs/
+site_description: Persistent memory for coding agents
+repo_url: https://github.com/lorehq/lore
+repo_name: lorehq/lore
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - toc.follow
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.details
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - How It Works: how-it-works.md
+  - Guides:
+    - Working with Lore: guides/interaction.md
+    - Commands: guides/commands.md
+    - Roadmaps & Plans: guides/roadmaps-and-plans.md
+  - Examples:
+    - Roadmap: examples/roadmap.md
+    - Plan: examples/plan.md
+    - Brainstorm: examples/brainstorm.md
