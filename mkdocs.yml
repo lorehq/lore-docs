@@ -46,6 +46,7 @@ nav:
   - How It Works: how-it-works.md
   - Guides:
     - Working with Lore: guides/interaction.md
+    - Working Across Repos: guides/cross-repo-workflow.md
     - Commands: guides/commands.md
     - Roadmaps & Plans: guides/roadmaps-and-plans.md
   - Examples:

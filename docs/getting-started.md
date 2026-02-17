@@ -53,6 +53,12 @@ After substantive work, run `/capture` to trigger a full knowledge capture pass.
 3. Update environmental docs with new knowledge
 4. Validate consistency across registries and navigation
 
+## Working Across Repos
+
+Lore is designed as a central hub. Launch your agent from the Lore project, then work on any repo from there. Knowledge captures back to Lore, work repos stay clean.
+
+See [Working Across Repos](guides/cross-repo-workflow.md) for the full pattern.
+
 ## Building Knowledge
 
 The first few sessions are discovery-heavy. By session 5-10, meaningful context accumulates and the agent starts working faster — correct parameters on the first try, delegation to domain agents, less rediscovery.
