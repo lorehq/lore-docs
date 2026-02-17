@@ -6,8 +6,7 @@ repo_name: lorehq/lore
 
 theme:
   name: material
-  icon:
-    logo: material/book-open-page-variant
+  logo: assets/logo.svg
   palette:
     - scheme: slate
       accent: amber
