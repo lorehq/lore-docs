@@ -27,8 +27,7 @@ my-project/
     agents/          # Domain agents live here (created as skills accumulate)
     settings.json    # Hook configuration
   docs/
-    index.md         # Your project context (injected every session — customize this)
-    environment/     # Environmental knowledge (filled in as you work)
+    context/         # Project context, conventions, inventory (filled in as you work)
     work/            # Roadmaps, plans, brainstorms
   hooks/             # Session start, tool use, and edit hooks
   scripts/           # Validation and registry generation
@@ -38,7 +37,7 @@ my-project/
 
 ## Customize Your Project Context
 
-Open `docs/index.md` and describe your project. This file is injected into every agent session — it replaces what you'd normally put in `CLAUDE.md` or `agents.md` for project-specific instructions:
+Open `docs/context/agent-rules.md` and describe your project. This file is injected into every agent session as project context:
 
 - **About** — what the project does, what domain it's in
 - **Agent Behavior** — communication style, preferences, constraints
@@ -54,13 +53,13 @@ Start your agent in the project directory:
 claude
 ```
 
-Work normally. Lore's hooks reinforce knowledge capture as you go — prompting the agent to extract gotchas into skills and document environmental knowledge.
+Work normally. Lore's hooks reinforce knowledge capture as you go — prompting the agent to extract gotchas into skills and document context knowledge.
 
 After substantive work, run `/capture` to trigger a full knowledge capture pass. The agent will:
 
 1. Review what it learned during the session
 2. Create skills for any gotchas encountered
-3. Update environmental docs with new knowledge
+3. Update context docs with new knowledge
 4. Validate consistency across registries and navigation
 
 ## Working Across Repos

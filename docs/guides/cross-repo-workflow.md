@@ -11,7 +11,7 @@ Lore is designed as a hub — one Lore project that tracks and performs work acr
 Without a central project, you have two options — both worse:
 
 1. **Lore in every repo** — knowledge fragments. The same gotcha gets rediscovered per-repo. No cross-project context ("repo A's API connects to repo B's service"). Work repos get cluttered with skills, docs, and hooks that have nothing to do with the application.
-2. **No Lore at all** — the agent starts cold every session. No persistent skills, no environmental docs, no work tracking.
+2. **No Lore at all** — the agent starts cold every session. No persistent skills, no context docs, no work tracking.
 
 A single Lore project avoids both problems. Knowledge compounds in one place, work repos stay clean, and cross-project context builds naturally.
 
@@ -39,7 +39,7 @@ flowchart TD
     "Update the Terraform config in ~/projects/infra"
     ```
 
-3. **Knowledge captures back to Lore.** Gotchas become skills, endpoints go to environment docs, multi-step procedures become runbooks — all stored in the Lore project, available next session.
+3. **Knowledge captures back to Lore.** Gotchas become skills, endpoints go to context docs, multi-step procedures become runbooks — all stored in the Lore project, available next session.
 
 ## What Crosses Repo Boundaries
 
@@ -57,7 +57,7 @@ The agent operates on files and commands anywhere on your machine. There's no pa
 | Artifact | Example |
 |----------|---------|
 | **Skills** | "This API requires case-sensitive org names" |
-| **Environment docs** | Repo inventory, service endpoints, relationships |
+| **Context docs** | Repo inventory, service endpoints, relationships |
 | **Runbooks** | "How to deploy app-api to staging" |
 | **Roadmaps/plans** | Work that spans multiple repos |
 

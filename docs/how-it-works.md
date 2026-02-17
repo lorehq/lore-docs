@@ -55,7 +55,7 @@ Every session produces knowledge as a byproduct — endpoints, gotchas, org stru
 ```mermaid
 sequenceDiagram
     participant S1 as Session N
-    participant Docs as docs/environment/
+    participant Docs as docs/context/
     participant S2 as Session N+1
 
     Note over S1: User asks about service org structure
@@ -75,16 +75,16 @@ sequenceDiagram
 
 | Knowledge Type | Destination | Example |
 |---------------|-------------|---------|
-| API endpoints, URLs, services | `docs/environment/inventory/` | Service API base URL |
+| API endpoints, URLs, services | `docs/context/inventory/` | Service API base URL |
 | Tool gotchas, auth quirks | `.claude/skills/` | Case-sensitive org name |
-| Dependencies, relationships | `docs/environment/` | Which services connect to what |
+| Dependencies, relationships | `docs/context/` | Which services connect to what |
 | Strategic initiatives | `docs/work/roadmaps/` | Cloud migration phases |
 | Tactical work | `docs/work/plans/` | Phase 1 networking setup |
-| Multi-step procedures | `docs/runbooks/` | Cross-platform comparison |
+| Multi-step procedures | `docs/context/runbooks/` | Cross-platform comparison |
 
 #### How Skills and Agents Emerge
 
-**Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. Skills must be generic (no environment data). Skill creation can trigger agent creation: one agent per domain.
+**Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. Skills must be generic (no context data). Skill creation can trigger agent creation: one agent per domain.
 
 ```mermaid
 flowchart TD
@@ -136,13 +136,13 @@ flowchart TB
 
     subgraph P2["Phase 2: Specialization"]
         P2a[Agents handle domain work]
-        P2b[Environmental knowledge fills in]
+        P2b[Context knowledge fills in]
         P2c["Balanced: execute + delegate"]
     end
 
     subgraph P3["Phase 3: Full Context"]
         P3a[Orchestrator delegates most work]
-        P3b[Full environmental context]
+        P3b[Full context]
         P3c["Minimal discovery, maximum leverage"]
     end
 
@@ -151,9 +151,9 @@ flowchart TB
 
 **Phase 1 (Foundation):** First sessions discover everything — org names, auth flows, tool parameters. Capture extracts each gotcha as a skill or doc.
 
-**Phase 2 (Specialization):** Domain agents handle routine work. The orchestrator delegates more than it executes. Environmental knowledge fills in.
+**Phase 2 (Specialization):** Domain agents handle routine work. The orchestrator delegates more than it executes. Context knowledge fills in.
 
-**Phase 3 (Full Context):** Most requests dispatch directly to agents. Strong environmental context. Novel work is the primary remaining discovery cost.
+**Phase 3 (Full Context):** Most requests dispatch directly to agents. Strong context. Novel work is the primary remaining discovery cost.
 
 ## Context Efficiency
 
@@ -163,7 +163,7 @@ A persistent knowledge base needs to be *available* every session without being 
 |-------|------------------|
 | Instruction file (~180 lines) | Routing map, knowledge routing table, operating principles |
 | Session start: framework | Operating principles, active agents, active roadmaps/plans |
-| Session start: project context | Operator customization from `docs/index.md` (project identity, agent behavior, conventions) |
+| Session start: project context | Operator customization from `docs/context/agent-rules.md` (project identity, agent behavior) |
 | Session start: knowledge map | ASCII tree of docs/, skills/, and agents/ — current structure at a glance |
 | Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |
 | Per-prompt reinforcement | Delegation + capture reminder |
