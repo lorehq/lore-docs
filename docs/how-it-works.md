@@ -127,23 +127,20 @@ flowchart TD
 Session acceleration is the compound effect of knowledge capture and delegation working together. As captured knowledge builds the base and delegation distributes the workload, each session benefits from every previous session's discoveries.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph P1["Phase 1: Foundation"]
-        direction TB
         P1a[Explore integrations]
         P1b[Hit gotchas, create first skills]
         P1c["Heavy discovery cost"]
     end
 
     subgraph P2["Phase 2: Specialization"]
-        direction TB
         P2a[Agents handle domain work]
         P2b[Environmental knowledge fills in]
         P2c["Balanced: execute + delegate"]
     end
 
     subgraph P3["Phase 3: Full Context"]
-        direction TB
         P3a[Orchestrator delegates most work]
         P3b[Full environmental context]
         P3c["Minimal discovery, maximum leverage"]
