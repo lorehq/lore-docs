@@ -7,7 +7,7 @@ title: Getting Started
 ## Prerequisites
 
 - **Node.js 18+** — for the installer
-- **Claude Code** — or another coding agent that supports hooks and `CLAUDE.md`
+- **A supported coding agent** — Claude Code, Cursor, or OpenCode
 
 ## Install
 
@@ -22,16 +22,24 @@ This scaffolds a Lore project with hooks, scripts, starter docs, and the skill/a
 
 ```
 my-project/
-  .claude/
-    skills/          # Skills live here (created as you work)
-    agents/          # Domain agents live here (created as skills accumulate)
-    settings.json    # Hook configuration
+  .lore/
+    skills/          # Skills live here (canonical — created as you work)
+    agents/          # Domain agents (canonical — created as skills accumulate)
+    instructions.md  # Agent instructions (canonical source)
+  .claude/           # Claude Code platform copies (auto-generated)
+  .cursor/
+    hooks/           # Cursor hooks (fire on prompt, read, edit events)
+    hooks.json       # Cursor hook configuration
+  .opencode/
+    plugins/         # OpenCode plugins (fire on lifecycle events)
   docs/
     context/         # Project context, conventions, inventory (filled in as you work)
     work/            # Roadmaps, plans, brainstorms
-  hooks/             # Session start, tool use, and edit hooks
-  scripts/           # Validation and registry generation
-  CLAUDE.md          # Agent instructions (loaded automatically)
+  hooks/             # Claude Code hooks (fire on session start, tool use, edits)
+  lib/               # Shared hook logic (all platforms use this)
+  scripts/           # Validation, registry generation, platform sync
+  CLAUDE.md          # Generated from .lore/instructions.md
+  .cursorrules       # Generated from .lore/instructions.md
   mkdocs.yml         # Docs site config
 ```
 
@@ -50,7 +58,9 @@ The agent sees this before your first prompt every session.
 Start your agent in the project directory:
 
 ```bash
-claude
+claude       # Claude Code
+cursor .     # Cursor (open the project)
+opencode     # OpenCode
 ```
 
 Work normally. Lore's hooks reinforce knowledge capture as you go — prompting the agent to extract gotchas into skills and document context knowledge.

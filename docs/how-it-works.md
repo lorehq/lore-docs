@@ -76,7 +76,7 @@ sequenceDiagram
 | Knowledge Type | Destination | Example |
 |---------------|-------------|---------|
 | API endpoints, URLs, services | `docs/context/inventory/` | Service API base URL |
-| Tool gotchas, auth quirks | `.claude/skills/` | Case-sensitive org name |
+| Tool gotchas, auth quirks | `.lore/skills/` | Case-sensitive org name |
 | Dependencies, relationships | `docs/context/` | Which services connect to what |
 | Strategic initiatives | `docs/work/roadmaps/` | Cloud migration phases |
 | Tactical work | `docs/work/plans/` | Phase 1 networking setup |

@@ -35,6 +35,8 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
 
 extra_css:
   - stylesheets/theme.css
@@ -50,6 +52,7 @@ nav:
     - Working with Lore: guides/interaction.md
     - Working Across Repos: guides/cross-repo-workflow.md
     - Commands: guides/commands.md
+    - Platform Support: guides/platform-support.md
     - Roadmaps & Plans: guides/roadmaps-and-plans.md
   - Examples:
     - Roadmap: examples/roadmap.md

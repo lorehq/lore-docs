@@ -1,0 +1,82 @@
+---
+title: Platform Support
+---
+
+# Platform Support
+
+Lore supports three coding agent platforms. All share the same knowledge base — skills, agents, docs, and work tracking work identically across platforms.
+
+## Feature Matrix
+
+| Feature | Claude Code | Cursor | OpenCode |
+|---------|:-----------:|:------:|:--------:|
+| Session banner | Yes | Yes | Yes |
+| Per-prompt reminder | Yes | Yes | No |
+| Memory protection (reads) | Yes | Yes | Yes |
+| Memory protection (writes) | Yes | No | Yes |
+| Knowledge capture reminders | Yes | Partial | Yes |
+| Bash escalation tracking | Yes | No | Yes |
+| Context path guide | Yes | No | No |
+| Skills & agents | Yes | Yes | Yes |
+| Work tracking | Yes | Yes | Yes |
+| Instructions file | `CLAUDE.md` | `.cursorrules` | `opencode.json` |
+
+## How Hooks Work
+
+Each platform has thin adapter scripts that call shared logic in `lib/`. The adapters handle platform-specific wire formats; the core behavior is identical.
+
+```
+hooks/              → Claude Code hooks (subprocess per event)
+.cursor/hooks/      → Cursor hooks (subprocess per event)
+.opencode/plugins/  → OpenCode plugins (long-lived ESM modules)
+lib/                → Shared logic (all platforms)
+```
+
+### Claude Code
+
+Full hook coverage. Hooks fire as subprocesses on every lifecycle event — session start, prompt submit, pre/post tool use.
+
+- **Config:** `.claude/settings.json`
+- **Events:** `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PostToolUseFailure`
+- **Wire format:** JSON on stdin, JSON on stdout (`{ "decision": "block" }` to block)
+
+### Cursor
+
+Hook support via `.cursor/hooks.json` (v1.7+). Covers prompt injection, file read blocking, and post-edit tracking.
+
+- **Config:** `.cursor/hooks.json`
+- **Events:** `beforeSubmitPrompt`, `beforeReadFile`, `afterFileEdit`
+- **Wire format:** JSON on stdin, JSON on stdout (`{ "continue": false }` to block)
+
+**Known gaps:**
+
+- No dedicated session start event — first-prompt detection via flag file
+- No write blocking — `beforeReadFile` exists but no `beforeWriteFile`
+- No shell event — bash escalation tracking unavailable
+- No context path guide — no pre-write hook for non-file tools
+
+### OpenCode
+
+Plugin support via long-lived ESM modules. Covers session lifecycle, tool blocking, and post-tool tracking.
+
+- **Config:** `opencode.json` (points to instruction files)
+- **Events:** `session.created`, `experimental.session.compacting`, `tool.execute.before`, `tool.execute.after`
+- **Wire format:** Function calls with input/output objects; throw to block
+
+## Setup
+
+All platforms activate automatically after `npx create-lore`. No manual configuration needed.
+
+| Platform | What loads automatically |
+|----------|------------------------|
+| **Claude Code** | `CLAUDE.md` + `.claude/settings.json` (hooks) |
+| **Cursor** | `.cursorrules` + `.cursor/hooks.json` (hooks) |
+| **OpenCode** | `opencode.json` (instructions + plugins) |
+
+`CLAUDE.md` and `.cursorrules` are generated copies of `.lore/instructions.md`. Run `bash scripts/sync-platform-skills.sh` after editing instructions to keep them in sync.
+
+## Using Multiple Platforms
+
+You can use different platforms on the same Lore project. The knowledge base is shared — a skill captured in Claude Code is available in Cursor and OpenCode on the next session.
+
+The only platform-specific files are hook configs and generated instruction copies. These coexist without conflict.

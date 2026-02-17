@@ -37,7 +37,7 @@ See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow
 
 `/lore-status` is the operator's diagnostic — verify Lore is loaded and healthy.
 
-`/lore-update` syncs hooks, scripts, built-in skills, and CLAUDE.md from the latest release. Your docs, custom skills, agents, and work items are never touched.
+`/lore-update` syncs hooks, scripts, built-in skills, and instructions from the latest release. Your docs, custom skills, agents, and work items are never touched.
 
 ## Docs Server
 

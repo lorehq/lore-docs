@@ -29,7 +29,7 @@ flowchart TD
     C -->|knowledge flows back| Lore
 ```
 
-1. **Launch your agent from the Lore project directory.** This loads `CLAUDE.md`, hooks, and settings — everything the agent needs to operate with persistent memory.
+1. **Launch your agent from the Lore project directory.** This loads instructions, hooks, and settings — everything the agent needs to operate with persistent memory.
 
 2. **Tell it to work on other repos.** The agent reads, writes, and runs commands across repos using absolute paths. No `cd` needed.
 
@@ -69,7 +69,12 @@ None of this pollutes your work repos.
 
 ```bash
 cd ~/projects/my-lore-project
-claude
+claude       # Claude Code
+cursor .     # Cursor (open the project)
+opencode     # OpenCode
 ```
 
 Then work on whatever repos you need from there.
+
+!!! note "IDE-based agents"
+    The hub pattern works natively with CLI tools (Claude Code, OpenCode) which launch from a directory. For IDE-based agents like Cursor, open the Lore project directly — Cursor loads `.cursorrules` and `.cursor/hooks.json` from the project root.
