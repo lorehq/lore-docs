@@ -32,12 +32,12 @@ See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow
 
 | Command | What it does |
 |---------|-------------|
-| `/status` | Show Lore version, hook health, skill/agent counts, active work |
-| `/update-lore` | Pull latest framework files from GitHub without touching operator content |
+| `/lore-status` | Show Lore version, hook health, skill/agent counts, active work |
+| `/lore-update` | Pull latest framework files from GitHub without touching operator content |
 
-`/status` is the operator's diagnostic — verify Lore is loaded and healthy.
+`/lore-status` is the operator's diagnostic — verify Lore is loaded and healthy.
 
-`/update-lore` syncs hooks, scripts, built-in skills, and CLAUDE.md from the latest release. Your docs, custom skills, agents, and work items are never touched.
+`/lore-update` syncs hooks, scripts, built-in skills, and CLAUDE.md from the latest release. Your docs, custom skills, agents, and work items are never touched.
 
 ## Docs Server
 

@@ -80,7 +80,7 @@ See [How It Works](how-it-works.md) for the full picture of how knowledge compou
 Verify your Lore instance is healthy:
 
 ```
-/status
+/lore-status
 ```
 
 This shows your Lore version, hook health, skill/agent counts, and active work items.
@@ -88,7 +88,7 @@ This shows your Lore version, hook health, skill/agent counts, and active work i
 To pull the latest framework updates without touching your docs, skills, or agents:
 
 ```
-/update-lore
+/lore-update
 ```
 
 The agent will show you what changed and ask for approval before syncing.
