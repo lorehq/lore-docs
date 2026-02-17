@@ -18,6 +18,15 @@
   text-shadow: 0 0 20px rgba(200, 160, 80, 0.35), 0 0 40px rgba(200, 160, 80, 0.15);
 }
 
+/* Code block text glow */
+[data-md-color-scheme="slate"] code {
+  text-shadow: 0 0 8px rgba(180, 190, 255, 0.3);
+}
+
+[data-md-color-scheme="default"] code {
+  text-shadow: 0 0 8px rgba(200, 160, 80, 0.25);
+}
+
 /* Parchment — warm ivory background, ink-brown text, dark gold header */
 [data-md-color-scheme="default"] {
   --md-default-bg-color: #FAF6F0;
