@@ -173,6 +173,97 @@ A persistent knowledge base needs to be *available* every session without being 
 
 Things that grow fastest (docs, skills) have zero baseline cost. Things with nonzero cost (agents, active roadmaps) grow slowly.
 
+## Hook Architecture
+
+Lore hooks into the agent's lifecycle at four points. Shared logic lives in `lib/`, with thin adapters for each platform.
+
+### Hook Lifecycle
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Agent
+    participant Hooks
+    participant KB as Knowledge Base
+
+    Note over Hooks: SessionStart
+    Hooks->>KB: ensureStickyFiles()
+    Hooks->>KB: Read agent-rules, conventions, work items
+    Hooks->>Agent: Inject session banner
+
+    loop Every Prompt
+        User->>Agent: Message
+        Note over Hooks: UserPromptSubmit
+        Hooks->>Agent: Delegation reminder
+        Agent->>Agent: Work (tool calls)
+
+        Note over Hooks: PreToolUse
+        Hooks->>Agent: Memory guard (block MEMORY.md)
+        Hooks->>Agent: Context path guide (show tree)
+
+        Note over Hooks: PostToolUse
+        Hooks->>Agent: Capture reminder (escalating)
+        Hooks->>Hooks: Set nav-dirty flag if docs/ changed
+    end
+```
+
+### Module Layout
+
+```mermaid
+flowchart TB
+    subgraph lib["lib/ (shared core)"]
+        banner["banner.js<br/>Banner assembly"]
+        tree["tree.js<br/>ASCII tree builder"]
+        config["config.js<br/>Config reader"]
+        sticky["sticky.js<br/>Sticky file scaffold"]
+        tracker["tracker.js<br/>Tool classification"]
+        guard["memory-guard.js<br/>MEMORY.md protection"]
+        debug["debug.js<br/>Debug logging"]
+    end
+
+    subgraph claude["Claude Code (hooks/)"]
+        cc_si[session-init.js]
+        cc_pp[prompt-preamble.js]
+        cc_pm[protect-memory.js]
+        cc_kt[knowledge-tracker.js]
+        cc_cp[context-path-guide.js]
+    end
+
+    subgraph cursor["Cursor (.cursor/hooks/)"]
+        cu_si[session-init.js]
+        cu_pp[prompt-preamble.js]
+        cu_pm[protect-memory.js]
+        cu_kt[knowledge-tracker.js]
+    end
+
+    subgraph opencode["OpenCode (.opencode/plugins/)"]
+        oc_si[session-init.js]
+        oc_pm[protect-memory.js]
+        oc_kt[knowledge-tracker.js]
+        oc_cp[context-path-guide.js]
+    end
+
+    cc_si & cu_si & oc_si --> banner
+    banner --> tree & config & sticky
+    cc_kt & cu_kt & oc_kt --> tracker
+    cc_pm & cu_pm & oc_pm --> guard
+    cc_cp & oc_cp --> tree & config
+    tracker & guard & tree & config --> debug
+```
+
+### Platform Adapters
+
+Each platform has a different hook API. Adapters are thin — they translate between the platform's interface and the shared `lib/` functions.
+
+| Hook Point | Claude Code | Cursor | OpenCode |
+|-----------|-------------|--------|----------|
+| Session start | `SessionStart` subprocess → stdout JSON | `sessionStart` subprocess → stdout | `session.created` event → `client.session.prompt()` |
+| Per-prompt reminder | `UserPromptSubmit` → stdout | `beforeSubmitPrompt` → stdout | `experimental.chat.system.transform` → system prompt |
+| Memory guard | `PreToolUse` → stdin JSON, stdout JSON | `beforeReadFile` → exit code | `tool.execute.before` → async handler |
+| Knowledge tracker | `PostToolUse` → stdin JSON, stdout | `afterFileEdit` / `afterShellExecution` → stdout | `tool.execute.after` → async handler |
+| Context path guide | `PreToolUse` → stdin JSON, stdout JSON | — | `tool.execute.before` → async handler |
+| Compaction resilience | N/A (context preserved) | Condensed banner every prompt | `experimental.session.compacting` → re-inject |
+
 ## Limitations
 
 - **AI compliance**: Reinforcement prompts encourage capture and delegation but cannot force it. The agent may skip reminders in long sessions.
