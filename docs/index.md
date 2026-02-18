@@ -36,8 +36,8 @@ No configuration required. The framework activates through hooks automatically. 
 | Component | Location | What it does |
 |-----------|----------|--------------|
 | **Hooks** | `hooks/` | Fire on session start, prompt submit, and tool use. Reinforce capture habits and route knowledge. |
-| **Skills** | `.lore/skills/` | Non-obvious knowledge captured from real work — gotchas, tricks, patterns. |
-| **Agents** | `.lore/agents/` | Domain-specific workers. One agent per domain, created as skills accumulate. |
+| **Skills** | `.lore/skills/` | Non-obvious knowledge captured from real work — gotchas, tricks, patterns. `lore-*` = framework, rest = yours. |
+| **Agents** | `.lore/agents/` | Domain-specific workers. One agent per domain. `lore-*` = framework, rest = yours. |
 | **Docs** | `docs/` | Context knowledge, runbooks, and work tracking. Your agent's long-term memory. |
 | **Scripts** | `scripts/` | Validation, registry generation, nav building. Keeps knowledge consistent as it grows. |
 

@@ -23,8 +23,8 @@ This scaffolds a Lore project with hooks, scripts, starter docs, and the skill/a
 ```
 my-project/
   .lore/
-    skills/          # Skills live here (canonical — created as you work)
-    agents/          # Domain agents (canonical — created as skills accumulate)
+    skills/          # Skills (canonical). lore-* = framework, rest = yours
+    agents/          # Domain agents (canonical). lore-* = framework, rest = yours
     instructions.md  # Agent instructions (canonical source)
   .claude/           # Claude Code platform copies (auto-generated)
   .cursor/

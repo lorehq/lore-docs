@@ -82,6 +82,15 @@ sequenceDiagram
 | Tactical work | `docs/work/plans/` | Phase 1 networking setup |
 | Multi-step procedures | `docs/knowledge/runbooks/` | Deploy to staging |
 
+#### Ownership
+
+Skills and agents use a naming convention to separate framework-owned from operator-owned content:
+
+- **`lore-*` prefix** — framework-owned. Overwritten on `/lore-update`. Examples: `lore-capture`, `lore-create-skill`, `lore-documentation-agent`.
+- **No prefix** — operator-owned. Never touched by sync or generation scripts. Examples: `bash-macos-compat`, `github-agent`.
+
+Discovered gotchas are operator-owned from birth — Lore creates the file, the operator owns it. The `lore-*` boundary is enforced by `sync-framework.sh` and `generate-agents.sh`, which only process `lore-*` items.
+
 #### How Skills and Agents Emerge
 
 **Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. Skills must be generic (no context data). Skill creation can trigger agent creation: one agent per domain.
@@ -121,6 +130,24 @@ flowchart TD
 | Choose which agent(s) | Load and use domain skills |
 | Coordinate multi-agent flows | Create new skills when needed |
 | Strategic decisions | Domain-specific details |
+
+#### Per-Platform Model Configuration
+
+Agents carry per-platform model preferences in their frontmatter, allowing different models across tools:
+
+```yaml
+---
+name: github-agent
+domain: GitHub
+claude-model: sonnet
+opencode-model: openai/gpt-4o
+cursor-model: # not yet supported
+---
+```
+
+Instance-level defaults live in `.lore-config` under `subagentDefaults`. Agent frontmatter overrides the defaults. See [Configuration](guides/configuration.md#subagentdefaults) for details.
+
+At sync time, `sync-platform-skills.sh` resolves the cascade (agent frontmatter → instance defaults → omit) and writes a platform-native `model` field into each platform copy.
 
 ### 3. Session Acceleration
 

@@ -34,7 +34,7 @@ See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow
 
 `/lore-status` is the operator's diagnostic — verify Lore is loaded and healthy.
 
-`/lore-update` syncs hooks, scripts, built-in skills, and instructions from the latest release. Your docs, custom skills, agents, and work items are never touched.
+`/lore-update` syncs hooks, scripts, and `lore-*` skills/agents from the latest release. Operator-owned content (skills and agents without the `lore-` prefix, docs, and work items) is never touched. See [Platform Support: Sync Boundaries](platform-support.md#sync-boundaries) for the full breakdown.
 
 ## Docs Server
 

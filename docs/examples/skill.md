@@ -14,8 +14,9 @@ Skills capture non-obvious knowledge — gotchas, workarounds, parameter tricks 
 ---
 name: <service>-<action>-<object>
 description: <one-line summary of the gotcha>
-trigger: <when this skill applies>
 domain: <agent domain or "Orchestrator">
+user-invocable: false
+allowed-tools: Bash, Read, etc
 ---
 ```
 
@@ -45,8 +46,9 @@ This skill was captured after discovering that macOS ships Bash 3.2 and common B
 ---
 name: bash-macos-compat
 description: Avoid Bash 4+ features that break on macOS stock Bash 3.2
-trigger: writing bash scripts that will run cross-platform
 domain: Orchestrator
+user-invocable: false
+allowed-tools: Bash, Read
 ---
 ```
 
@@ -91,7 +93,7 @@ grep for `declare -A`, `${.*,,}`, `[[ -v`, `readarray` before shipping.
 
 **30-80 lines** — long enough to be useful, short enough to load quickly. Over 80 lines means the skill covers multiple concerns and should be split.
 
-**Naming convention** — `<service>-<action>-<object>`. Examples: `bash-macos-compat`, `github-api-pagination`, `docker-build-cache-invalidation`.
+**Naming convention** — `<service>-<action>-<object>`. Examples: `bash-macos-compat`, `github-api-pagination`, `docker-build-cache-invalidation`. The `lore-` prefix is reserved for framework-owned skills — operator and discovered skills must not use it.
 
 **Domain assignment** — every skill belongs to an agent domain. If the domain doesn't have an agent yet, creating the skill triggers agent creation. Skills without a clear domain use "Orchestrator".
 

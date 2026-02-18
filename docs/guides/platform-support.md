@@ -90,6 +90,22 @@ All platforms activate automatically after `npx create-lore`. No manual configur
 
 `CLAUDE.md` and `.cursorrules` are generated copies of `.lore/instructions.md`. Run `bash scripts/sync-platform-skills.sh` after editing instructions to keep them in sync.
 
+## Sync Boundaries
+
+`/lore-update` and `sync-framework.sh` only overwrite **framework-owned** content — items with the `lore-*` prefix. Operator-created skills, agents, docs, and work items are never touched.
+
+| Category | Synced by `/lore-update` | Operator-owned |
+|----------|:-----------------------:|:--------------:|
+| `lore-*` skills | Yes | — |
+| `lore-*` agents | Yes | — |
+| Operator skills (no prefix) | — | Yes |
+| Operator agents (no prefix) | — | Yes |
+| `hooks/`, `lib/`, `scripts/` | Yes | — |
+| `docs/`, `mkdocs.yml` | — | Yes |
+| `.lore-config`, registries | — | Yes |
+
+Agent platform copies (`.claude/agents/`) are transformed at sync time — per-platform model fields are resolved into a single `model` field for the target platform. See [Configuration: subagentDefaults](configuration.md#subagentdefaults) for the resolution cascade.
+
 ## Using Multiple Platforms
 
 You can use different platforms on the same Lore project. The knowledge base is shared — a skill captured in Claude Code is available in Cursor and OpenCode on the next session.
