@@ -14,8 +14,8 @@ Lore supports three coding agent platforms. All share the same knowledge base �
 | Per-prompt reminder | Yes | Yes | No |
 | Memory protection (reads) | Yes | Yes | Yes |
 | Memory protection (writes) | Yes | No | Yes |
-| Knowledge capture reminders | Yes | Partial | Yes |
-| Bash escalation tracking | Yes | No | Yes |
+| Knowledge capture reminders | Yes | Yes | Yes |
+| Bash escalation tracking | Yes | Yes | Yes |
 | Context path guide | Yes | No | No |
 | Skills & agents | Yes | Yes | Yes |
 | Work tracking | Yes | Yes | Yes |
@@ -43,18 +43,18 @@ Full hook coverage. Hooks fire as subprocesses on every lifecycle event — sess
 
 ### Cursor
 
-Hook support via `.cursor/hooks.json` (v1.7+). Covers session start, file read blocking, post-edit tracking, and shell command tracking.
+Hook support via `.cursor/hooks.json` (v1.7+). Covers session start, prompt injection, file read blocking, post-edit tracking, and shell command tracking.
 
 - **Config:** `.cursor/hooks.json`
-- **Events:** `sessionStart`, `beforeReadFile`, `afterFileEdit`, `afterShellExecution`
+- **Events:** `sessionStart`, `beforeSubmitPrompt`, `beforeReadFile`, `afterFileEdit`, `afterShellExecution`
 - **Wire format:** JSON on stdin, JSON on stdout (`{ "continue": false }` to block)
+
+Cursor ignores output from `afterFileEdit` and `afterShellExecution`, so knowledge capture reminders and bash escalation warnings use a read-back pattern: the after-hooks write state to disk, and `beforeSubmitPrompt` reads it back on the next turn.
 
 **Known gaps:**
 
 - No write blocking — `beforeReadFile` exists but no `beforeWriteFile`
-- No per-prompt hook — no equivalent to Claude Code's `UserPromptSubmit`
 - No context path guide — no pre-write hook for non-file tools
-- Cursor ignores output from `afterFileEdit` and `afterShellExecution` — side effects (nav-dirty flag, state file) still work but messages are not displayed
 
 ### OpenCode
 
