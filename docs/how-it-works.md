@@ -173,6 +173,44 @@ A persistent knowledge base needs to be *available* every session without being 
 
 Things that grow fastest (docs, skills) have zero baseline cost. Things with nonzero cost (agents, active roadmaps) grow slowly.
 
+### What Grows and What Doesn't
+
+Not all knowledge has the same context cost. Understanding the growth profile helps you manage a large instance:
+
+| Category | Loaded When | Growth Rate | Context Cost |
+|----------|-------------|-------------|--------------|
+| Instructions (`.lore/instructions.md`) | Every session | Rarely changes | Fixed (~80 lines) |
+| Agent rules (`docs/context/agent-rules.md`) | Every session | Rarely changes | Fixed (operator-controlled) |
+| Conventions (`docs/context/conventions/`) | Every session | Rarely changes | Fixed (operator-controlled) |
+| Knowledge map (ASCII tree) | Every session | Grows with docs | Bounded by `treeDepth` |
+| Active agents | Every session | ~1 per domain | Low (~1 line each in banner) |
+| Active roadmaps/plans | Every session | Operator-created | Low (title + summary only) |
+| Skills (`.lore/skills/`) | On-demand | Grows with gotchas | Zero baseline |
+| Knowledge docs (`docs/knowledge/`) | On-demand | Grows fastest | Zero baseline |
+| Archived work items | Never (tree only) | Accumulates | Zero (collapsed in tree) |
+
+### Tuning for Large Instances
+
+As a knowledge base grows, the session banner's main variable cost is the **knowledge map** — the ASCII tree of `docs/`, `skills/`, and `agents/`. Two mechanisms keep this bounded:
+
+**`treeDepth`** — set in `.lore-config` to limit how many directory levels the knowledge map displays. Default is 5. Reducing to 3 or 4 hides deep nesting while still showing top-level structure. The agent can always read deeper directories on-demand.
+
+```json
+{
+  "version": "0.6.0",
+  "treeDepth": 3
+}
+```
+
+**Archive collapsing** — `archive/` directories appear in the tree but their contents are never expanded. Completed work items move to archive, keeping the active tree focused on current work.
+
+**When to act:**
+
+- Knowledge map exceeds ~50 lines → reduce `treeDepth` or reorganize subdirectories
+- `MEMORY.local.md` exceeds ~50 lines → route content to skills or `docs/knowledge/`
+- Conventions section growing → keep it focused on rules, move reference material to `docs/knowledge/`
+- Many active work items → archive completed items with `/lore-capture`
+
 ## Hook Architecture
 
 Lore hooks into the agent's lifecycle at four points. Shared logic lives in `lib/`, with thin adapters for each platform.

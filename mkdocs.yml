@@ -56,6 +56,7 @@ nav:
     - Platform Support: guides/platform-support.md
     - Roadmaps & Plans: guides/roadmaps-and-plans.md
   - Examples:
+    - Skill: examples/skill.md
     - Roadmap: examples/roadmap.md
     - Plan: examples/plan.md
     - Brainstorm: examples/brainstorm.md
