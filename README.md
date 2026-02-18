@@ -5,7 +5,7 @@ Public documentation for [Lore](https://github.com/lorehq/lore), deployed to Git
 ## Local Development
 
 ```bash
-pip install mkdocs-material
+pip install mkdocs-material mkdocs-panzoom-plugin==0.5.2
 mkdocs serve
 ```
 
