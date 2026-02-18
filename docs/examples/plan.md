@@ -90,7 +90,7 @@ None currently.
 ## Creating Plans
 
 ```
-/create-plan "<Plan Name>"
+/lore-create-plan "<Plan Name>"
 ```
 
 Lore will ask if the plan belongs to a roadmap and create the appropriate folder structure.

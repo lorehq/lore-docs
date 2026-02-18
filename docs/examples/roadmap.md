@@ -74,7 +74,7 @@ target: 2026-06-30
 ## Creating Roadmaps
 
 ```
-/create-roadmap "<Initiative Name>"
+/lore-create-roadmap "<Initiative Name>"
 ```
 
 ## See Also

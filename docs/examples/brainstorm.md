@@ -92,7 +92,7 @@ This brainstorm informed:
 ## Creating Brainstorms
 
 ```
-/create-brainstorm "<Topic>"
+/lore-create-brainstorm "<Topic>"
 ```
 
 ## See Also

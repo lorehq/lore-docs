@@ -65,7 +65,7 @@ opencode     # OpenCode
 
 Work normally. Lore's hooks reinforce knowledge capture as you go — prompting the agent to extract gotchas into skills and document context knowledge. If you prefer working from the work repo in an IDE, see [lore link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active without opening the Lore project.
 
-After substantive work, run `/capture` to trigger a full knowledge capture pass. The agent will:
+After substantive work, run `/lore-capture` to trigger a full knowledge capture pass. The agent will:
 
 1. Review what it learned during the session
 2. Create skills for any gotchas encountered
@@ -107,13 +107,13 @@ The agent will show you what changed and ask for approval before syncing.
 Lore includes a local docs server to browse your accumulated knowledge:
 
 ```
-/serve-docs
+/lore-serve-docs
 ```
 
-This starts an MkDocs server at `localhost:8000` with live reload. Use `/stop-docs` to shut it down.
+This starts an MkDocs server at `localhost:8000` with live reload. Use `/lore-stop-docs` to shut it down.
 
 If you prefer Docker (no Python required):
 
 ```
-/serve-docs-docker
+/lore-serve-docs-docker
 ```

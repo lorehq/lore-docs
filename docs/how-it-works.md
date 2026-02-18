@@ -174,5 +174,5 @@ Things that grow fastest (docs, skills) have zero baseline cost. Things with non
 ## Limitations
 
 - **AI compliance**: Reinforcement prompts encourage capture and delegation but cannot force it. The agent may skip reminders in long sessions.
-- **Operator involvement**: Running `/capture` after substantive work improves capture rates. The system works best as a collaboration.
+- **Operator involvement**: Running `/lore-capture` after substantive work improves capture rates. The system works best as a collaboration.
 - **Knowledge completeness**: Early sessions have gaps. By session 5-10, meaningful context accumulates. Quality correlates with capture consistency.

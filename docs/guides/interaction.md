@@ -6,7 +6,7 @@ title: Working with Lore
 
 ## Core Principle
 
-**You direct, Lore captures.** Each session builds on the last. You don't need to set anything up, create roadmaps, or plan ahead — just start working. Hooks prompt knowledge capture as you go. Use `/capture` after substantive work to ensure nothing was missed.
+**You direct, Lore captures.** Each session builds on the last. You don't need to set anything up, create roadmaps, or plan ahead — just start working. Hooks prompt knowledge capture as you go. Use `/lore-capture` after substantive work to ensure nothing was missed.
 
 ## Just Start Working
 

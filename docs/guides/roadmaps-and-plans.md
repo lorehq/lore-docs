@@ -58,9 +58,9 @@ roadmap: <roadmap-slug>
 ## Creating
 
 ```
-/create-roadmap "<Initiative Name>"
-/create-plan "<Plan Name>"          # Lore asks if it belongs to a roadmap
-/create-brainstorm "<Topic>"        # Exploratory discussions, ADRs
+/lore-create-roadmap "<Initiative Name>"
+/lore-create-plan "<Plan Name>"          # Lore asks if it belongs to a roadmap
+/lore-create-brainstorm "<Topic>"        # Exploratory discussions, ADRs
 ```
 
 ## Status Workflow
