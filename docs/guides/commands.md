@@ -33,7 +33,6 @@ See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow
 |---------|-------------|
 | `/lore-status` | Show Lore version, hook health, skill/agent counts, active work |
 | `/lore-update` | Pull latest framework files from GitHub without touching operator content |
-| `/lore-commands-check` | OpenCode smoke check for required `.opencode/commands` files |
 
 `/lore-status` is the operator's diagnostic — verify Lore is loaded and healthy.
 
