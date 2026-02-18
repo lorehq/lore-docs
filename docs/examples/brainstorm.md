@@ -14,9 +14,6 @@ Brainstorms are conversation artifacts that capture exploratory discussions, arc
 ---
 title: <Topic>
 created: 2026-01-10
-participants: operator, lore
-context: <Why this discussion happened>
-related_roadmap: <roadmap-slug>
 ---
 ```
 

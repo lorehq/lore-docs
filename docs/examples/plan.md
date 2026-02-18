@@ -16,7 +16,7 @@ title: <Plan Name>
 status: active
 created: 2026-02-01
 updated: 2026-02-06
-roadmap: <roadmap-slug>
+summary: <one-liner shown in session banner>
 target: 2026-02-28
 ---
 ```
@@ -75,7 +75,7 @@ None currently.
 
 ## Key Concepts
 
-**YAML Frontmatter** — links to parent roadmap via `roadmap:` field. Status tracking and target date.
+**YAML Frontmatter** — `summary` is shown in the session banner (keep under 60 chars). Standalone plans can optionally include a `roadmap: <slug>` field to reference their parent; plans nested under a roadmap folder don't need it.
 
 **Test plan** — checklist of acceptance criteria, performance targets, and verification steps.
 

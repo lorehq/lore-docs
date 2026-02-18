@@ -43,18 +43,18 @@ Full hook coverage. Hooks fire as subprocesses on every lifecycle event — sess
 
 ### Cursor
 
-Hook support via `.cursor/hooks.json` (v1.7+). Covers prompt injection, file read blocking, and post-edit tracking.
+Hook support via `.cursor/hooks.json` (v1.7+). Covers session start, file read blocking, post-edit tracking, and shell command tracking.
 
 - **Config:** `.cursor/hooks.json`
-- **Events:** `beforeSubmitPrompt`, `beforeReadFile`, `afterFileEdit`
+- **Events:** `sessionStart`, `beforeReadFile`, `afterFileEdit`, `afterShellExecution`
 - **Wire format:** JSON on stdin, JSON on stdout (`{ "continue": false }` to block)
 
 **Known gaps:**
 
-- No dedicated session start event — first-prompt detection via flag file
 - No write blocking — `beforeReadFile` exists but no `beforeWriteFile`
-- No shell event — bash escalation tracking unavailable
+- No per-prompt hook — no equivalent to Claude Code's `UserPromptSubmit`
 - No context path guide — no pre-write hook for non-file tools
+- Cursor ignores output from `afterFileEdit` and `afterShellExecution` — side effects (nav-dirty flag, state file) still work but messages are not displayed
 
 ### OpenCode
 

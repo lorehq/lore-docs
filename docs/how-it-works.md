@@ -164,6 +164,7 @@ A persistent knowledge base needs to be *available* every session without being 
 | Instruction file (~180 lines) | Routing map, knowledge routing table, operating principles |
 | Session start: framework | Operating principles, active agents, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` (project identity, agent behavior) |
+| Session start: conventions | Coding and docs standards from `docs/context/conventions/` — injected every session |
 | Session start: knowledge map | ASCII tree of docs/, skills/, and agents/ — current structure at a glance |
 | Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |
 | Per-prompt reinforcement | Delegation + capture reminder |

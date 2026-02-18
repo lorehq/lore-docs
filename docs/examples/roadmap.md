@@ -65,9 +65,9 @@ target: 2026-06-30
 
 **YAML Frontmatter** — machine-readable metadata parsed by the session start hook. Active roadmaps display at session start.
 
-**Status values:** `active` (shown at startup), `on-hold`, `completed`, `cancelled` (archived).
+**Status values:** `active` (shown at startup), `on-hold`. Completed or cancelled items are archived by moving their folder to the parent's `archive/` directory — there is no `completed` or `cancelled` status value.
 
-**Nested plans** — plans can nest under roadmaps in folder structure, or reference via frontmatter `roadmap:` field.
+**Nested plans** — plans nest under roadmaps in folder structure (`docs/work/roadmaps/<slug>/plans/<plan-slug>/`). Standalone plans can optionally reference a roadmap via the `roadmap:` frontmatter field.
 
 **Supporting docs** — each roadmap gets its own folder. Research, diagrams, and decision records live alongside `index.md`.
 

@@ -24,9 +24,8 @@ Lore uses slash commands to trigger common operations. Type them in your agent's
 | `/lore-create-roadmap` | Create a strategic roadmap (weeks to months) |
 | `/lore-create-plan` | Create a tactical plan (days to weeks) |
 | `/lore-create-brainstorm` | Create a brainstorm for exploratory discussion |
-| `/archive-item` | Archive a completed or cancelled roadmap/plan |
 
-See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow.
+See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow. Completed or cancelled items are archived by moving their folder to the parent's `archive/` directory.
 
 ## Instance Management
 
