@@ -6,6 +6,8 @@ title: Commands
 
 Lore uses slash commands to trigger common operations. Type them in your agent's chat.
 
+In OpenCode, these commands are provided by markdown files under `.opencode/commands/`.
+
 ## Knowledge Capture
 
 | Command | What it does |

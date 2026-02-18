@@ -78,6 +78,8 @@ OpenCode behavior is split by purpose:
 
 This avoids full-banner token overhead on every turn while preserving full Lore context at startup and after compaction.
 
+OpenCode slash menu entries are provided by `.opencode/commands/`; skills in `.lore/skills/` do not auto-populate the OpenCode command menu.
+
 ## Setup
 
 All platforms activate automatically after `npx create-lore`. No manual configuration needed. For linked repos, run `bash scripts/lore-link.sh <target>` from the hub to generate platform configs — see [Linked Repos](#linked-repos) below.
@@ -86,7 +88,7 @@ All platforms activate automatically after `npx create-lore`. No manual configur
 |----------|------------------------|
 | **Claude Code** | `CLAUDE.md` + `.claude/settings.json` (hooks) |
 | **Cursor** | `.cursorrules` + `.cursor/hooks.json` (hooks) + `.cursor/rules/` (rules) |
-| **OpenCode** | `opencode.json` (instructions + plugins) |
+| **OpenCode** | `opencode.json` (instructions), `.opencode/plugins/` (hooks), `.opencode/commands/` (slash menu) |
 
 `CLAUDE.md` and `.cursorrules` are generated copies of `.lore/instructions.md`. Run `bash scripts/sync-platform-skills.sh` after editing instructions to keep them in sync.
 
@@ -120,7 +122,7 @@ When you [link a work repo](cross-repo-workflow.md#ide-workflow-lore-link), `lor
 |----------|----------------|
 | **Claude Code** | `.claude/settings.json` — hooks with `LORE_HUB` pointing to hub |
 | **Cursor** | `.cursor/hooks.json` + `.cursor/rules/lore.mdc` — hooks and instructions pointing to hub |
-| **OpenCode** | `.opencode/plugins/` wrappers + `opencode.json` — delegating to hub plugins |
+| **OpenCode** | `.opencode/plugins/` wrappers + `.opencode/commands/` + `opencode.json` — delegating to hub plugins and exposing slash commands |
 | **All** | `CLAUDE.md`, `.cursorrules` — instruction copies from hub |
 | **All** | `.lore` marker file recording the hub path and link timestamp |
 
