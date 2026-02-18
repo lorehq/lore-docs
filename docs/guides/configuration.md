@@ -12,7 +12,7 @@ A JSON file with optional fields. Create it manually or let `npx create-lore` ge
 
 ```json
 {
-  "version": "0.5.0",
+  "version": "1.0.0",
   "treeDepth": 5,
   "nudgeThreshold": 3,
   "warnThreshold": 5
@@ -23,7 +23,7 @@ A JSON file with optional fields. Create it manually or let `npx create-lore` ge
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `version` | string | — | Displayed in the session banner (`=== LORE v0.5.0 ===`) |
+| `version` | string | — | Displayed in the session banner (`=== LORE v1.0.0 ===`) |
 | `treeDepth` | number | `5` | Max directory depth in the knowledge map tree |
 | `nudgeThreshold` | number | `3` | Bash commands before a gentle capture reminder |
 | `warnThreshold` | number | `5` | Bash commands before a strong capture warning |
@@ -38,7 +38,6 @@ Sets default model preferences for domain agents across platforms. Agents inheri
 
 ```json
 {
-  "version": "0.7.0",
   "subagentDefaults": {
     "claude-model": "sonnet",
     "opencode-model": "openai/gpt-4o",

@@ -224,7 +224,6 @@ As a knowledge base grows, the session banner's main variable cost is the **know
 
 ```json
 {
-  "version": "0.6.0",
   "treeDepth": 3
 }
 ```
