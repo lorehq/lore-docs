@@ -78,7 +78,7 @@ This brainstorm informed:
 
 **Not a roadmap or plan** — brainstorms are reference artifacts. They document the thinking process, not work progress.
 
-**Decision record** — captures options considered, trade-offs weighed, and rationale for the choice made.
+**Decision record** — captures options considered, trade-offs weighed, and rationale for any choice made. Not all brainstorms reach a decision — omit the decision sections if the discussion is still open.
 
 **Follow-up links** — connect brainstorms to the roadmaps/plans they informed.
 
@@ -88,9 +88,7 @@ This brainstorm informed:
 
 ## Creating Brainstorms
 
-```
-/lore-create-brainstorm "<Topic>"
-```
+Ask Lore to create a brainstorm — for example: *"Start a brainstorm about auth options."* Lore handles the folder structure and frontmatter.
 
 ## See Also
 

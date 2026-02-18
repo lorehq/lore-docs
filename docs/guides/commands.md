@@ -19,13 +19,11 @@ Lore uses slash commands to trigger common operations. Type them in your agent's
 
 ## Work Management
 
-| Command | What it does |
-|---------|-------------|
-| `/lore-create-roadmap` | Create a strategic roadmap (weeks to months) |
-| `/lore-create-plan` | Create a tactical plan (days to weeks) |
-| `/lore-create-brainstorm` | Create a brainstorm for exploratory discussion |
+Ask Lore to create roadmaps, plans, or brainstorms conversationally — for example, *"Create a roadmap for cloud migration"* or *"Start a brainstorm about auth options."* Lore handles folder structure, frontmatter, and validation.
 
-See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow. Completed or cancelled items are archived by moving their folder to the parent's `archive/` directory.
+Completed or cancelled items are archived by moving their folder to the parent's `archive/` directory.
+
+See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow.
 
 ## Instance Management
 

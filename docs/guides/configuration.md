@@ -8,7 +8,7 @@ Lore reads settings from `.lore-config` (JSON) at the root of your instance and 
 
 ## `.lore-config`
 
-A JSON file with optional fields. Create it manually or let `create-lore` generate one during setup.
+A JSON file with optional fields. Create it manually or let `npx create-lore` generate one during setup.
 
 ```json
 {
@@ -30,7 +30,7 @@ A JSON file with optional fields. Create it manually or let `create-lore` genera
 
 All fields are optional. Missing fields fall back to their defaults.
 
-**Metadata fields** — `.lore-config` may also contain `name`, `created`, and `level`. These are informational metadata set during instance creation and are not used by framework logic.
+**Metadata fields** — `.lore-config` may also contain `name` and `created`. These are informational metadata set during instance creation and are not used by framework logic.
 
 ### `treeDepth`
 
@@ -46,7 +46,7 @@ Controls how deep the ASCII directory tree goes in the session banner's KNOWLEDG
 
 ### `nudgeThreshold` and `warnThreshold`
 
-The bash-tracking hook counts consecutive Bash tool calls. When the count hits `nudgeThreshold`, a gentle reminder appears suggesting a capture pass. At `warnThreshold`, the reminder is stronger. Both reset after a capture command runs.
+The bash-tracking hook counts consecutive Bash tool calls. When the count hits `nudgeThreshold`, a gentle reminder appears suggesting a capture pass. At `warnThreshold`, the reminder is stronger. Both reset when the agent writes to a knowledge path (`docs/`, `.lore/skills/`).
 
 ## Environment Variables
 

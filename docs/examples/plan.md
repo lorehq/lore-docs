@@ -75,7 +75,9 @@ None currently.
 
 ## Key Concepts
 
-**YAML Frontmatter** — `summary` is shown in the session banner (keep under 60 chars). Standalone plans can optionally include a `roadmap: <slug>` field to reference their parent; plans nested under a roadmap folder don't need it.
+**YAML Frontmatter** — `summary` is shown in the session banner (keep under 60 chars). Standalone plans can optionally include a `roadmap: <slug>` field to reference their parent; plans nested under a roadmap folder don't need it. Both `active` and `on-hold` plans appear at session start.
+
+**Archiving** — completed or cancelled plans are archived by moving their folder to the parent's `archive/` subdirectory (e.g., `docs/work/plans/archive/<slug>/`). `/lore-capture` checks for completed items and suggests archiving.
 
 **Test plan** — checklist of acceptance criteria, performance targets, and verification steps.
 
@@ -89,11 +91,7 @@ None currently.
 
 ## Creating Plans
 
-```
-/lore-create-plan "<Plan Name>"
-```
-
-Lore will ask if the plan belongs to a roadmap and create the appropriate folder structure.
+Ask Lore to create a plan — for example: *"Create a plan for the networking setup."* Specify which roadmap it belongs to, if any, and Lore will create the appropriate folder structure.
 
 ## See Also
 

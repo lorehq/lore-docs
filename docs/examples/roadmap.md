@@ -42,7 +42,7 @@ target: 2026-06-30
 - <Work item>
 
 **Plans:**
-- [<Plan Name>](../plans/<slug>/index.md)
+- [<Plan Name>](plans/<slug>/index.md)
 
 ### Phase 3: <Name>
 **Status:** Planned (2026-04-01 to 2026-06-30)
@@ -63,9 +63,9 @@ target: 2026-06-30
 
 ## Key Concepts
 
-**YAML Frontmatter** — machine-readable metadata parsed by the session start hook. Active roadmaps display at session start.
+**YAML Frontmatter** — machine-readable metadata parsed by the session start hook. Active and on-hold roadmaps display at session start.
 
-**Status values:** `active` (shown at startup), `on-hold`. Completed or cancelled items are archived by moving their folder to the parent's `archive/` directory — there is no `completed` or `cancelled` status value.
+**Status values:** `active` (shown at startup), `on-hold` (shown at startup with `[ON HOLD]` suffix). Completed or cancelled items are archived by moving their folder to the parent's `archive/` directory.
 
 **Nested plans** — plans nest under roadmaps in folder structure (`docs/work/roadmaps/<slug>/plans/<plan-slug>/`). Standalone plans can optionally reference a roadmap via the `roadmap:` frontmatter field.
 
@@ -73,9 +73,7 @@ target: 2026-06-30
 
 ## Creating Roadmaps
 
-```
-/lore-create-roadmap "<Initiative Name>"
-```
+Ask Lore to create a roadmap — for example: *"Create a roadmap for cloud migration."* Lore handles the folder structure, frontmatter, and validation.
 
 ## See Also
 

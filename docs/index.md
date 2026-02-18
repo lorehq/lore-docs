@@ -11,7 +11,7 @@ Lore is a lightweight framework that gives coding agents persistent memory. Inst
 ## What You Get
 
 - **Self-Learning** — Your agent captures gotchas as reusable skills and maps your context through docs. API quirks, auth tricks, encoding issues — all persist across sessions.
-- **Delegation** — An orchestrator/agent pattern where the main model dispatches domain work to cheaper, faster models. Less token spend, cleaner context windows.
+- **Delegation** — An orchestrator/agent pattern where the main model dispatches domain work to cheaper models that run in parallel. Less token spend, cleaner context windows.
 - **Work Continuity** — Roadmaps and plans persist across sessions and surface at startup, so long-running projects pick up where they left off.
 
 ## Quick Start
@@ -29,13 +29,13 @@ cursor .     # Cursor (open the project)
 opencode     # OpenCode
 ```
 
-No configuration needed. The framework activates through hooks and conventions automatically.
+No configuration required. The framework activates through hooks automatically. Customize `docs/context/agent-rules.md` to teach the agent about your project.
 
 ## How It Works
 
 | Component | Location | What it does |
 |-----------|----------|--------------|
-| **Hooks** | `hooks/` | Fire on session start, tool use, and edits. Reinforce capture habits and route knowledge. |
+| **Hooks** | `hooks/` | Fire on session start, prompt submit, and tool use. Reinforce capture habits and route knowledge. |
 | **Skills** | `.lore/skills/` | Non-obvious knowledge captured from real work — gotchas, tricks, patterns. |
 | **Agents** | `.lore/agents/` | Domain-specific workers. One agent per domain, created as skills accumulate. |
 | **Docs** | `docs/` | Context knowledge, runbooks, and work tracking. Your agent's long-term memory. |

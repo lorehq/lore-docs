@@ -20,7 +20,7 @@ Lore supports three coding agent platforms. All share the same knowledge base â€
 | Skills & agents | Yes | Yes | Yes |
 | Work tracking | Yes | Yes | Yes |
 | Linked repo support | Yes | Yes | Yes |
-| Instructions file | `CLAUDE.md` | `.cursorrules` | `opencode.json` |
+| Instructions file | `CLAUDE.md` | `.cursorrules` | `.lore/instructions.md` (via `opencode.json`) |
 
 ## How Hooks Work
 

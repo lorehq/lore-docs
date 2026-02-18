@@ -28,14 +28,14 @@ my-project/
     instructions.md  # Agent instructions (canonical source)
   .claude/           # Claude Code platform copies (auto-generated)
   .cursor/
-    hooks/           # Cursor hooks (fire on prompt, read, edit events)
+    hooks/           # Cursor hooks (fire on session start, read, edit, shell events)
     hooks.json       # Cursor hook configuration
   .opencode/
     plugins/         # OpenCode plugins (fire on lifecycle events)
   docs/
     context/         # Project context, conventions, inventory (filled in as you work)
     work/            # Roadmaps, plans, brainstorms
-  hooks/             # Claude Code hooks (fire on session start, tool use, edits)
+  hooks/             # Claude Code hooks (fire on session start, prompt submit, tool use)
   lib/               # Shared hook logic (all platforms use this)
   scripts/           # Validation, registry generation, platform sync
   CLAUDE.md          # Generated from .lore/instructions.md
@@ -49,9 +49,10 @@ Open `docs/context/agent-rules.md` and describe your project. This file is injec
 
 - **About** — what the project does, what domain it's in
 - **Agent Behavior** — communication style, preferences, constraints
-- **Conventions** — coding patterns, tooling choices, naming rules
 
-The agent sees this before your first prompt every session.
+Coding and docs conventions go in `docs/context/conventions/` — also injected every session as a separate section.
+
+The agent sees both before your first prompt every session.
 
 ## First Session
 
@@ -63,14 +64,9 @@ cursor .     # Cursor (open the project)
 opencode     # OpenCode
 ```
 
-Work normally. Lore's hooks reinforce knowledge capture as you go — prompting the agent to extract gotchas into skills and document context knowledge. If you prefer working from the work repo in an IDE, see [lore link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active without opening the Lore project.
+Work normally. Lore's hooks reinforce knowledge capture as you go — prompting the agent to extract gotchas into skills and document context knowledge. If you prefer working from your application repo in an IDE (rather than the Lore project directory), see [lore link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active without opening the Lore project.
 
-After substantive work, run `/lore-capture` to trigger a full knowledge capture pass. The agent will:
-
-1. Review what it learned during the session
-2. Create skills for any gotchas encountered
-3. Update context docs with new knowledge
-4. Validate consistency across registries and navigation
+After substantive work, run `/lore-capture` to trigger a full knowledge capture pass. The agent will review the session, surface what it found (gotchas, new context, stale work items), and ask which items to act on before making changes.
 
 ## Working Across Repos
 
@@ -80,7 +76,7 @@ See [Working Across Repos](guides/cross-repo-workflow.md) for the full pattern.
 
 ## Building Knowledge
 
-The first few sessions are discovery-heavy. By session 5-10, meaningful context accumulates and the agent starts working faster — correct parameters on the first try, delegation to domain agents, less rediscovery.
+The first few sessions are discovery-heavy. As context accumulates, each session gets faster — the agent spends less time re-discovering your environment and more time acting on it.
 
 See [How It Works](how-it-works.md) for the full picture of how knowledge compounds.
 
@@ -92,7 +88,7 @@ Verify your Lore instance is healthy:
 /lore-status
 ```
 
-This shows your Lore version, hook health, skill/agent counts, and active work items.
+This shows your Lore version, hook health, skill/agent counts, linked repos, and active work items.
 
 To pull the latest framework updates without touching your docs, skills, or agents:
 
@@ -100,7 +96,7 @@ To pull the latest framework updates without touching your docs, skills, or agen
 /lore-update
 ```
 
-The agent will show you what changed and ask for approval before syncing.
+The agent will show you the version change and which file categories will be synced, then ask for approval.
 
 ## Browsing Your Knowledge Base
 

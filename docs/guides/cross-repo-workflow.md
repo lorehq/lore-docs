@@ -31,7 +31,7 @@ flowchart TD
 
 1. **Launch your agent from the Lore project directory.** This loads instructions, hooks, and settings — everything the agent needs to operate with persistent memory.
 
-2. **Tell it to work on other repos.** The agent reads, writes, and runs commands across repos using absolute paths. No `cd` needed.
+2. **Tell it to work on other repos.** The agent reads, writes, and runs commands across repos using absolute paths. No `cd` needed for file operations.
 
     ```
     "Fix the auth bug in ~/projects/app-api"

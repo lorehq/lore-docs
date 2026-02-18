@@ -48,7 +48,7 @@ flowchart TB
 
 ### 1. Knowledge Capture
 
-Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Capture checkpoints prompt the agent to extract this into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. When a skill has a clear domain, it gets an agent.
+Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract this into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. When a skill has a clear domain, it gets an agent.
 
 #### The "Don't Ask Twice" Loop
 
@@ -75,12 +75,12 @@ sequenceDiagram
 
 | Knowledge Type | Destination | Example |
 |---------------|-------------|---------|
-| API endpoints, URLs, services | `docs/context/inventory/` | Service API base URL |
+| API endpoints, URLs, services | `docs/context/` | Service API base URL |
 | Tool gotchas, auth quirks | `.lore/skills/` | Case-sensitive org name |
 | Dependencies, relationships | `docs/context/` | Which services connect to what |
 | Strategic initiatives | `docs/work/roadmaps/` | Cloud migration phases |
 | Tactical work | `docs/work/plans/` | Phase 1 networking setup |
-| Multi-step procedures | `docs/context/runbooks/` | Cross-platform comparison |
+| Multi-step procedures | `docs/context/runbooks/` | Deploy to staging |
 
 #### How Skills and Agents Emerge
 
@@ -92,7 +92,7 @@ flowchart TD
     gotcha -->|No| skip[No skill needed]
     gotcha -->|Yes| createSkill[Create skill]
     createSkill --> domainClear{Clear domain?}
-    domainClear -->|No| orchestrator[Orchestrator handles directly]
+    domainClear -->|No| unassigned[Skill stays unassigned]
     domainClear -->|Yes| agentExists{Agent exists?}
     agentExists -->|Yes| addToAgent[Add skill to agent]
     agentExists -->|No| createAgent[Create agent + add skill]
@@ -109,7 +109,7 @@ flowchart TD
     Q1 -->|No| GP[Handle Directly]
     Q1 -->|Yes| Q3{Agent exists?}
     Q3 -->|Yes| Delegate[Delegate to domain agent]
-    Q3 -->|No| Create[Create agent, then delegate]
+    Q3 -->|No| Create[Handle directly + create agent during capture]
     Delegate --> Review[Review + Respond]
     Create --> Delegate
     GP --> Review
@@ -161,12 +161,12 @@ A persistent knowledge base needs to be *available* every session without being 
 
 | Layer | What It Contains |
 |-------|------------------|
-| Instruction file (~80 lines) | Routing map, knowledge routing table, operating principles |
+| `.lore/instructions.md` (~80 lines) | Framework rules, knowledge routing, naming conventions |
 | Session start: framework | Operating principles, active agents, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` (project identity, agent behavior) |
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` — injected every session |
 | Session start: knowledge map | ASCII tree of docs/, skills/, and agents/ — current structure at a glance |
-| Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |
+| Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) — included when non-empty |
 | Per-prompt reinforcement | Delegation reminder + task-list guidance (every prompt) |
 | Post-tool-use reinforcement | Capture reminders with escalating urgency (after bash commands and file edits) |
 | Skills and docs | Loaded on-demand when invoked or needed |
@@ -177,4 +177,4 @@ Things that grow fastest (docs, skills) have zero baseline cost. Things with non
 
 - **AI compliance**: Reinforcement prompts encourage capture and delegation but cannot force it. The agent may skip reminders in long sessions.
 - **Operator involvement**: Running `/lore-capture` after substantive work improves capture rates. The system works best as a collaboration.
-- **Knowledge completeness**: Early sessions have gaps. By session 5-10, meaningful context accumulates. Quality correlates with capture consistency.
+- **Knowledge completeness**: Early sessions have gaps. Context accumulates with each session. Quality correlates with capture consistency.
