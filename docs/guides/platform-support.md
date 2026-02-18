@@ -17,6 +17,7 @@ Lore supports three coding agent platforms. All share the same knowledge base �
 | Knowledge capture reminders | Yes | Yes | Yes |
 | Bash escalation tracking | Yes | Yes | Yes |
 | Context path guide | Yes | No | Yes |
+| Banner survives compaction | Yes | No | Yes |
 | Skills & agents | Yes | Yes | Yes |
 | Work tracking | Yes | Yes | Yes |
 | Linked repo support | Yes | Yes | Yes |
@@ -41,6 +42,8 @@ Full hook coverage. Hooks fire as subprocesses on every lifecycle event — sess
 - **Events:** `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PostToolUseFailure`
 - **Wire format:** JSON on stdin, JSON on stdout (`{ "decision": "block" }` to block)
 
+`SessionStart` fires on startup, resume, and after context compaction — the session banner is re-injected automatically when the context window is trimmed.
+
 ### Cursor
 
 Hook support via `.cursor/hooks.json` (v1.7+). Covers session start, prompt injection, file read blocking, post-edit tracking, and shell command tracking.
@@ -55,6 +58,7 @@ Cursor ignores output from `afterFileEdit` and `afterShellExecution`, so knowled
 
 - No write blocking — `beforeReadFile` exists but no `beforeWriteFile`
 - No context path guide — no pre-write hook for non-file tools
+- No compaction event — `sessionStart` fires once, so the banner is lost if the context window is trimmed mid-session
 
 ### OpenCode
 
@@ -63,6 +67,8 @@ Plugin support via long-lived ESM modules. Covers session lifecycle, tool blocki
 - **Config:** `opencode.json` (points to instruction files)
 - **Events:** `session.created`, `experimental.session.compacting`, `tool.execute.before`, `tool.execute.after`
 - **Wire format:** Function calls with input/output objects; throw to block
+
+The `experimental.session.compacting` event re-injects the session banner into the context when the context window is trimmed, so delegation info and conventions survive long sessions.
 
 ## Setup
 
