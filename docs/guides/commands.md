@@ -36,15 +36,13 @@ See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow
 
 `/lore-update` syncs hooks, scripts, and `lore-*` skills/agents from the latest release. Operator-owned content (skills and agents without the `lore-` prefix, docs, and work items) is never touched. See [Platform Support: Sync Boundaries](platform-support.md#sync-boundaries) for the full breakdown.
 
-## Docs Server
+## Docs UI
 
 | Command | What it does |
 |---------|-------------|
-| `/lore-serve-docs` | Start local MkDocs server at localhost:8000 with live reload |
-| `/lore-serve-docs-docker` | Start via Docker — no Python required |
-| `/lore-stop-docs` | Stop the docs server |
+| `/lore-ui` | Manage docs UI lifecycle (start/stop/status), preferring Docker with local mkdocs fallback |
 
-The docs server lets you browse your knowledge base (skills, context docs, runbooks, work items) in a web UI.
+The docs UI lets you browse your knowledge base (skills, context docs, runbooks, work items) in a web UI.
 
 ## Scripts
 

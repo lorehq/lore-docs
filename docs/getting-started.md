@@ -102,16 +102,10 @@ The agent will show you the version change and which file categories will be syn
 
 ## Browsing Your Knowledge Base
 
-Lore includes a local docs server to browse your accumulated knowledge:
+Lore includes a local docs UI command to browse your accumulated knowledge:
 
 ```
-/lore-serve-docs
+/lore-ui
 ```
 
-This starts an MkDocs server at `localhost:8000` with live reload. Use `/lore-stop-docs` to shut it down.
-
-If you prefer Docker (no Python required):
-
-```
-/lore-serve-docs-docker
-```
+`/lore-ui` starts docs in Docker mode when Docker is available, and falls back to local MkDocs when Docker is unavailable. Use `/lore-ui stop` to shut it down and `/lore-ui status` to check what mode is active.
