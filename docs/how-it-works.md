@@ -165,7 +165,7 @@ A persistent knowledge base needs to be *available* every session without being 
 | Session start: framework | Operating principles, active agents, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` (project identity, agent behavior) |
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` — injected every session |
-| Session start: knowledge map | ASCII tree of docs/, skills/, and agents/ — current structure at a glance |
+| Session start: knowledge map | Directory tree of docs/, skills/, and agents/ — structure at a glance |
 | Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) — included when non-empty |
 | Per-prompt reinforcement | Delegation reminder + task-list guidance (every prompt) |
 | Post-tool-use reinforcement | Capture reminders with escalating urgency (after bash commands and file edits) |
@@ -182,18 +182,18 @@ Not all knowledge has the same context cost. Understanding the growth profile he
 | Instructions (`.lore/instructions.md`) | Every session | Rarely changes | Fixed (~80 lines) |
 | Agent rules (`docs/context/agent-rules.md`) | Every session | Rarely changes | Fixed (operator-controlled) |
 | Conventions (`docs/context/conventions/`) | Every session | Rarely changes | Fixed (operator-controlled) |
-| Knowledge map (ASCII tree) | Every session | Grows with docs | Bounded by `treeDepth` |
+| Knowledge map (directory tree) | Every session | Grows with dirs | Bounded by `treeDepth` |
 | Active agents | Every session | ~1 per domain | Low (~1 line each in banner) |
 | Active roadmaps/plans | Every session | Operator-created | Low (title + summary only) |
 | Skills (`.lore/skills/`) | On-demand | Grows with gotchas | Zero baseline |
 | Knowledge docs (`docs/knowledge/`) | On-demand | Grows fastest | Zero baseline |
-| Archived work items | Never (tree only) | Accumulates | Zero (collapsed in tree) |
+| Archived work items | On-demand | Accumulates | Zero baseline (dirs visible in tree) |
 
 ### Tuning for Large Instances
 
-As a knowledge base grows, the session banner's main variable cost is the **knowledge map** — the ASCII tree of `docs/`, `skills/`, and `agents/`. Two mechanisms keep this bounded:
+As a knowledge base grows, the session banner's main variable cost is the **knowledge map** — a directory-only tree of `docs/`, `skills/`, and `agents/`. The tree shows structure, not content: only directory names appear, never individual files. This keeps the map compact — growth is proportional to the number of directories, not the number of documents. The agent reads specific directories on-demand when it needs to find files.
 
-**`treeDepth`** — set in `.lore-config` to limit how many directory levels the knowledge map displays. Default is 5. Reducing to 3 or 4 hides deep nesting while still showing top-level structure. The agent can always read deeper directories on-demand.
+**`treeDepth`** — set in `.lore-config` to limit how many directory levels the knowledge map displays. Default is 5. Reducing to 3 or 4 hides deep nesting while still showing top-level structure.
 
 ```json
 {
@@ -201,8 +201,6 @@ As a knowledge base grows, the session banner's main variable cost is the **know
   "treeDepth": 3
 }
 ```
-
-**Archive collapsing** — `archive/` directories appear in the tree but their contents are never expanded. Completed work items move to archive, keeping the active tree focused on current work.
 
 **When to act:**
 
