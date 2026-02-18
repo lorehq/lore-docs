@@ -77,7 +77,19 @@ active → on-hold → active (resumed)
 
 - **active**: Shown in session startup output every session
 - **on-hold**: Shown at startup with `[ON HOLD]` suffix
-- **archived**: Move the folder to the parent's `archive/` directory — no longer shown at startup
+- **completed**: Finished; keep `status: completed` and move folder to `archive/`
+- **cancelled**: Stopped/abandoned; keep `status: cancelled` and move folder to `archive/`
+
+### Allowed Status Values
+
+Use exactly these values for roadmap/plan frontmatter:
+
+- `active`
+- `on-hold`
+- `completed`
+- `cancelled`
+
+`archived` is a folder location, not a status value.
 
 ## Session Startup Integration
 
