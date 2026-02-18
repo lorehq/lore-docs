@@ -161,13 +161,14 @@ A persistent knowledge base needs to be *available* every session without being 
 
 | Layer | What It Contains |
 |-------|------------------|
-| Instruction file (~180 lines) | Routing map, knowledge routing table, operating principles |
+| Instruction file (~80 lines) | Routing map, knowledge routing table, operating principles |
 | Session start: framework | Operating principles, active agents, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` (project identity, agent behavior) |
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` — injected every session |
 | Session start: knowledge map | ASCII tree of docs/, skills/, and agents/ — current structure at a glance |
 | Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |
-| Per-prompt reinforcement | Delegation + capture reminder |
+| Per-prompt reinforcement | Delegation reminder + task-list guidance (every prompt) |
+| Post-tool-use reinforcement | Capture reminders with escalating urgency (after bash commands and file edits) |
 | Skills and docs | Loaded on-demand when invoked or needed |
 
 Things that grow fastest (docs, skills) have zero baseline cost. Things with nonzero cost (agents, active roadmaps) grow slowly.
