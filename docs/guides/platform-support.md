@@ -8,19 +8,20 @@ Lore supports three coding agent platforms. All share the same knowledge base �
 
 ## Feature Matrix
 
-| Feature | Description | Claude Code | Cursor | OpenCode |
-|---------|-------------|:-----------:|:------:|:--------:|
-| Session banner | Project identity + delegation info on startup | Yes | Yes | Yes |
-| Per-prompt reminder | One-line nudge before every turn | Yes | Yes | No |
-| MEMORY.md guard | Blocks access, redirects to Lore routes | Yes | Reads only | Yes |
-| Knowledge capture reminders | Flags new knowledge after edits and commands | Yes | Yes | Yes |
-| Bash escalation tracking | Warns when shell commands bypass tool safety | Yes | Yes | Yes |
-| Context path guide | Shows directory tree before docs writes | Yes | No | Yes |
-| Banner survives compaction | Re-injects banner when context is trimmed | Yes | No | Yes |
-| Skills & agents | Shared skill and agent definitions | Yes | Yes | Yes |
-| Work tracking | Roadmaps, plans, brainstorms | Yes | Yes | Yes |
-| Linked repo support | Hub knowledge accessible from work repos | Yes | Yes | Yes |
-| Instructions file | Platform-specific instructions path | `CLAUDE.md` | `.cursorrules` | `.lore/instructions.md` |
+| Feature | Claude Code | Cursor | OpenCode |
+|---------|:-----------:|:------:|:--------:|
+| Session banner | Yes | Yes | Yes |
+| Per-prompt reminder | Yes | Yes | No |
+| Memory protection (reads) | Yes | Yes | Yes |
+| Memory protection (writes) | Yes | No | Yes |
+| Knowledge capture reminders | Yes | Yes | Yes |
+| Bash escalation tracking | Yes | Yes | Yes |
+| Context path guide | Yes | No | Yes |
+| Banner survives compaction | Yes | Condensed | Yes |
+| Skills & agents | Yes | Yes | Yes |
+| Work tracking | Yes | Yes | Yes |
+| Linked repo support | Yes | Yes | Yes |
+| Instructions file | `CLAUDE.md` | `.cursorrules` | `.lore/instructions.md` (via `opencode.json`) |
 
 ## How Hooks Work
 
@@ -53,11 +54,12 @@ Hook support via `.cursor/hooks.json` (v1.7+). Covers session start, prompt inje
 
 Cursor ignores output from `afterFileEdit` and `afterShellExecution`, so knowledge capture reminders and bash escalation warnings use a read-back pattern: the after-hooks write state to disk, and `beforeSubmitPrompt` reads it back on the next turn.
 
+Cursor has no compaction event, so `beforeSubmitPrompt` also injects a condensed banner on every turn — delegation, active work, repo boundary, and conventions pointer. This keeps the agent oriented after context trimming, but the full banner (knowledge map, project description, convention text) is only available from `sessionStart` at the beginning of the session.
+
 **Known gaps:**
 
-- No write blocking — `beforeReadFile` exists but no `beforeWriteFile`, so MEMORY.md writes can't be intercepted
-- No context path guide — no pre-write hook to show directory tree before docs edits
-- No compaction event — `sessionStart` fires once, so the banner is lost if the context window is trimmed mid-session
+- No write blocking — `beforeReadFile` exists but no `beforeWriteFile`
+- No context path guide — no pre-write hook for non-file tools
 
 ### OpenCode
 
