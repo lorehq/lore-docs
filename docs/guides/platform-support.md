@@ -16,7 +16,7 @@ Lore supports three coding agent platforms. All share the same knowledge base â€
 | Memory protection (writes) | Yes | No | Yes |
 | Knowledge capture reminders | Yes | Yes | Yes |
 | Bash escalation tracking | Yes | Yes | Yes |
-| Context path guide | Yes | No | No |
+| Context path guide | Yes | No | Yes |
 | Skills & agents | Yes | Yes | Yes |
 | Work tracking | Yes | Yes | Yes |
 | Linked repo support | Yes | Yes | Yes |
