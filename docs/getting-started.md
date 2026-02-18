@@ -30,6 +30,7 @@ my-project/
   .cursor/
     hooks/           # Cursor hooks (fire on session start, read, edit, shell events)
     hooks.json       # Cursor hook configuration
+    rules/           # Cursor-specific rules (always-apply behavioral overrides)
   .opencode/
     plugins/         # OpenCode plugins (fire on lifecycle events)
   docs/

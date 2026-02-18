@@ -16,7 +16,7 @@ Lore supports three coding agent platforms. All share the same knowledge base â€
 | Memory protection (writes) | Yes | No | Yes |
 | Knowledge capture reminders | Yes | Yes | Yes |
 | Bash escalation tracking | Yes | Yes | Yes |
-| Context path guide | Yes | No | Yes |
+| Context path guide | Yes | No | No |
 | Skills & agents | Yes | Yes | Yes |
 | Work tracking | Yes | Yes | Yes |
 | Linked repo support | Yes | Yes | Yes |
@@ -71,7 +71,7 @@ All platforms activate automatically after `npx create-lore`. No manual configur
 | Platform | What loads automatically |
 |----------|------------------------|
 | **Claude Code** | `CLAUDE.md` + `.claude/settings.json` (hooks) |
-| **Cursor** | `.cursorrules` + `.cursor/hooks.json` (hooks) |
+| **Cursor** | `.cursorrules` + `.cursor/hooks.json` (hooks) + `.cursor/rules/` (rules) |
 | **OpenCode** | `opencode.json` (instructions + plugins) |
 
 `CLAUDE.md` and `.cursorrules` are generated copies of `.lore/instructions.md`. Run `bash scripts/sync-platform-skills.sh` after editing instructions to keep them in sync.
@@ -80,7 +80,7 @@ All platforms activate automatically after `npx create-lore`. No manual configur
 
 You can use different platforms on the same Lore project. The knowledge base is shared â€” a skill captured in Claude Code is available in Cursor and OpenCode on the next session.
 
-The only platform-specific files are hook configs and generated instruction copies. These coexist without conflict.
+The only platform-specific files are hook configs, rules, and generated instruction copies. These coexist without conflict.
 
 ## Linked Repos
 
