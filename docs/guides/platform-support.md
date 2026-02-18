@@ -78,6 +78,8 @@ OpenCode behavior is split by purpose:
 
 This avoids full-banner token overhead on every turn while preserving full Lore context at startup and after compaction.
 
+Subagents are intentionally scoped and do not receive full orchestrator banner context. They are expected to load `docs/context/agent-rules.md` and relevant files under `docs/context/conventions/` before implementation.
+
 OpenCode slash menu entries are provided by `.opencode/commands/`; skills in `.lore/skills/` do not auto-populate the OpenCode command menu.
 
 ## Setup

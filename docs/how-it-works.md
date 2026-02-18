@@ -131,6 +131,17 @@ flowchart TD
 | Coordinate multi-agent flows | Create new skills when needed |
 | Strategic decisions | Domain-specific details |
 
+#### Subagent Context Contract
+
+Subagents do not get full orchestrator context. They are intentionally scoped to avoid role confusion and token bloat.
+
+Every domain agent is expected to load and apply:
+
+- `docs/context/agent-rules.md`
+- Relevant files in `docs/context/conventions/`
+
+This gives subagents the project boundary and coding/doc conventions they need, while keeping orchestration responsibilities with the main agent. Subagents also follow the same self-learning loop: non-obvious gotchas become skills, new environment facts go to `docs/knowledge/environment/`, and reusable multi-step procedures go to `docs/knowledge/runbooks/`.
+
 #### Per-Platform Model Configuration
 
 Agents carry per-platform model preferences in their frontmatter, allowing different models across tools:
