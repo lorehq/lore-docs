@@ -109,7 +109,7 @@ flowchart TD
 
 ### 2. Delegation
 
-The orchestrator routes work to domain agents based on a simple rule: **domain = delegation trigger**. Agents own their domain end-to-end and create skills as they need them.
+The orchestrator routes work to domain agents based on a simple rule: **domain = delegation trigger**. For compound requests, reminders nudge the orchestrator to split independent branches across parallel subagents and keep dependency-gated steps sequential. Agents own their domain end-to-end and create skills as they need them.
 
 ```mermaid
 flowchart TD
@@ -194,7 +194,7 @@ A persistent knowledge base needs to be *available* every session without being 
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` — injected every session |
 | Session start: knowledge map | Directory tree of docs/, skills/, and agents/ — structure at a glance |
 | Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) — included when non-empty |
-| Per-prompt reinforcement | Delegation reminder + task-list guidance (every prompt) |
+| Per-prompt reinforcement | Delegation reminder + task-list guidance + parallelization nudge (every prompt) |
 | Post-tool-use reinforcement | Capture reminders with escalating urgency (after bash commands and file edits) |
 | Skills and docs | Loaded on-demand when invoked or needed |
 
@@ -256,7 +256,7 @@ sequenceDiagram
     loop Every Prompt
         User->>Agent: Message
         Note over Hooks: UserPromptSubmit
-        Hooks->>Agent: Delegation reminder
+        Hooks->>Agent: Delegation + parallelization reminder
         Agent->>Agent: Work (tool calls)
 
         Note over Hooks: PreToolUse

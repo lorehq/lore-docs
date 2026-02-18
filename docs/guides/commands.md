@@ -17,6 +17,8 @@ In OpenCode, these commands are provided by markdown files under `.opencode/comm
 
 `/lore-capture` is the primary end-of-session command. It prompts the agent to extract gotchas into skills, update context docs, and run consistency checks.
 
+Per-prompt reminders also reinforce delegation and planning: use task lists for multi-step work, parallelize independent branches with subagents, and keep dependency-gated steps sequential.
+
 `/lore-consolidate` is a deeper pass for periodic maintenance — finding duplicate skills, stale documentation, and opportunities to simplify.
 
 ## Work Management

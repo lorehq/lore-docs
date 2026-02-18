@@ -35,6 +35,7 @@ Skills and agents emerge from demonstrated need, not upfront planning.
 |----------|-----|
 | Work naturally, let skills emerge | Skills are best when they capture real gotchas from actual work |
 | Work in a domain, let agents emerge | Agents form around demonstrated need, not upfront planning |
+| Break compound work into branches | Independent branches can run in parallel subagents; dependency chains stay sequential |
 | Bring your own skills and agents | Drop them in and tell Lore to capture — it'll update registries |
 | Let Lore maintain registries | Registries, nav, and cross-references are where consistency matters most |
 

@@ -13,7 +13,7 @@ Behavior is intentionally not identical. Lore keeps the same outcomes (orientati
 | Feature | Description | Claude Code | Cursor | OpenCode |
 |---------|-------------|:-----------:|:------:|:--------:|
 | Session banner | Project identity + delegation info on startup | Yes | Yes | Yes |
-| Per-prompt reminder | One-line nudge before every turn | Yes | Yes | Yes |
+| Per-prompt reminder | One-line nudge for delegation and parallel task planning | Yes | Yes | Yes |
 | MEMORY.md guard | Blocks access, redirects to Lore routes | Yes | Reads only | Yes |
 | Knowledge capture reminders | Flags new knowledge after edits and commands | Yes | Yes | Yes |
 | Bash escalation tracking | Warns when shell commands bypass tool safety | Yes | Yes | Yes |
