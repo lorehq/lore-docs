@@ -48,3 +48,16 @@ See [Roadmaps & Plans](roadmaps-and-plans.md) for details on format and workflow
 | `/stop-docs` | Stop the docs server |
 
 The docs server lets you browse your knowledge base (skills, context docs, runbooks, work items) in a web UI.
+
+## Scripts
+
+These run in the terminal, not in agent chat.
+
+| Script | What it does |
+|--------|-------------|
+| `scripts/lore-link.sh <target>` | Link a work repo — hooks fire from hub |
+| `scripts/lore-link.sh --unlink <target>` | Remove link from a work repo |
+| `scripts/lore-link.sh --list` | Show linked repos with stale detection |
+| `scripts/lore-link.sh --refresh` | Regenerate configs in all linked repos |
+
+See [IDE Workflow: lore link](cross-repo-workflow.md#ide-workflow-lore-link) for full details.

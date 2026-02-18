@@ -63,7 +63,7 @@ cursor .     # Cursor (open the project)
 opencode     # OpenCode
 ```
 
-Work normally. Lore's hooks reinforce knowledge capture as you go — prompting the agent to extract gotchas into skills and document context knowledge.
+Work normally. Lore's hooks reinforce knowledge capture as you go — prompting the agent to extract gotchas into skills and document context knowledge. If you prefer working from the work repo in an IDE, see [lore link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active without opening the Lore project.
 
 After substantive work, run `/capture` to trigger a full knowledge capture pass. The agent will:
 
@@ -74,7 +74,7 @@ After substantive work, run `/capture` to trigger a full knowledge capture pass.
 
 ## Working Across Repos
 
-Lore is designed as a central hub. Launch your agent from the Lore project, then work on any repo from there. Knowledge captures back to Lore, work repos stay clean.
+Lore is designed as a central hub. Launch your agent from the Lore project, then work on any repo from there. Knowledge captures back to Lore, work repos stay clean. For IDE workflows, `lore link` lets you open a work repo directly with hooks pointing back to the hub.
 
 See [Working Across Repos](guides/cross-repo-workflow.md) for the full pattern.
 

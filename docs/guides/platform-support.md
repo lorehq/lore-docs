@@ -19,6 +19,7 @@ Lore supports three coding agent platforms. All share the same knowledge base �
 | Context path guide | Yes | No | No |
 | Skills & agents | Yes | Yes | Yes |
 | Work tracking | Yes | Yes | Yes |
+| Linked repo support | Yes | Yes | Yes |
 | Instructions file | `CLAUDE.md` | `.cursorrules` | `opencode.json` |
 
 ## How Hooks Work
@@ -65,7 +66,7 @@ Plugin support via long-lived ESM modules. Covers session lifecycle, tool blocki
 
 ## Setup
 
-All platforms activate automatically after `npx create-lore`. No manual configuration needed.
+All platforms activate automatically after `npx create-lore`. No manual configuration needed. For linked repos, run `bash scripts/lore-link.sh <target>` from the hub to generate platform configs — see [Linked Repos](#linked-repos) below.
 
 | Platform | What loads automatically |
 |----------|------------------------|
@@ -80,3 +81,19 @@ All platforms activate automatically after `npx create-lore`. No manual configur
 You can use different platforms on the same Lore project. The knowledge base is shared — a skill captured in Claude Code is available in Cursor and OpenCode on the next session.
 
 The only platform-specific files are hook configs and generated instruction copies. These coexist without conflict.
+
+## Linked Repos
+
+When you [link a work repo](cross-repo-workflow.md#ide-workflow-lore-link), `lore-link.sh` generates per-platform configs in the target:
+
+| Platform | Generated files |
+|----------|----------------|
+| **Claude Code** | `.claude/settings.json` — hooks with `LORE_HUB` pointing to hub |
+| **Cursor** | `.cursor/hooks.json` + `.cursor/rules/lore.mdc` — hooks and instructions pointing to hub |
+| **OpenCode** | `.opencode/plugins/` wrappers + `opencode.json` — delegating to hub plugins |
+| **All** | `CLAUDE.md`, `.cursorrules` — instruction copies from hub |
+| **All** | `.lore` marker file recording the hub path and link timestamp |
+
+All generated files are added to the target's `.gitignore` automatically. Existing configs are backed up to `.bak` before overwriting.
+
+After running `/lore-update` on the hub, run `bash scripts/lore-link.sh --refresh` to regenerate configs in all linked repos with the latest hooks.

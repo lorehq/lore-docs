@@ -76,5 +76,52 @@ opencode     # OpenCode
 
 Then work on whatever repos you need from there.
 
-!!! note "IDE-based agents"
-    The hub pattern works natively with CLI tools (Claude Code, OpenCode) which launch from a directory. For IDE-based agents like Cursor, open the Lore project directly — Cursor loads `.cursorrules` and `.cursor/hooks.json` from the project root.
+For IDE workflows where opening the Lore project is impractical, see [IDE Workflow: lore link](#ide-workflow-lore-link) below.
+
+## IDE Workflow: lore link
+
+The One Rule works well for CLI tools like Claude Code and OpenCode — you launch from a directory, and that's that. For IDEs like Cursor, opening the Lore project means losing the work repo's file tree, git integration, and search. You're editing your app but navigating Lore's directory structure.
+
+`lore link` resolves this. Run it once from the hub and it generates lightweight configs in the work repo that point hooks back to the hub via `LORE_HUB`. You open the work repo in your IDE with full file tree, git, and search — and hooks still fire from the hub.
+
+### Usage
+
+```bash
+# From your Lore project directory:
+bash scripts/lore-link.sh ~/projects/my-app          # Link a work repo
+bash scripts/lore-link.sh --unlink ~/projects/my-app  # Remove the link
+bash scripts/lore-link.sh --list                       # Show linked repos (with stale detection)
+bash scripts/lore-link.sh --refresh                    # Regenerate configs in all linked repos
+```
+
+### What It Generates
+
+In the target repo, `lore link` creates:
+
+- **Claude Code** — `.claude/settings.json` with hooks pointing to the hub
+- **Cursor** — `.cursor/hooks.json` + `.cursor/rules/lore.mdc` pointing to the hub
+- **OpenCode** — `.opencode/plugins/` wrappers + `opencode.json` pointing to the hub
+- **Instructions** — `CLAUDE.md` and `.cursorrules` copied from the hub
+- **Marker** — `.lore` file recording the hub path and link timestamp
+
+All generated files are added to the target repo's `.gitignore` automatically. Existing files are backed up to `.bak` before overwriting.
+
+### Knowledge Still Centralizes
+
+Even when working from a linked repo, knowledge captures back to the hub. Skills, context docs, and runbooks all write to the hub directory — the work repo stays clean.
+
+### When to Use Which
+
+| Scenario | Approach |
+|----------|----------|
+| CLI agent (Claude Code, OpenCode) | **The One Rule** — launch from the Lore project |
+| IDE agent (Cursor, or IDE-mode Claude Code) | **lore link** — link the work repo, open it in your IDE |
+| Quick cross-repo task from the hub | **The One Rule** — just reference the path |
+
+### After Framework Updates
+
+Run `--refresh` after `/lore-update` to regenerate configs in all linked repos with the latest hooks:
+
+```bash
+bash scripts/lore-link.sh --refresh
+```
