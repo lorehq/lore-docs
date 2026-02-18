@@ -4,19 +4,21 @@ title: Platform Support
 
 # Platform Support
 
-Lore supports three coding agent platforms. All share the same knowledge base — skills, agents, docs, and work tracking work identically across platforms.
+Lore supports three coding agent platforms. All share the same knowledge base — skills, agents, docs, and work tracking persist across platforms.
+
+Behavior is intentionally not identical. Lore keeps the same outcomes (orientation, capture nudges, memory guardrails) while adapting to each platform's hook surface.
 
 ## Feature Matrix
 
 | Feature | Description | Claude Code | Cursor | OpenCode |
 |---------|-------------|:-----------:|:------:|:--------:|
 | Session banner | Project identity + delegation info on startup | Yes | Yes | Yes |
-| Per-prompt reminder | One-line nudge before every turn | Yes | Yes | No |
+| Per-prompt reminder | One-line nudge before every turn | Yes | Yes | Yes |
 | MEMORY.md guard | Blocks access, redirects to Lore routes | Yes | Reads only | Yes |
 | Knowledge capture reminders | Flags new knowledge after edits and commands | Yes | Yes | Yes |
 | Bash escalation tracking | Warns when shell commands bypass tool safety | Yes | Yes | Yes |
 | Context path guide | Shows directory tree before docs writes | Yes | No | Yes |
-| Banner survives compaction | Re-injects banner when context is trimmed | Yes | Condensed | Yes |
+| Banner survives compaction | Re-injects banner when context is trimmed | Yes | Condensed pre-turn reinjection | Yes |
 | Skills & agents | Shared skill and agent definitions | Yes | Yes | Yes |
 | Work tracking | Roadmaps, plans, brainstorms | Yes | Yes | Yes |
 | Linked repo support | Hub knowledge accessible from work repos | Yes | Yes | Yes |
@@ -65,10 +67,16 @@ Cursor has no compaction event, so `beforeSubmitPrompt` also injects a condensed
 Plugin support via long-lived ESM modules. Covers session lifecycle, tool blocking, and post-tool tracking.
 
 - **Config:** `opencode.json` (points to instruction files)
-- **Events:** `session.created`, `experimental.session.compacting`, `tool.execute.before`, `tool.execute.after`
+- **Events:** `session.created`, `experimental.session.compacting`, `experimental.chat.system.transform`, `tool.execute.before`, `tool.execute.after`
 - **Wire format:** Function calls with input/output objects; throw to block
 
-The `experimental.session.compacting` event re-injects the session banner into the context when the context window is trimmed, so delegation info and conventions survive long sessions.
+OpenCode behavior is split by purpose:
+
+- `session.created` injects the full session banner (`=== LORE ...`)
+- `experimental.session.compacting` re-injects the full banner after trimming
+- `experimental.chat.system.transform` injects a small per-turn reminder only
+
+This avoids full-banner token overhead on every turn while preserving full Lore context at startup and after compaction.
 
 ## Setup
 
