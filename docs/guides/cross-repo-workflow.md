@@ -82,16 +82,15 @@ For IDE workflows where opening the Lore project is impractical, see [IDE Workfl
 
 The One Rule works well for CLI tools like Claude Code and OpenCode — you launch from a directory, and that's that. For IDEs like Cursor, opening the Lore project means losing the work repo's file tree, git integration, and search. You're editing your app but navigating Lore's directory structure.
 
-`lore link` resolves this. Run it once from the hub and it generates lightweight configs in the work repo that point hooks back to the hub via `LORE_HUB`. You open the work repo in your IDE with full file tree, git, and search — and hooks still fire from the hub.
+`/lore-link` resolves this. Run it once from the hub and it generates lightweight configs in the work repo that point hooks back to the hub via `LORE_HUB`. You open the work repo in your IDE with full file tree, git, and search — and hooks still fire from the hub.
 
 ### Usage
 
-```bash
-# From your Lore project directory:
-bash scripts/lore-link.sh ~/projects/my-app          # Link a work repo
-bash scripts/lore-link.sh --unlink ~/projects/my-app  # Remove the link
-bash scripts/lore-link.sh --list                       # Show linked repos (with stale detection)
-bash scripts/lore-link.sh --refresh                    # Regenerate configs in all linked repos
+```
+/lore-link ~/projects/my-app          # Link a work repo
+/lore-link --unlink ~/projects/my-app  # Remove the link
+/lore-link --list                       # Show linked repos (with stale detection)
+/lore-link --refresh                    # Regenerate configs in all linked repos
 ```
 
 ### What It Generates
@@ -120,8 +119,4 @@ Even when working from a linked repo, knowledge captures back to the hub. Skills
 
 ### After Framework Updates
 
-Run `--refresh` after `/lore-update` to regenerate configs in all linked repos with the latest hooks:
-
-```bash
-bash scripts/lore-link.sh --refresh
-```
+Run `/lore-link --refresh` after `/lore-update` to regenerate configs in all linked repos with the latest hooks.

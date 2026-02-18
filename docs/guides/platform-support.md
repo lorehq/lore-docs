@@ -82,7 +82,7 @@ OpenCode slash menu entries are provided by `.opencode/commands/`; skills in `.l
 
 ## Setup
 
-All platforms activate automatically after `npx create-lore`. No manual configuration needed. For linked repos, run `bash scripts/lore-link.sh <target>` from the hub to generate platform configs — see [Linked Repos](#linked-repos) below.
+All platforms activate automatically after `npx create-lore`. No manual configuration needed. For linked repos, run `/lore-link <target>` from the hub to generate platform configs — see [Linked Repos](#linked-repos) below.
 
 | Platform | What loads automatically |
 |----------|------------------------|
@@ -116,7 +116,7 @@ The only platform-specific files are hook configs, rules, and generated instruct
 
 ## Linked Repos
 
-When you [link a work repo](cross-repo-workflow.md#ide-workflow-lore-link), `lore-link.sh` generates per-platform configs in the target:
+When you [link a work repo](cross-repo-workflow.md#ide-workflow-lore-link), `/lore-link` generates per-platform configs in the target:
 
 | Platform | Generated files |
 |----------|----------------|
@@ -128,4 +128,4 @@ When you [link a work repo](cross-repo-workflow.md#ide-workflow-lore-link), `lor
 
 All generated files are added to the target's `.gitignore` automatically. Existing configs are backed up to `.bak` before overwriting.
 
-After running `/lore-update` on the hub, run `bash scripts/lore-link.sh --refresh` to regenerate configs in all linked repos with the latest hooks.
+After running `/lore-update` on the hub, run `/lore-link --refresh` to regenerate configs in all linked repos with the latest hooks.
