@@ -57,7 +57,7 @@ The agent operates on files and commands anywhere on your machine. There's no pa
 | Artifact | Example |
 |----------|---------|
 | **Skills** | "This API requires case-sensitive org names" |
-| **Context docs** | Repo inventory, service endpoints, relationships |
+| **Knowledge docs** | Repo inventory, service endpoints, relationships |
 | **Runbooks** | "How to deploy app-api to staging" |
 | **Roadmaps/plans** | Work that spans multiple repos |
 

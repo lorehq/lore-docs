@@ -55,7 +55,7 @@ Every session produces knowledge as a byproduct — endpoints, gotchas, org stru
 ```mermaid
 sequenceDiagram
     participant S1 as Session N
-    participant Docs as docs/context/
+    participant Docs as docs/knowledge/
     participant S2 as Session N+1
 
     Note over S1: User asks about service org structure
@@ -75,12 +75,12 @@ sequenceDiagram
 
 | Knowledge Type | Destination | Example |
 |---------------|-------------|---------|
-| API endpoints, URLs, services | `docs/context/` | Service API base URL |
+| API endpoints, URLs, services | `docs/knowledge/environment/` | Service API base URL |
 | Tool gotchas, auth quirks | `.lore/skills/` | Case-sensitive org name |
-| Dependencies, relationships | `docs/context/` | Which services connect to what |
+| Dependencies, relationships | `docs/knowledge/environment/` | Which services connect to what |
 | Strategic initiatives | `docs/work/roadmaps/` | Cloud migration phases |
 | Tactical work | `docs/work/plans/` | Phase 1 networking setup |
-| Multi-step procedures | `docs/context/runbooks/` | Deploy to staging |
+| Multi-step procedures | `docs/knowledge/runbooks/` | Deploy to staging |
 
 #### How Skills and Agents Emerge
 

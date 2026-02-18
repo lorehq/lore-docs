@@ -33,7 +33,8 @@ my-project/
   .opencode/
     plugins/         # OpenCode plugins (fire on lifecycle events)
   docs/
-    context/         # Project context, conventions, inventory (filled in as you work)
+    context/         # Rules and conventions (injected every session)
+    knowledge/       # Environment details, runbooks, scratch notes (on-demand)
     work/            # Roadmaps, plans, brainstorms
   hooks/             # Claude Code hooks (fire on session start, prompt submit, tool use)
   lib/               # Shared hook logic (all platforms use this)
