@@ -91,10 +91,33 @@ The bash-tracking hook counts consecutive Bash tool calls. When the count hits `
 | Variable | Description |
 |----------|-------------|
 | `LORE_DEBUG=1` | Enable debug logging to stderr — shows hook execution details |
+| `LORE_HOOK_LOG=1` | Enable structured hook event logging to `.git/lore-hook-events.jsonl` |
 | `LORE_HUB` | Internal. Set by `lore-link` to point cross-repo hooks back to the hub instance |
 
 `LORE_DEBUG` is useful when troubleshooting hooks. Set it before launching your agent session:
 
 ```bash
 LORE_DEBUG=1 claude
+```
+
+### Hook Event Logging
+
+`LORE_HOOK_LOG` enables structured event logging for all 15 hooks across all three platforms. Each hook fire writes a JSON line to `.git/lore-hook-events.jsonl` recording the platform, hook name, event type, output size, and hook-specific state. Zero cost when disabled — the check is an early return before any I/O.
+
+```bash
+export LORE_HOOK_LOG=1
+```
+
+Work normally for a few days, then analyze the collected data:
+
+```bash
+bash scripts/analyze-hook-logs.sh
+```
+
+The report shows fires per platform, fires per hook, average output sizes, estimated accumulated context tokens, and any hooks that never fired. Useful for validating hook wiring, measuring context cost, and tuning nudge behavior.
+
+To reset the log:
+
+```bash
+rm .git/lore-hook-events.jsonl
 ```

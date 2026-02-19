@@ -292,6 +292,7 @@ flowchart TB
         tracker["tracker.js<br/>Tool classification"]
         guard["memory-guard.js<br/>MEMORY.md protection"]
         debug["debug.js<br/>Debug logging"]
+        hooklog["hook-logger.js<br/>Event logging"]
     end
 
     subgraph claude["Claude Code (hooks/)"]
@@ -322,6 +323,7 @@ flowchart TB
     cc_pm & cu_pm & oc_pm --> guard
     cc_cp & oc_cp --> tree & config
     tracker & guard & tree & config --> debug
+    cc_si & cu_si & oc_si & cc_kt & cu_kt & oc_kt --> hooklog
 ```
 
 ### Platform Adapters
@@ -336,6 +338,27 @@ Each platform has a different hook API. Adapters are thin — they translate bet
 | Knowledge tracker | `PostToolUse` → stdin JSON, stdout | `afterFileEdit` / `afterShellExecution` → stdout | `tool.execute.after` → async handler |
 | Context path guide | `PreToolUse` → stdin JSON, stdout JSON | — | `tool.execute.before` → async handler |
 | Compaction resilience | N/A (context preserved) | Condensed banner every prompt | `experimental.session.compacting` → re-inject |
+
+### Hook Observability
+
+All hooks are instrumented with structured event logging via `lib/hook-logger.js`. When `LORE_HOOK_LOG=1` is set, each hook fire appends a JSON line to `.git/lore-hook-events.jsonl`:
+
+```json
+{"ts": 1740000000000, "platform": "cursor", "hook": "capture-nudge", "event": "beforeShellExecution", "output_size": 52, "state": {"bash": 3}}
+```
+
+Fields:
+
+| Field | Description |
+|-------|-------------|
+| `ts` | Unix epoch milliseconds |
+| `platform` | `claude`, `cursor`, or `opencode` |
+| `hook` | Hook filename (e.g., `capture-nudge`, `session-init`) |
+| `event` | Platform event name (e.g., `beforeShellExecution`, `PostToolUse`) |
+| `output_size` | Characters injected into the agent's context (0 for silent hooks) |
+| `state` | Optional hook-specific snapshot (bash counter, flags) |
+
+Run `bash scripts/analyze-hook-logs.sh` to produce a summary covering fire rates, output sizes, accumulated context tokens, and missing hooks. See [Configuration](guides/configuration.md#hook-event-logging) for setup details.
 
 ## Limitations
 
