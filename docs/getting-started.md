@@ -16,8 +16,6 @@ npx create-lore my-project
 cd my-project
 ```
 
-This scaffolds a Lore project with hooks, scripts, starter docs, and the skill/agent framework.
-
 ## What You Get
 
 ```
@@ -28,7 +26,7 @@ my-project/
     instructions.md  # Agent instructions (canonical source)
   .claude/           # Claude Code platform copies (auto-generated)
   .cursor/
-    hooks/           # Cursor hooks (fire on session start, read, edit, shell events)
+    hooks/           # Cursor hooks (session start, read, edit, shell, compaction, failure events)
     hooks.json       # Cursor hook configuration
     mcp/             # Cursor MCP server (on-demand context and nudges)
     rules/           # Cursor-specific rules (always-apply behavioral overrides)
@@ -42,7 +40,6 @@ my-project/
   lib/               # Shared hook logic (all platforms use this)
   scripts/           # Validation, registry generation, platform sync
   CLAUDE.md          # Generated from .lore/instructions.md
-  .cursorrules       # Generated from .lore/instructions.md
   mkdocs.yml         # Docs site config
 ```
 
@@ -67,21 +64,13 @@ cursor .     # Cursor (open the project)
 opencode     # OpenCode
 ```
 
-Work normally. Lore's hooks reinforce knowledge capture as you go — prompting the agent to extract gotchas into skills and document context knowledge. If you prefer working from your application repo in an IDE (rather than the Lore project directory), see [lore link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active without opening the Lore project.
+Work normally. Lore's hooks reinforce knowledge capture as you go. If you prefer opening a work repo in your IDE instead of the Lore project directory, see [lore link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active.
 
-After substantive work, run `/lore-capture` to trigger a full knowledge capture pass. The agent will review the session, surface what it found (gotchas, new context, stale work items), and ask which items to act on before making changes.
+After substantive work, run `/lore-capture` to trigger a full knowledge capture pass.
 
 ## Working Across Repos
 
-Lore is designed as a central hub. Launch your agent from the Lore project, then work on any repo from there. Knowledge captures back to Lore, work repos stay clean. For IDE workflows, `lore link` lets you open a work repo directly with hooks pointing back to the hub.
-
-See [Working Across Repos](guides/cross-repo-workflow.md) for the full pattern.
-
-## Building Knowledge
-
-The first few sessions are discovery-heavy. As context accumulates, each session gets faster — the agent spends less time re-discovering your environment and more time acting on it.
-
-See [How It Works](how-it-works.md) for the full picture of how knowledge compounds.
+See [Working Across Repos](guides/cross-repo-workflow.md) for the hub pattern and IDE linking.
 
 ## Checking Status and Updating
 
@@ -109,4 +98,4 @@ Lore includes a local docs UI command to browse your accumulated knowledge:
 /lore-ui
 ```
 
-`/lore-ui` starts docs in Docker mode when Docker is available, and falls back to local MkDocs when Docker is unavailable. Use `/lore-ui stop` to shut it down and `/lore-ui status` to check what mode is active.
+Use `/lore-ui stop` to shut it down and `/lore-ui status` to check what mode is active.

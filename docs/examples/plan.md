@@ -75,19 +75,9 @@ None currently.
 
 ## Key Concepts
 
-**YAML Frontmatter** — `summary` is shown in the session banner (keep under 60 chars). Standalone plans can optionally include a `roadmap: <slug>` field to reference their parent; plans nested under a roadmap folder don't need it. Both `active` and `on-hold` plans appear at session start.
+**YAML Frontmatter** — `summary` is shown in the session banner (keep under 60 chars). See [Roadmaps & Plans: Hierarchy](../guides/roadmaps-and-plans.md#hierarchy) for nesting and frontmatter linking.
 
-**Archiving** — completed or cancelled plans are archived by moving their folder to the parent's `archive/` subdirectory (e.g., `docs/work/plans/archive/<slug>/`). `/lore-capture` checks for completed items and suggests archiving.
-
-**Test plan** — checklist of acceptance criteria, performance targets, and verification steps.
-
-**Plans vs Roadmaps:**
-
-| Aspect | Roadmap | Plan |
-|--------|---------|------|
-| **Scope** | Strategic initiative (weeks to months) | Tactical task (days to weeks) |
-| **Purpose** | Track progress across phases | Describe how to accomplish specific work |
-| **Relationship** | Contains multiple plans | Implements one phase of a roadmap (or standalone) |
+**Archiving** — completed or cancelled plans move to `docs/work/plans/archive/<slug>/`. See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for the full status workflow.
 
 ## Creating Plans
 

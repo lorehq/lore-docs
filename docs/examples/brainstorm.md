@@ -78,13 +78,7 @@ This brainstorm informed:
 
 **Not a roadmap or plan** — brainstorms are reference artifacts. They document the thinking process, not work progress.
 
-**Decision record** — captures options considered, trade-offs weighed, and rationale for any choice made. Not all brainstorms reach a decision — omit the decision sections if the discussion is still open.
-
-**Follow-up links** — connect brainstorms to the roadmaps/plans they informed.
-
-**Good use cases:** architectural decisions, technology selection, strategy discussions, design explorations.
-
-**Not needed for:** quick questions, routine implementation, information retrieval.
+**Decision record** — captures options considered, trade-offs, and rationale for any decision made.
 
 ## Creating Brainstorms
 

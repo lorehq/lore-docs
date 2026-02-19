@@ -6,15 +6,6 @@ title: Working Across Repos
 
 Lore is designed as a hub — one Lore project that tracks and performs work across all your other repositories.
 
-## Why a Central Hub
-
-Without a central project, you have two options — both worse:
-
-1. **Lore in every repo** — knowledge fragments. The same gotcha gets rediscovered per-repo. No cross-project context ("repo A's API connects to repo B's service"). Work repos get cluttered with skills, docs, and hooks that have nothing to do with the application.
-2. **No Lore at all** — the agent starts cold every session. No persistent skills, no context docs, no work tracking.
-
-A single Lore project avoids both problems. Knowledge compounds in one place, work repos stay clean, and cross-project context builds naturally.
-
 ## How It Works
 
 ```mermaid
@@ -76,11 +67,11 @@ opencode     # OpenCode
 
 Then work on whatever repos you need from there.
 
-For IDE workflows where opening the Lore project is impractical, see [IDE Workflow: lore link](#ide-workflow-lore-link) below.
+For IDE workflows where opening the Lore project is impractical, see [IDE Workflow: lore link](#ide-workflow-lore-link).
 
 ## IDE Workflow: lore link
 
-The One Rule works well for CLI tools like Claude Code and OpenCode — you launch from a directory, and that's that. For IDEs like Cursor, opening the Lore project means losing the work repo's file tree, git integration, and search. You're editing your app but navigating Lore's directory structure.
+For CLI agents (Claude Code, OpenCode), launching from the Lore project is straightforward. For IDEs like Cursor, it means losing the work repo's file tree, git integration, and search.
 
 `/lore-link` resolves this. Run it once from the hub and it generates lightweight configs in the work repo that point hooks back to the hub via `LORE_HUB`. You open the work repo in your IDE with full file tree, git, and search — and hooks still fire from the hub.
 
@@ -100,10 +91,10 @@ In the target repo, `lore link` creates:
 - **Claude Code** — `.claude/settings.json` with hooks pointing to the hub
 - **Cursor** — `.cursor/hooks.json` + `.cursor/mcp.json` + `.cursor/rules/lore-*.mdc` pointing to the hub
 - **OpenCode** — `.opencode/plugins/` wrappers + `.opencode/commands/` + `opencode.json` pointing to the hub
-- **Instructions** — `CLAUDE.md` and `.cursorrules` copied from the hub
+- **Instructions** — `CLAUDE.md` rewritten from hub's `.lore/instructions.md`
 - **Marker** — `.lore` file recording the hub path and link timestamp
 
-All generated files are added to the target repo's `.gitignore` automatically. Existing files are backed up to `.bak` before overwriting.
+All generated files are added to the target repo's `.gitignore` automatically. Existing files are backed up with a `.bak` extension before overwriting.
 
 ### Knowledge Still Centralizes
 

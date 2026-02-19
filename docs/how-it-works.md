@@ -133,18 +133,11 @@ flowchart TD
 
 #### Subagent Context Contract
 
-Subagents do not get full orchestrator context. They are intentionally scoped to avoid role confusion and token bloat.
-
-Every domain agent is expected to load and apply:
-
-- `docs/context/agent-rules.md`
-- Relevant files in `docs/context/conventions/`
-
-This gives subagents the project boundary and coding/doc conventions they need, while keeping orchestration responsibilities with the main agent. Subagents also follow the same self-learning loop: non-obvious gotchas become skills, new environment facts go to `docs/knowledge/environment/`, and reusable multi-step procedures go to `docs/knowledge/runbooks/`.
+Every domain agent loads `docs/context/agent-rules.md` and relevant files in `docs/context/conventions/` before implementation.
 
 #### Per-Platform Model Configuration
 
-Agents carry per-platform model preferences in their frontmatter, allowing different models across tools:
+Agents carry per-platform model preferences in their frontmatter:
 
 ```yaml
 ---
@@ -157,8 +150,6 @@ cursor-model: # not yet supported
 ```
 
 Instance-level defaults live in `.lore-config` under `subagentDefaults`. Agent frontmatter overrides the defaults. See [Configuration](guides/configuration.md#subagentdefaults) for details.
-
-At sync time, `sync-platform-skills.sh` resolves the cascade (agent frontmatter → instance defaults → omit) and writes a platform-native `model` field into each platform copy.
 
 ### 3. Session Acceleration
 
@@ -187,187 +178,27 @@ flowchart TB
     P1 --> P2 --> P3
 ```
 
-**Phase 1 (Foundation):** First sessions discover everything — org names, auth flows, tool parameters. Capture extracts each gotcha as a skill or doc.
-
-**Phase 2 (Specialization):** Domain agents handle routine work. The orchestrator delegates more than it executes. Context knowledge fills in.
-
-**Phase 3 (Full Context):** Most requests dispatch directly to agents. Strong context. Novel work is the primary remaining discovery cost.
-
 ## Context Efficiency
 
-A persistent knowledge base needs to be *available* every session without being *loaded* every session. Lore resolves this with **indirection** — telling the agent *where to find things* rather than loading everything into context. At session start, the agent receives a structured banner: framework rules, your project context, and a knowledge map showing what exists. Skills and docs are loaded on-demand.
+Lore uses indirection — telling the agent *where to find things* rather than loading everything into context. Skills and docs load on-demand; only what's needed for orientation loads every session.
 
 | Layer | What It Contains |
 |-------|------------------|
 | `.lore/instructions.md` (~80 lines) | Framework rules, knowledge routing, naming conventions |
 | Session start: framework | Operating principles, active agents, active roadmaps/plans |
-| Session start: project context | Operator customization from `docs/context/agent-rules.md` (project identity, agent behavior) |
-| Session start: conventions | Coding and docs standards from `docs/context/conventions/` — injected every session |
-| Session start: knowledge map | Directory tree of docs/, skills/, and agents/ — structure at a glance |
-| Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) — included when non-empty |
-| Per-prompt reinforcement | Delegation + knowledge discovery + work tracking nudges (every prompt) |
-| Post-tool-use reinforcement | Capture reminders with escalating urgency (after bash commands and file edits) |
+| Session start: project context | Operator customization from `docs/context/agent-rules.md` |
+| Session start: conventions | Coding and docs standards from `docs/context/conventions/` |
+| Session start: knowledge map | Directory tree of docs/, skills/, and agents/ |
+| Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |
+| Per-prompt reinforcement | Delegation + knowledge discovery + work tracking nudges |
+| Post-tool-use reinforcement | Capture reminders with escalating urgency |
 | Skills and docs | Loaded on-demand when invoked or needed |
 
-Things that grow fastest (docs, skills) have zero baseline cost. Things with nonzero cost (agents, active roadmaps) grow slowly.
-
-### What Grows and What Doesn't
-
-Not all knowledge has the same context cost. Understanding the growth profile helps you manage a large instance:
-
-| Category | Loaded When | Growth Rate | Context Cost |
-|----------|-------------|-------------|--------------|
-| Instructions (`.lore/instructions.md`) | Every session | Rarely changes | Fixed (~80 lines) |
-| Agent rules (`docs/context/agent-rules.md`) | Every session | Rarely changes | Fixed (operator-controlled) |
-| Conventions (`docs/context/conventions/`) | Every session | Rarely changes | Fixed (operator-controlled) |
-| Knowledge map (directory tree) | Every session | Grows with dirs | Bounded by `treeDepth` |
-| Active agents | Every session | ~1 per domain | Low (~1 line each in banner) |
-| Active roadmaps/plans | Every session | Operator-created | Low (title + summary only) |
-| Skills (`.lore/skills/`) | On-demand | Grows with gotchas | Zero baseline |
-| Knowledge docs (`docs/knowledge/`) | On-demand | Grows fastest | Zero baseline |
-| Archived work items | On-demand | Accumulates | Zero baseline (dirs visible in tree) |
-
-### Tuning for Large Instances
-
-As a knowledge base grows, the session banner's main variable cost is the **knowledge map** — a directory-only tree of `docs/`, `skills/`, and `agents/`. The tree shows structure, not content: only directory names appear, never individual files. This keeps the map compact — growth is proportional to the number of directories, not the number of documents. The agent reads specific directories on-demand when it needs to find files.
-
-**`treeDepth`** — set in `.lore-config` to limit how many directory levels the knowledge map displays. Default is 5. Reducing to 3 or 4 hides deep nesting while still showing top-level structure.
-
-```json
-{
-  "treeDepth": 3
-}
-```
-
-**When to act:**
-
-- Knowledge map exceeds ~50 lines → reduce `treeDepth` or reorganize subdirectories
-- `MEMORY.local.md` exceeds ~50 lines → route content to skills or `docs/knowledge/`
-- Conventions section growing → keep it focused on rules, move reference material to `docs/knowledge/`
-- Many active work items → archive completed items with `/lore-capture`
+Docs and skills have zero baseline session cost — they load on-demand. Agents and active roadmaps appear in every session banner but grow slowly in count. See [Configuration: Tuning](guides/configuration.md#tuning-for-large-instances) for managing growth.
 
 ## Hook Architecture
 
-Lore hooks into the agent's lifecycle at four points. Shared logic lives in `lib/`, with thin adapters for each platform.
-
-### Hook Lifecycle
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Agent
-    participant Hooks
-    participant KB as Knowledge Base
-
-    Note over Hooks: SessionStart
-    Hooks->>KB: ensureStickyFiles()
-    Hooks->>KB: Read agent-rules, conventions, work items
-    Hooks->>Agent: Inject session banner
-
-    loop Every Prompt
-        User->>Agent: Message
-        Note over Hooks: UserPromptSubmit
-        Hooks->>Agent: Knowledge discovery + work tracking reminder
-        Agent->>Agent: Work (tool calls)
-
-        Note over Hooks: PreToolUse
-        Hooks->>Agent: Memory guard (block MEMORY.md)
-        Hooks->>Agent: Context path guide (show tree)
-
-        Note over Hooks: PostToolUse
-        Hooks->>Agent: Capture reminder (escalating)
-        Hooks->>Hooks: Set nav-dirty flag if docs/ changed
-    end
-```
-
-### Module Layout
-
-```mermaid
-flowchart TB
-    subgraph lib["lib/ (shared core)"]
-        banner["banner.js<br/>Banner assembly"]
-        tree["tree.js<br/>ASCII tree builder"]
-        config["config.js<br/>Config reader"]
-        sticky["sticky.js<br/>Sticky file scaffold"]
-        tracker["tracker.js<br/>Tool classification"]
-        guard["memory-guard.js<br/>MEMORY.md protection"]
-        debug["debug.js<br/>Debug logging"]
-        hooklog["hook-logger.js<br/>Event logging"]
-    end
-
-    subgraph claude["Claude Code (hooks/)"]
-        cc_si[session-init.js]
-        cc_pp[prompt-preamble.js]
-        cc_pm[protect-memory.js]
-        cc_kt[knowledge-tracker.js]
-        cc_cp[context-path-guide.js]
-    end
-
-    subgraph cursor["Cursor (.cursor/hooks/ + .cursor/mcp/)"]
-        cu_si[session-init.js]
-        cu_cn[capture-nudge.js]
-        cu_cf[compaction-flag.js]
-        cu_ft[failure-tracker.js]
-        cu_pm[protect-memory.js]
-        cu_kt[knowledge-tracker.js]
-        cu_mcp[lore-server.js — MCP]
-    end
-
-    subgraph opencode["OpenCode (.opencode/plugins/)"]
-        oc_si[session-init.js]
-        oc_pm[protect-memory.js]
-        oc_kt[knowledge-tracker.js]
-        oc_cp[context-path-guide.js]
-    end
-
-    cc_si & cu_si & oc_si --> banner
-    banner --> tree & config & sticky
-    cc_kt & cu_kt & oc_kt --> tracker
-    cu_cn --> tracker & banner
-    cu_mcp --> banner & tracker & config
-    cc_pm & cu_pm & oc_pm --> guard
-    cc_cp & oc_cp --> tree & config
-    tracker & guard & tree & config --> debug
-    cc_si & cu_si & oc_si & cc_kt & cu_kt & oc_kt & cu_cn --> hooklog
-```
-
-### Platform Adapters
-
-Each platform has a different hook API. Adapters are thin — they translate between the platform's interface and the shared `lib/` functions.
-
-| Hook Point | Claude Code | Cursor | OpenCode |
-|-----------|-------------|--------|----------|
-| Session start | `SessionStart` → stdout | `sessionStart` → stdout JSON | `SessionInit` → `client.app.log()` |
-| Per-prompt | `UserPromptSubmit` → stdout | — (no per-prompt hook) | `chat.system.transform` → system prompt |
-| Memory guard | `PreToolUse` → stdin/stdout JSON | `beforeReadFile` + `preToolUse` → JSON | `tool.execute.before` → throw to block |
-| Knowledge tracker | `PostToolUse` → stdout JSON | `afterFileEdit` → state file (silent) | `tool.execute.after` → `client.app.log()` |
-| Capture nudge | `PostToolUse` (in knowledge-tracker) | `beforeShellExecution` → `agent_message` | `tool.execute.after` (in knowledge-tracker) |
-| Context path guide | `PreToolUse` → stdout JSON | — | `tool.execute.before` → `client.app.log()` |
-| MCP tools | — | `lore_check_in` + `lore_context` | — |
-| Compaction | `SessionStart` re-fires | `preCompact` flag → next shell cmd | `session.compacting` → re-inject banner |
-
-Cursor's hook surface is limited — `afterFileEdit` and `postToolUseFailure` produce no visible output, and there is no per-prompt hook. The MCP server (`lore_check_in`, `lore_context`) compensates by providing on-demand access to nudges and the full knowledge map via tool calls.
-
-### Hook Observability
-
-All hooks are instrumented with structured event logging via `lib/hook-logger.js`. When `LORE_HOOK_LOG=1` is set, each hook fire appends a JSON line to `.git/lore-hook-events.jsonl`:
-
-```json
-{"ts": 1740000000000, "platform": "cursor", "hook": "capture-nudge", "event": "beforeShellExecution", "output_size": 52, "state": {"bash": 3}}
-```
-
-Fields:
-
-| Field | Description |
-|-------|-------------|
-| `ts` | Unix epoch milliseconds |
-| `platform` | `claude`, `cursor`, or `opencode` |
-| `hook` | Hook filename (e.g., `capture-nudge`, `session-init`) |
-| `event` | Platform event name (e.g., `beforeShellExecution`, `PostToolUse`) |
-| `output_size` | Characters injected into the agent's context (0 for silent hooks) |
-| `state` | Optional hook-specific snapshot (bash counter, flags) |
-
-Run `bash scripts/analyze-hook-logs.sh` to produce a summary covering fire rates, output sizes, accumulated context tokens, and missing hooks. See [Configuration](guides/configuration.md#hook-event-logging) for setup details.
+Hooks fire at session start, prompt submit, pre-tool-use, post-tool-use, and post-tool-use-failure. Shared logic in `lib/` keeps behavior consistent across platforms. See [Hook Architecture](guides/hook-architecture.md) for the full lifecycle, module layout, and platform adapter reference.
 
 ## Limitations
 

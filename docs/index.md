@@ -21,15 +21,7 @@ npx create-lore my-project
 cd my-project
 ```
 
-Then start your agent:
-
-```bash
-claude       # Claude Code
-cursor .     # Cursor (open the project)
-opencode     # OpenCode
-```
-
-No configuration required. The framework activates through hooks automatically. Customize `docs/context/agent-rules.md` to teach the agent about your project.
+No configuration required. The framework activates through hooks when you start your agent. Customize `docs/context/agent-rules.md` to teach the agent about your project.
 
 ## How It Works
 

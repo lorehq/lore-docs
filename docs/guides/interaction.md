@@ -8,26 +8,16 @@ title: Working with Lore
 
 **You direct, Lore captures.** Each session builds on the last. You don't need to set anything up, create roadmaps, or plan ahead — just start working. Hooks prompt knowledge capture as you go. Use `/lore-capture` after substantive work to ensure nothing was missed.
 
-## Just Start Working
-
-Tell Lore what you need — it figures out tools, agents, and APIs on its own:
-
-```
-"Connect us to Jira and pull all open INFRA tickets."
-"The VPN endpoint is 10.0.1.1 and the Azure tenant ID is abc-123 — remember that."
-"Set up a CI pipeline for the auth service repo."
-```
-
-Skills and agents emerge from demonstrated need, not upfront planning.
-
-## Do This
+## Just Work
 
 | Action | Example |
 |--------|---------|
 | **Ask for work** | "Connect us to Jira and pull all open INFRA tickets" |
-| **Share context** | "The API endpoint is at https://api.example.com/v2" |
+| **Share context** | "The VPN endpoint is 10.0.1.1 and the Azure tenant ID is abc-123 — remember that" |
 | **Request documentation** | "Document the architecture decisions we just made" |
 | **Ask questions** | "What agents do we have available?" |
+
+Skills and agents emerge from demonstrated need, not upfront planning.
 
 ## Tips
 

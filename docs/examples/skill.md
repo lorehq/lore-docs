@@ -97,15 +97,9 @@ grep for `declare -A`, `${.*,,}`, `[[ -v`, `readarray` before shipping.
 
 **Domain assignment** — every skill belongs to an agent domain. If the domain doesn't have an agent yet, creating the skill triggers agent creation. Skills without a clear domain use "Orchestrator".
 
-## Before and After
-
-**Before capture** (Session N): The agent writes a bash script using `declare -A` for a lookup table. CI passes on Linux. macOS user reports the script fails. Agent debugs, discovers Bash 3.2 incompatibility, rewrites using portable alternatives. ~30 minutes of rediscovery.
-
-**After capture** (Session N+1): The agent loads the `bash-macos-compat` skill when writing shell scripts. Uses portable alternatives from the start. Zero rediscovery cost.
-
 ## Creating Skills
 
-Ask Lore to create a skill — for example: *"Create a skill for the case-sensitive org name gotcha."* Or use `/lore-create-skill` directly. Lore handles the folder structure and frontmatter.
+Ask Lore: *"Create a skill for the case-sensitive org name gotcha."* Or use `/lore-create-skill` directly.
 
 ## See Also
 
