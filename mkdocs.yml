@@ -60,6 +60,7 @@ nav:
     - Hook Architecture: guides/hook-architecture.md
     - Conventions: guides/conventions.md
     - Roadmaps & Plans: guides/roadmaps-and-plans.md
+  - When to Use Lore: when-to-use-lore.md
   - Production Readiness: production-readiness.md
   - Troubleshooting: troubleshooting.md
   - Changelog: changelog.md
