@@ -57,6 +57,7 @@ nav:
     - Commands: guides/commands.md
     - Configuration: guides/configuration.md
     - Platform Support: guides/platform-support.md
+    - Conventions: guides/conventions.md
     - Roadmaps & Plans: guides/roadmaps-and-plans.md
   - Examples:
     - Skill: examples/skill.md
