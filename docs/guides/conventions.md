@@ -93,18 +93,21 @@ Add a markdown file to `docs/context/conventions/`:
 - **Numbered sections** help scanning. Match the pattern of the default conventions.
 - **File name** becomes the menu label. Use descriptive kebab-case: `api-design.md`, `email-drafting.md`, `diagrams.md`.
 
-Your convention appears automatically in:
+Your convention reaches the agent through three channels:
 
-- The session start banner (all conventions are loaded)
-- The write-time menu (listed for any write where it wasn't already injected)
+1. **Session start** — loaded in full alongside all other conventions. The agent reads the entire file at the beginning of every session.
+2. **Write-time menu** — listed by name before every file write so the agent can re-read it if relevant. The menu is a mid-session nudge for when the initial load has faded from attention.
+3. **Agent initiative** — the agent can read any convention file at any time, not just during writes. The session banner and write-time menu make conventions discoverable, but the agent isn't limited to those moments.
 
 No hook changes, no configuration, no registration. Drop the file in and it works.
 
 ### Path-Matched vs Menu Conventions
 
-The five default conventions have hardcoded path routing (security always fires, docs fires for `docs/` paths, etc.). Custom conventions appear in the menu — the agent sees them listed and decides whether to load them.
+The five default conventions have hardcoded path routing — their bold principles are injected automatically before writes to matching paths (security on every write, docs for `docs/` paths, etc.). The agent doesn't need to do anything; the rules appear in context.
 
-If your convention applies to a specific file pattern and you need automatic injection, that requires a hook change. For most conventions, the menu is sufficient — the agent sees the name on every write and can choose to read it when relevant.
+Custom conventions work differently. They're loaded in full at session start, but at write-time they appear only as a menu listing. The agent sees the convention name and decides whether to open the file. This means a convention like `email-drafting.md` works even when there's no file path to match — the agent recognizes the name, connects it to what it's doing, and loads the full convention.
+
+Descriptive file names matter. `email-drafting.md` is more likely to be recognized and loaded than `comms.md`. Name conventions for what they correct, not where they apply.
 
 ## Relationship to Other Context
 
