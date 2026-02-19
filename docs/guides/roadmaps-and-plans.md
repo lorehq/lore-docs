@@ -23,11 +23,13 @@ See [Example Roadmap](../examples/roadmap.md) and [Example Plan](../examples/pla
 Plans can nest under roadmaps in two ways:
 
 **Folder nesting** (location implies relationship):
+
 ```
 docs/work/roadmaps/<initiative>/plans/<plan>/index.md
 ```
 
 **Frontmatter link** (standalone plan referencing a roadmap):
+
 ```yaml
 roadmap: <roadmap-slug>
 ```

@@ -48,4 +48,3 @@ See [IDE Workflow: lore link](cross-repo-workflow.md#ide-workflow-lore-link) for
 | Command | What it does |
 |---------|-------------|
 | `/lore-ui` | Manage docs UI lifecycle (start/stop/status), preferring Docker with local mkdocs fallback |
-
