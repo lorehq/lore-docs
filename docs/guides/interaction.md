@@ -26,8 +26,33 @@ Skills and agents emerge from demonstrated need, not upfront planning.
 | Work naturally, let skills emerge | Skills are best when they capture real gotchas from actual work |
 | Work in a domain, let agents emerge | Agents form around demonstrated need, not upfront planning |
 | Break compound work into branches | Independent branches can run in parallel subagents; dependency chains stay sequential |
-| Bring your own skills and agents | Drop them in and tell Lore to capture — it'll update registries |
+| Bring your own skills | Copy them in, run `/lore-capture` — see below |
 | Let Lore maintain registries | Registries, nav, and cross-references are where consistency matters most |
+
+## Bringing Existing Skills
+
+If you have skills from other projects or custom markdown files you've been copying between repos, Lore can absorb them.
+
+**What to do:**
+
+1. Copy your skill files into `.lore/skills/<skill-name>/SKILL.md`
+2. Each skill needs YAML frontmatter with three required fields:
+
+    ```yaml
+    ---
+    name: my-api-quirk
+    domain: MyService
+    description: One-line summary of what this skill captures
+    ---
+    ```
+
+3. Run `/lore-capture` — it updates registries and syncs to all platforms
+
+**Domain is required.** It drives delegation routing and registry organization. If you're unsure what domain to assign, ask the agent — it can read your skills and suggest appropriate domains. For general-purpose skills that don't fit a specific service or tool, use `Orchestrator`.
+
+**Agents form naturally.** Don't copy agents between projects — they reference specific skills and model configurations that may not match your new setup. Instead, import your skills and let agents emerge as you work. When a domain accumulates enough skills, `/lore-create-agent` wires it up correctly.
+
+**After import, sharing is automatic.** Once skills are in your Lore hub, every [linked repo](cross-repo-workflow.md#ide-workflow-lore-link) gets them. No more copying between projects.
 
 ## Roadmaps, Plans & Brainstorms
 
