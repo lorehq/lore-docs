@@ -60,6 +60,7 @@ nav:
     - Hook Architecture: guides/hook-architecture.md
     - Conventions: guides/conventions.md
     - Roadmaps & Plans: guides/roadmaps-and-plans.md
+  - Production Readiness: production-readiness.md
   - Troubleshooting: troubleshooting.md
   - Changelog: changelog.md
   - Examples:
