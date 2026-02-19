@@ -98,7 +98,7 @@ The One Rule works well for CLI tools like Claude Code and OpenCode — you laun
 In the target repo, `lore link` creates:
 
 - **Claude Code** — `.claude/settings.json` with hooks pointing to the hub
-- **Cursor** — `.cursor/hooks.json` + `.cursor/rules/lore.mdc` pointing to the hub
+- **Cursor** — `.cursor/hooks.json` + `.cursor/mcp.json` + `.cursor/rules/lore-*.mdc` pointing to the hub
 - **OpenCode** — `.opencode/plugins/` wrappers + `.opencode/commands/` + `opencode.json` pointing to the hub
 - **Instructions** — `CLAUDE.md` and `.cursorrules` copied from the hub
 - **Marker** — `.lore` file recording the hub path and link timestamp

@@ -205,7 +205,7 @@ A persistent knowledge base needs to be *available* every session without being 
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` — injected every session |
 | Session start: knowledge map | Directory tree of docs/, skills/, and agents/ — structure at a glance |
 | Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) — included when non-empty |
-| Per-prompt reinforcement | Delegation reminder + task-list guidance + parallelization nudge (every prompt) |
+| Per-prompt reinforcement | Delegation + knowledge discovery + work tracking nudges (every prompt) |
 | Post-tool-use reinforcement | Capture reminders with escalating urgency (after bash commands and file edits) |
 | Skills and docs | Loaded on-demand when invoked or needed |
 
@@ -267,7 +267,7 @@ sequenceDiagram
     loop Every Prompt
         User->>Agent: Message
         Note over Hooks: UserPromptSubmit
-        Hooks->>Agent: Delegation + parallelization reminder
+        Hooks->>Agent: Knowledge discovery + work tracking reminder
         Agent->>Agent: Work (tool calls)
 
         Note over Hooks: PreToolUse
@@ -303,11 +303,14 @@ flowchart TB
         cc_cp[context-path-guide.js]
     end
 
-    subgraph cursor["Cursor (.cursor/hooks/)"]
+    subgraph cursor["Cursor (.cursor/hooks/ + .cursor/mcp/)"]
         cu_si[session-init.js]
-        cu_pp[prompt-preamble.js]
+        cu_cn[capture-nudge.js]
+        cu_cf[compaction-flag.js]
+        cu_ft[failure-tracker.js]
         cu_pm[protect-memory.js]
         cu_kt[knowledge-tracker.js]
+        cu_mcp[lore-server.js — MCP]
     end
 
     subgraph opencode["OpenCode (.opencode/plugins/)"]
@@ -320,10 +323,12 @@ flowchart TB
     cc_si & cu_si & oc_si --> banner
     banner --> tree & config & sticky
     cc_kt & cu_kt & oc_kt --> tracker
+    cu_cn --> tracker & banner
+    cu_mcp --> banner & tracker & config
     cc_pm & cu_pm & oc_pm --> guard
     cc_cp & oc_cp --> tree & config
     tracker & guard & tree & config --> debug
-    cc_si & cu_si & oc_si & cc_kt & cu_kt & oc_kt --> hooklog
+    cc_si & cu_si & oc_si & cc_kt & cu_kt & oc_kt & cu_cn --> hooklog
 ```
 
 ### Platform Adapters
@@ -332,12 +337,16 @@ Each platform has a different hook API. Adapters are thin — they translate bet
 
 | Hook Point | Claude Code | Cursor | OpenCode |
 |-----------|-------------|--------|----------|
-| Session start | `SessionStart` subprocess → stdout JSON | `sessionStart` subprocess → stdout | `session.created` event → `client.session.prompt()` |
-| Per-prompt reminder | `UserPromptSubmit` → stdout | `beforeSubmitPrompt` → stdout | `experimental.chat.system.transform` → system prompt |
-| Memory guard | `PreToolUse` → stdin JSON, stdout JSON | `beforeReadFile` → exit code | `tool.execute.before` → async handler |
-| Knowledge tracker | `PostToolUse` → stdin JSON, stdout | `afterFileEdit` / `afterShellExecution` → stdout | `tool.execute.after` → async handler |
-| Context path guide | `PreToolUse` → stdin JSON, stdout JSON | — | `tool.execute.before` → async handler |
-| Compaction resilience | N/A (context preserved) | Condensed banner every prompt | `experimental.session.compacting` → re-inject |
+| Session start | `SessionStart` → stdout | `sessionStart` → stdout JSON | `SessionInit` → `client.app.log()` |
+| Per-prompt | `UserPromptSubmit` → stdout | — (no per-prompt hook) | `chat.system.transform` → system prompt |
+| Memory guard | `PreToolUse` → stdin/stdout JSON | `beforeReadFile` + `preToolUse` → JSON | `tool.execute.before` → throw to block |
+| Knowledge tracker | `PostToolUse` → stdout JSON | `afterFileEdit` → state file (silent) | `tool.execute.after` → `client.app.log()` |
+| Capture nudge | `PostToolUse` (in knowledge-tracker) | `beforeShellExecution` → `agent_message` | `tool.execute.after` (in knowledge-tracker) |
+| Context path guide | `PreToolUse` → stdout JSON | — | `tool.execute.before` → `client.app.log()` |
+| MCP tools | — | `lore_check_in` + `lore_context` | — |
+| Compaction | `SessionStart` re-fires | `preCompact` flag → next shell cmd | `session.compacting` → re-inject banner |
+
+Cursor's hook surface is limited — `afterFileEdit` and `postToolUseFailure` produce no visible output, and there is no per-prompt hook. The MCP server (`lore_check_in`, `lore_context`) compensates by providing on-demand access to nudges and the full knowledge map via tool calls.
 
 ### Hook Observability
 

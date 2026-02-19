@@ -35,7 +35,7 @@ No configuration required. The framework activates through hooks automatically. 
 
 | Component | Location | What it does |
 |-----------|----------|--------------|
-| **Hooks** | `hooks/` | Fire on session start, prompt submit, and tool use. Reinforce capture habits and route knowledge. |
+| **Hooks** | `hooks/`, `.cursor/hooks/`, `.opencode/plugins/` | Fire on session start, prompt submit, and tool use. Reinforce knowledge capture, delegation, and work tracking. |
 | **Skills** | `.lore/skills/` | Non-obvious knowledge captured from real work — gotchas, tricks, patterns. `lore-*` = framework, rest = yours. |
 | **Agents** | `.lore/agents/` | Domain-specific workers. One agent per domain. `lore-*` = framework, rest = yours. |
 | **Docs** | `docs/` | Context knowledge, runbooks, and work tracking. Your agent's long-term memory. |

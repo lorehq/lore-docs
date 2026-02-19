@@ -12,18 +12,19 @@ Behavior is intentionally not identical. Lore keeps the same outcomes (orientati
 
 | Feature | Description | Claude Code | Cursor | OpenCode |
 |---------|-------------|:-----------:|:------:|:--------:|
-| Session banner | Project identity + delegation info on startup | Yes | Yes | Yes |
-| Per-prompt reminder | One-line nudge for delegation and parallel task planning | Yes | Yes | Yes |
-| MEMORY.md guard | Blocks access, redirects to Lore routes | Yes | Reads only | Yes |
+| Session banner | Full project context on startup | Yes | Yes | Yes |
+| Per-prompt reminder | Delegation + capture nudge on every interaction | Yes | No (MCP on-demand) | Yes (system prompt) |
+| MCP tools | On-demand check-in and context retrieval | No | Yes (`lore_check_in`, `lore_context`) | No |
+| MEMORY.md guard | Blocks access, redirects to Lore routes | Yes | Yes (reads + writes) | Yes |
 | Knowledge capture reminders | Flags new knowledge after edits and commands | Yes | Yes | Yes |
 | Bash escalation tracking | Warns when shell commands bypass tool safety | Yes | Yes | Yes |
 | Context path guide | Shows directory tree before docs writes | Yes | No | Yes |
-| Banner survives compaction | Re-injects banner when context is trimmed | Yes | Condensed pre-turn reinjection | Yes |
+| Banner survives compaction | Re-injects banner when context is trimmed | Yes (SessionStart re-fires) | Flag + re-orientation on next shell cmd or MCP call | Yes (compacting event) |
 | Skills & agents | Shared skill and agent definitions | Yes | Yes | Yes |
 | Work tracking | Roadmaps, plans, brainstorms | Yes | Yes | Yes |
 | Linked repo support | Hub knowledge accessible from work repos | Yes | Yes | Yes |
 | Hook event logging | Structured JSONL logging of all hook fires | Yes | Yes | Yes |
-| Instructions file | Platform-specific instructions path | `CLAUDE.md` | `.cursorrules` | `.lore/instructions.md` |
+| Instructions file | Platform-specific instructions path | `CLAUDE.md` | `.cursor/rules/lore-*.mdc` | `.lore/instructions.md` |
 
 ## How Hooks Work
 
@@ -32,6 +33,7 @@ Each platform has thin adapter scripts that call shared logic in `lib/`. The ada
 ```
 hooks/              → Claude Code hooks (subprocess per event)
 .cursor/hooks/      → Cursor hooks (subprocess per event)
+.cursor/mcp/        → Cursor MCP server (long-lived process)
 .opencode/plugins/  → OpenCode plugins (long-lived ESM modules)
 lib/                → Shared logic (all platforms)
 ```
@@ -48,38 +50,75 @@ Full hook coverage. Hooks fire as subprocesses on every lifecycle event — sess
 
 `SessionStart` fires on startup, resume, and after context compaction — the session banner is re-injected automatically when the context window is trimmed.
 
+=== "Hooks"
+
+    | Hook | Event | Purpose | Accumulates |
+    |------|-------|---------|:-----------:|
+    | `session-init.js` | `SessionStart` | Full session banner (version, delegation, knowledge map, conventions, project context, active work) | One-time |
+    | `prompt-preamble.js` | `UserPromptSubmit` | Per-prompt nudge: delegation domains, capture reminder | Yes |
+    | `context-path-guide.js` | `PreToolUse` | ASCII directory tree before docs writes | Yes |
+    | `protect-memory.js` | `PreToolUse` | Blocks MEMORY.md access, redirects to Lore routes | Can block |
+    | `knowledge-tracker.js` | `PostToolUse` / `PostToolUseFailure` | Capture reminders, bash counting, nav-dirty flag | Yes |
+
 ### Cursor
 
-Hook support via `.cursor/hooks.json` (v1.7+). Covers session start, prompt injection, file read blocking, post-edit tracking, and shell command tracking.
+Hook support via `.cursor/hooks.json` (v1.7+). Cursor's hook surface has no per-prompt event (`beforeSubmitPrompt` does not exist), so Lore uses a distributed state pattern: fire-and-forget hooks write state to disk, and `beforeShellExecution` reads it back on the next shell command. An MCP server provides on-demand context retrieval as a second channel.
 
-- **Config:** `.cursor/hooks.json`
-- **Events:** `sessionStart`, `beforeSubmitPrompt`, `beforeReadFile`, `afterFileEdit`, `afterShellExecution`
-- **Wire format:** JSON on stdin, JSON on stdout (`{ "continue": false }` to block)
+- **Config:** `.cursor/hooks.json` (hooks) + `.cursor/mcp.json` (MCP)
+- **Events:** `sessionStart`, `beforeShellExecution`, `preCompact`, `postToolUseFailure`, `afterFileEdit`, `beforeReadFile`, `preToolUse`
+- **Wire format:** JSON on stdin, JSON on stdout
 
-Cursor ignores output from `afterFileEdit` and `afterShellExecution`, so knowledge capture reminders and bash escalation warnings use a read-back pattern: the after-hooks write state to disk, and `beforeSubmitPrompt` reads it back on the next turn.
+=== "Hooks"
 
-Cursor has no compaction event, so `beforeSubmitPrompt` also injects a condensed banner on every turn — delegation, active work, repo boundary, and conventions pointer. This keeps the agent oriented after context trimming, but the full banner (knowledge map, project description, convention text) is only available from `sessionStart` at the beginning of the session.
+    | Hook | Event | Purpose | Output |
+    |------|-------|---------|--------|
+    | `session-init.js` | `sessionStart` | Full session banner via `additional_context` | One-time |
+    | `capture-nudge.js` | `beforeShellExecution` | Capture nudges, bash escalation, error patterns, compaction re-orientation | `agent_message` (accumulates) |
+    | `compaction-flag.js` | `preCompact` | Sets flag file for post-compaction detection | None (Cursor ignores preCompact output) |
+    | `failure-tracker.js` | `postToolUseFailure` | Records failure in shared state | None (Cursor ignores postToolUseFailure output) |
+    | `knowledge-tracker.js` | `afterFileEdit` | Sets nav-dirty flag, resets bash counter | None (Cursor ignores afterFileEdit output) |
+    | `protect-memory.js` | `beforeReadFile` + `preToolUse` | Blocks MEMORY.md reads and writes | `permission: deny` / `decision: deny` |
+
+=== "MCP Server"
+
+    The MCP server (`lore-server.js` in `.cursor/mcp/`) exposes two tools:
+
+    | Tool | Purpose |
+    |------|---------|
+    | `lore_check_in` | Capture nudges, failure notes, compaction re-orientation. Instructions tell the agent to call this every 2-3 shell commands. |
+    | `lore_context` | Full knowledge map, active work, delegation domains. For navigation and post-compaction recovery. |
+
+    The MCP server provides the same information as hooks but on-demand — the agent calls tools when it needs orientation rather than receiving injections on every prompt.
+
+**Compaction flow:** `preCompact` sets a flag file → on the next shell command, `capture-nudge.js` reads the flag and emits a re-orientation message (`[COMPACTED] Lore <version> | Delegate: <domains> | Re-read .cursor/rules/ and project context`). The MCP `lore_check_in` tool also detects the flag.
+
+**Distributed state pattern:** Cursor ignores output from `afterFileEdit`, `postToolUseFailure`, and `preCompact`. These hooks instead write state to disk (nav-dirty flags, failure records, compaction flags). The `beforeShellExecution` hook and MCP tools read this state back when they fire.
 
 **Known gaps:**
 
-- No write blocking — `beforeReadFile` exists but no `beforeWriteFile`, so MEMORY.md writes can't be intercepted
-- No context path guide — no pre-write hook to show directory tree before docs edits
+- No per-prompt hook — `beforeShellExecution` and MCP tools are the only per-interaction injection points
+- No context path guide — no pre-write hook equivalent to Claude Code's `PreToolUse` for showing directory trees
 
 ### OpenCode
 
 Plugin support via long-lived ESM modules. Covers session lifecycle, tool blocking, and post-tool tracking.
 
 - **Config:** `opencode.json` (points to instruction files)
-- **Events:** `session.created`, `experimental.session.compacting`, `experimental.chat.system.transform`, `tool.execute.before`, `tool.execute.after`
+- **Events:** `SessionInit`, `experimental.session.compacting`, `experimental.chat.system.transform`, `tool.execute.before`, `tool.execute.after`
 - **Wire format:** Function calls with input/output objects; throw to block
 
-OpenCode behavior is split by purpose:
+=== "Plugins"
 
-- `session.created` injects the full session banner (`=== LORE ...`)
-- `experimental.session.compacting` re-injects the full banner after trimming
-- `experimental.chat.system.transform` injects a small per-turn reminder only
+    | Plugin | Event | Purpose |
+    |--------|-------|---------|
+    | `session-init.js` | `SessionInit` + `experimental.chat.system.transform` + `experimental.session.compacting` | Full banner on startup, system prompt injection every LLM call, banner re-injection on compaction |
+    | `context-path-guide.js` | `tool.execute.before` | ASCII directory tree before docs writes |
+    | `protect-memory.js` | `tool.execute.before` | Blocks MEMORY.md access (throws to block) |
+    | `knowledge-tracker.js` | `tool.execute.after` | Capture reminders, bash counting, nav-dirty flag |
 
-This avoids full-banner token overhead on every turn while preserving full Lore context at startup and after compaction.
+`experimental.chat.system.transform` fires on every LLM call and pushes the **full** session banner into the system prompt. This is a system prompt replacement, not conversation history — there is zero accumulation cost. The banner is the same fixed size regardless of conversation length.
+
+`SessionInit` fires once on startup and logs the banner via `client.app.log()`. `experimental.session.compacting` fires on compaction and pushes the banner into `output.context`.
 
 Subagents are intentionally scoped and do not receive full orchestrator banner context. They are expected to load `docs/context/agent-rules.md` and relevant files under `docs/context/conventions/` before implementation.
 
@@ -92,10 +131,10 @@ All platforms activate automatically after `npx create-lore`. No manual configur
 | Platform | What loads automatically |
 |----------|------------------------|
 | **Claude Code** | `CLAUDE.md` + `.claude/settings.json` (hooks) |
-| **Cursor** | `.cursorrules` + `.cursor/hooks.json` (hooks) + `.cursor/rules/` (rules) |
+| **Cursor** | `.cursor/rules/lore-*.mdc` (rules) + `.cursor/hooks.json` (hooks) + `.cursor/mcp.json` (MCP) |
 | **OpenCode** | `opencode.json` (instructions), `.opencode/plugins/` (hooks), `.opencode/commands/` (slash menu) |
 
-`CLAUDE.md` and `.cursorrules` are generated copies of `.lore/instructions.md`. Run `bash scripts/sync-platform-skills.sh` after editing instructions to keep them in sync.
+`CLAUDE.md` and `.cursor/rules/lore-*.mdc` are generated from `.lore/instructions.md`. Run `bash scripts/sync-platform-skills.sh` after editing instructions to keep them in sync.
 
 ## Sync Boundaries
 
@@ -126,7 +165,7 @@ When you [link a work repo](cross-repo-workflow.md#ide-workflow-lore-link), `/lo
 | Platform | Generated files |
 |----------|----------------|
 | **Claude Code** | `.claude/settings.json` — hooks with `LORE_HUB` pointing to hub |
-| **Cursor** | `.cursor/hooks.json` + `.cursor/rules/lore.mdc` — hooks and instructions pointing to hub |
+| **Cursor** | `.cursor/hooks.json` + `.cursor/mcp.json` + `.cursor/rules/lore-*.mdc` — hooks, MCP, and instructions pointing to hub |
 | **OpenCode** | `.opencode/plugins/` wrappers + `.opencode/commands/` + `opencode.json` — delegating to hub plugins and exposing slash commands |
 | **All** | `CLAUDE.md`, `.cursorrules` — instruction copies from hub |
 | **All** | `.lore` marker file recording the hub path and link timestamp |
