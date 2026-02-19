@@ -60,6 +60,8 @@ nav:
     - Hook Architecture: guides/hook-architecture.md
     - Conventions: guides/conventions.md
     - Roadmaps & Plans: guides/roadmaps-and-plans.md
+  - Troubleshooting: troubleshooting.md
+  - Changelog: changelog.md
   - Examples:
     - Skill: examples/skill.md
     - Roadmap: examples/roadmap.md
