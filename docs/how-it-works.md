@@ -187,6 +187,7 @@ Lore uses indirection — telling the agent *where to find things* rather than l
 | `.lore/instructions.md` (~80 lines) | Framework rules, knowledge routing, naming conventions |
 | Session start: framework | Operating principles, active agents, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` |
+| Session start: operator profile | Identity and preferences from `docs/knowledge/local/operator-profile.md` (gitignored) |
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` |
 | Session start: knowledge map | Directory tree of docs/, skills/, and agents/ |
 | Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |

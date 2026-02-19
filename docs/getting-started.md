@@ -54,6 +54,8 @@ Coding and docs conventions go in `docs/context/conventions/` — also injected 
 
 The agent sees both before your first prompt every session.
 
+For personal preferences that shouldn't be shared via git, edit `docs/knowledge/local/operator-profile.md`. This file is gitignored and injected into every session alongside project context. The default template is ignored until you customize it.
+
 ## First Session
 
 Start your agent in the project directory:
