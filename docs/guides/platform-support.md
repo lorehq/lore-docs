@@ -22,6 +22,7 @@ Behavior is intentionally not identical. Lore keeps the same outcomes (orientati
 | Skills & agents | Shared skill and agent definitions | Yes | Yes | Yes |
 | Work tracking | Roadmaps, plans, brainstorms | Yes | Yes | Yes |
 | Linked repo support | Hub knowledge accessible from work repos | Yes | Yes | Yes |
+| Hook event logging | Structured JSONL logging of all hook fires | Yes | Yes | Yes |
 | Instructions file | Platform-specific instructions path | `CLAUDE.md` | `.cursorrules` | `.lore/instructions.md` |
 
 ## How Hooks Work
@@ -34,6 +35,8 @@ hooks/              → Claude Code hooks (subprocess per event)
 .opencode/plugins/  → OpenCode plugins (long-lived ESM modules)
 lib/                → Shared logic (all platforms)
 ```
+
+All hooks are instrumented with `lib/hook-logger.js`. Set `LORE_HOOK_LOG=1` to record every hook fire to `.git/lore-hook-events.jsonl` — useful for validating wiring across platforms and measuring context accumulation. See [Configuration: Hook Event Logging](configuration.md#hook-event-logging) for details.
 
 ### Claude Code
 
