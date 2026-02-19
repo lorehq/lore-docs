@@ -48,9 +48,9 @@ If you have skills from other projects or custom markdown files you've been copy
 
 3. Run `/lore-capture` — it updates registries and syncs to all platforms
 
-**Domain is required.** It drives delegation routing and registry organization. If you're unsure what domain to assign, ask the agent — it can read your skills and suggest appropriate domains. For general-purpose skills that don't fit a specific service or tool, use `Orchestrator`.
+**Skills default to Orchestrator.** The domain is the specific tool at the bottom of the call stack (e.g., `git`, `mkdocs`, `docker-compose`), not a category. New skills start in Orchestrator — domains emerge when multiple skills cluster around the same tool.
 
-**Agents form naturally.** Don't copy agents between projects — they reference specific skills and model configurations that may not match your new setup. Instead, import your skills and let agents emerge as you work. When a domain accumulates enough skills, `/lore-create-agent` wires it up correctly.
+**Agents form from clustering.** Don't copy agents between projects — they reference specific skills and model configurations that may not match your new setup. Instead, import your skills and let agents emerge as you work. When a tool accumulates enough skills to make delegation valuable, `/lore-create-agent` wires it up. Domain name = tool name (e.g., `git-agent`, `mkdocs-agent`).
 
 **After import, sharing is automatic.** Once skills are in your Lore hub, every [linked repo](cross-repo-workflow.md#ide-workflow-lore-link) gets them. No more copying between projects.
 

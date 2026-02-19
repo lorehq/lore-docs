@@ -95,7 +95,7 @@ grep for `declare -A`, `${.*,,}`, `[[ -v`, `readarray` before shipping.
 
 **Naming convention** — `<service>-<action>-<object>`. Examples: `bash-macos-compat`, `github-api-pagination`, `docker-build-cache-invalidation`. The `lore-` prefix is reserved for framework-owned skills — operator and discovered skills must not use it.
 
-**Domain assignment** — every skill belongs to an agent domain. If the domain doesn't have an agent yet, creating the skill triggers agent creation. Skills without a clear domain use "Orchestrator".
+**Domain assignment** — skills default to Orchestrator. The domain is the specific tool at the bottom of the call stack (e.g., `git`, `mkdocs`), not a category. A domain earns an agent when multiple skills cluster around the same tool, making delegation valuable.
 
 ## Creating Skills
 

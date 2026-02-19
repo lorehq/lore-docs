@@ -48,7 +48,7 @@ flowchart TB
 
 ### 1. Knowledge Capture
 
-Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract this into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. When a skill has a clear domain, it gets an agent.
+Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract this into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. When multiple skills cluster around the same tool, the domain earns an agent.
 
 #### The "Don't Ask Twice" Loop
 
@@ -86,25 +86,25 @@ sequenceDiagram
 
 Skills and agents use a naming convention to separate framework-owned from operator-owned content:
 
-- **`lore-*` prefix** — framework-owned. Overwritten on `/lore-update`. Examples: `lore-capture`, `lore-create-skill`, `lore-documentation-agent`.
-- **No prefix** — operator-owned. Never touched by sync or generation scripts. Examples: `bash-macos-compat`, `github-agent`.
+- **`lore-*` prefix** — framework-owned. Overwritten on `/lore-update`. Examples: `lore-capture`, `lore-create-skill`.
+- **No prefix** — operator-owned. Never touched by sync or generation scripts. Examples: `bash-macos-compat`, `git-agent`.
 
 Discovered gotchas are operator-owned from birth — Lore creates the file, the operator owns it. The `lore-*` boundary is enforced by `sync-framework.sh` and `generate-agents.sh`, which only process `lore-*` items.
 
 #### How Skills and Agents Emerge
 
-**Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. Skills must be generic (no context data). Skill creation can trigger agent creation: one agent per domain.
+**Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. Skills must be generic (no context data). Skills default to the Orchestrator domain. When multiple skills cluster around the same tool, the domain earns an agent.
 
 ```mermaid
 flowchart TD
     op[Operation Completed] --> gotcha{Hit any\ngotchas?}
     gotcha -->|No| skip[No skill needed]
-    gotcha -->|Yes| createSkill[Create skill]
-    createSkill --> domainClear{Clear domain?}
-    domainClear -->|No| unassigned[Skill stays unassigned]
-    domainClear -->|Yes| agentExists{Agent exists?}
+    gotcha -->|Yes| createSkill[Create skill\ndomain = Orchestrator]
+    createSkill --> cluster{Multiple skills\nfor same tool?}
+    cluster -->|No| wait[Skill stays in Orchestrator]
+    cluster -->|Yes| agentExists{Agent exists\nfor tool?}
     agentExists -->|Yes| addToAgent[Add skill to agent]
-    agentExists -->|No| createAgent[Create agent + add skill]
+    agentExists -->|No| createAgent[Create agent + assign skills]
 ```
 
 ### 2. Delegation
