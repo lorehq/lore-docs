@@ -8,10 +8,11 @@ Conventions are behavioral rules that shape how your agent writes code, docs, an
 
 ## How They Work
 
-Conventions reach your agent through two channels:
+Conventions reach your agent through three channels:
 
 1. **Session start** — all convention files are concatenated into the startup banner. The agent sees them at the beginning of every session.
-2. **Write-time reinforcement** — a guard fires before every file write, injecting the relevant convention principles based on the target path. This keeps rules in active attention when they matter most.
+2. **Per-prompt reminder** — before every user message, a hook lists all convention names (e.g. `Conventions: coding, docs, security`). This keeps conventions discoverable as the session-start load fades from attention.
+3. **Write-time reinforcement** — a guard fires before every file write, injecting the relevant convention principles based on the target path. This keeps rules in active attention when they matter most.
 
 The guard reads bold principle lines (`**Like this.**`) from the actual convention files. No duplication — the files are the single source of truth.
 
@@ -93,11 +94,12 @@ Add a markdown file to `docs/context/conventions/`:
 - **Numbered sections** help scanning. Match the pattern of the default conventions.
 - **File name** becomes the menu label. Use descriptive kebab-case: `api-design.md`, `email-drafting.md`, `diagrams.md`.
 
-Your convention reaches the agent through three channels:
+Your convention reaches the agent through four channels:
 
 1. **Session start** — loaded in full alongside all other conventions. The agent reads the entire file at the beginning of every session.
-2. **Write-time menu** — listed by name before every file write so the agent can re-read it if relevant. The menu is a mid-session nudge for when the initial load has faded from attention.
-3. **Agent initiative** — the agent can read any convention file at any time, not just during writes. The session banner and write-time menu make conventions discoverable, but the agent isn't limited to those moments.
+2. **Per-prompt reminder** — listed by name before every user message. The agent sees convention names continuously, not just at session start or write-time.
+3. **Write-time menu** — listed by name before every file write so the agent can re-read it if relevant.
+4. **Agent initiative** — the agent can read any convention file at any time, not just during writes. The other channels make conventions discoverable, but the agent isn't limited to those moments.
 
 No hook changes, no configuration, no registration. Drop the file in and it works.
 
@@ -114,7 +116,7 @@ Descriptive file names matter. `email-drafting.md` is more likely to be recogniz
 | File | Purpose | Loaded |
 |---|---|---|
 | `docs/context/agent-rules.md` | Project identity, behavior rules | Every session (banner) |
-| `docs/context/conventions/*.md` | Domain-specific behavioral rules | Every session (banner) + write-time (guard) |
+| `docs/context/conventions/*.md` | Domain-specific behavioral rules | Every session (banner) + every prompt (name listing) + write-time (guard) |
 | `.lore/instructions.md` | Framework instructions (knowledge routing, ownership, capture) | Always (CLAUDE.md / cursor rules) |
 
 Conventions complement instructions — instructions define the framework's mechanics (where things go, how skills are created), conventions define quality standards (how code should be written, how docs should read).
