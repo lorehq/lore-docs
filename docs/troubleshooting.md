@@ -67,7 +67,8 @@ The knowledge tracker counts consecutive tool uses without capture and escalates
 
 ```json
 {
-  "trackerThresholds": [5, 10, 15]
+  "nudgeThreshold": 5,
+  "warnThreshold": 10
 }
 ```
 
