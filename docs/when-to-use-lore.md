@@ -48,7 +48,7 @@ Lore is designed for individual operators with coding agents, but teams can adop
 
 Each developer maintains their own Lore instance. Knowledge captures reflect individual discoveries. Sharing happens through git — push your instance, teammates pull useful skills or docs into theirs.
 
-**Pros:** No conflicts, each developer's agent learns their patterns.
+**Pros:** No conflicts, each developer's agent captures their patterns.
 **Cons:** Knowledge doesn't automatically propagate across the team.
 
 ### Shared Instance

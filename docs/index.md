@@ -10,9 +10,9 @@ Lore is a lightweight framework that gives coding agents persistent memory. Inst
 
 ## What You Get
 
-- **Self-Learning** — Your agent captures gotchas as reusable skills and maps your context through docs. API quirks, auth tricks, encoding issues — all persist across sessions.
+- **Knowledge Capture** — Run `/lore-capture` and the agent documents gotchas as reusable skills and maps your context through docs. API quirks, auth tricks, encoding issues — all persist across sessions.
 - **Delegation** — An orchestrator/worker pattern where the main model dispatches execution to cheaper models that run in parallel. Less token spend, cleaner context windows.
-- **Work Continuity** — Roadmaps and plans persist across sessions and surface at startup, so long-running projects pick up where they left off.
+- **Work Continuity** — Roadmaps and plans persist across sessions and surface at startup, so long-running projects have persistent context from day one.
 
 ## Quick Start
 
