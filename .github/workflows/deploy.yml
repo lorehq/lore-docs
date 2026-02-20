@@ -3,6 +3,7 @@ name: Deploy docs
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -27,6 +28,7 @@ jobs:
 
   deploy:
     needs: validate
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
