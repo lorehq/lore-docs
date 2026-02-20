@@ -67,7 +67,7 @@ hooks/                    # Claude Code hooks
 lib/                      # Shared logic (all hooks import from here)
 ```
 
-Every file is plain JavaScript, under 100 lines, with no minification or bundling. Read them directly. The total hook + lib codebase is approximately 1,200 lines.
+Every file is plain JavaScript with no minification or bundling. Most are under 100 lines; the largest (banner.js) is ~250. Read them directly. The total hook + lib codebase is approximately 1,500 lines.
 
 ```bash
 # Count all hook and lib code
