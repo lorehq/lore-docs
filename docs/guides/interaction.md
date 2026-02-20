@@ -24,7 +24,7 @@ Skills and agents emerge from demonstrated need, not upfront planning.
 | Approach | Why |
 |----------|-----|
 | Work naturally, let skills emerge | Skills are best when they capture real gotchas from actual work |
-| Work in a domain, let agents emerge | Agents form around demonstrated need, not upfront planning |
+| Let workers handle complex tasks | The orchestrator delegates with curated skills — no upfront agent planning |
 | Break compound work into branches | Independent branches can run in parallel subagents; dependency chains stay sequential |
 | Bring your own skills | Copy them in, run `/lore-capture` — see below |
 | Let Lore maintain registries | Registries, nav, and cross-references are where consistency matters most |
@@ -36,21 +36,18 @@ If you have skills from other projects or custom markdown files you've been copy
 **What to do:**
 
 1. Copy your skill files into `.lore/skills/<skill-name>/SKILL.md`
-2. Each skill needs YAML frontmatter with three required fields:
+2. Each skill needs YAML frontmatter with two required fields:
 
     ```yaml
     ---
     name: my-api-quirk
-    domain: MyService
     description: One-line summary of what this skill captures
     ---
     ```
 
 3. Run `/lore-capture` — it updates registries and syncs to all platforms
 
-**Skills default to Orchestrator.** The domain is the specific tool at the bottom of the call stack (e.g., `git`, `mkdocs`, `docker-compose`), not a category. New skills start in Orchestrator — domains emerge when multiple skills cluster around the same tool.
-
-**Agents form from clustering.** Don't copy agents between projects — they reference specific skills and model configurations that may not match your new setup. Instead, import your skills and let agents emerge as you work. When a tool accumulates enough skills to make delegation valuable, `/lore-create-agent` wires it up. Domain name = tool name (e.g., `git-agent`, `mkdocs-agent`).
+**Workers load skills dynamically.** Don't copy agents between projects. Instead, import your skills — the orchestrator selects the right ones per-task by name and description when spawning workers. Operator agents are optional for recurring delegation patterns.
 
 **After import, sharing is automatic.** Once skills are in your Lore hub, every [linked repo](cross-repo-workflow.md#ide-workflow-lore-link) gets them. No more copying between projects.
 

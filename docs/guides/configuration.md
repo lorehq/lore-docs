@@ -32,7 +32,7 @@ All fields are optional. Missing fields fall back to defaults.
 
 ### `subagentDefaults`
 
-Sets default model preferences for domain agents across platforms. Agents inherit these unless they override with their own frontmatter values.
+Sets default model preferences for worker and operator agents across platforms. Agents inherit these unless they override with their own frontmatter values.
 
 ```json
 {

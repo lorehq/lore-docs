@@ -22,7 +22,7 @@ cd my-project
 my-project/
   .lore/
     skills/          # Skills (canonical). lore-* = framework, rest = yours
-    agents/          # Domain agents (canonical). lore-* = framework, rest = yours
+    agents/          # Agents (canonical). lore-* = framework, rest = yours
     instructions.md  # Agent instructions (canonical source)
   .claude/           # Claude Code platform copies (auto-generated)
   .cursor/

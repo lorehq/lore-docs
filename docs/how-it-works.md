@@ -14,22 +14,22 @@ flowchart TB
 
     subgraph Orchestrator["Orchestrator"]
         direction TB
-        Parse[Parse Intent] --> Registry[Check Agent Registry]
-        Registry --> Decide{Domain Match?}
+        Parse[Parse Intent] --> Decide{Delegate?}
+        Decide -->|Yes| Select[Select skills from registry]
     end
 
-    Decide -->|Yes| Delegate[Delegate to Domain Agent]
     Decide -->|No| Direct[Handle Directly]
+    Select --> Spawn[Spawn Worker Agent]
 
-    subgraph Agent["Domain Agent"]
+    subgraph Worker["Worker Agent"]
         direction TB
-        Skills[Load Skills] --> Tools[Call Tools]
+        Load[Load skills + conventions] --> Tools[Call Tools]
         Tools --> Result[Return Result]
     end
 
-    Delegate --> Agent
+    Spawn --> Worker
     Direct --> Tools2[Call Tools Directly]
-    Agent --> Respond[Respond to User]
+    Worker --> Respond[Respond to User]
     Tools2 --> Respond
 
     Respond --> Capture
@@ -48,7 +48,7 @@ flowchart TB
 
 ### 1. Knowledge Capture
 
-Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract this into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. When multiple skills cluster around the same tool, the domain earns an agent.
+Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract this into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. The orchestrator finds relevant skills by name and description when delegating related tasks.
 
 #### The "Don't Ask Twice" Loop
 
@@ -89,51 +89,47 @@ Skills and agents use a naming convention to separate framework-owned from opera
 - **`lore-*` prefix** — framework-owned. Overwritten on `/lore-update`. Examples: `lore-capture`, `lore-create-skill`.
 - **No prefix** — operator-owned. Never touched by sync or generation scripts. Examples: `bash-macos-compat`, `git-agent`.
 
-Discovered gotchas are operator-owned from birth — Lore creates the file, the operator owns it. The `lore-*` boundary is enforced by `sync-framework.sh` and `generate-agents.sh`, which only process `lore-*` items.
+Discovered gotchas are operator-owned from birth — Lore creates the file, the operator owns it. The `lore-*` boundary is enforced by `sync-framework.sh`, which only processes `lore-*` items.
 
 #### How Skills and Agents Emerge
 
-**Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. Skills must be generic (no context data). Skills default to the Orchestrator domain. When multiple skills cluster around the same tool, the domain earns an agent.
+**Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. Skills must be generic (no context data). The orchestrator selects skills by name and description when delegating.
 
 ```mermaid
 flowchart TD
     op[Operation Completed] --> gotcha{Hit any\ngotchas?}
     gotcha -->|No| skip[No skill needed]
-    gotcha -->|Yes| createSkill[Create skill\ndomain = Orchestrator]
-    createSkill --> cluster{Multiple skills\nfor same tool?}
-    cluster -->|No| wait[Skill stays in Orchestrator]
-    cluster -->|Yes| agentExists{Agent exists\nfor tool?}
-    agentExists -->|Yes| addToAgent[Add skill to agent]
-    agentExists -->|No| createAgent[Create agent + assign skills]
+    gotcha -->|Yes| createSkill[Create skill]
+    createSkill --> registry[Update registries]
+    registry --> done[Skill available for\nworker delegation]
 ```
 
 ### 2. Delegation
 
-The orchestrator routes work to domain agents based on a simple rule: **domain = delegation trigger**. For compound requests, reminders nudge the orchestrator to split independent branches across parallel subagents and keep dependency-gated steps sequential. Agents own their domain end-to-end and create skills as they need them.
+The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and conventions per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent branches and keeps dependency-gated steps sequential.
 
 ```mermaid
 flowchart TD
-    Request[Incoming Request] --> Parse[Identify Domain]
-    Parse --> Q1{Clear domain?}
-    Q1 -->|No| GP[Handle Directly]
-    Q1 -->|Yes| Q3{Agent exists?}
-    Q3 -->|Yes| Delegate[Delegate to domain agent]
-    Q3 -->|No| Create[Handle directly + create agent during capture]
-    Delegate --> Review[Review + Respond]
-    Create --> Delegate
-    GP --> Review
+    Request[Incoming Request] --> Q1{Benefits from\nfresh context?}
+    Q1 -->|No| Direct[Handle Directly]
+    Q1 -->|Yes| Skills[Select skills from registry]
+    Skills --> Spawn[Spawn worker with\nskills + conventions + scope]
+    Spawn --> Execute[Worker executes task]
+    Execute --> Review[Orchestrator reviews results]
+    Direct --> Review
+    Review --> Capture[Knowledge capture]
 ```
 
-| Orchestrator | Domain Agent |
+| Orchestrator | Worker Agent |
 |-------------|-------------|
-| Understand user intent | Execute domain tasks |
-| Choose which agent(s) | Load and use domain skills |
-| Coordinate multi-agent flows | Create new skills when needed |
-| Strategic decisions | Domain-specific details |
+| Understand user intent | Execute delegated task |
+| Select relevant skills | Load what orchestrator specifies |
+| Coordinate multi-worker flows | Stay within scope boundaries |
+| Handle knowledge capture | Report gotchas and findings |
 
 #### Subagent Context Contract
 
-Every domain agent loads `docs/context/agent-rules.md` and relevant files in `docs/context/conventions/` before implementation.
+Workers receive what the orchestrator specifies: task description, skill file paths, convention file paths, and scope boundaries. They load `docs/context/agent-rules.md` and relevant conventions before implementation.
 
 #### Per-Platform Model Configuration
 
@@ -141,8 +137,7 @@ Agents carry per-platform model preferences in their frontmatter:
 
 ```yaml
 ---
-name: github-agent
-domain: GitHub
+name: lore-worker-agent
 claude-model: sonnet
 opencode-model: openai/gpt-4o
 cursor-model: # not yet supported
@@ -164,7 +159,7 @@ flowchart TB
     end
 
     subgraph P2["Phase 2: Specialization"]
-        P2a[Agents handle domain work]
+        P2a[Workers handle delegated tasks]
         P2b[Context knowledge fills in]
         P2c["Balanced: execute + delegate"]
     end
