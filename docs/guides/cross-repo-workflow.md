@@ -10,7 +10,7 @@ Lore is designed as a hub — one Lore instance that tracks and performs work ac
 
 ```mermaid
 flowchart TD
-    Lore["Lore Instance<br/>(launch agent here)"]
+    Lore["Lore Instance<br/>(knowledge hub)"]
     Lore -->|work on| A["app-api/"]
     Lore -->|work on| B["app-frontend/"]
     Lore -->|work on| C["infra/"]
@@ -20,9 +20,9 @@ flowchart TD
     C -->|knowledge flows back| Lore
 ```
 
-1. **Launch your agent from the Lore instance directory.** This loads instructions, hooks, and settings — everything the agent needs to operate with persistent memory.
+1. **Connect your agent to the Lore instance.** CLI agents launch from here directly. IDE agents use [`lore link`](#ide-workflow-lore-link) to work from the code repo with hooks firing from the hub.
 
-2. **Tell it to work on other repos.** The agent reads, writes, and runs commands across repos using absolute paths. No `cd` needed for file operations.
+2. **Work on other repos.** The agent reads, writes, and runs commands across repos using absolute paths.
 
     ```
     "Fix the auth bug in ~/projects/app-api"
