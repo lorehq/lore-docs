@@ -6,6 +6,30 @@ title: Changelog
 
 All notable changes to Lore are documented here. Releases follow [semantic versioning](https://semver.org/). For full commit history, see [GitHub Releases](https://github.com/lorehq/lore/releases).
 
+## v0.9.0 — 2026-02-20
+
+Health sweep, code hardening, and messaging sync.
+
+**Docs:**
+
+- Full health sweep across all 19 doc pages (reduce, verify, polish)
+- Merged `commands.md` into `interaction.md`
+- Verified 373 doc claims against source code — fixed 11 wrong/outdated items
+- Standardized terminology ("Lore instance" not "Lore project"), command style (`/lore-link` not `lore link`)
+
+**Code:**
+
+- `analyze-hook-logs.sh`: consolidated 6 Node processes into one, fixed shell injection risk by passing log path via `process.argv`
+- `generate-nav.sh`: warns to stderr when auto-creating missing `index.md` instead of silently scaffolding
+- `create-lore`: added path traversal guard — rejects target directories outside cwd
+- Prettier formatting fixes across 6 files
+
+**Messaging:**
+
+- Synced all READMEs and launch content to current worker delegation model
+- Removed stale `domain` field references and old "skills get agents" language
+- Updated technical claims with current banner format and function references
+
 ## v0.8.1 — 2026-02-19
 
 CI stabilization and release automation.
