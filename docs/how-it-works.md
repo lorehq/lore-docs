@@ -89,11 +89,11 @@ Skills and agents use a naming convention to separate framework-owned from opera
 - **`lore-*` prefix** — framework-owned. Overwritten on `/lore-update`. Examples: `lore-capture`, `lore-create-skill`.
 - **No prefix** — operator-owned. Never touched by sync or generation scripts. Examples: `bash-macos-compat`, `git-agent`.
 
-Discovered gotchas are operator-owned from birth — Lore creates the file, the operator owns it. The `lore-*` boundary is enforced by `sync-framework.sh`, which only processes `lore-*` items.
+Discovered gotchas are operator-owned from birth — Lore creates the file, the operator owns it. The `lore-*` boundary applies to skills and agents specifically; `sync-framework.sh` also overwrites framework directories (`hooks/`, `lib/`, `scripts/`) wholesale.
 
 #### How Skills and Agents Emerge
 
-**Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. Skills must be generic (no context data). The orchestrator selects skills by name and description when delegating.
+**Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. The orchestrator selects skills by name and description when delegating.
 
 ```mermaid
 flowchart TD
@@ -129,26 +129,15 @@ flowchart TD
 
 #### Subagent Context Contract
 
-Workers receive what the orchestrator specifies: task description, skill file paths, convention file paths, and scope boundaries. They load `docs/context/agent-rules.md` and relevant conventions before implementation.
+Workers receive what the orchestrator specifies: task description, skill file paths, convention file paths, and scope boundaries. `docs/context/agent-rules.md` is injected into the orchestrator's session banner; workers receive conventions and skills selected by the orchestrator per-task.
 
 #### Per-Platform Model Configuration
 
-Agents carry per-platform model preferences in their frontmatter:
-
-```yaml
----
-name: lore-worker-agent
-claude-model: sonnet
-opencode-model: openai/gpt-4o
-cursor-model: # not yet supported
----
-```
-
-Instance-level defaults live in `.lore-config` under `subagentDefaults`. Agent frontmatter overrides the defaults. See [Configuration](guides/configuration.md#subagentdefaults) for details.
+Per-platform model fields in agent frontmatter (`claude-model`, `opencode-model`, `cursor-model`) override `subagentDefaults`. See [Configuration](guides/configuration.md#subagentdefaults).
 
 ### 3. Session Acceleration
 
-Session acceleration is the compound effect of knowledge capture and delegation working together. As captured knowledge builds the base and delegation distributes the workload, each session benefits from every previous session's discoveries.
+Knowledge capture and delegation compound — each session benefits from every previous session's discoveries.
 
 ```mermaid
 flowchart TB
@@ -175,11 +164,11 @@ flowchart TB
 
 ## Context Efficiency
 
-Lore uses indirection — telling the agent *where to find things* rather than loading everything into context. Skills and docs load on-demand; only what's needed for orientation loads every session.
+Lore uses indirection — telling the agent *where to find things* rather than loading everything into context.
 
 | Layer | What It Contains |
 |-------|------------------|
-| `.lore/instructions.md` (~80 lines) | Framework rules, knowledge routing, naming conventions |
+| `.lore/instructions.md` (~115 lines) | Framework rules, knowledge routing, naming conventions |
 | Session start: framework | Operating principles, active agents, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` |
 | Session start: operator profile | Identity and preferences from `docs/knowledge/local/operator-profile.md` (gitignored) |
@@ -196,8 +185,4 @@ Docs and skills have zero baseline session cost — they load on-demand. Agents 
 
 Hooks fire at session start, prompt submit, pre-tool-use, post-tool-use, and post-tool-use-failure. Shared logic in `lib/` keeps behavior consistent across platforms. See [Hook Architecture](guides/hook-architecture.md) for the full lifecycle, module layout, and platform adapter reference.
 
-## Limitations
-
-- **AI compliance**: Reinforcement prompts encourage capture and delegation but cannot force it. The agent may skip reminders in long sessions.
-- **Operator involvement**: Running `/lore-capture` after substantive work improves capture rates. The system works best as a collaboration.
-- **Knowledge completeness**: Early sessions have gaps. Context accumulates with each session. Quality correlates with capture consistency.
+For limitations and known gaps, see [Production Readiness](production-readiness.md#known-limitations).

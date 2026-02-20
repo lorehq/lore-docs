@@ -4,7 +4,7 @@ title: Example Brainstorm
 
 # Example Brainstorm
 
-Brainstorms are conversation artifacts that capture exploratory discussions, architectural decisions, and design trade-offs for future reference.
+Brainstorms capture exploratory discussions, architectural decisions, and design trade-offs for future reference. They document thinking — not work progress. Each brainstorm serves as a decision record: options considered, trade-offs, and rationale. Ask Lore to create one — for example: *"Start a brainstorm about auth options."* Lore handles the folder structure and frontmatter.
 
 ## Template
 
@@ -73,16 +73,6 @@ created: 2026-01-10
 This brainstorm informed:
 - [<Roadmap or Plan Name>](../path/to/index.md)
 ```
-
-## Key Concepts
-
-**Not a roadmap or plan** — brainstorms are reference artifacts. They document the thinking process, not work progress.
-
-**Decision record** — captures options considered, trade-offs, and rationale for any decision made.
-
-## Creating Brainstorms
-
-Ask Lore to create a brainstorm — for example: *"Start a brainstorm about auth options."* Lore handles the folder structure and frontmatter.
 
 ## See Also
 

@@ -4,13 +4,7 @@ title: Production Readiness
 
 # Production Readiness
 
-Lore is pre-1.0 software. This page documents what it guarantees, what it doesn't, and what you should know before adopting it.
-
-## What Lore Is
-
-A lightweight framework that gives coding agents persistent memory across sessions. It runs as hooks inside your existing agent (Claude Code, Cursor, or OpenCode) and stores knowledge as plain files in your git repo.
-
-Lore is **not** a hosted service, a database, a plugin marketplace, or an AI model. It has zero runtime dependencies beyond Node.js 18+.
+Lore is pre-1.0 software.
 
 ## Stability Policy
 
@@ -43,7 +37,7 @@ Lore hooks are plain JavaScript files that run as child processes of your coding
 
 **Hooks do:**
 
-- Read `.lore-config`, `docs/`, `.lore/`, and registry files to build the session banner
+- Read `.lore-config`, `docs/`, `.lore/`, registry files, and `.git/` (state files) to build the session banner
 - Write state files to `.git/` (tracker counters, nav-dirty flags, hook event logs)
 - Write to stdout (injecting context into the agent's conversation)
 - Scaffold sticky files (`MEMORY.local.md`, `.gitignore` entries) if missing
@@ -58,7 +52,7 @@ Lore hooks are plain JavaScript files that run as child processes of your coding
 
 ### Supply Chain
 
-Lore has **zero npm runtime dependencies**. All `lib/` modules use only Node.js built-ins (`fs`, `path`, `os`, `crypto`). Dev dependencies (eslint, prettier) are not installed by `create-lore` and do not run in hooks.
+Lore has **zero npm runtime dependencies**. All `lib/` modules use only Node.js built-ins (`fs`, `path`, `os`, `crypto`, `util`). Dev dependencies (eslint, prettier) are not installed by `create-lore` and do not run in hooks.
 
 The installer (`create-lore`) clones the lore repo at a pinned version tag — no transitive dependency tree to audit.
 
@@ -73,7 +67,7 @@ hooks/                    # Claude Code hooks
 lib/                      # Shared logic (all hooks import from here)
 ```
 
-Every file is plain JavaScript, under 100 lines, with no minification or bundling. Read them directly. The total hook + lib codebase is under 1,000 lines.
+Every file is plain JavaScript, under 100 lines, with no minification or bundling. Read them directly. The total hook + lib codebase is approximately 1,200 lines.
 
 ```bash
 # Count all hook and lib code
@@ -90,7 +84,7 @@ Hooks actively block reads and writes to `MEMORY.md` at the project root. This p
 - **Single-developer origin.** Lore was built and tested by one developer. The test suite covers hooks, lib modules, and the scaffolder across 3 OSes and 2 Node versions, but edge cases in team workflows are untested.
 - **No access control.** Anyone with repo access can read and modify all knowledge, skills, and agents. Lore trusts the git permission model.
 - **Shell scripts require bash.** Core scripts (`validate-consistency.sh`, `generate-nav.sh`, etc.) require bash. Windows users need Git Bash, WSL, or equivalent. Hooks themselves are pure Node.js and work everywhere.
-- **Context window cost is unmeasured.** Hook injections consume tokens from the agent's context window. The hook-logger infrastructure exists but published measurements are pending. See [Configuration: Hook Event Logging](guides/configuration.md#hook-event-logging) for self-measurement.
+- **Context window cost is unmeasured.** Hook injections consume tokens from the agent's context window. Measure your own instance with `LORE_HOOK_LOG=1` — see [Hook Event Logging](guides/configuration.md#hook-event-logging).
 
 ## Non-Goals
 

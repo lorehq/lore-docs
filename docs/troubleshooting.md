@@ -8,10 +8,10 @@ title: Troubleshooting
 
 ### `npx create-lore` fails with "Could not find remote branch"
 
-The installer clones a specific version tag from GitHub. If the tag doesn't exist, the clone fails.
+The installer clones a specific version tag from GitHub. If the tag doesn't exist, the clone fails with an error like:
 
 ```
-fatal: Remote branch v0.8.1 not found in upstream origin
+fatal: Remote branch vX.Y.Z not found in upstream origin
 ```
 
 **Fix:** Update to the latest version of create-lore:
@@ -56,14 +56,14 @@ bash scripts/validate-consistency.sh
 
 ### "MEMORY.md is intercepted" warning
 
-Lore blocks writes to `MEMORY.md` in the project root because platform-level memory features overwrite it between sessions. Use the persistent alternatives:
+Lore blocks reads and writes to `MEMORY.md` in the instance root because platform-level memory features overwrite the file between sessions. Use the persistent alternatives:
 
 - **Scratch notes:** `MEMORY.local.md` (gitignored, survives sessions)
 - **Structured knowledge:** `docs/knowledge/` (git-tracked, shared)
 
 ### Escalating capture reminders are too aggressive
 
-The knowledge tracker counts consecutive tool uses without capture and escalates nudges. Configure thresholds in `.lore-config`:
+The knowledge tracker counts consecutive Bash tool calls without capture and escalates nudges. Configure thresholds in `.lore-config`:
 
 ```json
 {

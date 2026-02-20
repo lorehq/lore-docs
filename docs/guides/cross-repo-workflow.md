@@ -4,13 +4,13 @@ title: Working Across Repos
 
 # Working Across Repos
 
-Lore is designed as a hub — one Lore project that tracks and performs work across all your other repositories.
+Lore is designed as a hub — one Lore instance that tracks and performs work across all your other repositories.
 
 ## How It Works
 
 ```mermaid
 flowchart TD
-    Lore["Lore Project<br/>(launch agent here)"]
+    Lore["Lore Instance<br/>(launch agent here)"]
     Lore -->|work on| A["app-api/"]
     Lore -->|work on| B["app-frontend/"]
     Lore -->|work on| C["infra/"]
@@ -20,7 +20,7 @@ flowchart TD
     C -->|knowledge flows back| Lore
 ```
 
-1. **Launch your agent from the Lore project directory.** This loads instructions, hooks, and settings — everything the agent needs to operate with persistent memory.
+1. **Launch your agent from the Lore instance directory.** This loads instructions, hooks, and settings — everything the agent needs to operate with persistent memory.
 
 2. **Tell it to work on other repos.** The agent reads, writes, and runs commands across repos using absolute paths. No `cd` needed for file operations.
 
@@ -30,7 +30,7 @@ flowchart TD
     "Update the Terraform config in ~/projects/infra"
     ```
 
-3. **Knowledge captures back to Lore.** Gotchas become skills, endpoints go to context docs, multi-step procedures become runbooks — all stored in the Lore project, available next session.
+3. **Knowledge captures back to Lore.** Gotchas become skills, endpoints go to context docs, multi-step procedures become runbooks — all stored in the Lore instance, available next session.
 
 ## What Crosses Repo Boundaries
 
@@ -56,7 +56,7 @@ None of this pollutes your work repos.
 
 ## The One Rule
 
-**Always launch your agent from the Lore project directory.** That's what loads the operating principles, hooks, and accumulated knowledge. If you launch from a work repo instead, the agent starts without Lore's context.
+**Always launch your agent from the Lore instance directory.** Launching from the instance loads instructions, hooks, and accumulated knowledge. Launching from a work repo instead means the agent starts without Lore's context.
 
 ```bash
 cd ~/projects/my-lore-project
@@ -67,7 +67,7 @@ opencode     # OpenCode
 
 Then work on whatever repos you need from there.
 
-For IDE workflows where opening the Lore project is impractical, see [IDE Workflow: lore link](#ide-workflow-lore-link).
+For IDE workflows where opening the Lore instance is impractical, see [IDE Workflow: lore link](#ide-workflow-lore-link).
 
 ## IDE Workflow: lore link
 
@@ -86,11 +86,11 @@ For CLI agents (Claude Code, OpenCode), launching from the Lore project is strai
 
 ### What It Generates
 
-In the target repo, `lore link` creates:
+In the target repo, `/lore-link` creates:
 
 - **Claude Code** — `.claude/settings.json` with hooks pointing to the hub
 - **Cursor** — `.cursor/hooks.json` + `.cursor/mcp.json` + `.cursor/rules/lore-*.mdc` pointing to the hub
-- **OpenCode** — `.opencode/plugins/` wrappers + `.opencode/commands/` + `opencode.json` pointing to the hub
+- **OpenCode** — `.opencode/plugins/` wrappers (3 of 5 hub plugins: session-init, protect-memory, knowledge-tracker) + `.opencode/commands/` + `opencode.json` pointing to the hub
 - **Instructions** — `CLAUDE.md` rewritten from hub's `.lore/instructions.md`
 - **Marker** — `.lore` file recording the hub path and link timestamp
 
@@ -104,7 +104,7 @@ Even when working from a linked repo, knowledge captures back to the hub. Skills
 
 | Scenario | Approach |
 |----------|----------|
-| CLI agent (Claude Code, OpenCode) | **The One Rule** — launch from the Lore project |
+| CLI agent (Claude Code, OpenCode) | **The One Rule** — launch from the Lore instance |
 | IDE agent (Cursor, or IDE-mode Claude Code) | **lore link** — link the work repo, open it in your IDE |
 | Quick cross-repo task from the hub | **The One Rule** — just reference the path |
 

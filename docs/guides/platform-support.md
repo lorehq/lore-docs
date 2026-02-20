@@ -11,7 +11,7 @@ Lore supports three coding agent platforms. All share the same knowledge base â€
 | Feature | Claude Code | Cursor | OpenCode |
 |---------|:-----------:|:------:|:--------:|
 | Session banner | Yes | Yes | Yes |
-| Per-prompt reinforcement | Yes (conversation history) | No | Yes (system prompt, zero accumulation) |
+| Per-prompt reinforcement | Yes (conversation history) | No (compensated by MCP tools) | Yes (system prompt, zero accumulation) |
 | MCP tools | No | Yes (`lore_check_in`, `lore_context`, `lore_write_guard`) | No |
 | MEMORY.md guard | Yes | Yes | Yes |
 | Knowledge capture reminders | Yes | Yes | Yes |
@@ -52,7 +52,7 @@ Hooks plus an MCP server to compensate for missing per-prompt events.
 - **Events:** `sessionStart`, `beforeShellExecution`, `preCompact`, `postToolUseFailure`, `afterFileEdit`, `beforeReadFile`, `preToolUse`
 - **MCP tools:** `lore_check_in` (nudges), `lore_context` (knowledge map), `lore_write_guard` (convention reminders)
 
-Cursor does not display output from `afterFileEdit`, `postToolUseFailure`, or `preCompact` to the agent. These hooks write state to disk; `beforeShellExecution` and the MCP server read it back when they fire.
+Cursor does not display output from `afterFileEdit`, `postToolUseFailure`, or `preCompact` to the agent. Those hooks write state to disk; `beforeShellExecution` and the MCP server read the state back when they fire.
 
 **Gaps:** No per-prompt hook, no context path guide.
 

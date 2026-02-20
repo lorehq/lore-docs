@@ -4,7 +4,7 @@ title: Example Skill
 
 # Example Skill
 
-Skills capture non-obvious knowledge — gotchas, workarounds, parameter tricks — so the agent never rediscovers them. Every gotcha becomes a skill.
+Skills capture gotchas — workarounds, parameter tricks, and auth quirks that aren't obvious from docs alone.
 
 ## Template
 

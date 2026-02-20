@@ -16,22 +16,9 @@ Lore is a lightweight framework that gives coding agents persistent memory. Inst
 
 ## Quick Start
 
-```bash
-npx create-lore my-project
-cd my-project
-```
+Install with `npx create-lore my-project` and check the [Getting Started](getting-started.md) guide.
 
 No configuration required. The framework activates through hooks when you start your agent. Customize `docs/context/agent-rules.md` to teach the agent about your project.
-
-## How It Works
-
-| Component | Location | What it does |
-|-----------|----------|--------------|
-| **Hooks** | `hooks/`, `.cursor/hooks/`, `.opencode/plugins/` | Fire on session start, prompt submit, and tool use. Reinforce knowledge capture, delegation, and work tracking. |
-| **Skills** | `.lore/skills/` | Non-obvious knowledge captured from real work — gotchas, tricks, patterns. `lore-*` = framework, rest = yours. |
-| **Agents** | `.lore/agents/` | Worker agents for delegated tasks. `lore-*` = framework, rest = yours. |
-| **Docs** | `docs/` | Context knowledge, runbooks, and work tracking. Your agent's long-term memory. |
-| **Scripts** | `scripts/` | Validation, registry generation, nav building. Keeps knowledge consistent as it grows. |
 
 ## Learn More
 

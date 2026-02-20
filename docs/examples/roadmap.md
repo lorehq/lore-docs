@@ -4,8 +4,6 @@ title: Example Roadmap
 
 # Example Roadmap
 
-Roadmaps are strategic progress-tracking documents for multi-phase initiatives spanning weeks to months.
-
 ## Template
 
 **File:** `docs/work/roadmaps/<slug>/index.md`
@@ -61,15 +59,7 @@ target: 2026-06-30
 | <What could go wrong> | <How to prevent or recover> |
 ```
 
-## Key Concepts
-
-**YAML Frontmatter** — machine-readable metadata parsed by the session start hook. See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for the full status workflow, archiving, and [hierarchy](../guides/roadmaps-and-plans.md#hierarchy).
-
-**Supporting docs** — research, diagrams, and decision records live alongside `index.md` in the roadmap folder.
-
-## Creating Roadmaps
-
-Ask Lore to create a roadmap — for example: *"Create a roadmap for cloud migration."* Lore handles the folder structure, frontmatter, and validation.
+See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for status workflow, archiving, and hierarchy.
 
 ## See Also
 

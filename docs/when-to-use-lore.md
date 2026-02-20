@@ -4,8 +4,6 @@ title: When to Use Lore
 
 # When to Use Lore
 
-Lore isn't for every project. This page helps you decide if it fits your workflow.
-
 ## Good Fit
 
 **You work with coding agents regularly and notice them rediscovering the same things.**
@@ -17,7 +15,7 @@ Lore isn't for every project. This page helps you decide if it fits your workflo
 **You use multiple repos or services that share context.**
 
 - The agent needs to know about your infrastructure, CI setup, or cross-repo relationships
-- You link work repos to a central knowledge hub so every project benefits from shared knowledge
+- You link work repos to a central Lore instance so every project benefits from shared knowledge
 
 **You want structured work tracking inside the agent's workflow.**
 
@@ -44,7 +42,7 @@ Lore isn't for every project. This page helps you decide if it fits your workflo
 
 ## Team Workflows
 
-Lore is designed for individual developers with coding agents, but teams can adopt it.
+Lore is designed for individual operators with coding agents, but teams can adopt it.
 
 ### One Instance Per Developer
 
@@ -62,7 +60,7 @@ The team shares a single Lore instance in a dedicated repo. Everyone commits kno
 
 ### Hub Per Team, Link Per Repo
 
-A team maintains one Lore hub with shared knowledge. Each developer uses `lore link` to connect their work repos to the hub. The hub holds skills, conventions, and context. Work repos get hooks that point back to the hub.
+A team maintains one Lore hub with shared knowledge. Each developer uses `/lore-link` to connect their work repos to the hub. The hub holds skills, conventions, and context. Work repos get hooks that point back to the hub.
 
 **Pros:** Centralized knowledge, decentralized work. Each repo stays clean.
 **Cons:** Hub maintenance is a team responsibility. Breaking changes in the hub affect all linked repos.

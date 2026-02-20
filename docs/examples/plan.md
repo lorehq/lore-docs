@@ -4,8 +4,6 @@ title: Example Plan
 
 # Example Plan
 
-Plans are tactical documents describing how to accomplish a specific task, feature, or phase of work (days to weeks).
-
 ## Template
 
 **File:** `docs/work/plans/<slug>/index.md`
@@ -73,11 +71,7 @@ None currently.
 <Decisions, caveats, things to revisit later.>
 ```
 
-## Key Concepts
-
-**YAML Frontmatter** — `summary` is shown in the session banner (keep under 60 chars). See [Roadmaps & Plans: Hierarchy](../guides/roadmaps-and-plans.md#hierarchy) for nesting and frontmatter linking.
-
-**Archiving** — completed or cancelled plans move to `docs/work/plans/archive/<slug>/`. See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for the full status workflow.
+See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for status workflow, archiving, and hierarchy.
 
 ## Creating Plans
 

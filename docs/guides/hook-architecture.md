@@ -66,7 +66,7 @@ flowchart TB
         cu_ft[failure-tracker.js]
         cu_pm[protect-memory.js]
         cu_kt[knowledge-tracker.js]
-        cu_mcp[lore-server.js<br/>MCP: check_in, context, write_guard]
+        cu_mcp[lore-server.js<br/>MCP: lore_check_in, lore_context, lore_write_guard]
     end
 
     subgraph opencode["OpenCode (.opencode/plugins/)"]

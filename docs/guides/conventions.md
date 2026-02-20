@@ -77,4 +77,6 @@ Add a markdown file to `docs/context/conventions/`:
 - **Numbered sections** help scanning. Match the pattern of the default conventions.
 - **File name** becomes the menu label. Use descriptive kebab-case: `api-design.md`, `email-drafting.md`, `diagrams.md`.
 
-Default conventions have hardcoded path routing — their bold principles are injected automatically before writes to matching paths. Custom conventions appear as a menu listing at write-time. The agent uses the file name to decide whether to load the file — `email-drafting.md` is self-explanatory; `comms.md` is not.
+Default conventions have hardcoded path routing — their bold principles are injected automatically before writes to matching paths. Custom conventions appear as a menu listing at write-time.
+
+> **Tip:** The agent uses the file name to decide whether to load a custom convention — `email-drafting.md` is self-explanatory; `comms.md` is not.

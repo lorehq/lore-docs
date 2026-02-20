@@ -34,6 +34,8 @@ docs/work/roadmaps/<initiative>/plans/<plan>/index.md
 roadmap: <roadmap-slug>
 ```
 
+Only for standalone plans that reference a roadmap — not for plans nested under a roadmap folder (the folder location already implies the relationship).
+
 ## Creating
 
 Ask Lore to create work items conversationally:

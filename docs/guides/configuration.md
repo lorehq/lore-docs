@@ -56,7 +56,7 @@ Per-platform fields use vendor-native model identifiers (`sonnet`, `openai/gpt-4
 
 ### `nudgeThreshold` and `warnThreshold`
 
-The bash-tracking hook counts consecutive Bash tool calls. At `nudgeThreshold`, a gentle capture reminder appears. At `warnThreshold`, the reminder is stronger. Both reset when the agent writes to a knowledge path (`docs/`, `.lore/skills/`).
+The bash-tracking hook counts consecutive Bash tool calls. At `nudgeThreshold`, a gentle capture reminder appears. At `warnThreshold`, the reminder is stronger. Both reset on any non-Bash tool use (reads, edits, writes — not just knowledge writes).
 
 ## Tuning for Large Instances
 
