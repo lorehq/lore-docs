@@ -54,20 +54,19 @@ The agent operates on files and commands anywhere on your machine. There's no pa
 
 None of this pollutes your work repos.
 
-## The One Rule
+## Two Workflows
 
-**Always launch your agent from the Lore instance directory.** Launching from the instance loads instructions, hooks, and accumulated knowledge. Launching from a work repo instead means the agent starts without Lore's context.
+There are two equally valid ways to work with Lore, depending on your agent and tooling.
+
+**CLI agents (Claude Code, OpenCode):** Launch from the Lore instance. This loads instructions, hooks, and accumulated knowledge. Then reference any other repo by path.
 
 ```bash
 cd ~/projects/my-lore-project
 claude       # Claude Code
-cursor .     # Cursor (open the project)
 opencode     # OpenCode
 ```
 
-Then work on whatever repos you need from there.
-
-For IDE workflows where opening the Lore instance is impractical, see [IDE Workflow: lore link](#ide-workflow-lore-link).
+**IDE agents (Cursor):** Use [`lore link`](#ide-workflow-lore-link) to work from your code repo. You keep full file tree, git integration, and search — hooks still fire from the hub.
 
 ## IDE Workflow: lore link
 
@@ -104,9 +103,9 @@ Even when working from a linked repo, knowledge captures back to the hub. Skills
 
 | Scenario | Approach |
 |----------|----------|
-| CLI agent (Claude Code, OpenCode) | **The One Rule** — launch from the Lore instance |
+| CLI agent (Claude Code, OpenCode) | Launch from the Lore instance |
 | IDE agent (Cursor, or IDE-mode Claude Code) | **lore link** — link the work repo, open it in your IDE |
-| Quick cross-repo task from the hub | **The One Rule** — just reference the path |
+| Quick cross-repo task from the hub | Launch from the Lore instance, reference the path |
 
 ### After Framework Updates
 
