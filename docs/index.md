@@ -24,5 +24,4 @@ No configuration required. The framework activates through hooks when you start 
 
 - [Getting Started](getting-started.md) — install and first session walkthrough
 - [How It Works](how-it-works.md) — architecture, knowledge capture, session acceleration
-- [Working with Lore](guides/interaction.md) — tips for effective use
-- [Commands](guides/commands.md) — slash command reference
+- [Working with Lore](guides/interaction.md) — tips, commands, and effective use
