@@ -53,4 +53,4 @@ See [Working Across Repos](guides/cross-repo-workflow.md) for the hub pattern an
 
 ## Checking Status and Updating
 
-Use `/lore-status` to verify your instance is healthy and `/lore-update` to pull the latest framework updates. See [Commands](guides/interaction.md#command-reference) for the full list, including `/lore-ui` for browsing your knowledge base.
+Use `/lore-status` to verify your instance is healthy and `/lore-update` to pull the latest framework updates. See [Commands](guides/interaction.md#command-reference) for the full list, including `/lore-docker` for browsing your knowledge base.

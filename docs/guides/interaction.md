@@ -91,4 +91,4 @@ See [Cross-Repo Workflow](cross-repo-workflow.md) for full flag reference.
 
 | Command | What it does |
 |---------|-------------|
-| `/lore-ui` | Manage docs UI lifecycle (start/stop/status), preferring Docker with local mkdocs fallback |
+| `/lore-docker` | Manage docs UI lifecycle (start/stop/status), preferring Docker with local mkdocs fallback |
