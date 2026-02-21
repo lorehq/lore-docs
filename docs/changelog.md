@@ -6,6 +6,34 @@ title: Changelog
 
 All notable changes to Lore are documented here. See [Production Readiness](production-readiness.md) for versioning policy. For full commit history, see [GitHub Releases](https://github.com/lorehq/lore/releases).
 
+## v0.10.0 — 2026-02-21
+
+Hook profiles, operator.gitignore persistence, and framework consolidation.
+
+**Configuration:**
+
+- Hook profiles (`minimal`, `standard`, `discovery`) — configurable via `profile` in `.lore/config.json`
+- Bash tracking now threshold-only: silent below nudge threshold, emits only at crossing points
+- `discovery` profile: nudge=5, warn=10 (aggressive capture for exploration-heavy work)
+- `standard` profile: nudge=15, warn=30 (default)
+
+**Operator gitignore persistence:**
+
+- `sync-framework.sh` now merges `.lore/operator.gitignore` into `.gitignore` on every update
+- Operator-added ignore rules survive framework updates — no more re-adding after `/lore-update`
+- Bootstraps an empty `.lore/operator.gitignore` template on first sync
+
+**New skills:**
+
+- `/lore-docker` — start, stop, and inspect the local docs UI (Docker + mkdocs fallback)
+- `/lore-delegate` — delegation recipe: how to construct worker prompts with context, scope, return contract
+
+**Framework layout:**
+
+- All framework dirs consolidated under `.lore/` (hooks, lib, scripts, skills, agents)
+- `ensure-structure.sh` — idempotent structure init for new instances
+- `docker-compose.yml` moved into `.lore/` and synced as framework-owned
+
 ## v0.9.0 — 2026-02-20
 
 Health sweep, code hardening, and messaging sync.
