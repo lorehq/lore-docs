@@ -44,6 +44,8 @@ flowchart TB
     KB -.->|Next Session| Parse
 ```
 
+When the Docker sidecar is running, agents query the knowledge base via semantic search rather than file Grep/Glob — returning ranked results by topic relevance.
+
 ## Three Goals
 
 ### 1. Knowledge Capture
@@ -169,6 +171,8 @@ Lore uses indirection — telling the agent *where to find things* rather than l
 | Per-prompt reinforcement | Delegation + knowledge discovery + work tracking nudges |
 | Post-tool-use reinforcement | Capture reminders with escalating urgency |
 | Skills and docs | Loaded on-demand when invoked or needed |
+
+When the Docker sidecar is running, the session banner includes a semantic search URL. Agents query by topic to find relevant docs and skills without loading the full directory tree. See [Docs UI & Semantic Search](guides/docs-ui.md).
 
 Docs and skills have zero baseline session cost — they load on-demand. Agents and active roadmaps appear in every session banner but grow slowly in count. See [Configuration: Tuning](guides/configuration.md#tuning-for-large-instances) for managing growth.
 

@@ -55,6 +55,7 @@ nav:
     - Working with Lore: guides/interaction.md
     - Working Across Repos: guides/cross-repo-workflow.md
     - Configuration: guides/configuration.md
+    - Docs UI & Search: guides/docs-ui.md
     - Platform Support: guides/platform-support.md
     - Hook Architecture: guides/hook-architecture.md
     - Conventions: guides/conventions.md

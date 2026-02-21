@@ -47,6 +47,16 @@ Work normally. Lore's hooks reinforce knowledge capture as you go. If you prefer
 
 After substantive work, run `/lore-capture` to trigger a full knowledge capture pass.
 
+## Docs UI & Semantic Search
+
+Run `/lore-docker` to start the local Docker sidecar. It gives the agent semantic search over your knowledge base and opens a live MkDocs site at `localhost:PORT` for browsing it visually.
+
+Requires Docker (Docker Desktop or Docker Engine). First start pulls the image and loads models — about 1–2 minutes. Subsequent starts are fast.
+
+Without Docker, agents fall back to Grep/Glob search. The sidecar is optional but recommended — semantic search improves knowledge retrieval as your docs grow.
+
+See [Docs UI & Semantic Search](guides/docs-ui.md) for configuration and details.
+
 ## Working Across Repos
 
 See [Working Across Repos](guides/cross-repo-workflow.md) for the hub pattern and IDE linking.

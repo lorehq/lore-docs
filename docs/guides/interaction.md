@@ -91,4 +91,4 @@ See [Cross-Repo Workflow](cross-repo-workflow.md) for full flag reference.
 
 | Command | What it does |
 |---------|-------------|
-| `/lore-docker` | Manage docs UI lifecycle (start/stop/status), preferring Docker with local mkdocs fallback |
+| `/lore-docker` | Start, stop, or check the local Docker sidecar — provides semantic search and a live MkDocs UI. Falls back to local mkdocs if Docker is unavailable. See [Docs UI & Semantic Search](../guides/docs-ui.md). |
