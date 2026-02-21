@@ -84,16 +84,9 @@ sequenceDiagram
 
 #### Ownership
 
-Skills and agents use a naming convention to separate framework-owned from operator-owned content:
-
-- **`lore-*` prefix** — framework-owned. Overwritten on `/lore-update`. Examples: `lore-capture`, `lore-create-skill`.
-- **No prefix** — operator-owned. Never touched by sync or generation scripts. Examples: `bash-macos-compat`, `git-agent`.
-
-Discovered gotchas are operator-owned from birth — Lore creates the file, the operator owns it. The `lore-*` boundary applies to skills and agents specifically; `sync-framework.sh` also overwrites framework directories (`hooks/`, `lib/`, `scripts/`) wholesale.
+See [Platform Support: Sync Boundaries](guides/platform-support.md#sync-boundaries) for the `lore-*` prefix convention and what sync overwrites.
 
 #### How Skills and Agents Emerge
-
-**Rule: Every gotcha becomes a skill.** Auth quirks, encoding issues, parameter tricks — all skills. The orchestrator selects skills by name and description when delegating.
 
 ```mermaid
 flowchart TD
@@ -136,8 +129,6 @@ Workers receive what the orchestrator specifies: task description, skill file pa
 Per-platform model fields in agent frontmatter (`claude-model`, `opencode-model`, `cursor-model`) override `subagentDefaults`. See [Configuration](guides/configuration.md#subagentdefaults).
 
 ### 3. Session Acceleration
-
-Knowledge capture and delegation compound — each session benefits from every previous session's discoveries.
 
 ```mermaid
 flowchart TB

@@ -4,7 +4,7 @@ title: Changelog
 
 # Changelog
 
-All notable changes to Lore are documented here. Releases follow [semantic versioning](https://semver.org/). For full commit history, see [GitHub Releases](https://github.com/lorehq/lore/releases).
+All notable changes to Lore are documented here. See [Production Readiness](production-readiness.md) for versioning policy. For full commit history, see [GitHub Releases](https://github.com/lorehq/lore/releases).
 
 ## v0.9.0 — 2026-02-20
 

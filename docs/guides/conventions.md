@@ -75,8 +75,6 @@ Add a markdown file to `docs/context/conventions/`:
 
 - **Bold principle lines** (`**Like this.**`) are what the write-time guard extracts and injects. Make them concise and actionable.
 - **Numbered sections** help scanning. Match the pattern of the default conventions.
-- **File name** becomes the menu label. Use descriptive kebab-case: `api-design.md`, `email-drafting.md`, `diagrams.md`.
+- **File name** becomes the menu label. Use descriptive kebab-case: `api-design.md`, `email-drafting.md`, `diagrams.md`. The agent uses the file name to decide whether to load the convention, so prefer self-explanatory names (`email-drafting.md`) over vague ones (`comms.md`).
 
 Default conventions have hardcoded path routing — their bold principles are injected automatically before writes to matching paths. Custom conventions appear as a menu listing at write-time.
-
-> **Tip:** The agent uses the file name to decide whether to load a custom convention — `email-drafting.md` is self-explanatory; `comms.md` is not.

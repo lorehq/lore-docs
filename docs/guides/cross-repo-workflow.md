@@ -70,10 +70,6 @@ opencode     # OpenCode
 
 ## IDE Workflow: lore link
 
-For CLI agents (Claude Code, OpenCode), launching from the Lore project is straightforward. For IDEs like Cursor, it means losing the work repo's file tree, git integration, and search.
-
-`/lore-link` resolves this. Run it once from the hub and it generates lightweight configs in the work repo that point hooks back to the hub via `LORE_HUB`. You open the work repo in your IDE with full file tree, git, and search — and hooks still fire from the hub.
-
 ### Usage
 
 ```
@@ -110,3 +106,28 @@ Even when working from a linked repo, knowledge captures back to the hub. Skills
 ### After Framework Updates
 
 Run `/lore-link --refresh` after `/lore-update` to regenerate configs in all linked repos with the latest hooks.
+
+## Team Topologies
+
+Lore is designed for individual operators with coding agents, but teams can adopt it.
+
+### One Instance Per Developer
+
+Each developer maintains their own Lore instance. Knowledge captures reflect individual discoveries. Sharing happens through git — push your instance, teammates pull useful skills or docs into theirs.
+
+**Pros:** No conflicts, each developer's agent captures their patterns.
+**Cons:** Knowledge doesn't automatically propagate across the team.
+
+### Shared Instance
+
+The team shares a single Lore instance in a dedicated repo. Everyone commits knowledge to the same `docs/` and `.lore/skills/`. Standard git workflow applies — branches, PRs, code review.
+
+**Pros:** Knowledge compounds across the whole team. New members benefit from day one.
+**Cons:** Merge conflicts in docs. Capture conventions need team agreement. More noise in the knowledge base.
+
+### Hub Per Team, Link Per Repo
+
+A team maintains one Lore hub with shared knowledge. Each developer uses `/lore-link` to connect their work repos to the hub. The hub holds skills, conventions, and context. Work repos get hooks that point back to the hub.
+
+**Pros:** Centralized knowledge, decentralized work. Each repo stays clean.
+**Cons:** Hub maintenance is a team responsibility. Breaking changes in the hub affect all linked repos.

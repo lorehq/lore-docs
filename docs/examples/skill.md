@@ -81,22 +81,6 @@ Use delimited strings:
 grep for `declare -A`, `${.*,,}`, `[[ -v`, `readarray` before shipping.
 ```
 
-## Key Concepts
-
-**Generic only** — skills contain patterns and techniques, never context data. Usernames, URLs, account IDs, and org-specific details belong in `docs/knowledge/environment/`, not in skills.
-
-**One skill per gotcha** — if an integration has three gotchas, that's three skills, not one. Each skill should be independently useful.
-
-**One skill per interaction method** — API gotchas and CLI gotchas are separate skills, even for the same service. Different methods have different failure modes.
-
-**30-80 lines** — long enough to be useful, short enough to load quickly. Over 80 lines means the skill covers multiple concerns and should be split.
-
-**Naming convention** — `<service>-<action>-<object>`. Examples: `bash-macos-compat`, `github-api-pagination`, `docker-build-cache-invalidation`. The `lore-` prefix is reserved for framework-owned skills — operator and discovered skills must not use it.
-
-## Creating Skills
-
-Ask Lore: *"Create a skill for the case-sensitive org name gotcha."* Or use `/lore-create-skill` directly.
-
 ## See Also
 
 - [Example Plan](plan.md)

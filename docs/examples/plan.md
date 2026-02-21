@@ -73,10 +73,6 @@ None currently.
 
 See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for status workflow, archiving, and hierarchy.
 
-## Creating Plans
-
-Ask Lore to create a plan — for example: *"Create a plan for the networking setup."* Specify which roadmap it belongs to, if any, and Lore will create the appropriate folder structure.
-
 ## See Also
 
 - [Roadmaps & Plans Guide](../guides/roadmaps-and-plans.md)

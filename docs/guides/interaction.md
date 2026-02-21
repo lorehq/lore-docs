@@ -51,9 +51,7 @@ If you have skills from other projects or custom markdown files you've been copy
 
 ## Roadmaps, Plans & Brainstorms
 
-For longer initiatives, ask Lore to create roadmaps (strategic arc), plans (tactical work), or brainstorms (ideas worth keeping). Active items appear in every session's startup output. Lore asks before updating any roadmap or plan.
-
-See [Roadmaps & Plans](roadmaps-and-plans.md) for format details.
+See [Roadmaps & Plans](roadmaps-and-plans.md).
 
 ## Command Reference
 
@@ -86,13 +84,8 @@ See [Platform Support: Sync Boundaries](platform-support.md#sync-boundaries) for
 | Command | What it does |
 |---------|-------------|
 | `/lore-link <target>` | Link a work repo — hooks fire from hub |
-| `/lore-link --unlink <target>` | Remove link from a work repo |
-| `/lore-link --list` | Show linked repos with stale detection |
-| `/lore-link --refresh` | Regenerate configs in all linked repos |
 
-`/lore-link` lets you open a work repo in your IDE with full file tree, git, and search while Lore hooks still fire from the hub. Run `/lore-link --refresh` after `/lore-update` to regenerate configs with the latest hooks.
-
-See [IDE Workflow: lore link](cross-repo-workflow.md#ide-workflow-lore-link) for full details.
+See [Cross-Repo Workflow](cross-repo-workflow.md) for full flag reference.
 
 ### Docs UI
 

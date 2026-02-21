@@ -42,13 +42,7 @@ Lore hooks are plain JavaScript files that run as child processes of your coding
 - Write to stdout (injecting context into the agent's conversation)
 - Scaffold sticky files (`MEMORY.local.md`, `.gitignore` entries) if missing
 
-**Hooks do not:**
-
-- Make network requests
-- Execute shell commands or spawn child processes
-- Read or write files outside the project directory (except via `LORE_HUB` for linked repos)
-- Access environment variables beyond `LORE_HUB`, `LORE_DEBUG`, and `LORE_HOOK_LOG`
-- Modify your application code
+Hooks are plain JavaScript child processes scoped to the project directory — they cannot make network requests, spawn subprocesses, or access files outside the project.
 
 ### Supply Chain
 
@@ -88,12 +82,12 @@ Hooks actively block reads and writes to `MEMORY.md` at the project root. This p
 
 ## Non-Goals
 
-These are explicitly out of scope for Lore:
+- **Hosted knowledge storage.**
+- **Multi-user real-time collaboration.**
+- **Plugin ecosystem.**
+- **Model training or fine-tuning.**
 
-- **Hosted knowledge storage.** Knowledge lives in your git repo. No cloud sync, no external database.
-- **Multi-user real-time collaboration.** Lore is single-agent-at-a-time. Team workflows use git branches and merges, same as code.
-- **Plugin ecosystem.** Skills and agents are plain markdown files, not installable packages. Sharing happens via copy-paste or git.
-- **Model training or fine-tuning.** Lore works through prompt engineering (hook-injected context), not model modification.
+See [When to Use Lore](when-to-use-lore.md) for fit/no-fit guidance.
 
 ## CI and Test Coverage
 
@@ -112,7 +106,7 @@ Releases are tag-driven via GitHub Actions. The `create-lore` release workflow v
 1. Check the [changelog](changelog.md) for breaking changes
 2. Run `/lore-update` from your Lore instance
 3. Review the diff — only `lore-*` files are touched
-4. Run `bash scripts/validate-consistency.sh` to confirm health
+4. See [Troubleshooting](troubleshooting.md) for the full fix-by-symptom table.
 5. Commit the update
 
 If something breaks, `git checkout` the previous state. All changes are local and reversible.

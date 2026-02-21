@@ -42,28 +42,7 @@ title: When to Use Lore
 
 ## Team Workflows
 
-Lore is designed for individual operators with coding agents, but teams can adopt it.
-
-### One Instance Per Developer
-
-Each developer maintains their own Lore instance. Knowledge captures reflect individual discoveries. Sharing happens through git — push your instance, teammates pull useful skills or docs into theirs.
-
-**Pros:** No conflicts, each developer's agent captures their patterns.
-**Cons:** Knowledge doesn't automatically propagate across the team.
-
-### Shared Instance
-
-The team shares a single Lore instance in a dedicated repo. Everyone commits knowledge to the same `docs/` and `.lore/skills/`. Standard git workflow applies — branches, PRs, code review.
-
-**Pros:** Knowledge compounds across the whole team. New members benefit from day one.
-**Cons:** Merge conflicts in docs. Capture conventions need team agreement. More noise in the knowledge base.
-
-### Hub Per Team, Link Per Repo
-
-A team maintains one Lore hub with shared knowledge. Each developer uses `/lore-link` to connect their work repos to the hub. The hub holds skills, conventions, and context. Work repos get hooks that point back to the hub.
-
-**Pros:** Centralized knowledge, decentralized work. Each repo stays clean.
-**Cons:** Hub maintenance is a team responsibility. Breaking changes in the hub affect all linked repos.
+See [Cross-Repo Workflow](guides/cross-repo-workflow.md) for team topology options.
 
 ## Comparison With Alternatives
 
@@ -75,8 +54,6 @@ A team maintains one Lore hub with shared knowledge. Each developer uses `/lore-
 | **Lore** | Yes — git-tracked, multi-file | Yes — skills, agents, docs, conventions | Yes — hooks reinforce capture |
 
 Lore's main value over simpler approaches is **compounding structure**. A `CLAUDE.md` file works fine at 50 lines. At 500 lines it becomes a wall of text the agent skims past. Lore routes knowledge to the right location (skill, doc, convention, runbook) and loads it on demand instead of dumping everything into every session.
-
-If your project fits in a single `CLAUDE.md` and you're happy with it, you don't need Lore.
 
 ## Migration
 

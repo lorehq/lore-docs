@@ -39,7 +39,8 @@ Full hook coverage across all lifecycle events.
 
 - **Config:** `.claude/settings.json`
 - **6 hooks:** session banner, per-prompt reminder, context path guide, memory guard, convention guard, knowledge tracker
-- **Events:** `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PostToolUseFailure`
+
+See [Hook Architecture](hook-architecture.md) for the full event reference.
 
 `SessionStart` re-fires after compaction, so the full banner is always present.
 
@@ -49,8 +50,9 @@ Hooks plus an MCP server to compensate for missing per-prompt events.
 
 - **Config:** `.cursor/hooks.json` + `.cursor/mcp.json`
 - **6 hooks:** session banner, capture nudge (beforeShellExecution), compaction flag, failure tracker, knowledge tracker, memory guard
-- **Events:** `sessionStart`, `beforeShellExecution`, `preCompact`, `postToolUseFailure`, `afterFileEdit`, `beforeReadFile`, `preToolUse`
 - **MCP tools:** `lore_check_in` (nudges), `lore_context` (knowledge map), `lore_write_guard` (convention reminders)
+
+See [Hook Architecture](hook-architecture.md) for the full event reference.
 
 Cursor does not display output from `afterFileEdit`, `postToolUseFailure`, or `preCompact` to the agent. Those hooks write state to disk; `beforeShellExecution` and the MCP server read the state back when they fire.
 
@@ -62,7 +64,8 @@ Long-lived ESM plugins with system prompt injection.
 
 - **Config:** `opencode.json` + `.opencode/plugins/`
 - **5 plugins:** session banner + system transform, context path guide, memory guard, convention guard, knowledge tracker
-- **Events:** `SessionInit`, `experimental.chat.system.transform`, `experimental.session.compacting`, `tool.execute.before`, `tool.execute.after`
+
+See [Hook Architecture](hook-architecture.md) for the full event reference.
 
 `chat.system.transform` pushes the full banner into the system prompt on every LLM call. This replaces rather than accumulates — zero token growth regardless of conversation length.
 
@@ -87,10 +90,8 @@ All platforms activate automatically after `npx create-lore`.
 | `lore-*` skills/agents | Yes | — |
 | Operator skills/agents | — | Yes |
 | `hooks/`, `lib/`, `scripts/` | Yes | — |
-| `docs/`, `mkdocs.yml`, `.lore-config` | — | Yes |
+| `docs/`, `mkdocs.yml`, `.lore/config.json` | — | Yes |
 
-Agent platform copies (`.claude/agents/`) inherit `subagentDefaults` values for unset per-platform model fields at sync time. See [Configuration: subagentDefaults](configuration.md#subagentdefaults).
+See [Configuration: subagentDefaults](configuration.md#subagentdefaults).
 
-## Linked Repos
-
-`/lore-link` generates lightweight configs in work repos that point hooks back to the hub. Generated files are added to `.gitignore` automatically. See [Working Across Repos](cross-repo-workflow.md#ide-workflow-lore-link) for generated files and usage.
+See [Cross-Repo Workflow](cross-repo-workflow.md) for how `/lore-link` generates and gitignores config files in work repos.

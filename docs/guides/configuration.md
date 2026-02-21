@@ -4,9 +4,9 @@ title: Configuration
 
 # Configuration
 
-Lore reads settings from `.lore-config` (JSON) at the instance root and from environment variables.
+Lore reads settings from `.lore/config.json` (JSON) at the instance root and from environment variables.
 
-## `.lore-config`
+## `.lore/config.json`
 
 ```json
 {
@@ -53,10 +53,6 @@ Sets default model preferences for worker and operator agents across platforms. 
 **Resolution order:** Agent frontmatter field → `subagentDefaults` → omit (platform picks its own default).
 
 Per-platform fields use vendor-native model identifiers (`sonnet`, `openai/gpt-4o`). No translation is performed. See [How It Works: Per-Platform Model Configuration](../how-it-works.md#per-platform-model-configuration) for frontmatter format.
-
-### `nudgeThreshold` and `warnThreshold`
-
-The bash-tracking hook counts consecutive Bash tool calls. At `nudgeThreshold`, a gentle capture reminder appears. At `warnThreshold`, the reminder is stronger. Both reset on any non-Bash tool use (reads, edits, writes — not just knowledge writes).
 
 ## Tuning for Large Instances
 
