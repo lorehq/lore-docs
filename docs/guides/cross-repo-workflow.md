@@ -56,7 +56,7 @@ None of this pollutes your work repos.
 
 ## Two Workflows
 
-There are two equally valid ways to work with Lore, depending on your agent and tooling.
+Choose based on your agent and tooling:
 
 **CLI agents (Claude Code, OpenCode):** Launch from the Lore instance. This loads instructions, hooks, and accumulated knowledge. Then reference any other repo by path.
 

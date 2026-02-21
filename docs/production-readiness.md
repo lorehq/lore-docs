@@ -55,17 +55,17 @@ The installer (`create-lore`) clones the lore repo at a pinned version tag — n
 All hook source is in your repo after install:
 
 ```
-hooks/                    # Claude Code hooks
+.lore/hooks/              # Claude Code hooks
 .cursor/hooks/            # Cursor hooks
 .opencode/plugins/        # OpenCode hooks
-lib/                      # Shared logic (all hooks import from here)
+.lore/lib/                # Shared logic (all hooks import from here)
 ```
 
 Every file is plain JavaScript with no minification or bundling. Most are under 100 lines; the largest (banner.js) is ~250. Read them directly. The total hook + lib codebase is approximately 1,500 lines.
 
 ```bash
 # Count all hook and lib code
-wc -l hooks/*.js .cursor/hooks/*.js .opencode/plugins/*.js lib/*.js
+wc -l .lore/hooks/*.js .cursor/hooks/*.js .opencode/plugins/*.js .lore/lib/*.js
 ```
 
 ### MEMORY.md Protection

@@ -38,7 +38,7 @@ See [Hook Architecture](hook-architecture.md) for module layout and lifecycle di
 Full hook coverage across all lifecycle events.
 
 - **Config:** `.claude/settings.json`
-- **6 hooks:** session banner, per-prompt reminder, context path guide, memory guard, convention guard, knowledge tracker
+- **7 hooks:** session banner, per-prompt reminder, context path guide, memory guard, convention guard, framework guard, knowledge tracker
 
 See [Hook Architecture](hook-architecture.md) for the full event reference.
 
@@ -63,11 +63,11 @@ Cursor does not display output from `afterFileEdit`, `postToolUseFailure`, or `p
 Long-lived ESM plugins with system prompt injection.
 
 - **Config:** `opencode.json` + `.opencode/plugins/`
-- **5 plugins:** session banner + system transform, context path guide, memory guard, convention guard, knowledge tracker
+- **6 plugins:** session banner + system transform, context path guide, memory guard, convention guard, framework guard, knowledge tracker
 
 See [Hook Architecture](hook-architecture.md) for the full event reference.
 
-`chat.system.transform` pushes the full banner into the system prompt on every LLM call. This replaces rather than accumulates — zero token growth regardless of conversation length.
+`chat.system.transform` fires on every LLM call. The first call injects the full banner (~14K chars); subsequent calls inject a compact reminder (~200 chars). After context compaction, the full banner is restored on the next call.
 
 ## Setup
 
@@ -79,19 +79,19 @@ All platforms activate automatically after `npx create-lore`.
 | **Cursor** | `.cursor/rules/lore-*.mdc` + `.cursor/hooks.json` + `.cursor/mcp.json` |
 | **OpenCode** | `opencode.json` + `.opencode/plugins/` + `.opencode/commands/` |
 
-`CLAUDE.md` is generated from `.lore/instructions.md`. Cursor `.mdc` rules are generated from multiple sources (instructions, agent-rules, conventions, agent-registry). Run `bash scripts/sync-platform-skills.sh` after editing any source to keep platform copies in sync.
+`CLAUDE.md` is generated from `.lore/instructions.md`. Cursor `.mdc` rules are generated from multiple sources (instructions, agent-rules, conventions, agent-registry). Run `bash .lore/scripts/sync-platform-skills.sh` after editing any of those source files to keep platform copies in sync.
 
 ## Sync Boundaries
 
-`/lore-update` and `sync-framework.sh` overwrite framework infrastructure (`hooks/`, `lib/`, `scripts/`, `.opencode/`, `.cursor/hooks/`) and `lore-*` prefixed skills/agents. Operator content is never touched.
+`/lore-update` and `sync-framework.sh` overwrite framework infrastructure (`.lore/hooks/`, `.lore/lib/`, `.lore/scripts/`, `.opencode/`, `.cursor/hooks/`) and `lore-*` prefixed skills/agents. Operator content is never touched.
 
 | Category | Synced | Operator-owned |
 |----------|:------:|:--------------:|
 | `lore-*` skills/agents | Yes | — |
 | Operator skills/agents | — | Yes |
-| `hooks/`, `lib/`, `scripts/` | Yes | — |
+| `.lore/hooks/`, `.lore/lib/`, `.lore/scripts/` | Yes | — |
 | `docs/`, `mkdocs.yml`, `.lore/config.json` | — | Yes |
 
-See [Configuration: subagentDefaults](configuration.md#subagentdefaults).
+`.lore/config.json` controls subagent model defaults — see [Configuration: subagentDefaults](configuration.md#subagentdefaults).
 
 See [Cross-Repo Workflow](cross-repo-workflow.md) for how `/lore-link` generates and gitignores config files in work repos.

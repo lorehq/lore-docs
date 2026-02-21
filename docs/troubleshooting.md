@@ -42,7 +42,7 @@ node --version  # must be >= 18
 
 ### Hooks aren't firing
 
-**Claude Code:** Check that `hooks/` exists and contains `.js` files. Run `claude` from the project root.
+**Claude Code:** Check that `.lore/hooks/` exists and contains `.js` files. Run `claude` from the project root.
 
 **Cursor:** Check that `.cursor/hooks.json` exists and references files in `.cursor/hooks/`. Open the project folder directly in Cursor (not a parent directory).
 
@@ -51,7 +51,7 @@ node --version  # must be >= 18
 For all platforms, verify with:
 
 ```bash
-bash scripts/validate-consistency.sh
+bash .lore/scripts/validate-consistency.sh
 ```
 
 ### "MEMORY.md is intercepted" warning
@@ -63,7 +63,7 @@ Lore blocks reads and writes to `MEMORY.md` in the instance root because platfor
 
 ### Escalating capture reminders are too aggressive
 
-The knowledge tracker counts consecutive Bash tool calls without capture and escalates nudges. Configure thresholds in `.lore-config`:
+The knowledge tracker counts consecutive Bash tool calls without capture and escalates nudges. Configure thresholds in `.lore/config.json`:
 
 ```json
 {
@@ -82,17 +82,17 @@ This script runs 11 cross-reference checks. Common failures:
 
 | Failure | Fix |
 |---------|-----|
-| Platform copies out of sync | `bash scripts/sync-platform-skills.sh` |
-| Registry stale | `bash scripts/generate-registries.sh` |
-| Nav stale | `bash scripts/generate-nav.sh` |
-| Instructions out of sync | `bash scripts/sync-framework.sh` (via `/lore-update`) |
+| Platform copies out of sync | `bash .lore/scripts/sync-platform-skills.sh` |
+| Registry stale | `bash .lore/scripts/generate-registries.sh` |
+| Nav stale | `bash .lore/scripts/generate-nav.sh` |
+| Instructions out of sync | `bash .lore/scripts/sync-framework.sh` (via `/lore-update`) |
 
 ### `mkdocs.yml` nav is stale after adding docs
 
 The nav is auto-generated. Regenerate it:
 
 ```bash
-bash scripts/generate-nav.sh
+bash .lore/scripts/generate-nav.sh
 ```
 
 ## Updates
@@ -103,10 +103,10 @@ bash scripts/generate-nav.sh
 
 ### Version mismatch after update
 
-Check that `.lore-config` and `package.json` agree:
+Check that `.lore/config.json` and `package.json` agree:
 
 ```bash
-bash scripts/check-version-sync.sh
+bash .lore/scripts/check-version-sync.sh
 ```
 
 If they diverge, the update didn't complete cleanly. Run `/lore-update` again.

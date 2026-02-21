@@ -13,7 +13,8 @@ Lore reads settings from `.lore/config.json` (JSON) at the instance root and fro
   "version": "1.0.0",
   "treeDepth": 5,
   "nudgeThreshold": 3,
-  "warnThreshold": 5
+  "warnThreshold": 5,
+  "profile": "standard"
 }
 ```
 
@@ -25,8 +26,9 @@ Lore reads settings from `.lore/config.json` (JSON) at the instance root and fro
 | `treeDepth` | number | `5` | Max directory depth in the knowledge map tree |
 | `nudgeThreshold` | number | `3` | Bash commands before a gentle capture reminder |
 | `warnThreshold` | number | `5` | Bash commands before a strong capture warning |
+| `profile` | string | `"standard"` | Hook behavior profile. See [Hook Profile](#hook-profile). |
 
-All fields are optional. Missing fields fall back to defaults.
+All fields are optional. Missing fields fall back to defaults. If `.lore/config.json` is missing or contains a parse error, all fields silently fall back to defaults — no error is thrown.
 
 **Metadata fields** — `name` and `created` are informational, set during instance creation. Not used by framework logic.
 
@@ -54,9 +56,27 @@ Sets default model preferences for worker and operator agents across platforms. 
 
 Per-platform fields use vendor-native model identifiers (`sonnet`, `openai/gpt-4o`). No translation is performed. See [How It Works: Per-Platform Model Configuration](../how-it-works.md#per-platform-model-configuration) for frontmatter format.
 
+### Hook Profile
+
+Controls which hook behaviors are active for the session.
+
+```json
+{
+  "profile": "discovery"
+}
+```
+
+Any unrecognized value (or a missing `profile` key) falls back to `standard`.
+
+| Value | Behavior |
+|-------|----------|
+| `standard` | Default. All hooks active. Capture nudges at normal thresholds. |
+| `minimal` | Per-tool nudges off. Session banner notes to use `/lore-capture` manually. Use when hooks feel noisy. |
+| `discovery` | All hooks active. Banner adds aggressive capture instructions for environment mapping and skill creation. Use during initial setup or unfamiliar codebase exploration. |
+
 ## Tuning for Large Instances
 
-As a knowledge base grows, the session banner's main variable cost is the **knowledge map** — a directory-only tree of `docs/`, `skills/`, and `agents/`. Growth is proportional to the number of directories, not documents.
+The largest contributor to session banner size is the **knowledge map** — a directory-only tree of `docs/`, `skills/`, and `agents/`. Size grows with the number of directories, not documents.
 
 **`treeDepth`** limits how many directory levels the knowledge map displays. Default is 5. Reducing to 3 or 4 hides deep nesting while showing top-level structure.
 
@@ -66,6 +86,8 @@ As a knowledge base grows, the session banner's main variable cost is the **know
 - `MEMORY.local.md` exceeds ~50 lines → route content to skills or `docs/knowledge/`
 - Conventions section growing → keep it focused on rules, move reference material to `docs/knowledge/`
 - Many active work items → archive completed items with `/lore-capture`
+
+> Archived items (in `archive/` subdirectories) are excluded from the knowledge map tree — they do not appear in the session banner. This keeps the map focused on active content.
 
 ## Environment Variables
 
@@ -101,7 +123,7 @@ Each entry records:
 Analyze collected data:
 
 ```bash
-bash scripts/analyze-hook-logs.sh
+bash .lore/scripts/analyze-hook-logs.sh
 ```
 
 The report shows fires per platform, fires per hook, average output sizes, estimated accumulated context tokens, and any hooks that never fired. To reset: `rm .git/lore-hook-events.jsonl`.
