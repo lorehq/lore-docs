@@ -8,6 +8,7 @@ title: Getting Started
 
 - **Node.js 18+** — for the installer
 - **A supported coding agent** — Claude Code, Cursor, or OpenCode
+- **Docker** (Docker Desktop or Engine) — highly recommended for semantic search and docs UI; not required
 
 ## Install
 
@@ -33,6 +34,20 @@ The agent sees both before your first prompt every session.
 
 For personal preferences that shouldn't be shared via git, edit `docs/knowledge/local/operator-profile.md`. This file is gitignored and injected into every session alongside project context. The default template is ignored until you customize it.
 
+## Start the Docker Sidecar
+
+The Docker sidecar gives agents semantic search over your full knowledge base and opens a live MkDocs site at `localhost:PORT` for browsing it visually. **Highly recommended — start it before your first session.**
+
+```bash
+/lore-docker
+```
+
+Requires Docker (Docker Desktop or Docker Engine). First start pulls the image and loads models — about 1–2 minutes. Subsequent starts are fast.
+
+Without Docker, agents fall back to Grep/Glob search. That works for small knowledge bases; semantic search becomes noticeably better as your docs grow.
+
+See [Docs UI & Semantic Search](guides/docs-ui.md) for configuration and details.
+
 ## First Session
 
 Start your agent in the project directory:
@@ -46,16 +61,6 @@ opencode     # OpenCode
 Work normally. Lore's hooks reinforce knowledge capture as you go. If you prefer opening a work repo in your IDE instead of the Lore instance directory, see [lore link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active.
 
 After substantive work, run `/lore-capture` to trigger a full knowledge capture pass.
-
-## Docs UI & Semantic Search
-
-Run `/lore-docker` to start the local Docker sidecar. It gives the agent semantic search over your knowledge base and opens a live MkDocs site at `localhost:PORT` for browsing it visually.
-
-Requires Docker (Docker Desktop or Docker Engine). First start pulls the image and loads models — about 1–2 minutes. Subsequent starts are fast.
-
-Without Docker, agents fall back to Grep/Glob search. The sidecar is optional but recommended — semantic search improves knowledge retrieval as your docs grow.
-
-See [Docs UI & Semantic Search](guides/docs-ui.md) for configuration and details.
 
 ## Working Across Repos
 

@@ -47,6 +47,10 @@ Override in `.lore/config.json`:
 
 Agents fall back to Grep/Glob silently — no configuration needed. The fallback works reliably for small-to-medium knowledge bases. If queries start missing relevant content or you want the visual docs site, start the container.
 
+## When to Start the Sidecar
+
+Start it at project setup and leave it running. Semantic search improves knowledge retrieval as your docs grow — the value compounds over time. For a brand-new project with minimal docs, Grep/Glob fallback is fine. Once you have more than a few dozen knowledge files, the sidecar pays for itself in retrieval quality.
+
 ## Gotchas
 
 - Model loading takes 30–60s on first start. The docs site appears before semantic search is ready. `/lore-docker status` reports semantic search health separately from site health.
