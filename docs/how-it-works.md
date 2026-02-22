@@ -128,7 +128,7 @@ Workers receive what the orchestrator specifies: task description, skill file pa
 
 #### Per-Platform Model Configuration
 
-Per-platform model fields in agent frontmatter (`claude-model`, `opencode-model`, `cursor-model`) override `subagentDefaults`. See [Configuration](guides/configuration.md#subagentdefaults).
+Worker agent tiers (`lore-worker`, `lore-worker-fast`, `lore-worker-powerful`) and their models are configured via `subagentDefaults` in `.lore/config.json` — not via agent frontmatter. See [Configuration: subagentDefaults](guides/configuration.md#subagentdefaults).
 
 ### 3. Session Acceleration
 

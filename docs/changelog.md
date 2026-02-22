@@ -6,6 +6,22 @@ title: Changelog
 
 All notable changes to Lore are documented here. See [Production Readiness](production-readiness.md) for versioning policy. For full commit history, see [GitHub Releases](https://github.com/lorehq/lore/releases).
 
+## v0.11.0 — 2026-02-22
+
+Worker agent tier naming simplification.
+
+**Worker agents:**
+
+- `lore-worker-agent` renamed to `lore-worker`
+- `lore-worker-default` variant removed — `lore-worker` is now the single standard worker
+- `lore-worker-fast` and `lore-worker-powerful` are only generated when the corresponding tier key is present in `subagentDefaults.claude`
+
+**Configuration:**
+
+- Flat `subagentDefaults` schema removed — no backward compatibility provided
+- New nested schema: `subagentDefaults.claude = { fast?, default?, powerful? }`
+- `lore-worker` uses `claude.default` model if set, otherwise omits the model field (platform picks its own default)
+
 ## v0.10.0 — 2026-02-21
 
 Hook profiles, operator.gitignore persistence, and framework consolidation.
