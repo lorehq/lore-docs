@@ -51,6 +51,7 @@ nav:
   - Home: index.md
   - Getting Started: getting-started.md
   - How It Works: how-it-works.md
+  - Cost Evidence: cost-evidence.md
   - Guides:
     - Working with Lore: guides/interaction.md
     - Working Across Repos: guides/cross-repo-workflow.md

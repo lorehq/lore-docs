@@ -101,7 +101,7 @@ flowchart TD
 
 ### 2. Delegation
 
-The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and conventions per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent branches and keeps dependency-gated steps sequential.
+The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and conventions per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent branches and keeps dependency-gated steps sequential. For measured cost impact, see [Cost Evidence](cost-evidence.md).
 
 ```mermaid
 flowchart TD
