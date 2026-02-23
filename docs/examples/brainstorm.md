@@ -73,4 +73,3 @@ created: 2026-01-10
 This brainstorm informed:
 - [<Roadmap or Plan Name>](../path/to/index.md)
 ```
-

@@ -80,4 +80,3 @@ Use delimited strings:
 
 grep for `declare -A`, `${.*,,}`, `[[ -v`, `readarray` before shipping.
 ```
-
