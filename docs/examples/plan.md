@@ -72,9 +72,3 @@ None currently.
 ```
 
 See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for status workflow, archiving, and hierarchy.
-
-## See Also
-
-- [Roadmaps & Plans Guide](../guides/roadmaps-and-plans.md)
-- [Example Roadmap](roadmap.md)
-- [Example Brainstorm](brainstorm.md)

@@ -12,7 +12,6 @@ Lore follows [semantic versioning](https://semver.org/). During 0.x:
 
 - **Patch releases** (0.8.0 → 0.8.1) — bug fixes, CI improvements, docs. No breaking changes.
 - **Minor releases** (0.8.x → 0.9.0) — new features, new hooks, new lib modules. May include breaking changes to hook output format or config fields. Release notes document what changed and how to migrate.
-- **`/lore-update`** — the built-in update command. It syncs framework files (`lore-*` prefix) while preserving your operator-owned content (skills, agents, docs, conventions).
 
 **What can break between minor versions:**
 
@@ -42,8 +41,6 @@ Lore hooks are plain JavaScript files that run as child processes of your coding
 - Write to stdout (injecting context into the agent's conversation)
 - Scaffold sticky files (`MEMORY.local.md`, `.gitignore` entries) if missing
 
-Hooks are plain JavaScript child processes scoped to the project directory — they cannot make network requests, spawn subprocesses, or access files outside the project.
-
 ### Supply Chain
 
 Lore has **zero npm runtime dependencies**. All `lib/` modules use only Node.js built-ins (`fs`, `path`, `os`, `crypto`, `util`). Dev dependencies (eslint, prettier) are not installed by `create-lore` and do not run in hooks.
@@ -61,7 +58,7 @@ All hook source is in your repo after install:
 .lore/lib/                # Shared logic (all hooks import from here)
 ```
 
-Every file is plain JavaScript with no minification or bundling. Most are under 100 lines; the largest (banner.js) is ~250. Read them directly. The total hook + lib codebase is approximately 1,500 lines.
+Every file is plain JavaScript with no minification or bundling. Read them directly.
 
 ```bash
 # Count all hook and lib code
@@ -74,20 +71,13 @@ Hooks actively block reads and writes to `MEMORY.md` at the project root. This p
 
 ## Known Limitations
 
-- **AI compliance is probabilistic.** Hooks inject reminders, not commands. The agent may skip capture in long sessions or under heavy tool use. Running `/lore-capture` after substantive work improves consistency.
+- **AI compliance is probabilistic.** Hooks inject reminders, not commands. The agent may skip capture in long sessions or when tool calls accumulate rapidly. Running `/lore-capture` after substantive work improves consistency.
 - **Single-developer origin.** Lore was built and tested by one developer. The test suite covers hooks, lib modules, and the scaffolder across 3 OSes and 2 Node versions, but edge cases in team workflows are untested.
 - **No access control.** Anyone with repo access can read and modify all knowledge, skills, and agents. Lore trusts the git permission model.
 - **Shell scripts require bash.** Core scripts (`validate-consistency.sh`, `generate-nav.sh`, etc.) require bash. Windows users need Git Bash, WSL, or equivalent. Hooks themselves are pure Node.js and work everywhere.
-- **Context window cost is unmeasured.** Hook injections consume tokens from the agent's context window. Measure your own instance with `LORE_HOOK_LOG=1` — see [Hook Event Logging](guides/configuration.md#hook-event-logging).
+- **Hook injection cost is unmeasured per-instance.** Hook injections consume tokens from the agent's context window. Measure your own instance with `LORE_HOOK_LOG=1` — see [Hook Event Logging](guides/configuration.md#hook-event-logging).
 
-## Non-Goals
-
-- **Hosted knowledge storage.**
-- **Multi-user real-time collaboration.**
-- **Plugin ecosystem.**
-- **Model training or fine-tuning.**
-
-See [When to Use Lore](when-to-use-lore.md) for fit/no-fit guidance.
+See [When to Use Lore: Poor Fit](when-to-use-lore.md#poor-fit) for what Lore intentionally doesn't do.
 
 ## CI and Test Coverage
 
@@ -106,7 +96,6 @@ Releases are tag-driven via GitHub Actions. The `create-lore` release workflow v
 1. Check the [changelog](changelog.md) for breaking changes
 2. Run `/lore-update` from your Lore instance
 3. Review the diff — only `lore-*` files are touched
-4. See [Troubleshooting](troubleshooting.md) for the full fix-by-symptom table.
-5. Commit the update
+4. Commit the update
 
-If something breaks, `git checkout` the previous state. All changes are local and reversible.
+If something breaks, `git checkout` the previous state. All changes are local and reversible. See [Troubleshooting](troubleshooting.md) for the fix-by-symptom table.

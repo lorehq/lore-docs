@@ -12,7 +12,7 @@ Lore supports three coding agent platforms. All share the same knowledge base �
 |---------|:-----------:|:------:|:--------:|
 | Session banner | Yes | Yes | Yes |
 | Per-prompt reinforcement | Yes (conversation history) | No (compensated by MCP tools) | Yes (system prompt, zero accumulation) |
-| MCP tools | No | Yes (`lore_check_in`, `lore_context`, `lore_write_guard`) | No |
+| MCP tools | Yes (`lore_search`, `lore_read`, `lore_health` via `.mcp.json`) | Yes (`lore_check_in`, `lore_context`, `lore_write_guard`) | No |
 | MEMORY.md guard | Yes | Yes | Yes |
 | Knowledge capture reminders | Yes | Yes | Yes |
 | Bash escalation tracking | Yes | Yes | Yes |
@@ -24,50 +24,26 @@ Lore supports three coding agent platforms. All share the same knowledge base �
 ## Hook Directories
 
 ```
-hooks/              → Claude Code (subprocess per event)
+.lore/hooks/        → Claude Code (subprocess per event)
 .cursor/hooks/      → Cursor (subprocess per event)
 .cursor/mcp/        → Cursor MCP server (long-lived process)
 .opencode/plugins/  → OpenCode (long-lived ESM modules)
-lib/                → Shared logic (all platforms)
+.lore/lib/          → Shared logic (all platforms)
 ```
 
-See [Hook Architecture](hook-architecture.md) for module layout and lifecycle diagrams.
+See [Hook Architecture](hook-architecture.md) for module layout, lifecycle diagrams, and the full event reference.
 
 ### Claude Code
 
-Full hook coverage across all lifecycle events.
-
-- **Config:** `.claude/settings.json`
-- **7 hooks:** session banner, per-prompt reminder, context path guide, memory guard, convention guard, framework guard, knowledge tracker
-
-See [Hook Architecture](hook-architecture.md) for the full event reference.
-
-`SessionStart` re-fires after compaction, so the full banner is always present.
+Config: `.claude/settings.json`. Seven hooks cover all lifecycle events: session banner, per-prompt reminder, context path guide, memory guard, convention guard, framework guard, and knowledge tracker. `SessionStart` re-fires after compaction so the full banner is always present.
 
 ### Cursor
 
-Hooks plus an MCP server to compensate for missing per-prompt events.
-
-- **Config:** `.cursor/hooks.json` + `.cursor/mcp.json`
-- **6 hooks:** session banner, capture nudge (beforeShellExecution), compaction flag, failure tracker, knowledge tracker, memory guard
-- **MCP tools:** `lore_check_in` (nudges), `lore_context` (knowledge map), `lore_write_guard` (convention reminders)
-
-See [Hook Architecture](hook-architecture.md) for the full event reference.
-
-Cursor does not display output from `afterFileEdit`, `postToolUseFailure`, or `preCompact` to the agent. Those hooks write state to disk; `beforeShellExecution` and the MCP server read the state back when they fire.
-
-**Gaps:** No per-prompt hook, no context path guide.
+Config: `.cursor/hooks.json` + `.cursor/mcp.json`. Six hooks plus an MCP server (`lore_check_in`, `lore_context`, `lore_write_guard`) that compensates for Cursor's missing per-prompt hook. Hooks that Cursor silences (`afterFileEdit`, `postToolUseFailure`, `preCompact`) write state to disk; `beforeShellExecution` and the MCP server read it back. **Gaps:** No per-prompt hook, no context path guide.
 
 ### OpenCode
 
-Long-lived ESM plugins with system prompt injection.
-
-- **Config:** `opencode.json` + `.opencode/plugins/`
-- **6 plugins:** session banner + system transform, context path guide, memory guard, convention guard, framework guard, knowledge tracker
-
-See [Hook Architecture](hook-architecture.md) for the full event reference.
-
-`chat.system.transform` fires on every LLM call. The first call injects the full banner (~14K chars); subsequent calls inject a compact reminder (~200 chars). After context compaction, the full banner is restored on the next call.
+Config: `opencode.json` + `.opencode/plugins/`. Six long-lived ESM plugins with system prompt injection via `chat.system.transform`. The first LLM call injects the full banner (~14K chars); subsequent calls are silent (no injection). After context compaction, the full banner is restored on the next call.
 
 ## Setup
 

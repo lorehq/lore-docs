@@ -60,9 +60,3 @@ target: 2026-06-30
 ```
 
 See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for status workflow, archiving, and hierarchy.
-
-## See Also
-
-- [Roadmaps & Plans Guide](../guides/roadmaps-and-plans.md)
-- [Example Plan](plan.md)
-- [Example Brainstorm](brainstorm.md)

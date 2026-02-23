@@ -6,6 +6,14 @@ title: Changelog
 
 All notable changes to Lore are documented here. See [Production Readiness](production-readiness.md) for versioning policy. For full commit history, see [GitHub Releases](https://github.com/lorehq/lore/releases).
 
+## v0.11.1 — 2026-02-22
+
+Default config template and MCP tool renames.
+
+- Default `config.json` template now ships with docker ports (9184/9185), `standard` profile, `subagentDefaults`, and semantic search settings
+- Static/dynamic banner split: conventions and project context baked into `CLAUDE.md` at generation time; active work items and knowledge map injected by `SessionStart` hook each session
+- MCP search server tools renamed: `lore_search`, `lore_read`, `lore_health`
+
 ## v0.11.0 — 2026-02-22
 
 Worker agent tier naming simplification.

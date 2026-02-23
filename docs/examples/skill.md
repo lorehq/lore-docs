@@ -39,7 +39,7 @@ allowed-tools: Bash, Read, etc
 
 ## Real Example
 
-This skill was captured after discovering that macOS ships Bash 3.2 and common Bash 4+ features silently break:
+The `bash-macos-compat` skill was captured after discovering that macOS ships Bash 3.2 and common Bash 4+ features silently break:
 
 ```yaml
 ---
@@ -81,8 +81,3 @@ Use delimited strings:
 grep for `declare -A`, `${.*,,}`, `[[ -v`, `readarray` before shipping.
 ```
 
-## See Also
-
-- [Example Plan](plan.md)
-- [Example Roadmap](roadmap.md)
-- [Example Brainstorm](brainstorm.md)

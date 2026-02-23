@@ -38,7 +38,7 @@ title: When to Use Lore
 
 **Your environment prohibits local file writes.**
 
-- Lore stores everything as files in your git repo. Sandboxed environments, read-only containers, or restricted CI runners won't work.
+- Lore stores everything as files in your git repo and won't work in read-only or sandboxed environments.
 
 ## Team Workflows
 
@@ -53,7 +53,7 @@ See [Cross-Repo Workflow](guides/cross-repo-workflow.md) for team topology optio
 | **Custom system prompts** | Yes — but manual maintenance | Your structure | Depends on platform |
 | **Lore** | Yes — git-tracked, multi-file | Yes — skills, agents, docs, conventions | Yes — hooks reinforce capture |
 
-Lore's main value over simpler approaches is **compounding structure**. A `CLAUDE.md` file works fine at 50 lines. At 500 lines it becomes a wall of text the agent skims past. Lore routes knowledge to the right location (skill, doc, convention, runbook) and loads it on demand instead of dumping everything into every session. For measured cost data, see [Cost Evidence](cost-evidence.md).
+Lore's main value over simpler approaches is **compounding structure**. A `CLAUDE.md` file works fine at 50 lines. At 500 lines the file becomes a wall of text the agent skims past. Lore routes knowledge to the right location (skill, doc, convention, runbook) and loads it on demand instead of dumping everything into every session. For measured cost data, see [Cost Evidence](cost-evidence.md).
 
 ## Migration
 
@@ -75,7 +75,7 @@ Lore's main value over simpler approaches is **compounding structure**. A `CLAUD
 
 ### Uninstalling
 
-Lore is just files. Delete the Lore directories and you're back to a normal project:
+Lore is plain files. Delete the Lore directories and you're back to a normal project:
 
 ```bash
 rm -rf .lore .claude .cursor .opencode hooks lib scripts

@@ -10,10 +10,10 @@ Lore is a lightweight framework that gives coding agents persistent memory. Inst
 
 ## What You Get
 
-- **Knowledge Capture** — Run `/lore-capture` and the agent documents gotchas as reusable skills and maps your context through docs. API quirks, auth tricks, encoding issues — all persist across sessions.
-- **Semantic Search & Docs UI** — Semantic search over your full knowledge base and a live docs UI — both running locally. Run `/lore-docker` to start the sidecar. Agents query by meaning, not just filename, and get ranked results. **Highly recommended.** Without Docker, agents fall back to Grep/Glob.
-- **Delegation** — An orchestrator/worker pattern where the main model dispatches execution to cheaper models that run in parallel. Less token spend, cleaner context windows.
-- **Work Continuity** — Roadmaps and plans persist across sessions and surface at startup, so long-running projects have persistent context from day one.
+- **Knowledge Capture** — Gotchas, API quirks, and environment details persist as searchable skills and docs. See [How It Works](how-it-works.md#1-knowledge-capture).
+- **Semantic Search & Docs UI** — Local semantic search and a live docs UI via Docker sidecar. See [Docs UI & Semantic Search](guides/docs-ui.md).
+- **Delegation** — Orchestrator/worker pattern that dispatches work to cheaper models in parallel. See [How Delegation Works](how-delegation-works.md).
+- **Work Continuity** — Roadmaps and plans surface at session start so long-running projects pick up where they left off. See [How Delegation Works: Session Acceleration](how-delegation-works.md#session-acceleration).
 
 ## Quick Start
 

@@ -74,8 +74,3 @@ This brainstorm informed:
 - [<Roadmap or Plan Name>](../path/to/index.md)
 ```
 
-## See Also
-
-- [Example Roadmap](roadmap.md)
-- [Example Plan](plan.md)
-- [Roadmaps & Plans Guide](../guides/roadmaps-and-plans.md)

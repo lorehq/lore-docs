@@ -56,23 +56,11 @@ bash .lore/scripts/validate-consistency.sh
 
 ### "MEMORY.md is intercepted" warning
 
-Lore blocks reads and writes to `MEMORY.md` in the instance root because platform-level memory features overwrite the file between sessions. Use the persistent alternatives:
-
-- **Scratch notes:** `MEMORY.local.md` (gitignored, survives sessions)
-- **Structured knowledge:** `docs/knowledge/` (git-tracked, shared)
+Lore blocks `MEMORY.md` to prevent platform-level memory from overwriting knowledge; route persistent knowledge to skills or docs instead. See [Production Readiness: MEMORY.md Protection](production-readiness.md#memorymd-protection) for details and alternatives.
 
 ### Escalating capture reminders are too aggressive
 
-The knowledge tracker counts consecutive Bash tool calls without capture and escalates nudges. Configure thresholds in `.lore/config.json`:
-
-```json
-{
-  "nudgeThreshold": 5,
-  "warnThreshold": 10
-}
-```
-
-Higher values = fewer reminders. See [Configuration](guides/configuration.md) for details.
+Adjust `nudgeThreshold` and `warnThreshold` in `.lore/config.json`. See [Configuration: Hook Profile](guides/configuration.md#hook-profile) for profile options.
 
 ## Consistency
 
@@ -84,16 +72,8 @@ This script runs 11 cross-reference checks. Common failures:
 |---------|-----|
 | Platform copies out of sync | `bash .lore/scripts/sync-platform-skills.sh` |
 | Registry stale | `bash .lore/scripts/generate-registries.sh` |
-| Nav stale | `bash .lore/scripts/generate-nav.sh` |
+| Nav stale | `bash .lore/scripts/generate-nav.sh` — regenerates `mkdocs.yml` nav after adding or renaming docs |
 | Instructions out of sync | `bash .lore/scripts/sync-framework.sh` (via `/lore-update`) |
-
-### `mkdocs.yml` nav is stale after adding docs
-
-The nav is auto-generated. Regenerate it:
-
-```bash
-bash .lore/scripts/generate-nav.sh
-```
 
 ## Updates
 

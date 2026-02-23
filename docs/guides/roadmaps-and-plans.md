@@ -34,7 +34,7 @@ docs/work/roadmaps/<initiative>/plans/<plan>/index.md
 roadmap: <roadmap-slug>
 ```
 
-Only for standalone plans that reference a roadmap — not for plans nested under a roadmap folder (the folder location already implies the relationship).
+Only for standalone plans that reference a roadmap — not for plans nested under a roadmap folder.
 
 ## Creating
 
@@ -56,16 +56,7 @@ active → on-hold → active (resumed)
 - **completed**: Finished; keep `status: completed` and move folder to `archive/`
 - **cancelled**: Stopped/abandoned; keep `status: cancelled` and move folder to `archive/`
 
-### Allowed Status Values
-
-Use exactly these values for roadmap/plan frontmatter:
-
-- `active`
-- `on-hold`
-- `completed`
-- `cancelled`
-
-`archived` is a folder location, not a status value.
+Use these four values in frontmatter: `active`, `on-hold`, `completed`, `cancelled`. Note: `archived` is a folder location, not a status value. The framework reads `active` and `on-hold` for banner display. `completed` and `cancelled` are conventions for archiving workflows, not validated by framework logic.
 
 ## Archiving
 

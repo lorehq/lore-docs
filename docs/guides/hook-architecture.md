@@ -17,13 +17,13 @@ sequenceDiagram
 
     Note over Hooks: SessionStart
     Hooks->>KB: ensureStickyFiles()
-    Hooks->>KB: Read agent-rules, conventions, work items
-    Hooks->>Agent: Inject session banner
+    Hooks->>KB: Read active work items, skill registry, knowledge map
+    Hooks->>Agent: Inject dynamic session banner (active work, knowledge map, skill registry)
 
     loop Every Prompt
         User->>Agent: Message
         Note over Hooks: UserPromptSubmit
-        Hooks->>Agent: Knowledge discovery + work tracking reminder
+        Hooks->>Agent: Knowledge-base-first search prompt + ambiguity scan
         Agent->>Agent: Work (tool calls)
 
         Note over Hooks: PreToolUse
@@ -32,7 +32,6 @@ sequenceDiagram
 
         Note over Hooks: PostToolUse
         Hooks->>Agent: Capture reminder (escalating)
-        Hooks->>Hooks: Set nav-dirty flag if docs/ changed
     end
 ```
 
@@ -94,36 +93,13 @@ flowchart TB
 
 ## Banner-Loaded Skills
 
-Skills with `banner-loaded: true` in their YAML frontmatter have their full body inlined into the session banner at startup. Use `banner-loaded: true` for high-priority skills that must always be in context without explicit loading.
-
-```yaml
----
-name: my-skill
-banner-loaded: true
----
-# Skill content inlined into every session banner
-```
-
-Standard skills (without `banner-loaded: true`) are listed by name in the knowledge map tree but not loaded automatically.
+Set `banner-loaded: true` in a skill's YAML frontmatter to inline its full body into the session banner at startup. Standard skills are listed by name in the knowledge map tree but not loaded automatically. See [Working with Lore](interaction.md#bringing-existing-skills) for skill format and import.
 
 ## Platform Adapters
 
 Each platform has a different hook API. Adapters translate between the platform's interface and the shared `lib/` functions.
 
-| Hook Point | Claude Code | Cursor | OpenCode |
-|-----------|-------------|--------|----------|
-| Session start | `SessionStart` | `sessionStart` | `SessionInit` |
-| Per-prompt | `UserPromptSubmit` | -- | `chat.system.transform` |
-| Memory guard | `PreToolUse` | `beforeReadFile` + `preToolUse` | `tool.execute.before` |
-| Knowledge tracker | `PostToolUse` | `afterFileEdit` (silent) | `tool.execute.after` |
-| Capture nudge | `PostToolUse` (in knowledge-tracker) | `beforeShellExecution` | `tool.execute.after` (in knowledge-tracker) |
-| Context path guide | `PreToolUse` | -- | `tool.execute.before` |
-| MCP tools | -- | `lore_check_in` + `lore_context` | -- |
-| Compaction | `SessionStart` re-fires | `preCompact` flag | `session.compacting` |
-
-Cursor does not display output from `afterFileEdit`, `postToolUseFailure`, or `preCompact` hooks to the agent, and has no per-prompt hook. The MCP server (`lore_check_in`, `lore_context`) compensates by providing on-demand access to nudges and the knowledge map.
-
-See [Platform Support](platform-support.md) for the feature matrix and setup details.
+See [Platform Support](platform-support.md) for the full feature matrix across platforms.
 
 ## Hook Behavior Notes
 
@@ -133,11 +109,15 @@ Detects whether the agent is operating in a Lore hub repo or a linked work repo.
 
 ### context-path-guide.js
 
-Fires when the agent accesses files under `docs/context/` or `docs/knowledge/`. Outputs a knowledge map tree to help the agent navigate to the right location for context reads and writes. Fires on `PreToolUse`.
+Fires on `PreToolUse` for Write/Edit operations under `docs/context/` or `docs/knowledge/`. Outputs a knowledge map tree to help the agent navigate to the right location for writes. Does not fire on reads.
 
 ### failure-tracker.js (Cursor)
 
 Sets a flag when a tool use fails. The `capture-nudge.js` hook reads the flag in `beforeShellExecution` to deliver capture reminders when the agent transitions from a failed tool use to a shell command. The two-hook pattern compensates for Cursor not displaying `postToolUseFailure` output to the agent.
+
+### session-init.js (SessionStart)
+
+Static content (conventions, agent-rules) is embedded in `CLAUDE.md` at generation time by `sync-platform-skills.sh`. The `SessionStart` hook injects only the dynamic banner — active work items, the knowledge map tree, and the skill registry. This keeps the hook output small and current without re-reading static files every session.
 
 ### ensure-structure.sh
 
@@ -145,4 +125,4 @@ Runs on `SessionStart`. Creates stub `index.md` files for any knowledge director
 
 ### Read-only tool reset
 
-When the agent uses a read-only tool (Read, Glob, Grep, WebFetch), the Bash command counter resets to 0 rather than incrementing. Capture nudges only accumulate against shell commands — reading files does not count toward the nudge or warn thresholds.
+When the agent uses a read-only tool (Read, Glob, Grep), the Bash command counter resets to 0 rather than incrementing. Capture nudges only accumulate against shell commands — reading files does not count toward the nudge or warn thresholds.

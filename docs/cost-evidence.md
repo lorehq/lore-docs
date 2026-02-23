@@ -68,7 +68,7 @@ Source: [Anthropic API Pricing](https://docs.anthropic.com/en/docs/about-claude/
 
 **The steady state is 59% cheaper and 44% faster.** Lore Runbook ($0.19 median, 0m 40s) vs Raw Cold ($0.45 median, 1m 12s). This is the cost of a task after knowledge has been captured — which is the normal operating mode after initial setup.
 
-**Runbook is the most predictable.** Standard deviation drops from $0.11 (raw cold) to $0.04 (runbook). The cost range tightens from 2.0x ($0.30–$0.61) to 1.9x ($0.14–$0.27). Structured knowledge doesn't just reduce cost — it reduces variance.
+**Runbook is the most predictable.** Standard deviation drops from $0.11 (raw cold) to $0.04 (runbook). The cost range tightens from 2.0x ($0.30–$0.61) to 1.9x ($0.14–$0.27). Structured knowledge reduces both cost and variance.
 
 ## Capture ROI
 
@@ -101,7 +101,7 @@ The capture investment pays for itself on the very first reuse.
 
 Model tiering and context isolation are structural — they apply from the first run. Knowledge reuse and runbook procedures compound over time.
 
-For how these mechanisms work, see [How It Works: Delegation](how-it-works.md#2-delegation) and [Configuration](guides/configuration.md).
+For how these mechanisms work, see [How Delegation Works](how-delegation-works.md) and [Configuration](guides/configuration.md).
 
 ## Limitations
 

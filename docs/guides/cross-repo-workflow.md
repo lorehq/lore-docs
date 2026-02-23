@@ -52,7 +52,7 @@ The agent operates on files and commands anywhere on your machine. There's no pa
 | **Runbooks** | "How to deploy app-api to staging" |
 | **Roadmaps/plans** | Work that spans multiple repos |
 
-None of this pollutes your work repos.
+None of these artifacts pollute your work repos.
 
 ## Two Workflows
 
@@ -87,7 +87,7 @@ In the target repo, `/lore-link` creates:
 - **Cursor** — `.cursor/hooks.json` + `.cursor/mcp.json` + `.cursor/rules/lore-*.mdc` pointing to the hub
 - **OpenCode** — `.opencode/plugins/` wrappers (3 of 5 hub plugins: session-init, protect-memory, knowledge-tracker) + `.opencode/commands/` + `opencode.json` pointing to the hub
 - **Instructions** — `CLAUDE.md` rewritten from hub's `.lore/instructions.md`
-- **Marker** — `.lore` file recording the hub path and link timestamp
+- **Link record** — `.lore/links` in the hub repo (a JSON array) updated with the linked repo path and timestamp
 
 All generated files are added to the target repo's `.gitignore` automatically. Existing files are backed up with a `.bak` extension before overwriting.
 
@@ -109,25 +109,10 @@ Run `/lore-link --refresh` after `/lore-update` to regenerate configs in all lin
 
 ## Team Topologies
 
-Lore is designed for individual operators with coding agents, but teams can adopt it.
+| Topology | How it works |
+|----------|-------------|
+| Shared instance | One Lore instance in git. Team collaborates via branches, PRs, code review on `docs/` and `.lore/skills/`. |
+| Instance per developer | Each developer runs their own instance. Share skills by pushing/pulling between repos. |
+| Hub + linked repos | One hub with `/lore-link` per work repo. Centralized knowledge, decentralized development. |
 
-### One Instance Per Developer
-
-Each developer maintains their own Lore instance. Knowledge captures reflect individual discoveries. Sharing happens through git — push your instance, teammates pull useful skills or docs into theirs.
-
-**Pros:** No conflicts, each developer's agent captures their patterns.
-**Cons:** Knowledge doesn't automatically propagate across the team.
-
-### Shared Instance
-
-The team shares a single Lore instance in a dedicated repo. Everyone commits knowledge to the same `docs/` and `.lore/skills/`. Standard git workflow applies — branches, PRs, code review.
-
-**Pros:** Knowledge compounds across the whole team. New members benefit from day one.
-**Cons:** Merge conflicts in docs. Capture conventions need team agreement. More noise in the knowledge base.
-
-### Hub Per Team, Link Per Repo
-
-A team maintains one Lore hub with shared knowledge. Each developer uses `/lore-link` to connect their work repos to the hub. The hub holds skills, conventions, and context. Work repos get hooks that point back to the hub.
-
-**Pros:** Centralized knowledge, decentralized work. Each repo stays clean.
-**Cons:** Hub maintenance is a team responsibility. Breaking changes in the hub affect all linked repos.
+The single-developer model is the primary use case — team patterns follow naturally from it.

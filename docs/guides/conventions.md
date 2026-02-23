@@ -30,11 +30,7 @@ After injecting matched conventions, the guard lists remaining conventions as a 
 
 ### Platform Support
 
-| Platform | Mechanism | Automatic? |
-|---|---|---|
-| Claude Code | PreToolUse hook on Write/Edit | Yes |
-| OpenCode | ESM plugin on `tool.execute.before` | Yes |
-| Cursor | MCP tool `lore_write_guard` | Agent-initiated (instructed by cursor rule) |
+Convention enforcement works on all three platforms. See [Platform Support](platform-support.md) for the mechanism comparison.
 
 ## Default Conventions
 

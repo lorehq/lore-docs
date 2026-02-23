@@ -44,15 +44,13 @@ flowchart TB
     KB -.->|Next Session| Parse
 ```
 
-When the Docker sidecar is running, agents query the knowledge base via semantic search rather than file Grep/Glob — returning ranked results by topic relevance.
-
 ## Three Goals
 
 ### 1. Knowledge Capture
 
-Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract this into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. The orchestrator finds relevant skills by name and description when delegating related tasks.
+Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract that knowledge into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. The orchestrator finds relevant skills by name and description when delegating related tasks.
 
-#### The "Don't Ask Twice" Loop
+#### The Capture-and-Reuse Loop
 
 ```mermaid
 sequenceDiagram
@@ -99,78 +97,26 @@ flowchart TD
     registry --> done[Skill available for\nworker delegation]
 ```
 
-### 2. Delegation
-
-The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and conventions per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent branches and keeps dependency-gated steps sequential. For measured cost impact, see [Cost Evidence](cost-evidence.md).
-
-```mermaid
-flowchart TD
-    Request[Incoming Request] --> Q1{Benefits from\nfresh context?}
-    Q1 -->|No| Direct[Handle Directly]
-    Q1 -->|Yes| Skills[Select skills from registry]
-    Skills --> Spawn[Spawn worker with\nskills + conventions + scope]
-    Spawn --> Execute[Worker executes task]
-    Execute --> Review[Orchestrator reviews results]
-    Direct --> Review
-    Review --> Capture[Knowledge capture]
-```
-
-| Orchestrator | Worker Agent |
-|-------------|-------------|
-| Understand user intent | Execute delegated task |
-| Select relevant skills | Load what orchestrator specifies |
-| Coordinate multi-worker flows | Stay within scope boundaries |
-| Handle knowledge capture | Report gotchas and findings |
-
-#### Subagent Context Contract
-
-Workers receive what the orchestrator specifies: task description, skill file paths, convention file paths, and scope boundaries. `docs/context/agent-rules.md` is injected into the orchestrator's session banner; workers receive conventions and skills selected by the orchestrator per-task.
-
-#### Per-Platform Model Configuration
-
-Worker agent tiers (`lore-worker`, `lore-worker-fast`, `lore-worker-powerful`) and their models are configured via `subagentDefaults` in `.lore/config.json` — not via agent frontmatter. See [Configuration: subagentDefaults](guides/configuration.md#subagentdefaults).
-
-### 3. Session Acceleration
-
-```mermaid
-flowchart TB
-    subgraph P1["Phase 1: Foundation"]
-        P1a[Explore integrations]
-        P1b[Hit gotchas, create first skills]
-        P1c["Heavy discovery cost"]
-    end
-
-    subgraph P2["Phase 2: Specialization"]
-        P2a[Workers handle delegated tasks]
-        P2b[Context knowledge fills in]
-        P2c["Balanced: execute + delegate"]
-    end
-
-    subgraph P3["Phase 3: Full Context"]
-        P3a[Orchestrator delegates most work]
-        P3b[Full context]
-        P3c["Minimal discovery, maximum leverage"]
-    end
-
-    P1 --> P2 --> P3
-```
+See [How Delegation Works](how-delegation-works.md) for the orchestrator-worker model, worker tiers, and session acceleration.
 
 ## Context Efficiency
 
-Lore uses indirection — telling the agent *where to find things* rather than loading everything into context.
+Lore uses indirection — telling the agent *where to find things* rather than loading all knowledge into context at session start.
 
 | Layer | What It Contains |
 |-------|------------------|
-| `.lore/instructions.md` (~115 lines) | Framework rules, knowledge routing, naming conventions |
+| `.lore/instructions.md` | Framework rules, knowledge routing, naming conventions |
 | Session start: framework | Operating principles, active agents, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` |
 | Session start: operator profile | Identity and preferences from `docs/knowledge/local/operator-profile.md` (gitignored) |
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` |
-| Session start: knowledge map | Directory tree of docs/, skills/, and agents/ |
+| Session start: knowledge map | Directory tree of `docs/`, `.lore/skills/`, and `.lore/agents/` |
 | Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |
 | Per-prompt reinforcement | Delegation + knowledge discovery + work tracking nudges |
 | Post-tool-use reinforcement | Capture reminders with escalating urgency |
 | Skills and docs | Loaded on-demand when invoked or needed |
+
+**Static vs. dynamic banner split:** Conventions, agent-rules, and project context are baked into `CLAUDE.md` at generation time — these are stable and benefit from prompt cache hits. Active work items, the knowledge map, and the skill registry are injected by the `SessionStart` hook each session, so they stay current without regenerating `CLAUDE.md`.
 
 When the Docker sidecar is running, the session banner includes a semantic search URL. Agents query by topic to find relevant docs and skills without loading the full directory tree. See [Docs UI & Semantic Search](guides/docs-ui.md).
 
