@@ -46,6 +46,9 @@ flowchart TB
         sticky["sticky.js<br/>Sticky file scaffold"]
         tracker["tracker.js<br/>Tool classification"]
         guard["memory-guard.js<br/>MEMORY.md protection"]
+        frontmatter["frontmatter.js<br/>YAML frontmatter parser"]
+        genagents["generate-agents.js<br/>Agent file generation"]
+        linkedrw["linked-rewrite.js<br/>Cross-repo path rewrite"]
         debug["debug.js<br/>Debug logging"]
         hooklog["hook-logger.js<br/>Event logging"]
     end
@@ -80,7 +83,9 @@ flowchart TB
     end
 
     cc_si & cu_si & oc_si --> banner
-    banner --> tree & config & sticky
+    banner --> tree & config & sticky & frontmatter
+    cc_si --> genagents
+    cu_mcp --> linkedrw
     cc_kt & cu_kt & oc_kt --> tracker
     cu_cn --> tracker & config
     cu_mcp --> banner & tracker & config
@@ -123,6 +128,6 @@ Static content (conventions, agent-rules) is embedded in `CLAUDE.md` at generati
 
 Runs on `SessionStart`. Creates stub `index.md` files for any knowledge directories that don't have one. Prevents empty directory entries from appearing in the knowledge map without any navigation context.
 
-### Read-only tool reset
+### Tool counter reset
 
-When the agent uses a read-only tool (Read, Glob, Grep), the Bash command counter resets to 0 rather than incrementing. Capture nudges only accumulate against shell commands — reading files does not count toward the nudge or warn thresholds.
+When the agent uses a read-only tool (Read, Glob, Grep) or writes to a knowledge path (`docs/`, `.lore/skills/`, `.claude/skills/`), the Bash command counter resets to 0. Capture nudges only accumulate against consecutive shell commands — reading files and writing knowledge do not count toward the nudge or warn thresholds.

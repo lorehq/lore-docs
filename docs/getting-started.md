@@ -48,7 +48,7 @@ cursor .     # Cursor (open the project)
 opencode     # OpenCode
 ```
 
-Work normally. Lore's hooks reinforce knowledge capture as you go. To open a work repo in your IDE instead of the Lore instance directory, see [lore link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active.
+Work normally. Lore's hooks reinforce knowledge capture as you go. To open a work repo in your IDE instead of the Lore instance directory, see [/lore-link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active.
 
 After substantive work, run `/lore-capture` to trigger a full knowledge capture pass.
 

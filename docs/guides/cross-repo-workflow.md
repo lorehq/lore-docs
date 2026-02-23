@@ -20,7 +20,7 @@ flowchart TD
     C -->|knowledge flows back| Lore
 ```
 
-1. **Connect your agent to the Lore instance.** CLI agents launch from here directly. IDE agents use [`lore link`](#ide-workflow-lore-link) to work from the code repo with hooks firing from the hub.
+1. **Connect your agent to the Lore instance.** CLI agents launch from here directly. IDE agents use [`/lore-link`](#ide-workflow-lore-link) to work from the code repo with hooks firing from the hub.
 
 2. **Work on other repos.** The agent reads, writes, and runs commands across repos using absolute paths.
 
@@ -66,9 +66,9 @@ claude       # Claude Code
 opencode     # OpenCode
 ```
 
-**IDE agents (Cursor):** Use [`lore link`](#ide-workflow-lore-link) to work from your code repo. You keep full file tree, git integration, and search — hooks still fire from the hub.
+**IDE agents (Cursor):** Use [`/lore-link`](#ide-workflow-lore-link) to work from your code repo. You keep full file tree, git integration, and search — hooks still fire from the hub.
 
-## IDE Workflow: lore link
+## IDE Workflow: /lore-link
 
 ### Usage
 
@@ -100,7 +100,7 @@ Even when working from a linked repo, knowledge captures back to the hub. Skills
 | Scenario | Approach |
 |----------|----------|
 | CLI agent (Claude Code, OpenCode) | Launch from the Lore instance |
-| IDE agent (Cursor, or IDE-mode Claude Code) | **lore link** — link the work repo, open it in your IDE |
+| IDE agent (Cursor, or IDE-mode Claude Code) | `/lore-link` — link the work repo, open it in your IDE |
 | Quick cross-repo task from the hub | Launch from the Lore instance, reference the path |
 
 ### After Framework Updates
