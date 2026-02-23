@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+/* Cinzel for site name only */
+.md-header__topic:first-child .md-ellipsis {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.md-header__topic:first-child .md-ellipsis::after {
+  content: "\a0 \2014 \a0 Persistent Memory for Coding Agents v0.11.1";
+  font-family: var(--md-text-font-family, Roboto, sans-serif);
+  font-size: 0.89em;
+  opacity: 0.6;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+}
