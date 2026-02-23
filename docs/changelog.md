@@ -6,6 +6,17 @@ title: Changelog
 
 All notable changes to Lore are documented here. See [Production Readiness](production-readiness.md) for versioning policy. For full commit history, see [GitHub Releases](https://github.com/lorehq/lore/releases).
 
+## v0.12.0 — 2026-02-23
+
+OpenCode config fix, search-guard hook, notes support.
+
+- Fix `opencode.json`: use OpenCode's `mcp` key and command array format (was `mcpServers` — caused "Unrecognized key" validation error)
+- Add `search-guard` PreToolUse hook — nudges semantic search before speculative file reads when Docker sidecar is configured
+- Add `lore-create-note` skill for lightweight capture during deep work
+- Add OpenCode `/lore-ui` command stub
+- Add direction guard to `sync-framework.sh` (prevents backwards sync)
+- Fix Docker config: static default ports, clean template, opt-in dynamic ports
+
 ## v0.11.1 — 2026-02-22
 
 Default config template and MCP tool renames.
