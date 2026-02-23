@@ -4,120 +4,130 @@ title: Cost Evidence
 
 # Cost Evidence
 
-This page presents cost data from a controlled comparison between raw Claude Code and Lore on the same task. Raw cold has N=10 runs for statistical confidence. Lore conditions are preliminary (N=1) with full N=10 in progress.
+This page presents cost data from a controlled comparison between raw Claude Code and Lore on the same task. Raw cold and all Lore conditions have N=9–10 runs for statistical confidence.
 
-If you're skeptical, good. Read the [limitations](#limitations) first, then decide if the methodology is credible enough to run your own comparison.
+If you're skeptical, good. Read the [limitations](#limitations) first, then run the [test yourself](#reproduce-it).
 
 ## Methodology
 
 **Task:** Determine whether current inventory can fill all orders from last week. Two mock APIs (orders and inventory) with deliberate gotchas — version traps, required headers, non-obvious query parameters.
 
-**Four conditions**, same task, same day:
+**Five conditions**, same task, same day:
 
 | Condition | N | Framework | Orchestrator | Workers | Prior Knowledge |
 |-----------|---|-----------|-------------|---------|-----------------|
 | Raw Cold | 10 | None | Opus 4.6 | — (inline) | None |
-| Lore Cold | 1* | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | None |
-| Lore Warm | 1* | Lore v0.11.0 | Opus 4.6 | varies | Skills + env docs from cold run |
-| Lore Hot | 1* | Lore v0.11.0 | Opus 4.6 | varies | Full knowledge from cold + warm |
+| Lore Cold | 9 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | None |
+| Lore Warm | 9 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | Skills + env docs from cold |
+| Lore Hot | 10 | Lore v0.11.0 | Opus 4.6 | varies | Skills + env docs, writes runbook |
+| Lore Runbook | 10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | Full knowledge + runbook |
 
-*N=10 in progress. Preliminary results shown.
+Each Lore condition ran on a separate instance (lore-01 through lore-10), one session per condition per instance. "Cold" = no prior knowledge. "Warm" = knowledge captured from cold. "Hot" = knowledge from cold+warm, writes a runbook. "Runbook" = full knowledge stack, pure execution.
 
-"Cold" means no prior knowledge of the APIs. "Warm" means knowledge captured from one prior session. "Hot" means knowledge from two prior sessions — all gotchas documented, no new exploration needed.
-
-**Pricing basis:** Cache-aware API rates. These tests ran on Claude Max (flat-rate subscription), so cost figures represent what the compute *would* cost at API rates.
+**Pricing basis:** Cache-aware API rates. Tests ran on Claude Max (flat-rate subscription) — cost figures represent API-equivalent spend.
 
 | Model | Input | Output | Cache Read | Cache Create |
 |-------|-------|--------|------------|--------------|
 | Opus 4.6 | $5.00/MTok | $25.00/MTok | $0.50/MTok | $6.25/MTok |
-| Sonnet 4.6 | $1.50/MTok | $7.50/MTok | $0.15/MTok | $1.875/MTok |
 | Haiku 4.5 | $1.00/MTok | $5.00/MTok | $0.10/MTok | $1.25/MTok |
 
 Source: [Anthropic API Pricing](https://docs.anthropic.com/en/docs/about-claude/pricing)
 
-**Timing:** Execution time only — wall time minus operator idle gaps (>3s between assistant and user events). Tool permission approvals (<1s) pass through.
+**Timing:** Execution time only — wall time minus operator idle gaps (>3s between assistant and user events).
+
+**Cost split:** Each session's cost is split into "getting the answer" (API exploration, reasoning, final output) and "capture" (writing skills, environment docs, runbooks). This isolates the one-time knowledge investment from the recurring answer cost.
 
 ## Results
 
-### Raw Cold Baseline (N=10)
+### Summary Table
 
-All compute on Opus 4.6. No delegation, no knowledge base, no subagents.
+| Condition | N | Answer (median) | Capture (mean) | Total (median) | vs Raw Cold | Exec (median) |
+|-----------|---|-----------------|----------------|----------------|-------------|---------------|
+| **Raw Cold** | 10 | $0.4531 | — | $0.4531 | — | 3m 0s |
+| **Lore Cold** | 9 | $0.3395 | $0.0670 | $0.4029 | -11% | 6m 34s |
+| **Lore Warm** | 9 | $0.2408 | — | $0.2408 | -47% | 4m 13s |
+| **Lore Hot** | 10 | $0.2446 | $0.0795 | $0.3389 | -25% | 6m 55s |
+| **Lore Runbook** | 10 | $0.1870 | — | $0.1870 | **-59%** | 1m 46s |
 
-| Metric | Min | Max | Mean | Median |
-|--------|-----|-----|------|--------|
-| Requests | 17 | 32 | 24.1 | 24.5 |
-| Exec time | 2m 7s | 4m 36s | 3m 2s | 3m 0s |
-| **Cost** | **$0.30** | **$0.61** | **$0.45** | **$0.45** |
+### Progression: Each Knowledge Layer Reduces Cost
 
-High variance — the same task on the same model ranges 2x in cost. This is the nature of LLM-driven exploration without structure.
-
-### Lore Pilot (N=1, preliminary)
-
-Cost split into "getting the answer" vs "capturing knowledge" to quantify the investment ROI.
-
-| | Answer (Orch) | Answer (Workers) | Answer Total | Capture | Grand Total |
-|---|---|---|---|---|---|
-| **Lore Cold** | $0.2536 (Opus) | $0.0717 (Haiku) | $0.3253 | $0.0599 | **$0.3852** |
-| **Lore Warm** | $0.2768 (Opus) | — | $0.2768 | $0.0869 | **$0.3636** |
-| **Lore Hot** | $0.2410 (Opus) | $0.0274 (Sonnet) | $0.2684 | — | **$0.2684** |
-
-| | Cost | vs Raw Cold Mean | Exec Time | vs Raw Cold Mean |
-|---|---|---|---|---|
-| **Raw Cold** (mean, N=10) | $0.4542 | — | 3m 2s | — |
-| **Lore Cold** (answer only) | $0.3253 | **-28%** | 2m 38s | -13% |
-| **Lore Hot** | $0.2684 | **-41%** | 1m 12s | **-60%** |
+| Transition | Answer (median) | Reduction | What Changed |
+|-----------|----------------|-----------|--------------|
+| Raw Cold → Lore Cold | $0.45 → $0.34 | -25% | Delegation to Haiku workers |
+| Lore Cold → Lore Warm | $0.34 → $0.24 | -29% | Skills + env docs eliminate API discovery |
+| Lore Warm → Lore Runbook | $0.24 → $0.19 | -22% | Runbook provides step-by-step procedure |
+| **Raw Cold → Lore Runbook** | **$0.45 → $0.19** | **-59%** | **Full stack: delegation + knowledge + runbook** |
 
 ### Key Findings
 
-**Delegation alone is cheaper.** Even on a cold run with zero prior knowledge, the answer-only cost ($0.33) is 28% cheaper than raw Claude ($0.45). No knowledge base needed. The savings come entirely from routing API exploration to Haiku workers ($0.10/MTok cache read) instead of running it inline on Opus ($0.50/MTok cache read).
+**Delegation alone is cheaper.** On a cold run with zero prior knowledge, the answer-only median ($0.34) is 25% cheaper than raw Claude ($0.45). The savings come from routing API exploration to Haiku workers ($0.10/MTok cache read) instead of running it inline on Opus ($0.50/MTok cache read). No knowledge base needed.
 
-**Knowledge eliminates exploration.** By the hot run, workers don't explore — they have endpoints, parameters, and required headers from captured knowledge. Opus cache read drops from ~577k tokens (raw) to 157k (hot). 41% cheaper, 60% faster.
+**Knowledge compounds.** Each layer — skills, environment docs, runbook — removes another chunk of exploration. By the runbook stage, workers don't explore at all. They execute known procedures with known endpoints.
 
-**Context accumulation is the hidden cost driver.** Raw Claude accumulates all curl results in one growing Opus context (~577k cache read tokens on average). Lore keeps workers in isolated cheap-model contexts and the orchestrator's context stays small. This is a structural advantage, not a tuning knob.
+**The steady state is 59% cheaper and 41% faster.** Lore Runbook ($0.19 median, 1m 46s) vs Raw Cold ($0.45 median, 3m 0s). This is the cost of a task after knowledge has been captured — which is the normal operating mode after initial setup.
+
+**Runbook is the most predictable.** Standard deviation drops from $0.11 (raw cold) to $0.04 (runbook). The cost range tightens from 2.0x ($0.30–$0.61) to 1.9x ($0.14–$0.27). Structured knowledge doesn't just reduce cost — it reduces variance.
 
 ## Capture ROI
 
+Capture is a one-time investment that pays off on every subsequent run.
+
+| Phase | Mean Capture Cost | What Was Captured |
+|-------|-------------------|-------------------|
+| Cold | $0.07 | Skills (API gotchas), environment docs (endpoints, params, headers) |
+| Hot | $0.08 | Runbook (step-by-step procedure for the full task) |
+| **Total investment** | **$0.15** | |
+
 | Metric | Value |
 |--------|-------|
-| Total capture investment (cold + warm) | $0.1468 |
-| Answer savings per hot run vs raw cold | $0.1858 |
-| **Break-even** | **1st hot run** (nets +$0.04) |
-| Savings after 5 hot runs | $0.78 |
-| Savings after 10 hot runs | $1.71 |
+| Steady-state savings per run (runbook vs raw cold) | $0.26 |
+| **Break-even** | **1st runbook run** (saves $0.26, cost $0.15 to capture) |
+| Net savings after 5 runs | $1.15 |
+| Net savings after 10 runs | $2.44 |
 
-The capture investment pays for itself on the first reuse. Every subsequent run saves ~$0.19 at near-zero marginal cost.
+The capture investment pays for itself on the very first reuse.
 
 ## Where the Savings Come From
 
-| Mechanism | What It Does | Impact |
-|-----------|-------------|--------|
-| Model tiering | Worker compute on Haiku/Sonnet instead of Opus | 5–10x cheaper per worker token |
-| Context isolation | Workers run in fresh contexts; raw Claude accumulates all tool results in one growing context | 73% less Opus cache read by hot run |
-| Knowledge reuse | Hot workers skip exploration entirely | 60% faster execution |
-| Structured delegation | Orchestrator reasons, workers execute | Expensive model does less busy-work |
+| Mechanism | First Run | Steady State | Impact |
+|-----------|-----------|-------------|--------|
+| Model tiering | Yes | Yes | Workers on Haiku ($0.10/MTok cache read) instead of Opus ($0.50/MTok) — 5x cheaper per token |
+| Context isolation | Yes | Yes | Workers run in fresh contexts instead of accumulating in one growing Opus thread |
+| Knowledge reuse | No | Yes | Workers skip exploration — endpoints and gotchas are documented |
+| Runbook procedure | No | Yes | Orchestrator follows a known procedure instead of reasoning from scratch |
 
-Model tiering and context isolation are structural — they apply from the first run. Knowledge reuse compounds over time as the knowledge base grows.
+Model tiering and context isolation are structural — they apply from the first run. Knowledge reuse and runbook procedures compound over time.
 
 For how these mechanisms work, see [How It Works: Delegation](how-it-works.md#2-delegation) and [Configuration](guides/configuration.md).
 
 ## Limitations
 
-!!! warning "Work in progress"
+!!! warning "Read before citing these numbers"
 
-    Raw cold has N=10. Lore conditions are N=1 (pilot from a single instance). Full N=10 per condition is in progress.
-
-- **Lore N=1.** The pilot results are directional. Patterns may shift as more instances complete. Raw cold showed 2x variance ($0.30–$0.61) — Lore conditions may too.
 - **One task type.** API exploration with mock services. Results may differ for code generation, refactoring, debugging, or other task patterns.
-- **Subscription pricing.** Tests ran on Claude Max (flat-rate), not metered API. Cost figures are API-equivalent estimates, relevant for API users and for understanding relative efficiency.
+- **One model family.** Tested on Claude (Opus 4.6 orchestrator, Haiku 4.5 workers). Other model combinations may produce different results.
+- **Subscription pricing.** Tests ran on Claude Max (flat-rate). Cost figures are API-equivalent estimates, relevant for understanding relative efficiency.
+- **Outlier present.** One Lore Hot session (lore-01) had 62m 46s genuine execution time — included in stats but the median is more representative.
 - **No cross-tool validation.** Knowledge captured on Claude Code should benefit Cursor and OpenCode sessions — not yet tested.
-- **Worker tier variance.** The hot run used Sonnet instead of Haiku for its worker. Whether the framework consistently picks optimal tiers needs more data.
 
 ## Reproduce It
 
-Run the same comparison on your own tasks:
+The test services and verification scripts are open source:
 
-1. Pick a task that involves API exploration or multi-step tool use
-2. Run it on raw Claude Code (no framework) and note the token count from the UI
-3. Install Lore (`npx create-lore`), run the same task, and compare
-4. Run a second Lore session after knowledge capture to measure the warm delta
-5. Use the [session token usage runbook](https://github.com/lorehq/lorehq) to compute cache-aware costs from JSONL logs
+```bash
+git clone https://github.com/lorehq/lore-gotcha-demo.git
+cd lore-gotcha-demo
+
+# Start services
+node orders-service.js &
+node inventory-service.js &
+
+# Run the test prompt on raw Claude Code
+# Then install Lore and run the same prompt
+npx create-lore
+
+# Verify results match ground truth
+bash verify-fulfillment.sh
+```
+
+See the [repo README](https://github.com/lorehq/lore-gotcha-demo) for full setup, ground truth values, and the verification scripts.
