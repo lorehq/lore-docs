@@ -80,6 +80,7 @@ sequenceDiagram
 | Dependencies, relationships | `docs/knowledge/environment/` | Which services connect to what |
 | Strategic initiatives | `docs/work/roadmaps/` | Cloud migration phases |
 | Tactical work | `docs/work/plans/` | Phase 1 networking setup |
+| Quick observations, bugs | `docs/work/notes/` | Flaky auth timeout under load |
 | Multi-step procedures | `docs/knowledge/runbooks/` | Deploy to staging |
 
 #### Ownership

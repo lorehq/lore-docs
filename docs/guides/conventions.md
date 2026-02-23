@@ -34,15 +34,37 @@ Convention enforcement works on all three platforms. See [Platform Support](plat
 
 ## Default Conventions
 
-Every new Lore instance ships with five conventions:
+Every new Lore instance ships with conventions across two ownership tiers:
+
+### Operator Conventions (seed files)
+
+Created from seed templates on first install. You own these — the framework never overwrites them. On `/lore-update`, Lore compares seed templates to your versions and offers opt-in adoption of any changes.
 
 | Convention | What it corrects |
 |---|---|
 | **Coding** | Over-engineering, speculative features, unrelated changes, unverified work |
-| **Docs** | Duplication, sprawl, doc rot, unsolicited docs, vague references |
-| **Knowledge Capture** | Scattered facts, one-page-per-tiny-thing proliferation, high update cost |
+| **Documentation** | Duplication, sprawl, doc rot, unsolicited docs, vague references |
 | **Security** | Secrets in version control, excessive privileges, missing boundary validation |
+
+### System Conventions (`system/` subdirectory)
+
+Framework-owned — overwritten on every `/lore-update`. Live in `docs/context/conventions/system/`. To override a system convention, create a file with the same name in the parent directory.
+
+| Convention | What it corrects |
+|---|---|
+| **Knowledge Capture** | Scattered facts, one-page-per-tiny-thing proliferation, high update cost |
+| **Knowledge Base Structure** | Poor file naming, deep nesting, weak retrieval, missing frontmatter |
 | **Work Items** | Inconsistent formatting in plans, roadmaps, and brainstorms |
+
+### Ownership Tiers
+
+| Tier | Location | Sync behavior |
+|---|---|---|
+| **System** | `docs/context/conventions/system/` | Always overwritten |
+| **Seed** | `.lore/templates/seeds/conventions/` | Created if missing, opt-in update |
+| **Operator** | `docs/context/conventions/` | Never touched by framework |
+
+Operator files take precedence over system files with the same name.
 
 ## Creating Custom Conventions
 
@@ -73,4 +95,4 @@ Add a markdown file to `docs/context/conventions/`:
 - **Numbered sections** help scanning. Match the pattern of the default conventions.
 - **File name** becomes the menu label. Use descriptive kebab-case: `api-design.md`, `email-drafting.md`, `diagrams.md`. The agent uses the file name to decide whether to load the convention, so prefer self-explanatory names (`email-drafting.md`) over vague ones (`comms.md`).
 
-Default conventions have hardcoded path routing — their bold principles are injected automatically before writes to matching paths. Custom conventions appear as a menu listing at write-time.
+Default conventions (both operator and system) have hardcoded path routing — their bold principles are injected automatically before writes to matching paths. The guard checks the parent directory first, then falls back to `system/`. Custom conventions appear as a menu listing at write-time.

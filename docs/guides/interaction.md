@@ -47,9 +47,9 @@ If you have skills from other projects or custom markdown files you've been copy
 
 **After import, sharing is automatic.** Once skills are in your Lore hub, every [linked repo](cross-repo-workflow.md#ide-workflow-lore-link) gets them. No more copying between projects.
 
-## Roadmaps, Plans & Brainstorms
+## Roadmaps, Plans, Notes & Brainstorms
 
-See [Roadmaps & Plans](roadmaps-and-plans.md).
+See [Roadmaps, Plans & Notes](roadmaps-and-plans.md).
 
 ## Command Reference
 
@@ -67,4 +67,6 @@ Commands are slash-invoked skills.
 
 **`/lore-docker`** — Start, stop, or check the local Docker sidecar for semantic search and a live MkDocs UI. See [Docs UI & Semantic Search](docs-ui.md).
 
-For work management commands, see [Roadmaps & Plans](roadmaps-and-plans.md).
+**`/lore-create-note`** — Create a lightweight note for quick capture. See [Roadmaps, Plans & Notes](roadmaps-and-plans.md#notes).
+
+For work management commands, see [Roadmaps, Plans & Notes](roadmaps-and-plans.md).

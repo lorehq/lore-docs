@@ -61,7 +61,7 @@ nav:
     - Platform Support: guides/platform-support.md
     - Hook Architecture: guides/hook-architecture.md
     - Conventions: guides/conventions.md
-    - Roadmaps & Plans: guides/roadmaps-and-plans.md
+    - Roadmaps, Plans & Notes: guides/roadmaps-and-plans.md
   - When to Use Lore: when-to-use-lore.md
   - Production Readiness: production-readiness.md
   - Troubleshooting: troubleshooting.md
@@ -70,4 +70,5 @@ nav:
     - Skill: examples/skill.md
     - Roadmap: examples/roadmap.md
     - Plan: examples/plan.md
+    - Note: examples/note.md
     - Brainstorm: examples/brainstorm.md

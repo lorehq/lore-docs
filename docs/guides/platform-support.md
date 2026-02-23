@@ -66,7 +66,9 @@ All platforms activate automatically after `npx create-lore`.
 | `lore-*` skills/agents | Yes | — |
 | Operator skills/agents | — | Yes |
 | `.lore/hooks/`, `.lore/lib/`, `.lore/scripts/` | Yes | — |
-| `docs/`, `mkdocs.yml`, `.lore/config.json` | — | Yes |
+| `docs/context/conventions/system/` | Yes | — |
+| `docs/knowledge/runbooks/system/` | Yes | — |
+| `docs/` (except `system/` subdirs), `mkdocs.yml`, `.lore/config.json` | — | Yes |
 
 `.lore/config.json` controls subagent model defaults — see [Configuration: subagentDefaults](configuration.md#subagentdefaults).
 

@@ -22,8 +22,8 @@ Lore follows [semantic versioning](https://semver.org/). During 0.x:
 
 **What won't break:**
 
-- Your docs (`docs/`), operator skills, operator agents, conventions
-- The `lore-*` / non-`lore-*` ownership boundary
+- Your docs (`docs/`), operator skills, operator agents, operator conventions
+- The `lore-*` / non-`lore-*` ownership boundary and the `system/` subdirectory convention
 - Git-tracked knowledge (Lore never deletes operator content)
 
 **Post-1.0:** minor versions will be non-breaking. Breaking changes will require a major version bump.
