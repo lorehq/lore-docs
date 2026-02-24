@@ -6,6 +6,14 @@ title: How It Works
 
 AI agents are ephemeral — every session starts from zero. Lore wraps your coding agent in a persistent, git-versioned knowledge base so it picks up where it left off.
 
+## Harness Engineering
+
+Prompt engineering is about crafting individual prompts. Context engineering is about curating what goes into the context window. Lore does both, but they're means to an end — the actual product is the **harness**: the hooks, delegation patterns, worker tiers, capture lifecycle, semantic search, derived file generation, skill system, and the rules that govern how all of it interacts.
+
+The context is shaped by the harness — banner injection, convention loading, skill lazy-loading. The prompts are shaped by the harness — worker prompt structure, bail-out rules, return contracts. But the thing you're building and maintaining is the harness itself: the scaffolding that makes an AI agent operationally reliable across sessions, repos, and contributors.
+
+This distinction matters because it changes what you optimize for. Prompt engineering optimizes for a single interaction. Context engineering optimizes for a single session. Harness engineering optimizes for **all sessions** — the system that makes every future session better than the last.
+
 ## System Architecture
 
 ```mermaid
