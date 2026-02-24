@@ -30,7 +30,7 @@ After injecting matched conventions, the guard lists remaining conventions as a 
 
 ### Platform Support
 
-Convention enforcement works on all three platforms. See [Platform Support](platform-support.md) for the mechanism comparison.
+Convention enforcement works on all three platforms. See [Platform Overview](platforms/index.md) for the mechanism comparison.
 
 ## Default Conventions
 

@@ -93,7 +93,7 @@ sequenceDiagram
 
 #### Ownership
 
-See [Platform Support: Sync Boundaries](guides/platform-support.md#sync-boundaries) for the `lore-*` prefix convention and what sync overwrites.
+See [Platform Overview: Sync Boundaries](guides/platforms/index.md#sync-boundaries) for the `lore-*` prefix convention and what sync overwrites.
 
 #### How Skills and Agents Emerge
 
@@ -133,6 +133,6 @@ Docs and skills have zero baseline session cost — they load on-demand. Agents 
 
 ## Hook Architecture
 
-Hooks fire at session start, prompt submit, pre-tool-use, post-tool-use, and post-tool-use-failure. Shared logic in `lib/` keeps behavior consistent across platforms. See [Hook Architecture](guides/hook-architecture.md) for the full lifecycle, module layout, and platform adapter reference.
+Hooks fire at key lifecycle events — session start, prompt submit, pre-tool-use, post-tool-use, and post-tool-use-failure. Shared logic in `.lore/lib/` keeps behavior consistent; each platform has thin adapters that translate between its hook API and the shared modules. Hook implementations vary by platform — see [Hook Architecture](guides/hook-architecture.md) for the shared lib deep-dive and [Platform Overview](guides/platforms/index.md) for per-platform specifics.
 
 For limitations and known gaps, see [Production Readiness](production-readiness.md#known-limitations).

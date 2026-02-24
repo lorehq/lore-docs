@@ -72,7 +72,11 @@ nav:
     - Working Across Repos: guides/cross-repo-workflow.md
     - Configuration: guides/configuration.md
     - Docs UI & Search: guides/docs-ui.md
-    - Platform Support: guides/platform-support.md
+    - Platform Support:
+      - Overview: guides/platforms/index.md
+      - Claude Code: guides/platforms/claude-code.md
+      - Cursor: guides/platforms/cursor.md
+      - OpenCode: guides/platforms/opencode.md
     - Hook Architecture: guides/hook-architecture.md
     - Conventions: guides/conventions.md
     - Roadmaps, Plans & Notes: guides/roadmaps-and-plans.md

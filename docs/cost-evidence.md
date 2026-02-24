@@ -4,7 +4,10 @@ title: Cost Evidence
 
 # Cost Evidence
 
-This page presents cost data from a controlled comparison between raw Claude Code and Lore on the same task. All conditions have N=10 runs. Platform: Claude Code (CLI).
+!!! note "Claude Code only"
+    All evidence on this page was measured on **Claude Code** (CLI) with Claude models (Opus 4.6 orchestrator, Haiku 4.5 workers). Cursor and OpenCode are [experimental platforms](guides/platforms/index.md#platform-maturity) — they should see similar benefits from delegation and knowledge reuse, but this has not been independently verified.
+
+This page presents cost data from a controlled comparison between raw Claude Code and Lore on the same task. All conditions have N=10 runs.
 
 If you're skeptical, good. Read the [limitations](#limitations) first, then run the [test yourself](#reproduce-it).
 

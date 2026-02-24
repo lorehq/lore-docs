@@ -4,7 +4,7 @@ title: Hook Architecture
 
 # Hook Architecture
 
-Lore uses eight hooks to shape agent behavior across the session lifecycle. Shared logic lives in `lib/`, with thin adapters for each platform.
+Lore's hook system shapes agent behavior across the session lifecycle. Shared logic lives in `.lore/lib/`, with thin adapters for each platform. This page covers the shared foundation — see the [platform pages](platforms/index.md) for per-platform hook lists, configuration, and coverage gaps.
 
 ## Hook Lifecycle
 
@@ -105,7 +105,13 @@ Set `banner-loaded: true` in a skill's YAML frontmatter to inline its full body 
 
 Each platform has a different hook API. Adapters translate between the platform's interface and the shared `lib/` functions.
 
-See [Platform Support](platform-support.md) for the full feature matrix across platforms.
+| Platform | Adapter Style | Hook Count | Details |
+|----------|--------------|:----------:|---------|
+| Claude Code | Subprocess per event | 8 | [Claude Code](platforms/claude-code.md) |
+| Cursor | Subprocess + MCP server | 6 + MCP | [Cursor](platforms/cursor.md) |
+| OpenCode | Long-lived ESM plugins | 6 | [OpenCode](platforms/opencode.md) |
+
+See [Platform Overview](platforms/index.md) for the full feature matrix.
 
 ## Hook Behavior Notes
 
@@ -117,13 +123,9 @@ Detects whether the agent is operating in a Lore hub repo or a linked work repo.
 
 Fires on `PreToolUse` for Write/Edit operations under `docs/context/` or `docs/knowledge/`. Outputs a knowledge map tree to help the agent navigate to the right location for writes. Does not fire on reads.
 
-### failure-tracker.js (Cursor)
+### session-init.js
 
-Sets a flag when a tool use fails. The `capture-nudge.js` hook reads the flag in `beforeShellExecution` to deliver capture reminders when the agent transitions from a failed tool use to a shell command. The two-hook pattern compensates for Cursor not displaying `postToolUseFailure` output to the agent.
-
-### session-init.js (SessionStart)
-
-Static content (conventions, agent-rules) is embedded in `CLAUDE.md` at generation time by `sync-platform-skills.sh`. The `SessionStart` hook injects only the dynamic banner — active work items, the knowledge map tree, and the skill registry. This keeps the hook output small and current without re-reading static files every session.
+The session-init hook assembles the dynamic banner by calling `lib/banner.js`. Static content (conventions, agent-rules) is embedded in platform instruction files at generation time. The hook injects only the dynamic portion — active work items, the knowledge map tree, and the skill registry. See each platform page for compaction resilience and lifecycle specifics.
 
 ### ensure-structure.sh
 
