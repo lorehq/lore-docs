@@ -4,7 +4,7 @@ title: How Delegation Works
 
 # How Delegation Works
 
-The orchestrator-worker model is one of Lore's three core goals — see [How It Works](how-it-works.md) for the full architecture overview.
+Delegation is one of the harness's core functions — see [How It Works](how-it-works.md) for the full architecture overview.
 
 ## Delegation
 

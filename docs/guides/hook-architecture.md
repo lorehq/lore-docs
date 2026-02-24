@@ -58,7 +58,7 @@ flowchart TB
         cc_pp[prompt-preamble.js]
         cc_pm[protect-memory.js]
         cc_cg[convention-guard.js]
-        cc_fg[framework-guard.js]
+        cc_fg[harness-guard.js]
         cc_kt[knowledge-tracker.js]
         cc_cp[context-path-guide.js]
     end
@@ -77,7 +77,7 @@ flowchart TB
         oc_si[session-init.js]
         oc_pm[protect-memory.js]
         oc_cg[convention-guard.js]
-        oc_fg[framework-guard.js]
+        oc_fg[harness-guard.js]
         oc_kt[knowledge-tracker.js]
         oc_cp[context-path-guide.js]
     end
@@ -108,7 +108,7 @@ See [Platform Support](platform-support.md) for the full feature matrix across p
 
 ## Hook Behavior Notes
 
-### framework-guard.js
+### harness-guard.js
 
 Detects whether the agent is operating in a Lore hub repo or a linked work repo. Enforces different guardrails in each context — hub repos block application code creation; linked repos block direct edits to hub knowledge files. Fires on `PreToolUse` for file write operations.
 

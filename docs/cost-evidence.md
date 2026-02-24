@@ -14,7 +14,7 @@ If you're skeptical, good. Read the [limitations](#limitations) first, then run 
 
 **Five conditions**, same task, same day:
 
-| Condition | N | Framework | Orchestrator | Workers | Prior Knowledge |
+| Condition | N | Harness | Orchestrator | Workers | Prior Knowledge |
 |-----------|---|-----------|-------------|---------|-----------------|
 | Raw Cold | 10 | None | Opus 4.6 | — (inline) | None |
 | Lore Cold | 10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | None |
@@ -49,7 +49,7 @@ Source: [Anthropic API Pricing](https://docs.anthropic.com/en/docs/about-claude/
 | **Lore Hot** | 10 | $0.2446 | $0.0795 | $0.3389 | -46% | 0m 57s | 0m 37s * |
 | **Lore Runbook** | 10 | $0.1870 | — | $0.1870 | **-59%** | 0m 40s | — |
 
-**\*** Lore Hot capture time is operator-initiated runbook creation — the operator explicitly asked the agent to write a runbook after getting the answer. This is not automatic framework behavior.
+**\*** Lore Hot capture time is operator-initiated runbook creation — the operator explicitly asked the agent to write a runbook after getting the answer. This is not automatic harness behavior.
 
 ### Progression: Each Knowledge Layer Reduces Cost
 

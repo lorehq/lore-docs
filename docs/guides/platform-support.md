@@ -35,7 +35,7 @@ See [Hook Architecture](hook-architecture.md) for module layout, lifecycle diagr
 
 ### Claude Code
 
-Config: `.claude/settings.json`. Seven hooks cover all lifecycle events: session banner, per-prompt reminder, context path guide, memory guard, convention guard, framework guard, and knowledge tracker. `SessionStart` re-fires after compaction so the full banner is always present.
+Config: `.claude/settings.json`. Seven hooks cover all lifecycle events: session banner, per-prompt reminder, context path guide, memory guard, convention guard, harness guard, and knowledge tracker. `SessionStart` re-fires after compaction so the full banner is always present.
 
 #### Foundry / Bedrock / Vertex Deployments
 
@@ -79,7 +79,7 @@ All platforms activate automatically after `npx create-lore`.
 
 ## Sync Boundaries
 
-`/lore-update` and `sync-framework.sh` overwrite framework infrastructure (`.lore/hooks/`, `.lore/lib/`, `.lore/scripts/`, `.opencode/`, `.cursor/hooks/`) and `lore-*` prefixed skills/agents. Operator content is never touched.
+`/lore-update` and `sync-harness.sh` overwrite harness infrastructure (`.lore/hooks/`, `.lore/lib/`, `.lore/scripts/`, `.opencode/`, `.cursor/hooks/`) and `lore-*` prefixed skills/agents. Operator content is never touched.
 
 | Category | Synced | Operator-owned |
 |----------|:------:|:--------------:|

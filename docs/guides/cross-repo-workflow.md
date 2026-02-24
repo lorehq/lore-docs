@@ -103,7 +103,7 @@ Even when working from a linked repo, knowledge captures back to the hub. Skills
 | IDE agent (Cursor, or IDE-mode Claude Code) | `/lore-link` — link the work repo, open it in your IDE |
 | Quick cross-repo task from the hub | Launch from the Lore instance, reference the path |
 
-### After Framework Updates
+### After Harness Updates
 
 Run `/lore-link --refresh` after `/lore-update` to regenerate configs in all linked repos with the latest hooks.
 

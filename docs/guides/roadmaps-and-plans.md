@@ -58,7 +58,7 @@ active → on-hold → active (resumed)
 - **completed**: Finished; keep `status: completed` and move folder to `archive/`
 - **cancelled**: Stopped/abandoned; keep `status: cancelled` and move folder to `archive/`
 
-Use these four values in frontmatter: `active`, `on-hold`, `completed`, `cancelled`. Note: `archived` is a folder location, not a status value. The framework reads `active` and `on-hold` for banner display. `completed` and `cancelled` are conventions for archiving workflows, not validated by framework logic.
+Use these four values in frontmatter: `active`, `on-hold`, `completed`, `cancelled`. Note: `archived` is a folder location, not a status value. The harness reads `active` and `on-hold` for banner display. `completed` and `cancelled` are conventions for archiving workflows, not validated by harness logic.
 
 ## Archiving
 

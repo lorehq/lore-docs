@@ -4,4 +4,4 @@ The `runbooks/` directory holds step-by-step procedures for multi-step operation
 
 ## System Runbooks
 
-The `system/` subdirectory contains framework-owned runbooks that are overwritten on every `/lore-update`. These provide standard procedures for Lore operations like knowledge defrag and hook testing. Operator runbooks live in the parent directory and are never touched by the framework.
+The `system/` subdirectory contains harness-owned runbooks that are overwritten on every `/lore-update`. These provide standard procedures for Lore operations like knowledge defrag and hook testing. Operator runbooks live in the parent directory and are never touched by the harness.

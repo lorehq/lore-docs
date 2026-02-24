@@ -4,7 +4,7 @@ title: Production Readiness
 
 # Production Readiness
 
-Lore is pre-1.0 software.
+Lore is a pre-1.0 coding agent harness.
 
 ## Stability Policy
 

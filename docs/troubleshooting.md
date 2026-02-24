@@ -104,13 +104,13 @@ This script runs 11 cross-reference checks. Common failures:
 | Platform copies out of sync | `bash .lore/scripts/sync-platform-skills.sh` |
 | Registry stale | `bash .lore/scripts/generate-registries.sh` |
 | Nav stale | `bash .lore/scripts/generate-nav.sh` — regenerates `mkdocs.yml` nav after adding or renaming docs |
-| Instructions out of sync | `bash .lore/scripts/sync-framework.sh` (via `/lore-update`) |
+| Instructions out of sync | `bash .lore/scripts/sync-harness.sh` (via `/lore-update`) |
 
 ## Updates
 
 ### `/lore-update` shows conflicts
 
-`/lore-update` only touches framework-owned files (`lore-*` prefix). If you see conflicts, you may have modified a `lore-*` file directly. Framework files are overwritten on sync — move your changes to an operator-owned file (no `lore-` prefix).
+`/lore-update` only touches harness-owned files (`lore-*` prefix). If you see conflicts, you may have modified a `lore-*` file directly. Harness files are overwritten on sync — move your changes to an operator-owned file (no `lore-` prefix).
 
 ### Version mismatch after update
 

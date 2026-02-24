@@ -38,7 +38,7 @@ Every new Lore instance ships with conventions across two ownership tiers:
 
 ### Operator Conventions (seed files)
 
-Created from seed templates on first install. You own these — the framework never overwrites them. On `/lore-update`, Lore compares seed templates to your versions and offers opt-in adoption of any changes.
+Created from seed templates on first install. You own these — the harness never overwrites them. On `/lore-update`, Lore compares seed templates to your versions and offers opt-in adoption of any changes.
 
 | Convention | What it corrects |
 |---|---|
@@ -48,7 +48,7 @@ Created from seed templates on first install. You own these — the framework ne
 
 ### System Conventions (`system/` subdirectory)
 
-Framework-owned — overwritten on every `/lore-update`. Live in `docs/context/conventions/system/`. To override a system convention, create a file with the same name in the parent directory.
+Harness-owned — overwritten on every `/lore-update`. Live in `docs/context/conventions/system/`. To override a system convention, create a file with the same name in the parent directory.
 
 | Convention | What it corrects |
 |---|---|
@@ -62,7 +62,7 @@ Framework-owned — overwritten on every `/lore-update`. Live in `docs/context/c
 |---|---|---|
 | **System** | `docs/context/conventions/system/` | Always overwritten |
 | **Seed** | `.lore/templates/seeds/conventions/` | Created if missing, opt-in update |
-| **Operator** | `docs/context/conventions/` | Never touched by framework |
+| **Operator** | `docs/context/conventions/` | Never touched by harness |
 
 Operator files take precedence over system files with the same name.
 

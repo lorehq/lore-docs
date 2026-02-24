@@ -1,6 +1,6 @@
 # Lore Docs
 
-Public documentation for [Lore](https://github.com/lorehq/lore), deployed to GitHub Pages at [lorehq.github.io/lore-docs](https://lorehq.github.io/lore-docs/).
+Public documentation for [Lore](https://github.com/lorehq/lore), the coding agent harness. Deployed to GitHub Pages at [lorehq.github.io/lore-docs](https://lorehq.github.io/lore-docs/).
 
 ## Local Development
 

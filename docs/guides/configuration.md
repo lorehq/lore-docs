@@ -30,7 +30,7 @@ Lore reads settings from `.lore/config.json` (JSON) at the instance root and fro
 
 All fields are optional. Missing fields fall back to defaults. If `.lore/config.json` is missing or contains a parse error, all fields silently fall back to defaults — no error is thrown.
 
-**Metadata fields** — `name` and `created` are informational, set during instance creation. Not used by framework logic.
+**Metadata fields** — `name` and `created` are informational, set during instance creation. Not used by harness logic.
 
 ### `subagentDefaults`
 

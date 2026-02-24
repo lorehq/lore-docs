@@ -4,7 +4,7 @@ title: How It Works
 
 # How It Works
 
-AI agents are ephemeral — every session starts from zero. Lore wraps your coding agent in a persistent, git-versioned knowledge base so it picks up where it left off.
+AI agents are ephemeral — every session starts from zero. Lore is a harness that wraps your coding agent — managing persistent memory, enforcing conventions, orchestrating delegation, and tracking work so it picks up where it left off.
 
 ## Harness Engineering
 
@@ -52,7 +52,7 @@ flowchart TB
     KB -.->|Next Session| Parse
 ```
 
-## Three Goals
+## Three Harness Functions
 
 ### 1. Knowledge Capture
 
@@ -114,8 +114,8 @@ Lore uses indirection — telling the agent *where to find things* rather than l
 
 | Layer | What It Contains |
 |-------|------------------|
-| `.lore/instructions.md` | Framework rules, knowledge routing, naming conventions |
-| Session start: framework | Operating principles, active agents, active roadmaps/plans |
+| `.lore/instructions.md` | Harness rules, knowledge routing, naming conventions |
+| Session start: harness | Operating principles, active agents, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` |
 | Session start: operator profile | Identity and preferences from `docs/knowledge/local/operator-profile.md` (gitignored) |
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` |

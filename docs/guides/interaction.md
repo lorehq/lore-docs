@@ -61,7 +61,7 @@ Commands are slash-invoked skills.
 
 **`/lore-status`** — Show Lore version, hook health, skill/agent counts, and active work.
 
-**`/lore-update`** — Pull latest framework files from GitHub without touching operator content. See [Platform Support: Sync Boundaries](platform-support.md#sync-boundaries).
+**`/lore-update`** — Pull latest harness files from GitHub without touching operator content. See [Platform Support: Sync Boundaries](platform-support.md#sync-boundaries).
 
 **`/lore-link <target>`** — Link a work repo so hooks fire from the hub. See [Cross-Repo Workflow](cross-repo-workflow.md) for the full flag reference.
 

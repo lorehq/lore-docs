@@ -6,7 +6,7 @@ title: Home
 
 **Your coding agent forgets everything between sessions. Lore fixes that.**
 
-Lore is a lightweight framework that gives coding agents persistent memory. Install it, work normally, and your agent starts building knowledge that compounds across sessions.
+Lore is a harness for AI coding agents. It wraps your agent to manage persistent memory, enforce conventions, orchestrate delegation, and track work — so every session builds on the last.
 
 ## What You Get
 
@@ -19,7 +19,7 @@ Lore is a lightweight framework that gives coding agents persistent memory. Inst
 
 Install with `npx create-lore my-project` and check the [Getting Started](getting-started.md) guide.
 
-No configuration required. The framework activates through hooks when you start your agent. Customize `docs/context/agent-rules.md` to teach the agent about your project.
+No configuration required. The harness activates through hooks when you start your agent. Customize `docs/context/agent-rules.md` to teach the agent about your project.
 
 ## Learn More
 
