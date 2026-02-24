@@ -62,19 +62,15 @@ You can always add a remote later. Nothing about the instance structure changes 
 
 Set model aliases in `~/.claude/settings.json` under `env`:
 
-```json
-"ANTHROPIC_DEFAULT_HAIKU_MODEL": "<fast-model>",
-"ANTHROPIC_DEFAULT_SONNET_MODEL": "<default-model>",
-"ANTHROPIC_DEFAULT_OPUS_MODEL": "<powerful-model>"
-```
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "<fast-model>",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "<default-model>",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "<powerful-model>"
 
 On hosted inference (Foundry, Bedrock, Vertex), these point to deployment names. On the direct Anthropic API, they point to model IDs.
 
 After setting aliases, regenerate agent frontmatter:
 
-```bash
-node .lore/lib/generate-agents.js
-```
+    node .lore/lib/generate-agents.js
 
 **Do not skip this step.** Claude Code only accepts short aliases (`haiku`/`sonnet`/`opus`) in agent frontmatter. If frontmatter contains full model IDs or deployment names, Claude Code silently ignores the value — all workers run at the orchestrator's tier with no error.
 
@@ -139,33 +135,27 @@ Don't rely on memory. These surface the full environment faster than asking:
 
 **Browser history** — SQLite, accessible even after the browser is uninstalled:
 
-```bash
-# Use Python's built-in sqlite3 — no CLI install required
-python -c "
-import sqlite3, os
-db = os.path.expanduser('~/path/to/History')
-con = sqlite3.connect(db)
-rows = con.execute('SELECT url, title, visit_count FROM urls ORDER BY visit_count DESC LIMIT 500').fetchall()
-for r in rows: print(r[2], r[1], r[0])
-"
-```
+    # Use Python's built-in sqlite3 — no CLI install required
+    python -c "
+    import sqlite3, os
+    db = os.path.expanduser('~/path/to/History')
+    con = sqlite3.connect(db)
+    rows = con.execute('SELECT url, title, visit_count FROM urls ORDER BY visit_count DESC LIMIT 500').fetchall()
+    for r in rows: print(r[2], r[1], r[0])
+    "
 
 **Docker inventory** — reveals running services, stopped dev stacks, and available MCP images:
 
-```bash
-docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
-docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"
-```
+    docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+    docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"
 
 Stopped containers = local dev stacks. Present images = available MCP servers. Both are faster than trying to recall what's running.
 
 **Repo scan** — scan your VCS for active service domains and technology patterns:
 
-```bash
-# GitHub CLI
-gh repo list <org> --limit 200 --json name,description,updatedAt
-# GitLab, ADO: equivalent list commands
-```
+    # GitHub CLI
+    gh repo list <org> --limit 200 --json name,description,updatedAt
+    # GitLab, ADO: equivalent list commands
 
 **Company wiki** — before writing any environment docs, search your org's wiki (Confluence, Notion, SharePoint) for domain models, architecture decisions, and system inventories. Someone may have done the work already.
 
@@ -184,17 +174,13 @@ After the environment is mapped, capture what you're actively working on:
 
 ## Phase 6: Semantic Search
 
-```bash
-/lore-docker
-```
+    /lore-docker
 
 Or start manually:
 
-```bash
-docker compose -f .lore/docker-compose.yml up -d
-curl http://localhost:9185/health
-curl "http://localhost:9185/search?q=test&k=3"
-```
+    docker compose -f .lore/docker-compose.yml up -d
+    curl http://localhost:9185/health
+    curl "http://localhost:9185/search?q=test&k=3"
 
 On corporate networks, containers may need the org CA cert mounted. The embedding model (`BAAI/bge-small-en-v1.5`) is bundled in recent lore-docker releases.
 
@@ -202,9 +188,7 @@ On corporate networks, containers may need the org CA cert mounted. The embeddin
 
 ## Phase 7: Repo Linking
 
-```bash
-/lore-link
-```
+    /lore-link
 
 Link each active application repo. Creates `.lore/links/` entries the agent uses to navigate between repos without losing KB context.
 
@@ -216,11 +200,9 @@ Link each active application repo. Creates `.lore/links/` entries the agent uses
 
 First-run generates environment docs fast. The result is usually a flat accumulation. Once Phases 1–5 are complete, run the knowledge defrag runbook to restructure `docs/knowledge/` by content rather than creation order.
 
-```bash
-git checkout -b knowledge-defrag-$(date +%Y%m%d)
-# Then ask:
-# "Run the knowledge defrag runbook"
-```
+    git checkout -b knowledge-defrag-$(date +%Y%m%d)
+    # Then ask:
+    # "Run the knowledge defrag runbook"
 
 The runbook (`docs/knowledge/runbooks/system/knowledge-defrag.md`) handles everything: parallel inventory workers, structure proposal with operator review, execution, link repair, validation, and commit.
 
