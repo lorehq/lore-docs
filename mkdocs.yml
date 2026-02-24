@@ -56,7 +56,11 @@ nav:
   - How Delegation Works: how-delegation-works.md
   - Cost Evidence: cost-evidence.md
   - Guides:
-    - First Session Setup: guides/first-session-setup.md
+    - First Session Setup:
+      - Overview: guides/first-session/index.md
+      - Knowledge Worker: guides/first-session/knowledge-worker.md
+      - Homelab: guides/first-session/homelab.md
+      - Personal: guides/first-session/personal.md
     - Working with Lore: guides/interaction.md
     - Working Across Repos: guides/cross-repo-workflow.md
     - Configuration: guides/configuration.md
