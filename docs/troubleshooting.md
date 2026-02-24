@@ -62,6 +62,37 @@ Lore blocks `MEMORY.md` to prevent platform-level memory from overwriting knowle
 
 Adjust `nudgeThreshold` and `warnThreshold` in `.lore/config.json`. See [Configuration: Hook Profile](guides/configuration.md#hook-profile) for profile options.
 
+## Worker Tiers
+
+### All workers run on the same model (not their configured tier)
+
+Worker agents inherit the orchestrator's model when Claude Code ignores the `model:` field in their agent frontmatter. This happens in two scenarios:
+
+**Scenario 1 — Using a cloud deployment (Foundry, Bedrock, Vertex):** Claude Code resolves short aliases (`haiku`, `sonnet`, `opus`) through `ANTHROPIC_DEFAULT_*_MODEL` env vars. If those vars aren't set, it falls back to its own hardcoded model IDs. Set all three in `~/.claude/settings.json`:
+
+```json
+{
+  "env": {
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "your-haiku-deployment",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "your-sonnet-deployment",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "your-opus-deployment"
+  }
+}
+```
+
+**Scenario 2 — Full deployment names in config:** If `subagentDefaults.claude` contains full model IDs (e.g. `claude-opus-4-6`) instead of short aliases, Claude Code ignores the generated frontmatter value and workers inherit the orchestrator's model. Lore's `generate-agents.js` correctly stamps short aliases into `.claude/agents/` frontmatter regardless — but if you are on an older version, run `/lore-update` to get the fix.
+
+**Verify the generated agents look correct:**
+
+```bash
+grep "^model:" .claude/agents/lore-worker*.md
+# Should show: model: haiku / model: sonnet / model: opus
+```
+
+### `opus` tier returns a 404 deployment error
+
+Claude Code maps `opus` → its internal default opus model ID, which may not exist in your deployment. Fix: set `ANTHROPIC_DEFAULT_OPUS_MODEL` in `~/.claude/settings.json` to match your deployed model name. Restart Claude Code after changing settings.
+
 ## Consistency
 
 ### `validate-consistency.sh` fails

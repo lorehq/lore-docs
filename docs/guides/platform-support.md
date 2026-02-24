@@ -37,6 +37,26 @@ See [Hook Architecture](hook-architecture.md) for module layout, lifecycle diagr
 
 Config: `.claude/settings.json`. Seven hooks cover all lifecycle events: session banner, per-prompt reminder, context path guide, memory guard, convention guard, framework guard, and knowledge tracker. `SessionStart` re-fires after compaction so the full banner is always present.
 
+#### Foundry / Bedrock / Vertex Deployments
+
+When running Claude Code through a cloud provider deployment (Microsoft Foundry, AWS Bedrock, Google Vertex), worker tier model selection requires additional env vars in `~/.claude/settings.json`. Claude Code resolves the short aliases (`haiku`, `sonnet`, `opus`) through these env vars at runtime:
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_USE_FOUNDRY": "1",
+    "ANTHROPIC_FOUNDRY_RESOURCE": "your-resource-name",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "your-haiku-deployment-name",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "your-sonnet-deployment-name",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "your-opus-deployment-name"
+  }
+}
+```
+
+All three `ANTHROPIC_DEFAULT_*_MODEL` vars must be set. Without them, Claude Code uses its own hardcoded model IDs which may not match your deployment names, causing workers to either fall back to the orchestrator's model or return a 404 from the deployment API.
+
+See [Configuration: subagentDefaults](configuration.md#subagentdefaults) for how to set matching deployment names in `.lore/config.json`.
+
 ### Cursor
 
 Config: `.cursor/hooks.json` + `.cursor/mcp.json`. Six hooks plus an MCP server (`lore_check_in`, `lore_context`, `lore_write_guard`) that compensates for Cursor's missing per-prompt hook. Hooks that Cursor silences (`afterFileEdit`, `postToolUseFailure`, `preCompact`) write state to disk; `beforeShellExecution` and the MCP server read it back. **Gaps:** No per-prompt hook, no context path guide.
