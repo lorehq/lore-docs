@@ -18,6 +18,32 @@ The agent will follow this guide phase by phase, pausing at each decision point 
 
 ---
 
+## Phase 0: Version Control (Optional)
+
+**Goal:** Decide whether this instance is git-tracked with a remote, or local-only.
+
+A Lore instance is a git repo by default (`create-lore` runs `git init`). If you want to back up your knowledge base, share it across machines, or collaborate — add a remote now, before you start accumulating knowledge.
+
+**Option A — Remote repository:**
+
+Create a private repo on your SCM (GitHub, GitLab, Bitbucket, etc.) and add it as the remote:
+
+    git remote add origin <your-repo-url>
+    git push -u origin main
+
+Your knowledge base, skills, conventions, and work tracking are now version-controlled and backed up with every push. This is the recommended path for any instance you rely on.
+
+**Option B — Local-only:**
+
+Skip the remote. The instance stays on your machine only.
+
+!!! warning "Back up regularly"
+    A local-only instance has no off-machine backup. Your knowledge base — skills, environment docs, runbooks, work tracking — accumulates real value over time. If you choose to stay local, set up regular external backups (Time Machine, rsync, cloud sync, etc.) so a disk failure doesn't erase months of captured knowledge.
+
+You can always add a remote later. Nothing about the instance structure changes either way.
+
+---
+
 ## Phase 1: Identity
 
 **Goal:** Tell the agent who it is and who it serves.
