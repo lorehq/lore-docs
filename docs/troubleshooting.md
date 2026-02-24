@@ -97,12 +97,12 @@ Claude Code maps `opus` → its internal default opus model ID, which may not ex
 
 ### `validate-consistency.sh` fails
 
-This script runs 11 cross-reference checks. Common failures:
+This script runs 7 cross-reference checks. Common failures:
 
 | Failure | Fix |
 |---------|-----|
 | Platform copies out of sync | `bash .lore/scripts/sync-platform-skills.sh` |
-| Registry stale | `bash .lore/scripts/generate-registries.sh` |
+| Registry stale | `bash .lore/scripts/sync-platform-skills.sh` — syncs canonical `.lore/` sources to platform dirs (`.claude/skills/`, `.claude/agents/`, Cursor rules) |
 | Nav stale | `bash .lore/scripts/generate-nav.sh` — regenerates `mkdocs.yml` nav after adding or renaming docs |
 | Instructions out of sync | `bash .lore/scripts/sync-harness.sh` (via `/lore-update`) |
 

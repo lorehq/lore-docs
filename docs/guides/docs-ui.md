@@ -32,7 +32,7 @@ On first start, Docker pulls the image (`lorehq/lore-docker:latest`) and loads t
 
 ## Ports & Configuration
 
-Ports are auto-computed per project (hash of project name, range 9001–9999) so multiple projects never collide. Semantic search runs on docs port + 1000.
+Ports are auto-computed per project (hash of project name, range 9001–9999) so multiple projects never collide. Semantic search runs on docs port + 1 (e.g. docs on 9184, semantic search on 9185).
 
 Override in `.lore/config.json`:
 

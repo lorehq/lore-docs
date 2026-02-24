@@ -35,7 +35,7 @@ See [Hook Architecture](hook-architecture.md) for module layout, lifecycle diagr
 
 ### Claude Code
 
-Config: `.claude/settings.json`. Seven hooks cover all lifecycle events: session banner, per-prompt reminder, context path guide, memory guard, convention guard, harness guard, and knowledge tracker. `SessionStart` re-fires after compaction so the full banner is always present.
+Config: `.claude/settings.json`. Eight hooks cover all lifecycle events: session banner, per-prompt reminder, context path guide, memory guard, convention guard, harness guard, search guard, and knowledge tracker. `SessionStart` re-fires after compaction so the full banner is always present.
 
 #### Foundry / Bedrock / Vertex Deployments
 

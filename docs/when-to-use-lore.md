@@ -79,7 +79,7 @@ Lore is plain files. Delete the Lore directories and you're back to a normal pro
 
 ```bash
 rm -rf .lore .claude .cursor .opencode hooks lib scripts
-rm CLAUDE.md opencode.json mkdocs.yml .lore-config
+rm CLAUDE.md opencode.json mkdocs.yml
 ```
 
 Your `docs/` directory contains your accumulated knowledge — keep it or delete it. Nothing external to clean up. No accounts, no services, no subscriptions.

@@ -4,7 +4,7 @@ title: Hook Architecture
 
 # Hook Architecture
 
-Lore hooks into the agent's lifecycle at seven events. Shared logic lives in `lib/`, with thin adapters for each platform.
+Lore uses eight hooks to shape agent behavior across the session lifecycle. Shared logic lives in `lib/`, with thin adapters for each platform.
 
 ## Hook Lifecycle
 
@@ -61,6 +61,7 @@ flowchart TB
         cc_fg[harness-guard.js]
         cc_kt[knowledge-tracker.js]
         cc_cp[context-path-guide.js]
+        cc_sg[search-guard.js]
     end
 
     subgraph cursor["Cursor (.cursor/hooks/ + .cursor/mcp/)"]
@@ -127,6 +128,10 @@ Static content (conventions, agent-rules) is embedded in `CLAUDE.md` at generati
 ### ensure-structure.sh
 
 Runs on `SessionStart`. Creates stub `index.md` files for any knowledge directories that don't have one. Prevents empty directory entries from appearing in the knowledge map without any navigation context.
+
+### search-guard.js
+
+Fires on `PreToolUse` for Read/Glob operations. When semantic search is configured (`docker.search.address` in `.lore/config.json`), nudges the agent to use semantic search instead of speculative file reads. Exits silently when semantic search is unavailable or profile is `minimal`.
 
 ### Tool counter reset
 

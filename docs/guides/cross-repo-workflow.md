@@ -85,7 +85,7 @@ In the target repo, `/lore-link` creates:
 
 - **Claude Code** — `.claude/settings.json` with hooks pointing to the hub
 - **Cursor** — `.cursor/hooks.json` + `.cursor/mcp.json` + `.cursor/rules/lore-*.mdc` pointing to the hub
-- **OpenCode** — `.opencode/plugins/` wrappers (3 of 5 hub plugins: session-init, protect-memory, knowledge-tracker) + `.opencode/commands/` + `opencode.json` pointing to the hub
+- **OpenCode** — `.opencode/plugins/` wrappers (4 of 6 hub plugins: session-init, protect-memory, knowledge-tracker, harness-guard) + `.opencode/commands/` + `opencode.json` pointing to the hub
 - **Instructions** — `CLAUDE.md` rewritten from hub's `.lore/instructions.md`
 - **Link record** — `.lore/links` in the hub repo (a JSON array) updated with the linked repo path and timestamp
 
