@@ -30,6 +30,9 @@ The agent sees both before your first prompt every session.
 
 For personal preferences that shouldn't be shared via git, edit `docs/knowledge/local/operator-profile.md`. This file is gitignored and injected into every session alongside project context. The default template is ignored until you customize it.
 
+!!! tip "What to customize now vs. later"
+    `docs/context/` is meant to be edited upfront — agent-rules, conventions, and operator-profile all benefit from early customization. `docs/knowledge/` is different: it's built by the agent as it learns, not pre-structured by hand. Don't create folders or files there manually before running first-session setup. Let the agent populate it during environment mapping, then run the [knowledge defrag runbook](guides/first-session/knowledge-worker.md#phase-8-knowledge-defrag) to organize by content.
+
 The installer also scaffolds `.mcp.json` at the instance root for the MCP search server — used by Claude Code (and Cursor via `.cursor/mcp.json`) when the Docker sidecar is running. See [Configuration: MCP Search Server](guides/configuration.md#mcp-search-server).
 
 ## Start the Docker Sidecar
