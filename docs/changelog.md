@@ -6,6 +6,38 @@ title: Changelog
 
 All notable changes to Lore are documented here. See [Production Readiness](production-readiness.md) for versioning policy. For full commit history, see [GitHub Releases](https://github.com/lorehq/lore/releases).
 
+## v0.12.9 — 2026-02-24
+
+Harness rename, first-session guides, Docker runtime fixes.
+
+**Naming:**
+
+- Reframed from "coding agent framework" to "coding agent harness" throughout — `framework-guard` → `harness-guard`, `sync-framework.sh` → `sync-harness.sh`, all instructions and banner text updated
+
+**First-session experience:**
+
+- Fresh instances now guided to first-session setup instead of pre-structuring the knowledge base
+- Added first-session setup runbooks as seeds (knowledge-worker, homelab, personal)
+
+**Skills and agents:**
+
+- All skills now synced to `.claude/skills/` (previously only `type: command` skills were copied)
+- `user-invocable` field now required on all skill frontmatter
+- Config-driven model stamping for all agents across all platforms
+- New built-in skills: `mcp-stdio-content-length-framing`, `node-macos-stdin-fd`
+
+**Docker runtime (`lorehq/lore-docker`):**
+
+- Fix panzoom plugin assets lost on `mkdocs serve` livereload — assets now staged into docs workdir
+- Fix `site_url` subpath breaking all local asset resolution — defaults to `localhost` for dev serving
+- Header subtitle now shows instance version from config
+
+**Release pipeline:**
+
+- `release.sh` now tags `lore-docker` alongside `lore` and `create-lore`
+- `bump-version.sh` regenerates derived files after version update
+- Added prompt-engineering convention as seed template
+
 ## v0.12.0 — 2026-02-23
 
 OpenCode config fix, search-guard hook, notes support.
