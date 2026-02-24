@@ -56,6 +56,7 @@ nav:
   - How Delegation Works: how-delegation-works.md
   - Cost Evidence: cost-evidence.md
   - Guides:
+    - First Session Setup: guides/first-session-setup.md
     - Working with Lore: guides/interaction.md
     - Working Across Repos: guides/cross-repo-workflow.md
     - Configuration: guides/configuration.md

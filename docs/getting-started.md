@@ -40,7 +40,13 @@ See [Docs UI & Semantic Search](guides/docs-ui.md) for setup, configuration, and
 
 ## First Session
 
-Start your agent in the project directory:
+**Before your first real working session, ground the agent in your environment.** Ask your agent:
+
+> "Walk me through first-session setup."
+
+It will follow the [First Session Setup guide](guides/first-session-setup.md) phase by phase — operator profile, model configuration, keystore, CLI auth, environment mapping, and more. A well-grounded instance collaborates differently than a cold one.
+
+**For ongoing sessions**, start your agent normally:
 
 ```bash
 claude       # Claude Code
@@ -48,9 +54,7 @@ cursor .     # Cursor (open the project)
 opencode     # OpenCode
 ```
 
-Work normally. Lore's hooks reinforce knowledge capture as you go. To open a work repo in your IDE instead of the Lore instance directory, see [/lore-link](guides/cross-repo-workflow.md#ide-workflow-lore-link) for an alternative that keeps hooks active.
-
-After substantive work, run `/lore-capture` to trigger a full knowledge capture pass.
+Lore's hooks reinforce knowledge capture as you go. After substantive work, run `/lore-capture` for a full capture pass. To open a work repo in your IDE, see [/lore-link](guides/cross-repo-workflow.md#ide-workflow-lore-link).
 
 ## Working Across Repos
 
