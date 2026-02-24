@@ -4,18 +4,24 @@ title: Cost Evidence
 
 # Cost Evidence
 
-!!! note "Claude Code only"
-    All evidence on this page was measured on **Claude Code** (CLI) with Claude models (Opus 4.6 orchestrator, Haiku 4.5 workers). Cursor and OpenCode are [experimental platforms](guides/platforms/index.md#platform-maturity) — they should see similar benefits from delegation and knowledge reuse, but this has not been independently verified.
+!!! warning "Read this first"
+    - **Platform:** Claude Code (CLI) only. Cursor and OpenCode are [experimental](guides/platforms/index.md#platform-maturity) and untested.
+    - **Configuration:** Full Lore integration — Docker sidecar running, semantic search enabled, MCP search server configured, all hooks active. This is **not** the out-of-the-box default; it represents a fully configured instance.
+    - **Version:** Tested on Lore v0.11.0 (Feb 2026). The current version is newer; results may differ.
+    - **Sample size:** N=10 per condition (50 sessions total). Small sample — treat as directional evidence, not definitive benchmarks.
+    - **Accuracy:** We believe these numbers are representative but cannot guarantee their accuracy. Cost figures are API-equivalent estimates derived from session logs, not actual invoices.
 
-This page presents cost data from a controlled comparison between raw Claude Code and Lore on the same task. All conditions have N=10 runs.
+This page presents cost data from a controlled comparison between raw Claude Code and Lore on the same task.
 
-If you're skeptical, good. Read the [limitations](#limitations) first, then run the [test yourself](#reproduce-it).
+If you're skeptical, good. Read the [limitations](#limitations) first, then run the [test yourself](#reproduce-it). We welcome independent verification — see [Contribute](#contribute).
 
 ## Methodology
 
 **Task:** Determine whether current inventory can fill all orders from last week. Two mock APIs (orders and inventory) with deliberate gotchas — version traps, required headers, non-obvious query parameters.
 
-**Five conditions**, same task, same day:
+**Lore configuration:** All Lore sessions ran with full integration — Docker sidecar deployed (`/lore-docker`), semantic search active, MCP search server configured (`.mcp.json`), standard hook profile with all 8 Claude Code hooks firing. This represents a fully configured instance, not the default post-install state.
+
+**Five conditions**, same task, same day (2026-02-22):
 
 | Condition | N | Harness | Orchestrator | Workers | Prior Knowledge |
 |-----------|---|-----------|-------------|---------|-----------------|
@@ -110,29 +116,49 @@ For how these mechanisms work, see [How Delegation Works](how-delegation-works.m
 
 !!! warning "Read before citing these numbers"
 
-- **One task type.** API exploration with mock services. Results may differ for code generation, refactoring, debugging, or other task patterns.
-- **One platform.** Tested on Claude Code (CLI) with Claude models (Opus 4.6 orchestrator, Haiku 4.5 workers). Other platforms and model combinations may produce different results.
-- **Subscription pricing.** Tests ran on Claude Max (flat-rate). Cost figures are API-equivalent estimates, relevant for understanding relative efficiency.
+- **Small sample.** N=10 per condition (50 sessions total). This is directional evidence, not a statistically rigorous benchmark. Variance is reported but confidence intervals are wide at this sample size.
+- **One task type.** API exploration with mock services. Results may differ for code generation, refactoring, debugging, or other task patterns. The delegation advantage (routing to cheaper models) should generalize; the knowledge reuse advantage depends on task recurrence.
+- **One platform.** Claude Code (CLI) with Claude models (Opus 4.6 orchestrator, Haiku 4.5 workers). Cursor and OpenCode are [experimental platforms](guides/platforms/index.md#platform-maturity) — untested.
+- **Full integration, not default.** The test ran with Docker sidecar, semantic search, MCP server, and all hooks active. Out-of-the-box Lore (no Docker, no semantic search) may show different results — the delegation and knowledge reuse mechanisms still apply, but the search-guard and MCP tools would be absent.
+- **Older version.** Tested on Lore v0.11.0 (Feb 2026). Hook behavior, banner size, and capture patterns have changed since then. Results on the current version may differ in either direction.
+- **Estimated costs.** Tests ran on Claude Max (flat-rate subscription). Cost figures are API-equivalent estimates calculated from session log token counts, not actual API invoices. We believe the methodology is sound but cannot guarantee perfect accuracy.
 - **No cross-tool validation.** Knowledge captured on Claude Code should benefit Cursor and OpenCode sessions — not yet tested.
+- **Single operator.** All 50 sessions were run by one person. Operator behavior (clarification style, capture approval timing) may influence results.
 
 ## Reproduce It
 
-The test services and verification scripts are open source:
+The test services, verification scripts, full methodology, operator inputs, and calculation runbook are open source:
 
 ```bash
 git clone https://github.com/lorehq/lore-gotcha-demo.git
 cd lore-gotcha-demo
 
-# Start services
-node orders-service.js &
-node inventory-service.js &
+# Start services (separate terminals)
+node orders-service.js
+node inventory-service.js
 
-# Run the test prompt on raw Claude Code
-# Then install Lore and run the same prompt
-npx create-lore
-
-# Verify results match ground truth
+# Verify services work
 bash verify-fulfillment.sh
+
+# Run the test prompt on raw Claude Code, then with Lore
+npx create-lore my-test-instance
 ```
 
-See the [repo README](https://github.com/lorehq/lore-gotcha-demo) for full setup, ground truth values, and the verification scripts.
+The [repo README](https://github.com/lorehq/lore-gotcha-demo) contains:
+
+- Full service documentation with all gotchas and expected responses
+- Exact operator inputs for each condition
+- Calculation runbook (the correct reasoning path)
+- Instructions for measuring cost from Claude Code session logs
+- Verification scripts for ground truth validation
+
+## Contribute
+
+We are not 100% certain our numbers are accurate. If you reproduce this test — whether you confirm, refute, or improve on our results — we want to hear about it.
+
+- **Verify:** Run the same 5 conditions and compare. Different hardware, network conditions, or Claude Code versions may produce different results.
+- **Disprove:** If your numbers don't match, open an issue with your methodology and data. We'll update this page.
+- **Optimize:** Found a configuration that performs better? A different hook profile, model combination, or delegation strategy? Contributions are welcome.
+- **Expand:** Test on Cursor or OpenCode. Test with different task types. Test with larger knowledge bases.
+
+File issues or PRs at [lorehq/lore](https://github.com/lorehq/lore/issues) or [lorehq/lore-gotcha-demo](https://github.com/lorehq/lore-gotcha-demo/issues).
