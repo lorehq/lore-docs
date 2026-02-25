@@ -29,11 +29,15 @@ These principles load into the session banner at startup, so the agent sees them
 
 ### 2. Write-Time Reinforcement
 
-Knowing the rules at session start isn't enough. Context windows are long, sessions are longer, and instructions drift out of attention. Lore's **convention guard** hook fires before every file write or edit, injecting the security principles into the agent's context at the moment it matters most — right before content hits disk.
+Knowing the rules at session start isn't enough. Context windows are long, sessions are longer, and instructions drift out of attention. Lore's **convention guard** hook fires before every file write or edit, injecting a security checkpoint at the moment it matters most — right before content hits disk.
 
-This is path-aware: security principles fire for *every* write to *any* file. Other conventions (docs, work items) are path-scoped, but security is universal.
+The checkpoint forces a decision:
 
-The guard reads the bold principle lines directly from the convention file, so if you customize the security convention, the reinforcement updates automatically — no hook changes needed.
+> *Security checkpoint — assess this write. Does it contain secrets, credentials, or sensitive values? Replace with references (env var names, vault paths) or escalate to the operator. When uncertain, ask before writing.*
+
+This isn't a passive list of principles. It's a gate that makes the agent stop and evaluate every write: is this value sensitive? If yes, redact it with a reference or escalate. If uncertain, ask. If clean, proceed.
+
+Other conventions (docs, work items) are path-scoped. Security fires for *every* write to *any* file.
 
 ### 3. Self-Healing Convention
 
@@ -48,11 +52,17 @@ Operator modifications are always preserved. The self-heal only triggers when th
 A typical write in a Lore session looks like this:
 
 1. Agent decides to write a config file
-2. Convention guard fires, injects: *"Reference vaults and env var names — repos get leaked, and secrets in version history are permanent."*
-3. Agent writes `DATABASE_URL=<your-connection-string>` instead of a real credential
+2. Convention guard fires: *"Security checkpoint — assess this write..."*
+3. Agent evaluates the content, decides `DATABASE_URL` is sensitive, writes `DATABASE_URL=<your-connection-string>` instead of a real credential
 4. Capture reminder fires, prompting the agent to note the env var in environment docs
 
-No manual intervention. No per-session reminders. The harness handles it.
+No manual intervention. No per-session reminders. Every write passes through a security checkpoint.
+
+## Delegated Workers
+
+Security enforcement extends to delegated workers. When the orchestrator spawns a worker agent, the worker's process includes an explicit write-assessment step — before writing or editing any file, the worker checks for sensitive content and verifies the file is within the scope the orchestrator assigned. If either check fails, the worker stops and returns to the orchestrator for guidance rather than proceeding.
+
+This means security enforcement doesn't depend on the orchestrator reviewing every write after the fact. Workers carry the same security awareness as the orchestrator — assess every write, replace sensitive values with references, and escalate uncertainty.
 
 ## Customization
 
