@@ -82,17 +82,9 @@ Verify by asking the agent to run a quick worker test. Each tier should report t
 
 **Rule:** Secrets never go in the KB. The KB documents item names and what they're for — never values.
 
-| Option | Best for |
-|--------|----------|
-| [Vaultwarden](https://github.com/dani-garcia/vaultwarden) (self-hosted) | Local / air-gapped; full control |
-| 1Password CLI (`op`) | Teams with an existing 1Password subscription |
-| Bitwarden (cloud) | Cross-machine sync without self-hosting |
-| Cloud KMS (AWS Secrets Manager, Azure Key Vault, GCP Secret Manager) | Existing cloud infrastructure |
-| `pass` (GPG-based) | Unix environments; minimal dependencies |
+Common options: [Vaultwarden](https://github.com/dani-garcia/vaultwarden) (self-hosted), 1Password CLI, Bitwarden (cloud), cloud KMS (AWS/Azure/GCP), or `pass` (GPG-based).
 
-Authenticate the CLI and verify access yourself — keystore auth is interactive and involves credentials. If importing browser-saved passwords, export from your browser, import via the keystore CLI, then delete the export file immediately — it is plaintext.
-
-Once authenticated, the agent can discover the keystore configuration, list items, and document the tool, naming convention, and item index automatically.
+Authenticate the CLI yourself — keystore auth is interactive. Once authenticated, the agent discovers the configuration and documents items automatically.
 
 ---
 
@@ -100,16 +92,12 @@ Once authenticated, the agent can discover the keystore configuration, list item
 
 **Goal:** Authenticate external tooling in dependency order — keystore first, then tools that need keys from it.
 
-CLI authentication is interactive, so you do it directly. Authenticate in this sequence:
-
-1. **Version control CLI** (GitHub CLI, GitLab CLI, Azure DevOps extension) — foundational; needed for all repo work
-2. **Cloud provider CLI** (e.g. `az login`, `aws configure`, `gcloud auth login`) — needed before cloud-dependent tools
-3. **Token-based tools** — anything needing a PAT or API key: retrieve from the keystore, export as env var or pass as flag
+CLI auth is interactive — do it yourself in order: VCS CLI first (`gh`, `glab`), then cloud provider (`az login`, `aws configure`, `gcloud auth`), then token-based tools (retrieve keys from the keystore).
 
 !!! note "VCS CLI ≠ cloud CLI"
-    Version control and cloud provider auth are separate systems. For example, `az login` grants Azure Resource Manager access but does not grant Azure DevOps access — ADO requires its own PAT and extension.
+    Version control and cloud provider auth are separate systems. `az login` grants Azure access but not Azure DevOps — ADO requires its own PAT.
 
-After authenticating, the agent can verify each tool works (`gh auth status`, `az account show`, etc.) and document what it finds — auth methods, keystore references, session gotchas — automatically.
+After authenticating, the agent verifies each tool and documents what it finds automatically.
 
 ---
 
@@ -117,17 +105,9 @@ After authenticating, the agent can verify each tool works (`gh auth status`, `a
 
 **Goal:** Map the services the agent will interact with. Don't rely on what you can recall.
 
-Tell your agent to map your environment. It knows to check multiple sources rather than relying on your memory:
+Tell your agent to map your environment. It checks browser bookmarks/history, Docker inventory, repo scans, and company wikis rather than relying on your memory. It proposes doc structure, populates what it finds, and asks you to fill gaps.
 
-- **Browser bookmarks** — groups services you've used enough to bookmark
-- **Browser history** — surfaces the full range of tools and services you interact with
-- **Docker inventory** — reveals running services, stopped dev stacks, and available MCP images
-- **Repo scan** — surfaces active service domains and technology patterns across your VCS
-- **Company wiki** — Confluence, Notion, SharePoint — someone may have mapped the architecture already
-
-The agent will propose an environment doc structure, populate it with what it finds, and ask you to fill in gaps it can't discover automatically.
-
-Once the environment is mapped, tell your agent about your current initiatives and goals. If your org uses a goal-tracking system (Workday, Lattice, Notion OKRs, Linear cycles, etc.), export your current goals and share them as input — goals map to roadmaps, milestones map to plans. The agent will create the appropriate work tracking structure.
+Once mapped, tell the agent about your current initiatives. If your org uses a goal-tracking system (Workday, Lattice, Notion OKRs, Linear, etc.), export your goals as input — goals map to roadmaps, milestones map to plans.
 
 ---
 
@@ -141,13 +121,4 @@ First-run generates environment docs fast. The result is usually a flat accumula
 
 ## Verification
 
-Ask your agent to verify the setup is complete. It will check:
-
-- Operator profile and agent rules reflect current deployment
-- Worker tiers (fast/default/powerful) route to the expected models
-- Keystore accessible — agent can retrieve a test item
-- VCS CLI authenticated and verified
-- Cloud CLI authenticated (if applicable)
-- All active services documented in `docs/knowledge/environment/`
-- Semantic search returning results
-- Active roadmaps and plans created for current initiatives
+Ask your agent to verify setup is complete — it checks profile, agent rules, worker tiers, keystore access, CLI auth, environment docs, semantic search, and active work items.

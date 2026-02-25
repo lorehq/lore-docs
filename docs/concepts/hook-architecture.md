@@ -117,29 +117,15 @@ See [Platform Overview](../reference/platforms/index.md) for the full feature ma
 
 ## Hook Behavior Notes
 
-### harness-guard.js
+| Hook | Trigger | What it does |
+|------|---------|-------------|
+| `session-init.js` | SessionStart | Assembles the dynamic session banner (work items, knowledge map, skill registry) |
+| `harness-guard.js` | PreToolUse (writes) | Enforces hub vs. linked-repo boundaries |
+| `context-path-guide.js` | PreToolUse (writes to `docs/`) | Shows knowledge map tree to guide placement |
+| `search-guard.js` | PreToolUse (reads) | Nudges toward semantic search when sidecar is available |
+| `ensure-structure.sh` | SessionStart | Creates stub `index.md` files for empty knowledge directories |
 
-Enforces hub vs. linked-repo guardrails on `PreToolUse` for file write operations — hub repos block application code creation; linked repos block direct edits to hub knowledge files.
-
-### context-path-guide.js
-
-On `PreToolUse` for Write/Edit under `docs/context/` or `docs/knowledge/`, outputs a knowledge map tree to guide writes to the right location.
-
-### session-init.js
-
-Assembles and injects the dynamic session banner — active work items, knowledge map tree, and skill registry.
-
-### ensure-structure.sh
-
-On `SessionStart`, creates stub `index.md` files for knowledge directories that lack one, keeping the knowledge map navigable.
-
-### search-guard.js
-
-On `PreToolUse` for Read/Glob, nudges the agent toward semantic search when the sidecar is configured; silent when unavailable or profile is `minimal`.
-
-### Tool counter reset
-
-When the agent uses a read-only tool (Read, Glob, Grep) or writes to a knowledge path (`docs/`, `.lore/skills/`, `.claude/skills/`), the Bash command counter resets to 0. Capture nudges only accumulate against consecutive shell commands — reading files and writing knowledge do not count toward the nudge or warn thresholds.
+**Tool counter reset:** Read-only tools and knowledge writes reset the Bash command counter to 0. Capture nudges only accumulate against consecutive shell commands.
 
 ## See Also
 

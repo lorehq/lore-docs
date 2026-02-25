@@ -91,16 +91,7 @@ Any unrecognized value (or a missing `profile` key) falls back to `standard`.
 
 ## Tuning for Large Instances
 
-The largest contributor to session banner size is the **knowledge map** — a directory-only tree of `docs/`, `skills/`, and `agents/`. Size grows with the number of directories, not documents.
-
-**`treeDepth`** limits how many directory levels the knowledge map displays. Default is 5. Reducing to 3 or 4 hides deep nesting while showing top-level structure.
-
-Tell your agent when the instance feels noisy or slow. It will assess which signals apply and adjust config accordingly:
-
-- Knowledge map exceeds ~50 lines → reduce `treeDepth` or reorganize subdirectories
-- `.lore/memory.local.md` exceeds ~50 lines → route content to skills or `docs/knowledge/`
-- Conventions section growing → keep it focused on rules, move reference material to `docs/knowledge/`
-- Many active work items → archive completed items
+The biggest contributor to banner size is the **knowledge map** — a directory tree of `docs/`, `skills/`, and `agents/`. `treeDepth` (default 5) limits how many levels display. Tell your agent when the instance feels noisy — it adjusts depth, routes overflow to docs, and archives completed work items.
 
 ## Environment Variables
 
@@ -114,23 +105,6 @@ These are set outside sessions — in your shell profile or before launching you
 
 ### Hook Event Logging
 
-`LORE_HOOK_LOG` enables structured event logging for all hooks across all three platforms. Each hook fire writes a JSON line to `.git/lore-hook-events.jsonl`. Zero cost when disabled.
+`LORE_HOOK_LOG` enables structured JSONL event logging for all hooks across all platforms. Each hook fire writes a line to `.git/lore-hook-events.jsonl`. Zero cost when disabled. Set `export LORE_HOOK_LOG=1` before launching your editor.
 
-```bash
-export LORE_HOOK_LOG=1
-```
-
-Each entry records:
-
-```json
-{
-  "ts": 1740000000000,
-  "platform": "cursor",
-  "hook": "capture-nudge",
-  "event": "beforeShellExecution",
-  "output_size": 52,
-  "state": {"bash": 3}
-}
-```
-
-To analyze collected log data, tell your agent to analyze hook logs. The report covers fires per platform, fires per hook, average output sizes, estimated accumulated context tokens, and any hooks that never fired. To reset the log, tell your agent to clear it.
+Tell your agent to analyze or clear hook logs.

@@ -32,27 +32,11 @@ flowchart TD
 
 3. **Knowledge captures back to Lore.** Gotchas become skills, endpoints go to context docs, multi-step procedures become runbooks — all stored in the Lore instance, available next session.
 
-## What Crosses Repo Boundaries
+## Boundaries
 
-The agent operates on files and commands anywhere on your machine. There's no path restriction.
+The agent operates on files and commands anywhere on your machine — reads, writes, git, tests, search all use absolute paths. No path restriction.
 
-| Operation | How it works |
-|-----------|-------------|
-| Read/write files | Absolute paths (`/home/you/projects/app-api/src/auth.ts`) |
-| Git operations | `git -C /path/to/repo status`, `git -C /path/to/repo commit ...` |
-| Run tests | `cd /path/to/repo && npm test` |
-| Search code | Grep/Glob with path parameter pointing at any directory |
-
-## What Stays in Lore
-
-| Artifact | Example |
-|----------|---------|
-| **Skills** | "This API requires case-sensitive org names" |
-| **Knowledge docs** | Repo inventory, service endpoints, relationships |
-| **Runbooks** | "How to deploy app-api to staging" |
-| **Roadmaps/plans** | Work that spans multiple repos |
-
-None of these artifacts are written to your work repos.
+Knowledge always stays in Lore: skills, environment docs, runbooks, and work tracking write to the hub, never to work repos.
 
 ## Two Workflows
 
