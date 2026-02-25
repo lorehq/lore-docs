@@ -4,7 +4,10 @@ title: Configuration
 
 # Configuration
 
-Lore reads settings from `.lore/config.json` (JSON) at the instance root and from environment variables. Your agent manages this config — tell it what you want changed and it will update the file and apply the change.
+Lore reads settings from `.lore/config.json` (JSON) at the instance root and from environment variables. Your agent manages this config — tell it what you want changed and it handles the rest.
+
+!!! tip "Your agent can configure all of this"
+    The reference below documents what exists and why. To change anything, just tell your agent — "switch to discovery profile", "set the fast tier to haiku", "lower the capture thresholds."
 
 ## `.lore/config.json`
 

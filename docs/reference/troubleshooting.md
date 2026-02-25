@@ -4,6 +4,9 @@ title: Troubleshooting
 
 # Troubleshooting
 
+!!! tip "Your agent can diagnose most issues"
+    For anything after installation, describe the symptom to your agent and it will diagnose and fix. The reference below explains what goes wrong and why — useful context, but you rarely need to follow these steps manually.
+
 ## Installation
 
 ### `npx create-lore` fails with "Could not find remote branch"

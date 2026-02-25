@@ -8,6 +8,9 @@ This guide covers what to do in your first working session — after installatio
 
 **Run this once per Lore instance.** A well-configured instance collaborates differently than a cold one.
 
+!!! tip "Your agent can help with all of this"
+    Everything on this page can be done conversationally once you've run `npx create-lore` and launched your agent. Ask it to walk you through first-session setup, or jump to any specific phase — "help me configure model tiers", "set up my keystore", "map my environment." The guide below explains what happens and why, but you don't need to follow it manually.
+
 ---
 
 ## Phase 0: Docs UI & Semantic Search
@@ -59,15 +62,15 @@ You can always add a remote later. Nothing about the instance structure changes 
 
 **Goal:** Wire the three-tier worker system correctly before any delegation happens.
 
-Set model aliases in `~/.claude/settings.json` under `env` — this is system-level configuration outside the agent session, so you do it manually:
+Tell your agent which models to use for each tier (fast, default, powerful) and it will configure `~/.claude/settings.json` and regenerate agent frontmatter. On the direct Anthropic API, short aliases work as-is. On hosted inference (Foundry, Bedrock, Vertex), tell the agent your deployment names.
+
+The settings it writes look like this:
 
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "<fast-model>",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "<default-model>",
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "<powerful-model>"
 
-On hosted inference (Foundry, Bedrock, Vertex), these point to deployment names. On the direct Anthropic API, they point to model IDs.
-
-After setting the aliases, tell your agent to regenerate the agent frontmatter. This step is critical — Claude Code only accepts short aliases (`haiku`/`sonnet`/`opus`) in agent frontmatter. If frontmatter contains full model IDs or deployment names, Claude Code silently ignores the value and all workers run at the orchestrator's tier with no error.
+This step is critical — Claude Code only accepts short aliases (`haiku`/`sonnet`/`opus`) in agent frontmatter. If frontmatter contains full model IDs or deployment names, Claude Code silently ignores the value and all workers run at the orchestrator's tier with no error. The agent handles this correctly.
 
 Verify by asking the agent to run a quick worker test. Each tier should report the model it's running on.
 

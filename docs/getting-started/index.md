@@ -17,6 +17,9 @@ npx create-lore my-project
 cd my-project
 ```
 
+!!! tip "Your agent can help with everything after install"
+    Once you've run `npx create-lore` and launched your agent, it can assist with every step below — project setup, Docker sidecar, first-session configuration. Just ask.
+
 ## Customize Your Project Context
 
 Start a session and tell the agent about your project — what it does, what domain it's in, how you like to work. The agent writes `docs/context/agent-rules.md` from your description. This file is injected into every session as project context.
