@@ -75,6 +75,7 @@ nav:
     - Docs UI & Search: guides/docs-ui.md
     - Roadmaps & Plans: guides/roadmaps-and-plans.md
     - Upgrading: guides/upgrading.md
+    - Field Repair: guides/field-repair.md
   - Concepts:
     - concepts/index.md
     - How It Works: concepts/how-it-works.md

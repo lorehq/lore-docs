@@ -99,6 +99,10 @@ Harness updates only touch harness-owned files (`lore-*` prefix). If you see con
 
 Tell your agent: "There's a version mismatch after the update — can you check version sync?" If `.lore/config.json` and `package.json` disagree, the update didn't complete cleanly and your agent can re-run it.
 
+## Harness Bugs
+
+If the issue is a broken hook, script, or skill — not a configuration problem — see [Field Repair](../guides/field-repair.md). Your agent has a structured workflow for diagnosing and fixing harness bugs in source.
+
 ## Still Stuck?
 
 - Check the [guides](../guides/working-with-lore.md) for detailed walkthroughs

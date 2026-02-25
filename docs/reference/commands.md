@@ -16,6 +16,7 @@ Commands are things you say to your agent. They trigger specialized routines for
 | `/lore-update` | Pulls latest harness files from GitHub without touching your content. | "Update Lore to the latest version" |
 | `/lore-link <target>` | Links a work repo so hooks fire from the hub. | "Link my-app repo to this hub" |
 | `/lore-docker` | Starts, stops, or checks the local Docker sidecar for semantic search and docs UI. | "Start the docs UI" |
+| `/lore-field-repair` | Guided workflow for diagnosing and fixing harness bugs in source. | "Something is broken — run a field repair" |
 
 !!! tip
     You don't need to memorize these. Describe what you want and the agent routes to the right command. These exist for speed, not necessity.
