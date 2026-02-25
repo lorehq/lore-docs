@@ -74,13 +74,11 @@ flowchart TB
     KB -.->|Next Session| Parse
 ```
 
-## Three Harness Functions
-
-### 1. Knowledge Capture
+## Knowledge Capture
 
 Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract that knowledge into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. The orchestrator finds relevant skills by name and description when delegating related tasks.
 
-#### The Capture-and-Reuse Loop
+### The Capture-and-Reuse Loop
 
 ```mermaid
 sequenceDiagram
@@ -101,7 +99,7 @@ sequenceDiagram
     S2->>S2: Execute immediately with correct parameters
 ```
 
-#### What Gets Captured Where
+### What Gets Captured Where
 
 | Knowledge Type | Destination | Example |
 |---------------|-------------|---------|
@@ -113,11 +111,11 @@ sequenceDiagram
 | Quick observations, bugs | `docs/work/notes/` | Flaky auth timeout under load |
 | Multi-step procedures | `docs/knowledge/runbooks/` | Deploy to staging |
 
-#### Ownership
+### Ownership
 
 See [Platform Overview: Sync Boundaries](guides/platforms/index.md#sync-boundaries) for the `lore-*` prefix convention and what sync overwrites.
 
-#### How Skills Grow
+### How Skills Grow
 
 Skills are created from gotchas encountered during work. Lore ships with built-in workers (`lore-worker` tiers and `lore-explore`) — dynamic, ephemeral agents that are spawned per-task with specific conventions and skills to load, then dissolved after the task completes.
 
