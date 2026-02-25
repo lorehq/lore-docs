@@ -69,4 +69,4 @@ See [Configuration: subagentDefaults](../configuration.md#subagentdefaults) for 
 
 ## Cost Evidence
 
-Claude Code is the platform used for all [cost evidence](../../cost-evidence.md) measurements. The 59% cost reduction and 44% speed improvement were measured on Claude Code with Opus 4.6 orchestrator and Haiku 4.5 workers.
+Claude Code is the platform used for all [cost evidence](../../cost-evidence/index.md) measurements. The 59% cost reduction and 44% speed improvement were measured on Claude Code with Opus 4.6 orchestrator and Haiku 4.5 workers.

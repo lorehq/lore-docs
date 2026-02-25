@@ -61,7 +61,12 @@ nav:
   - Getting Started: getting-started.md
   - How It Works: how-it-works.md
   - How Delegation Works: how-delegation-works.md
-  - Cost Evidence: cost-evidence.md
+  - Cost Evidence:
+    - Overview: cost-evidence/index.md
+    - Analysis: cost-evidence/analysis.md
+    - Methodology: cost-evidence/methodology.md
+    - Raw Session Data: cost-evidence/raw-data.md
+    - Operator Inputs: cost-evidence/operator-inputs.md
   - Guides:
     - First Session Setup:
       - Overview: guides/first-session/index.md

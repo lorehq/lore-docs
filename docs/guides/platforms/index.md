@@ -20,7 +20,7 @@ Lore supports three coding agent platforms. All share the same knowledge base â€
     - **Cursor** compensates for missing hook events via an MCP server; this architecture is functional but undergoing optimization.
     - **OpenCode** uses experimental plugin API hooks (`experimental.chat.system.transform`, `experimental.session.compacting`) that may change in future OpenCode releases.
 
-    The [cost evidence](../../cost-evidence.md) was measured on Claude Code only. Cursor and OpenCode should see similar benefits from delegation and knowledge reuse, but this has not been independently verified.
+    The [cost evidence](../../cost-evidence/index.md) was measured on Claude Code only. Cursor and OpenCode should see similar benefits from delegation and knowledge reuse, but this has not been independently verified.
 
 ## Feature Matrix
 

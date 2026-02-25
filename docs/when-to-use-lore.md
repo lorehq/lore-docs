@@ -53,7 +53,7 @@ See [Cross-Repo Workflow](guides/cross-repo-workflow.md) for team topology optio
 | **Custom system prompts** | Yes — but manual maintenance | Your structure | Depends on platform |
 | **Lore** | Yes — git-tracked, multi-file | Yes — skills, agents, docs, conventions | Yes — harness hooks reinforce capture |
 
-Lore's main value over simpler approaches is **harness-level structure**. A `CLAUDE.md` file works fine at 50 lines. At 500 lines the file becomes a wall of text the agent skims past. Lore routes knowledge to the right location (skill, doc, convention, runbook) and loads it on demand instead of dumping everything into every session. For measured cost data, see [Cost Evidence](cost-evidence.md).
+Lore's main value over simpler approaches is **harness-level structure**. A `CLAUDE.md` file works fine at 50 lines. At 500 lines the file becomes a wall of text the agent skims past. Lore routes knowledge to the right location (skill, doc, convention, runbook) and loads it on demand instead of dumping everything into every session. For measured cost data, see [Cost Evidence](cost-evidence/index.md).
 
 ## Migration
 

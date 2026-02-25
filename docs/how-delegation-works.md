@@ -8,7 +8,7 @@ Delegation is one of the harness's core functions — see [How It Works](how-it-
 
 ## Delegation
 
-The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and conventions per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent subtasks and keeps dependency-gated steps sequential. For measured cost impact, see [Cost Evidence](cost-evidence.md).
+The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and conventions per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent subtasks and keeps dependency-gated steps sequential. For measured cost impact, see [Cost Evidence](cost-evidence/index.md).
 
 ```mermaid
 flowchart TD

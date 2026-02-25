@@ -5,13 +5,18 @@ title: Cost Evidence
 # Cost Evidence
 
 !!! warning "Read this first"
-    - **Platform:** Claude Code (CLI) only. Cursor and OpenCode are [experimental](guides/platforms/index.md#platform-maturity) and untested.
+    - **Platform:** Claude Code (CLI) only. Cursor and OpenCode are [experimental](../guides/platforms/index.md#platform-maturity) and untested.
     - **Configuration:** Full Lore integration — Docker sidecar running, semantic search enabled, MCP search server configured, all hooks active. This is **not** the out-of-the-box default; it represents a fully configured instance.
     - **Version:** Tested on Lore v0.11.0 (Feb 2026). The current version is newer; results may differ.
     - **Sample size:** N=10 per condition (50 sessions total). Small sample — treat as directional evidence, not definitive benchmarks.
     - **Accuracy:** We believe these numbers are representative but cannot guarantee their accuracy. Cost figures are API-equivalent estimates derived from session logs, not actual invoices.
 
-This page presents cost data from a controlled comparison between raw Claude Code and Lore on the same task.
+This page presents cost data from a controlled comparison between raw Claude Code and Lore on the same task. For full details, see:
+
+- [Analysis](analysis.md) — Detailed findings, cost progression, variance, cumulative ROI
+- [Methodology](methodology.md) — Test design, pricing basis, measurement approach
+- [Raw Session Data](raw-data.md) — Per-session token and cost breakdowns for all 50 sessions
+- [Operator Inputs](operator-inputs.md) — Exact operator messages for each condition
 
 If you're skeptical, good. Read the [limitations](#limitations) first, then run the [test yourself](#reproduce-it). We welcome independent verification — see [Contribute](#contribute).
 
@@ -110,7 +115,7 @@ The capture investment pays for itself on the very first reuse.
 
 Model tiering and context isolation are structural — they apply from the first run. Knowledge reuse and runbook procedures compound over time.
 
-For how these mechanisms work, see [How Delegation Works](how-delegation-works.md) and [Configuration](guides/configuration.md).
+For how these mechanisms work, see [How Delegation Works](../how-delegation-works.md) and [Configuration](../guides/configuration.md).
 
 ## Limitations
 
@@ -118,7 +123,7 @@ For how these mechanisms work, see [How Delegation Works](how-delegation-works.m
 
 - **Small sample.** N=10 per condition (50 sessions total). This is directional evidence, not a statistically rigorous benchmark. Variance is reported but confidence intervals are wide at this sample size.
 - **One task type.** API exploration with mock services. Results may differ for code generation, refactoring, debugging, or other task patterns. The delegation advantage (routing to cheaper models) should generalize; the knowledge reuse advantage depends on task recurrence.
-- **One platform.** Claude Code (CLI) with Claude models (Opus 4.6 orchestrator, Haiku 4.5 workers). Cursor and OpenCode are [experimental platforms](guides/platforms/index.md#platform-maturity) — untested.
+- **One platform.** Claude Code (CLI) with Claude models (Opus 4.6 orchestrator, Haiku 4.5 workers). Cursor and OpenCode are [experimental platforms](../guides/platforms/index.md#platform-maturity) — untested.
 - **Full integration, not default.** The test ran with Docker sidecar, semantic search, MCP server, and all hooks active. Out-of-the-box Lore (no Docker, no semantic search) may show different results — the delegation and knowledge reuse mechanisms still apply, but the search-guard and MCP tools would be absent.
 - **Older version.** Tested on Lore v0.11.0 (Feb 2026). Hook behavior, banner size, and capture patterns have changed since then. Results on the current version may differ in either direction.
 - **Estimated costs.** Tests ran on Claude Max (flat-rate subscription). Cost figures are API-equivalent estimates calculated from session log token counts, not actual API invoices. We believe the methodology is sound but cannot guarantee perfect accuracy.
