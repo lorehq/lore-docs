@@ -10,7 +10,23 @@ This guide covers what to do in your first working session — after installatio
 
 ---
 
-## Phase 0: Version Control (Optional)
+## Phase 0: Docs UI & Semantic Search
+
+**Strongly recommended as your first step.** The Docker sidecar gives you semantic search across all knowledge and a live docs UI from the start. Every subsequent phase benefits from it — skills, environment docs, and runbooks you create become instantly searchable.
+
+    /lore-docker
+
+Ports are auto-computed per project. After starting, check the assigned port:
+
+    /lore-docker status
+
+On corporate networks, containers may need the org CA cert mounted. The embedding model (`BAAI/bge-small-en-v1.5`) is bundled in recent lore-docker releases.
+
+If Docker isn't available, skip this and continue — everything works without it, you just lose semantic search and the live docs preview.
+
+---
+
+## Phase 1: Version Control (Optional)
 
 **Goal:** Decide whether this instance is git-tracked with a remote, or local-only.
 
@@ -36,7 +52,7 @@ You can always add a remote later. Nothing about the instance structure changes 
 
 ---
 
-## Phase 1: Identity
+## Phase 2: Identity
 
 **Goal:** Tell the agent who it is and who it serves.
 
@@ -48,7 +64,7 @@ You can always add a remote later. Nothing about the instance structure changes 
 
 ---
 
-## Phase 2: Model Configuration
+## Phase 3: Model Configuration
 
 **Goal:** Wire the three-tier worker system correctly before any delegation happens.
 
@@ -70,7 +86,7 @@ Verify by asking the agent to run a quick worker test. Each tier should report t
 
 ---
 
-## Phase 3: Keystore
+## Phase 4: Keystore
 
 **Goal:** Establish a secret store before ingesting any credentials.
 
@@ -92,7 +108,7 @@ After setup, add a table to the keystore environment doc: item names, types, and
 
 ---
 
-## Phase 4: CLI Authentication
+## Phase 5: CLI Authentication
 
 **Goal:** Authenticate external tooling in dependency order — keystore first, then tools that need keys from it.
 
@@ -113,7 +129,7 @@ For each tool, document in `docs/knowledge/environment/`:
 
 ---
 
-## Phase 5: Environment Mapping
+## Phase 6: Environment Mapping
 
 **Goal:** Map the services the agent will interact with. Don't rely on what you can recall.
 
@@ -164,25 +180,11 @@ After the environment is mapped, capture what you're actively working on:
 
 ---
 
-## Phase 6: Semantic Search
-
-    /lore-docker
-
-Or start manually:
-
-    docker compose -f .lore/docker-compose.yml up -d
-    curl http://localhost:9185/health
-    curl "http://localhost:9185/search?q=test&k=3"
-
-On corporate networks, containers may need the org CA cert mounted. The embedding model (`BAAI/bge-small-en-v1.5`) is bundled in recent lore-docker releases.
-
----
-
 ## Phase 7: Knowledge Defrag
 
 **Run this after the environment is substantially documented — not before.**
 
-First-run generates environment docs fast. The result is usually a flat accumulation. Once Phases 1–5 are complete, run the knowledge defrag runbook to restructure `docs/knowledge/` by content rather than creation order.
+First-run generates environment docs fast. The result is usually a flat accumulation. Once Phases 2–6 are complete, run the knowledge defrag runbook to restructure `docs/knowledge/` by content rather than creation order.
 
     git checkout -b knowledge-defrag-$(date +%Y%m%d)
     # Then ask:

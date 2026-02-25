@@ -49,7 +49,7 @@ If you have skills from other projects or custom markdown files you've been copy
 
 ## Roadmaps, Plans, Notes & Brainstorms
 
-See [Roadmaps, Plans & Notes](roadmaps-and-plans.md).
+See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md).
 
 ## Command Reference
 
@@ -67,10 +67,10 @@ Commands are slash-invoked skills.
 
 **`/lore-docker`** — Start, stop, or check the local Docker sidecar for semantic search and a live MkDocs UI. See [Docs UI & Semantic Search](docs-ui.md).
 
-**`/lore-create-note`** — Create a lightweight note for quick capture. See [Roadmaps, Plans & Notes](roadmaps-and-plans.md#notes).
+**`/lore-create-note`** — Create a lightweight note for quick capture. See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md#notes).
 
-**`/lore-create-roadmap`** — Create a strategic roadmap. See [Roadmaps, Plans & Notes](roadmaps-and-plans.md).
+**`/lore-create-roadmap`** — Create a strategic roadmap. See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md).
 
-**`/lore-create-plan`** — Create a tactical plan. See [Roadmaps, Plans & Notes](roadmaps-and-plans.md).
+**`/lore-create-plan`** — Create a tactical plan. See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md).
 
-**`/lore-create-brainstorm`** — Save a brainstorm for future reference. See [Roadmaps, Plans & Notes](roadmaps-and-plans.md).
+**`/lore-create-brainstorm`** — Save a brainstorm for future reference. See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md).

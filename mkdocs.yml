@@ -86,7 +86,7 @@ nav:
       - OpenCode: guides/platforms/opencode.md
     - Hook Architecture: guides/hook-architecture.md
     - Conventions: guides/conventions.md
-    - Roadmaps, Plans & Notes: guides/roadmaps-and-plans.md
+    - Roadmaps, Plans, Notes & Brainstorms: guides/roadmaps-and-plans.md
     - Examples:
       - Skill: examples/skill.md
       - Roadmap: examples/roadmap.md

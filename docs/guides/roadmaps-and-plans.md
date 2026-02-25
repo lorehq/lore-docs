@@ -2,23 +2,23 @@
 title: Roadmaps & Plans
 ---
 
-# Roadmaps, Plans & Notes
+# Roadmaps, Plans, Notes & Brainstorms
 
-Lore tracks strategic and tactical work through **roadmaps** (multi-phase initiatives), **plans** (specific implementation tasks), and **notes** (lightweight quick capture). All are operator-initiated — Lore maintains them but asks before updating.
+Lore tracks strategic and tactical work through **roadmaps** (multi-phase initiatives), **plans** (specific implementation tasks), **notes** (lightweight quick capture), and **brainstorms** (exploratory discussions and decision records). All are operator-initiated — Lore maintains them but asks before updating.
 
 ## Comparison
 
-| Aspect | Roadmap | Plan | Note |
-|--------|---------|------|------|
-| **Scope** | Strategic initiative (weeks-months) | Tactical task (days-weeks) | Single observation or idea |
-| **Purpose** | Track overall progress across phases | Describe implementation approach | Quick capture during deep work |
-| **Structure** | Folder with `index.md` | Folder with `index.md` | Single flat file |
-| **Banner** | Active/on-hold shown | Active/on-hold shown | Not shown |
-| **Creation** | `/lore-create-roadmap` | `/lore-create-plan` | `/lore-create-note` |
+| Aspect | Roadmap | Plan | Note | Brainstorm |
+|--------|---------|------|------|------------|
+| **Scope** | Strategic initiative (weeks-months) | Tactical task (days-weeks) | Single observation or idea | Exploratory discussion or ADR |
+| **Purpose** | Track overall progress across phases | Describe implementation approach | Quick capture during deep work | Document thinking and trade-offs |
+| **Structure** | Folder with `index.md` | Folder with `index.md` | Single flat file | Folder with `index.md` |
+| **Banner** | Active/on-hold shown | Active/on-hold shown | Not shown | Not shown |
+| **Creation** | `/lore-create-roadmap` | `/lore-create-plan` | `/lore-create-note` | `/lore-create-brainstorm` |
 
 ## Format
 
-See [Example Roadmap](../examples/roadmap.md), [Example Plan](../examples/plan.md), and [Example Note](../examples/note.md) for templates with full YAML frontmatter.
+See [Example Roadmap](../examples/roadmap.md), [Example Plan](../examples/plan.md), [Example Note](../examples/note.md), and [Example Brainstorm](../examples/brainstorm.md) for templates with full YAML frontmatter.
 
 ## Hierarchy
 
@@ -78,4 +78,16 @@ Notes use two status values: `open` (default) and `resolved`. Resolved notes sta
 
 See [Example Note](../examples/note.md) for the template.
 
-See also: [Example Brainstorm](../examples/brainstorm.md)
+## Brainstorms
+
+Brainstorms capture exploratory discussions, architectural decisions, and design trade-offs for future reference. They document thinking — not work progress. Each brainstorm is a folder in `docs/work/brainstorms/` with an `index.md`. Brainstorms are always standalone — never nested under roadmaps.
+
+Use brainstorms for:
+
+- Architectural decision records (ADRs)
+- Design trade-off analysis before committing to an approach
+- Exploratory discussions worth preserving for context
+
+Brainstorms have no `status` field and don't appear in the session banner. They're reference material, not tracked work.
+
+See [Example Brainstorm](../examples/brainstorm.md) for the template.
