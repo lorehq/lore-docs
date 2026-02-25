@@ -20,7 +20,6 @@ theme:
         name: Switch to dark mode
   features:
     - navigation.sections
-    - navigation.expand
     - toc.follow
     - search.highlight
 
@@ -59,14 +58,11 @@ plugins:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
-  - How It Works: how-it-works.md
-  - How Delegation Works: how-delegation-works.md
-  - Cost Evidence:
-    - Overview: cost-evidence/index.md
-    - Analysis: cost-evidence/analysis.md
-    - Methodology: cost-evidence/methodology.md
-    - Raw Session Data: cost-evidence/raw-data.md
-    - Operator Inputs: cost-evidence/operator-inputs.md
+  - About:
+    - How It Works: how-it-works.md
+    - How Delegation Works: how-delegation-works.md
+    - When to Use Lore: when-to-use-lore.md
+    - Production Readiness: production-readiness.md
   - Guides:
     - First Session Setup:
       - Overview: guides/first-session/index.md
@@ -85,8 +81,12 @@ nav:
     - Hook Architecture: guides/hook-architecture.md
     - Conventions: guides/conventions.md
     - Roadmaps, Plans & Notes: guides/roadmaps-and-plans.md
-  - When to Use Lore: when-to-use-lore.md
-  - Production Readiness: production-readiness.md
+  - Cost Evidence:
+    - Overview: cost-evidence/index.md
+    - Analysis: cost-evidence/analysis.md
+    - Methodology: cost-evidence/methodology.md
+    - Raw Session Data: cost-evidence/raw-data.md
+    - Operator Inputs: cost-evidence/operator-inputs.md
   - Troubleshooting: troubleshooting.md
   - Changelog: changelog.md
   - Changelog Archive: changelog-archive.md
