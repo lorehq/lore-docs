@@ -6,7 +6,13 @@ title: Docs UI & Semantic Search
 
 A single Docker container that runs locally alongside the agent, providing semantic search over your knowledge base and a live-reloading docs site.
 
-![Docs UI homepage showing sidebar navigation and work tracking](../assets/docs-ui-homepage.png)
+=== "Light"
+
+    ![Docs UI in light mode](../assets/docs-ui-light.png)
+
+=== "Dark"
+
+    ![Docs UI in dark mode](../assets/docs-ui-dark.png)
 
 ## What You Get
 
