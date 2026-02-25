@@ -59,6 +59,7 @@ nav:
   - About:
     - How It Works: how-it-works.md
     - How Delegation Works: how-delegation-works.md
+    - Security: security.md
     - When to Use Lore: when-to-use-lore.md
     - Production Readiness: production-readiness.md
     - Cost Evidence:
