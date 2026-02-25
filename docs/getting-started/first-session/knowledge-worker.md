@@ -50,11 +50,13 @@ You can always add a remote later. Nothing about the instance structure changes 
 
 ## Phase 2: Identity
 
-**Goal:** Tell the agent who it is and who it serves.
+**Goal:** Ground the agent in who you are, what you have, and how you work.
 
-**Operator profile and machine inventory** — Tell your agent about yourself: your name, role, org, VCS logins, cloud accounts, working style preferences, and CLI tool preferences. Also describe your machine: hostname, OS, installed runtimes (Node, Python, .NET, Go, etc.), CLI tools, and shell environment. The agent will create `docs/knowledge/local/operator-profile.md` and `docs/knowledge/local/machine.md` (both gitignored) from what you share. These are the first things the agent reads each session — without them, every session starts cold.
+**Operator profile** — Tell the agent your name, role, org, and how you like to work. It will ask follow-up questions for anything it needs (accounts, preferences, constraints). The profile it writes (`docs/knowledge/local/operator-profile.md`, gitignored) is the first thing it reads each session — without it, every session starts cold.
 
-**Agent rules** — `docs/context/agent-rules.md` is the agent's personality file: deployment assignment (instance name, operator, org), scope (what domains this instance covers), and behavioral rules specific to this deployment. Edit this file directly — it defines who the agent is, so the operator writes it. It is injected as PROJECT context every session.
+**Machine inventory** — Tell the agent to discover your local machine. It can detect hostname, OS, installed runtimes, CLI tools, and shell environment on its own. It writes `docs/knowledge/local/machine.md` (gitignored).
+
+**Agent rules** — Tell the agent what this instance is for: its name, scope, and any behavioral rules you want. Describe it conversationally — "this instance covers our cloud infra, always use the prod AWS account by default, never auto-commit." The agent writes `docs/context/agent-rules.md`, which is injected as PROJECT context every session.
 
 ---
 
@@ -92,7 +94,7 @@ Verify by asking the agent to run a quick worker test. Each tier should report t
 
 Authenticate the CLI and verify access yourself — keystore auth is interactive and involves credentials. If importing browser-saved passwords, export from your browser, import via the keystore CLI, then delete the export file immediately — it is plaintext.
 
-Once authenticated, tell your agent which keystore you set up and how items are named. It will document the tool, naming convention, and an index of item names and purposes in `docs/knowledge/environment/`.
+Once authenticated, the agent can discover the keystore configuration, list items, and document the tool, naming convention, and item index automatically.
 
 ---
 
@@ -109,7 +111,7 @@ CLI authentication is interactive, so you do it directly. Authenticate in this s
 !!! note "VCS CLI ≠ cloud CLI"
     Version control and cloud provider auth are separate systems. For example, `az login` grants Azure Resource Manager access but does not grant Azure DevOps access — ADO requires its own PAT and extension.
 
-After authenticating each tool, tell your agent what you set up. It will document the auth method, keystore item name, and any session management gotchas (expiry, CLI vs. SDK auth differences, multi-account switching) in `docs/knowledge/environment/`.
+After authenticating, the agent can verify each tool works (`gh auth status`, `az account show`, etc.) and document what it finds — auth methods, keystore references, session gotchas — automatically.
 
 ---
 

@@ -19,15 +19,10 @@ cd my-project
 
 ## Customize Your Project Context
 
-Open `docs/context/agent-rules.md` and describe your project. This file is injected into every agent session as project context:
-
-- **About** — what the project does, what domain it's in
-- **Agent Behavior** — communication style, preferences, constraints
-
-The agent loads your project identity, conventions, and knowledge map at session start.
+Start a session and tell the agent about your project — what it does, what domain it's in, how you like to work. The agent writes `docs/context/agent-rules.md` from your description. This file is injected into every session as project context.
 
 !!! tip "What to customize now vs. later"
-    `docs/context/` is meant to be edited upfront — agent-rules, conventions, and operator-profile all benefit from early customization. `docs/knowledge/` is different: it's built by the agent as it learns, not pre-structured by hand. Don't create folders or files there manually before running first-session setup. Let the agent populate it during environment mapping, then run the [knowledge defrag runbook](first-session/knowledge-worker.md#phase-7-knowledge-defrag) to organize by content.
+    `docs/context/` benefits from early setup — agent-rules, conventions, and operator-profile all shape how the agent behaves from day one. `docs/knowledge/` is different: the agent builds it as it learns, not pre-structured by hand. Don't create folders or files there manually. Let the agent populate it during environment mapping, then tell it to run [knowledge defrag](first-session/knowledge-worker.md#phase-7-knowledge-defrag) to organize by content.
 
 The installer also scaffolds `.mcp.json` at the instance root for the MCP search server — used by Claude Code (and Cursor via `.cursor/mcp.json`) when the Docker sidecar is running. See [Docs UI & Search](../guides/docs-ui.md) for setup details.
 

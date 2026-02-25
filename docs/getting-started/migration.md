@@ -10,9 +10,7 @@ title: Migration & Uninstalling
 
 Install Lore: `npx create-lore my-project`
 
-Then start a session and tell your agent: "I'm migrating from an existing CLAUDE.md — here's the content. Migrate it into Lore: move project rules to agent-rules, coding conventions to conventions, gotchas and tricks to skills, and environment details to environment docs."
-
-Paste your old file content into the same message. The agent handles the file operations and will ask if anything is unclear.
+Then start a session and tell the agent to migrate your old file. Paste the content or point it at the path — the agent reads it, categorizes the content (rules, conventions, gotchas, environment details), and distributes it into the right Lore locations.
 
 ### From Scratch Notes / No System
 
