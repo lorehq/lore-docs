@@ -12,10 +12,10 @@ The orchestrator delegates work to worker agents — ephemeral context windows l
 
 ```mermaid
 flowchart TD
-    Request[Incoming Request] --> Q1{Benefits from\nfresh context?}
+    Request[Incoming Request] --> Q1{"Benefits from<br/>fresh context?"}
     Q1 -->|No| Direct[Handle Directly]
     Q1 -->|Yes| Skills[Select skills from registry]
-    Skills --> Spawn[Spawn worker with\nskills + conventions + scope]
+    Skills --> Spawn["Spawn worker with<br/>skills + conventions + scope"]
     Spawn --> Execute[Worker executes task]
     Execute --> Review[Orchestrator reviews results]
     Direct --> Review
