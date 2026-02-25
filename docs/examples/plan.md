@@ -71,4 +71,4 @@ None currently.
 <Decisions, caveats, things to revisit later.>
 ```
 
-See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for status workflow, archiving, and hierarchy.
+See [Roadmaps, Plans, Notes & Brainstorms](../guides/roadmaps-and-plans.md) for status workflow, archiving, and hierarchy.

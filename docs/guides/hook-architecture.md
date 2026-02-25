@@ -81,6 +81,7 @@ flowchart TB
         oc_fg[harness-guard.js]
         oc_kt[knowledge-tracker.js]
         oc_cp[context-path-guide.js]
+        oc_sg[search-guard.js]
     end
 
     cc_si & cu_si & oc_si --> banner
@@ -93,13 +94,14 @@ flowchart TB
     cc_pm & cu_pm & oc_pm --> guard
     cc_cg & cc_fg & oc_cg & oc_fg --> guard & config
     cc_cp & oc_cp --> banner
+    cc_sg & oc_sg --> config
     tracker & guard & tree & config --> debug
     cc_si & cu_si & oc_si & cc_kt & cu_kt & oc_kt & cu_cn --> hooklog
 ```
 
 ## Banner-Loaded Skills
 
-Set `banner-loaded: true` in a skill's YAML frontmatter to inline its full body into the session banner at startup. Standard skills are listed by name in the knowledge map tree but not loaded automatically. See [Working with Lore](interaction.md#bringing-existing-skills) for skill format and import.
+`session-init.js` inlines skills with `banner-loaded: true` in frontmatter.
 
 ## Platform Adapters
 
@@ -109,7 +111,7 @@ Each platform has a different hook API. Adapters translate between the platform'
 |----------|--------------|:----------:|---------|
 | Claude Code | Subprocess per event | 8 | [Claude Code](platforms/claude-code.md) |
 | Cursor | Subprocess + MCP server | 6 + MCP | [Cursor](platforms/cursor.md) |
-| OpenCode | Long-lived ESM plugins | 6 | [OpenCode](platforms/opencode.md) |
+| OpenCode | Long-lived ESM plugins | 7 | [OpenCode](platforms/opencode.md) |
 
 See [Platform Overview](platforms/index.md) for the full feature matrix.
 
@@ -117,23 +119,23 @@ See [Platform Overview](platforms/index.md) for the full feature matrix.
 
 ### harness-guard.js
 
-Detects whether the agent is operating in a Lore hub repo or a linked work repo. Enforces different guardrails in each context — hub repos block application code creation; linked repos block direct edits to hub knowledge files. Fires on `PreToolUse` for file write operations.
+Enforces hub vs. linked-repo guardrails on `PreToolUse` for file write operations — hub repos block application code creation; linked repos block direct edits to hub knowledge files.
 
 ### context-path-guide.js
 
-Fires on `PreToolUse` for Write/Edit operations under `docs/context/` or `docs/knowledge/`. Outputs a knowledge map tree to help the agent navigate to the right location for writes. Does not fire on reads.
+On `PreToolUse` for Write/Edit under `docs/context/` or `docs/knowledge/`, outputs a knowledge map tree to guide writes to the right location.
 
 ### session-init.js
 
-The session-init hook assembles the dynamic banner by calling `lib/banner.js`. Static content (conventions, agent-rules) is embedded in platform instruction files at generation time. The hook injects only the dynamic portion — active work items, the knowledge map tree, and the skill registry. See each platform page for compaction resilience and lifecycle specifics.
+Assembles and injects the dynamic session banner — active work items, knowledge map tree, and skill registry.
 
 ### ensure-structure.sh
 
-Runs on `SessionStart`. Creates stub `index.md` files for any knowledge directories that don't have one. Prevents empty directory entries from appearing in the knowledge map without any navigation context.
+On `SessionStart`, creates stub `index.md` files for knowledge directories that lack one, keeping the knowledge map navigable.
 
 ### search-guard.js
 
-Fires on `PreToolUse` for Read/Glob operations. When semantic search is configured (`docker.search.address` in `.lore/config.json`), nudges the agent to use semantic search instead of speculative file reads. Exits silently when semantic search is unavailable or profile is `minimal`.
+On `PreToolUse` for Read/Glob, nudges the agent toward semantic search when the sidecar is configured; silent when unavailable or profile is `minimal`.
 
 ### Tool counter reset
 

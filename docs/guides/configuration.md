@@ -95,11 +95,9 @@ The largest contributor to session banner size is the **knowledge map** — a di
 **When to act:**
 
 - Knowledge map exceeds ~50 lines → reduce `treeDepth` or reorganize subdirectories
-- `MEMORY.local.md` exceeds ~50 lines → route content to skills or `docs/knowledge/`
+- `.lore/memory.local.md` exceeds ~50 lines → route content to skills or `docs/knowledge/`
 - Conventions section growing → keep it focused on rules, move reference material to `docs/knowledge/`
 - Many active work items → archive completed items with `/lore-capture`
-
-> Archived items (in `archive/` subdirectories) are excluded from the knowledge map tree — they do not appear in the session banner. This keeps the map focused on active content.
 
 ## Environment Variables
 
@@ -120,17 +118,15 @@ export LORE_HOOK_LOG=1
 Each entry records:
 
 ```json
-{"ts": 1740000000000, "platform": "cursor", "hook": "capture-nudge", "event": "beforeShellExecution", "output_size": 52, "state": {"bash": 3}}
+{
+  "ts": 1740000000000,        // Unix epoch milliseconds
+  "platform": "cursor",       // claude, cursor, or opencode
+  "hook": "capture-nudge",    // hook filename
+  "event": "beforeShellExecution", // platform event name
+  "output_size": 52,          // characters injected (0 for silent hooks)
+  "state": {"bash": 3}        // optional hook-specific snapshot
+}
 ```
-
-| Field | Description |
-|-------|-------------|
-| `ts` | Unix epoch milliseconds |
-| `platform` | `claude`, `cursor`, or `opencode` |
-| `hook` | Hook filename (e.g., `capture-nudge`, `session-init`) |
-| `event` | Platform event name (e.g., `beforeShellExecution`, `PostToolUse`) |
-| `output_size` | Characters injected into the agent's context (0 for silent hooks) |
-| `state` | Optional hook-specific snapshot (bash counter, flags) |
 
 Analyze collected data:
 

@@ -4,7 +4,7 @@ title: Example Brainstorm
 
 # Example Brainstorm
 
-Brainstorms capture exploratory discussions, architectural decisions, and design trade-offs for future reference. They document thinking — not work progress. Each brainstorm serves as a decision record: options considered, trade-offs, and rationale. Ask Lore to create one — for example: *"Start a brainstorm about auth options."* Lore handles the folder structure and frontmatter.
+Brainstorms capture exploratory discussions, architectural decisions, and design trade-offs for future reference. They document thinking — not work progress. Each brainstorm serves as a decision record: options considered, trade-offs, and rationale.
 
 ## Template
 

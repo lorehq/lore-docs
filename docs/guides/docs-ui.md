@@ -20,8 +20,6 @@ A single Docker container that runs locally alongside the agent, providing seman
 
 A local HTTP API that indexes all knowledge files, skills, work items, and agents. Agents query by topic or meaning — not just filename — and get back ranked file paths. Hooks use the API automatically when the container is running.
 
-Without Docker, agents fall back to Grep/Glob (keyword search).
-
 ### MkDocs UI
 
 A live-reloading site at `localhost:PORT` that renders your full knowledge base as a browsable site. Useful for seeing exactly what the agent sees, verifying conventions, and navigating large knowledge bases without opening individual files.
@@ -40,7 +38,7 @@ On first start, Docker pulls the image (`lorehq/lore-docker:latest`) and loads t
 
 ## Ports & Configuration
 
-Ports are auto-computed per project (hash of project name, range 9001–9999) so multiple projects never collide. Semantic search runs on docs port + 1 (e.g. docs on 9184, semantic search on 9185).
+Ports are auto-computed per project (hash of project name, docs port range 9001–9999). Semantic search runs on docs port + 1000.
 
 Override in `.lore/config.json`:
 
@@ -57,11 +55,7 @@ Override in `.lore/config.json`:
 
 ## Without Docker
 
-Agents fall back to Grep/Glob silently — no configuration needed. The fallback works reliably for small-to-medium knowledge bases; for a brand-new project with minimal docs, it's fine. Once you have more than a few dozen knowledge files, the sidecar pays for itself in retrieval quality.
-
-## When to Start the Sidecar
-
-Start it at project setup and leave it running. Semantic search improves knowledge retrieval as your docs grow — the value compounds over time.
+Agents fall back to Grep/Glob silently — no configuration needed. The fallback works reliably for small-to-medium knowledge bases; for a brand-new project with minimal docs, it's fine. Once you have more than a few dozen knowledge files, the sidecar provides meaningfully better retrieval quality.
 
 ## Environment Variables
 

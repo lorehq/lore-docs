@@ -24,7 +24,7 @@ Open `docs/context/agent-rules.md` and describe your project. This file is injec
 - **About** — what the project does, what domain it's in
 - **Agent Behavior** — communication style, preferences, constraints
 
-The agent loads your project identity, conventions, and knowledge map at session start. See [How It Works: Context Efficiency](how-it-works.md#context-efficiency) for the full context layer breakdown.
+The agent loads your project identity, conventions, and knowledge map at session start.
 
 !!! tip "What to customize now vs. later"
     `docs/context/` is meant to be edited upfront — agent-rules, conventions, and operator-profile all benefit from early customization. `docs/knowledge/` is different: it's built by the agent as it learns, not pre-structured by hand. Don't create folders or files there manually before running first-session setup. Let the agent populate it during environment mapping, then run the [knowledge defrag runbook](guides/first-session/knowledge-worker.md#phase-7-knowledge-defrag) to organize by content.
@@ -43,7 +43,7 @@ See [Docs UI & Semantic Search](guides/docs-ui.md) for setup, configuration, and
 
 > "Walk me through first-session setup."
 
-It will follow the [First Session Setup guide](guides/first-session/index.md) phase by phase — operator profile, model configuration, keystore, CLI auth, environment mapping, and more. A well-grounded instance collaborates differently than a cold one.
+The agent will follow the [First Session Setup guide](guides/first-session/index.md) phase by phase — operator profile, model configuration, keystore, CLI auth, environment mapping, and more. A well-grounded instance collaborates differently than a cold one.
 
 **For ongoing sessions**, start your agent normally:
 
@@ -83,7 +83,7 @@ Lore's hooks reinforce knowledge capture as you go. After substantive work, run 
 Lore is plain files. Delete the Lore directories and you're back to a normal project:
 
 ```bash
-rm -rf .lore .claude .cursor .opencode hooks lib scripts
+rm -rf .lore .claude .cursor .opencode
 rm CLAUDE.md opencode.json mkdocs.yml
 ```
 

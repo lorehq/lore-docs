@@ -19,7 +19,7 @@ Eight hooks cover all lifecycle events:
 | `harness-guard.js` | `PreToolUse` | Enforce hub vs. linked-repo guardrails |
 | `context-path-guide.js` | `PreToolUse` | Show knowledge map tree on writes under `docs/` |
 | `search-guard.js` | `PreToolUse` | Nudge semantic search over speculative file reads |
-| `knowledge-tracker.js` | `PostToolUse` | Escalating capture reminders after tool use |
+| `knowledge-tracker.js` | `PostToolUse` + `PostToolUseFailure` | Escalating capture reminders after tool use |
 
 ### Hook Lifecycle
 
@@ -67,4 +67,4 @@ See [Configuration: subagentDefaults](../configuration.md#subagentdefaults) for 
 
 ## Cost Evidence
 
-Claude Code is the platform used for all [cost evidence](../../cost-evidence/index.md) measurements. The 59% cost reduction and 44% speed improvement were measured on Claude Code with Opus 4.6 orchestrator and Haiku 4.5 workers.
+Claude Code is the platform used for all cost evidence measurements. See [Cost Evidence](../../cost-evidence/index.md) for measured delegation results.

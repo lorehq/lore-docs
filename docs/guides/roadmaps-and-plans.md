@@ -66,8 +66,6 @@ To archive: move the folder to the parent's `archive/` subdirectory — `docs/wo
 
 ## Notes
 
-Notes are lightweight capture — a single markdown file in `docs/work/notes/` with minimal frontmatter (`title`, `status`, `created`). No folder structure, no banner inclusion.
-
 Use notes for:
 
 - Bugs hit during deep work that you'll come back to later
@@ -80,14 +78,10 @@ See [Example Note](../examples/note.md) for the template.
 
 ## Brainstorms
 
-Brainstorms capture exploratory discussions, architectural decisions, and design trade-offs for future reference. They document thinking — not work progress. Each brainstorm is a folder in `docs/work/brainstorms/` with an `index.md`. Brainstorms are always standalone — never nested under roadmaps.
-
 Use brainstorms for:
 
 - Architectural decision records (ADRs)
 - Design trade-off analysis before committing to an approach
 - Exploratory discussions worth preserving for context
-
-Brainstorms have no `status` field and don't appear in the session banner. They're reference material, not tracked work.
 
 See [Example Brainstorm](../examples/brainstorm.md) for the template.

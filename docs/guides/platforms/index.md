@@ -33,14 +33,14 @@ Lore supports three coding agent platforms. All share the same knowledge base �
 | Knowledge capture reminders | Yes | Yes | Yes |
 | Bash escalation tracking | Yes | Yes | Yes |
 | Context path guide | Yes | No | Yes |
-| Search guard | Yes | No | No |
+| Search guard | Yes | No | Yes |
 | Compaction resilience | SessionStart re-fires | Flag + re-orientation on next cmd/MCP | Compacting event re-injects |
 | Hook event logging | Yes | Yes | Yes |
 | Instructions | `CLAUDE.md` | `.cursor/rules/lore-*.mdc` | `.lore/instructions.md` |
 
 ## Shared Architecture
 
-All platforms share common infrastructure:
+Common infrastructure:
 
     .lore/lib/          → Shared logic (all platforms)
     .lore/hooks/        → Claude Code (subprocess per event)
@@ -83,4 +83,4 @@ See [Cross-Repo Workflow](../cross-repo-workflow.md) for how `/lore-link` genera
 
 - [Claude Code](claude-code.md) — 8 hooks, full lifecycle coverage, cost evidence baseline
 - [Cursor](cursor.md) — 6 hooks + MCP server, dual architecture
-- [OpenCode](opencode.md) — 6 ESM plugins, experimental API hooks
+- [OpenCode](opencode.md) — 7 ESM plugins, experimental API hooks

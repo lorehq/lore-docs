@@ -4,7 +4,7 @@ title: How It Works
 
 # How It Works
 
-AI agents are ephemeral — every session starts from zero. Lore is a harness that wraps your coding agent — managing persistent memory, enforcing conventions, orchestrating delegation, and tracking work so it picks up where it left off.
+Every session starts from zero. Lore is the harness that changes that.
 
 ## Harness Engineering
 
@@ -119,7 +119,7 @@ See [Platform Overview: Sync Boundaries](guides/platforms/index.md#sync-boundari
 
 #### How Skills Grow
 
-Skills are grown organically from gotchas encountered during work. Lore ships with built-in workers (`lore-worker` tiers and `lore-explore`) — dynamic, ephemeral agents that are spawned per-task with specific conventions and skills to load, then dissolved after the task completes.
+Skills are created from gotchas encountered during work. Lore ships with built-in workers (`lore-worker` tiers and `lore-explore`) — dynamic, ephemeral agents that are spawned per-task with specific conventions and skills to load, then dissolved after the task completes.
 
 ```mermaid
 flowchart TD
@@ -144,16 +144,14 @@ Lore uses indirection — telling the agent *where to find things* rather than l
 | Session start: operator profile | Identity and preferences from `docs/knowledge/local/operator-profile.md` (gitignored) |
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` |
 | Session start: knowledge map | Directory tree of `docs/` and `.lore/skills/` |
-| Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |
+| Session start: local memory | Scratch notes from `.lore/memory.local.md` (gitignored) |
 | Per-prompt reinforcement | Delegation + knowledge discovery + work tracking nudges |
 | Post-tool-use reinforcement | Capture reminders with escalating urgency |
 | Skills and docs | Loaded on-demand when invoked or needed |
 
 **Static vs. dynamic banner split:** Conventions, agent-rules, and project context are baked into `CLAUDE.md` at generation time — these are stable and benefit from prompt cache hits. Active work items, the knowledge map, and the skill registry are injected by the `SessionStart` hook each session, so they stay current without regenerating `CLAUDE.md`.
 
-When the Docker sidecar is running, the session banner includes a semantic search URL. Agents query by topic to find relevant docs and skills without loading the full directory tree. See [Docs UI & Semantic Search](guides/docs-ui.md).
-
-Docs and skills have zero baseline session cost — they load on-demand. Workers and active roadmaps appear in every session banner. See [Configuration: Tuning](guides/configuration.md#tuning-for-large-instances) for managing growth.
+When the Docker sidecar is running, the session banner includes a semantic search URL. Agents query by topic to find relevant docs and skills without loading the full directory tree.
 
 ## Hook Architecture
 

@@ -52,7 +52,7 @@ The agent operates on files and commands anywhere on your machine. There's no pa
 | **Runbooks** | "How to deploy app-api to staging" |
 | **Roadmaps/plans** | Work that spans multiple repos |
 
-None of these artifacts pollute your work repos.
+None of these artifacts are written to your work repos.
 
 ## Two Workflows
 
@@ -85,7 +85,7 @@ In the target repo, `/lore-link` creates:
 
 - **Claude Code** — `.claude/settings.json` with hooks pointing to the hub
 - **Cursor** — `.cursor/hooks.json` + `.cursor/mcp.json` + `.cursor/rules/lore-*.mdc` pointing to the hub
-- **OpenCode** — `.opencode/plugins/` wrappers (4 of 6 hub plugins: session-init, protect-memory, knowledge-tracker, harness-guard) + `.opencode/commands/` + `opencode.json` pointing to the hub
+- **OpenCode** — `.opencode/plugins/` wrappers (4 of 7 hub plugins: session-init, protect-memory, knowledge-tracker, harness-guard) + `.opencode/commands/` + `opencode.json` pointing to the hub
 - **Instructions** — `CLAUDE.md` rewritten from hub's `.lore/instructions.md`
 - **Link record** — `.lore/links` in the hub repo (a JSON array) updated with the linked repo path and timestamp
 
@@ -95,24 +95,10 @@ All generated files are added to the target repo's `.gitignore` automatically. E
 
 Even when working from a linked repo, knowledge captures back to the hub. Skills, context docs, and runbooks all write to the hub directory — the work repo stays clean.
 
-### When to Use Which
-
-| Scenario | Approach |
-|----------|----------|
-| CLI agent (Claude Code, OpenCode) | Launch from the Lore instance |
-| IDE agent (Cursor, or IDE-mode Claude Code) | `/lore-link` — link the work repo, open it in your IDE |
-| Quick cross-repo task from the hub | Launch from the Lore instance, reference the path |
-
 ### After Harness Updates
 
 Run `/lore-link --refresh` after `/lore-update` to regenerate configs in all linked repos with the latest hooks.
 
 ## Team Topologies
 
-| Topology | How it works |
-|----------|-------------|
-| Shared instance | One Lore instance in git. Team collaborates via branches, PRs, code review on `docs/` and `.lore/skills/`. |
-| Instance per developer | Each developer runs their own instance. Share skills by pushing/pulling between repos. |
-| Hub + linked repos | One hub with `/lore-link` per work repo. Centralized knowledge, decentralized development. |
-
-The single-developer model is the primary use case — team patterns follow naturally from it.
+For teams, a shared instance in git or per-developer instances both work — knowledge sharing happens through normal git workflows.

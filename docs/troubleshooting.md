@@ -101,20 +101,15 @@ This script runs 7 cross-reference checks. Common failures:
 
 | Failure | Fix |
 |---------|-----|
-| Platform copies out of sync | `bash .lore/scripts/sync-platform-skills.sh` |
-| Registry stale | `bash .lore/scripts/sync-platform-skills.sh` — syncs canonical `.lore/` sources to platform dirs (`.claude/skills/`, `.claude/agents/`, Cursor rules) |
+| Platform copies out of sync / Registry stale | `bash .lore/scripts/sync-platform-skills.sh` — syncs canonical `.lore/` sources to platform dirs (`.claude/skills/`, `.claude/agents/`, Cursor rules) |
 | Nav stale | `bash .lore/scripts/generate-nav.sh` — regenerates `mkdocs.yml` nav after adding or renaming docs |
 | Instructions out of sync | `bash .lore/scripts/sync-harness.sh` (via `/lore-update`) |
 
-## Updates
-
-See [Production Readiness: Upgrade Policy](production-readiness.md#upgrade-policy) for the update process and conflict resolution.
-
-### `/lore-update` shows conflicts
+## `/lore-update` shows conflicts
 
 `/lore-update` only touches harness-owned files (`lore-*` prefix). If you see conflicts, you may have modified a `lore-*` file directly. Harness files are overwritten on sync — move your changes to an operator-owned file (no `lore-` prefix).
 
-### Version mismatch after update
+## Version mismatch after update
 
 Check that `.lore/config.json` and `package.json` agree:
 

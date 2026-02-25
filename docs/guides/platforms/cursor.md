@@ -17,7 +17,7 @@ Six hooks plus an MCP server:
 | `capture-nudge.js` | `beforeShellExecution` | Deliver capture reminders when transitioning from failed tool use |
 | `compaction-flag.js` | `preCompact` | Set flag before context compaction for re-orientation |
 | `failure-tracker.js` | `postToolUseFailure` | Track tool failures for capture-nudge coordination |
-| `protect-memory.js` | `afterFileEdit` | Block writes to `MEMORY.md` |
+| `protect-memory.js` | `beforeReadFile` + `preToolUse(Write)` | Block reads/writes to `MEMORY.md` |
 | `knowledge-tracker.js` | `afterFileEdit` | Escalating capture reminders after edits |
 
 ### MCP Server

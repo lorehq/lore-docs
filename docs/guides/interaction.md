@@ -45,7 +45,7 @@ If you have skills from other projects or custom markdown files you've been copy
 
 3. Run `/lore-capture` — it updates registries and syncs to all platforms
 
-**After import, sharing is automatic.** Once skills are in your Lore hub, every [linked repo](cross-repo-workflow.md#ide-workflow-lore-link) gets them. No more copying between projects.
+**After import, sharing is automatic.** Once skills are in your Lore hub, every [linked repo](cross-repo-workflow.md#ide-workflow-lore-link) gets them.
 
 ## Roadmaps, Plans, Notes & Brainstorms
 
@@ -55,22 +55,22 @@ See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md).
 
 Commands are slash-invoked skills.
 
-**`/lore-capture`** — Review session work, capture skills, update registries, validate consistency. Primary end-of-session command. See [Conventions](conventions.md).
+**`/lore-capture`** — Review session work, capture skills, update registries, validate consistency.
 
-**`/lore-consolidate`** — Deep health check: find stale items, semantic overlaps, knowledge drift. See [Conventions](conventions.md).
+**`/lore-consolidate`** — Deep health check: find stale items, semantic overlaps, knowledge drift.
 
 **`/lore-status`** — Show Lore version, hook health, skill counts, worker tiers, and active work.
 
-**`/lore-update`** — Pull latest harness files from GitHub without touching operator content. See [Platform Overview: Sync Boundaries](platforms/index.md#sync-boundaries).
+**`/lore-update`** — Pull latest harness files from GitHub without touching operator content.
 
-**`/lore-link <target>`** — Link a work repo so hooks fire from the hub. See [Cross-Repo Workflow](cross-repo-workflow.md) for the full flag reference.
+**`/lore-link <target>`** — Link a work repo so hooks fire from the hub.
 
-**`/lore-docker`** — Start, stop, or check the local Docker sidecar for semantic search and a live MkDocs UI. See [Docs UI & Semantic Search](docs-ui.md).
+**`/lore-docker`** — Start, stop, or check the local Docker sidecar for semantic search and a live MkDocs UI.
 
-**`/lore-create-note`** — Create a lightweight note for quick capture. See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md#notes).
+**`/lore-create-note`** — Create a lightweight note for quick capture.
 
-**`/lore-create-roadmap`** — Create a strategic roadmap. See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md).
+**`/lore-create-roadmap`** — Create a strategic roadmap.
 
-**`/lore-create-plan`** — Create a tactical plan. See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md).
+**`/lore-create-plan`** — Create a tactical plan.
 
-**`/lore-create-brainstorm`** — Save a brainstorm for future reference. See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md).
+**`/lore-create-brainstorm`** — Save a brainstorm for future reference.

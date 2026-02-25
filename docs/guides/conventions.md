@@ -10,7 +10,7 @@ Conventions are behavioral rules that shape how your agent writes code, docs, an
 
 Conventions reach your agent through four channels:
 
-1. **Session start** — all convention files load into the session banner at session start.
+1. **Session start** — all convention files load into the session banner.
 2. **Per-prompt reminder** — a hook lists convention names before every user message (e.g. `Conventions: coding, docs, security`).
 3. **Write-time reinforcement** — a guard fires before every file write or edit, injecting relevant convention principles based on the target path.
 4. **Agent initiative** — the agent can read any convention file at any time.
@@ -83,8 +83,5 @@ Add a markdown file to `docs/context/conventions/`:
 
 ### Format Requirements
 
-- **Bold principle lines** (`**Like this.**`) are what the write-time guard extracts and injects. Make them concise and actionable.
 - **Numbered sections** help scanning. Match the pattern of the default conventions.
 - **File name** becomes the menu label. Use descriptive kebab-case: `api-design.md`, `email-drafting.md`, `diagrams.md`. The agent uses the file name to decide whether to load the convention, so prefer self-explanatory names (`email-drafting.md`) over vague ones (`comms.md`).
-
-Default conventions (both operator and system) have hardcoded path routing — their bold principles are injected automatically before writes to matching paths. The guard checks the parent directory first, then falls back to `system/`. Custom conventions appear as a menu listing at write-time.
