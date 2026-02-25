@@ -8,14 +8,6 @@ This guide covers what to do in your first working session — after installatio
 
 **Run this once per Lore instance.** A well-configured instance collaborates differently than a cold one.
 
-## How to Run
-
-Ask your agent:
-
-> "Walk me through first-session setup."
-
-The agent will follow this guide phase by phase, pausing at each decision point for your input.
-
 ---
 
 ## Phase 0: Version Control (Optional)

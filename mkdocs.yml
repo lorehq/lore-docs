@@ -89,6 +89,7 @@ nav:
   - Production Readiness: production-readiness.md
   - Troubleshooting: troubleshooting.md
   - Changelog: changelog.md
+  - Changelog Archive: changelog-archive.md
   - Examples:
     - Skill: examples/skill.md
     - Roadmap: examples/roadmap.md

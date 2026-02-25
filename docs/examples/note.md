@@ -30,14 +30,4 @@ files or skills are helpful but not required.
 | `open` | Default. Needs attention or follow-up. |
 | `resolved` | Done. Keep for searchable context — don't delete. |
 
-## Key Differences from Plans
-
-| Aspect | Note | Plan |
-|--------|------|------|
-| **Structure** | Single file, flat | Folder with `index.md` |
-| **Frontmatter** | `title`, `status`, `created` | `title`, `status`, `created`, `updated`, `summary`, `target` |
-| **Banner** | Not shown | Active/on-hold shown in banner |
-| **Scope** | One observation or idea | Full implementation approach |
-| **Creation** | `/lore-create-note` | `/lore-create-plan` |
-
-See [Roadmaps & Plans](../guides/roadmaps-and-plans.md) for the full work item hierarchy.
+See [Roadmaps, Plans & Notes](../guides/roadmaps-and-plans.md) for the full comparison between notes, plans, roadmaps, and brainstorms.

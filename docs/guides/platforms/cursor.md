@@ -5,7 +5,7 @@ title: Cursor
 # Cursor
 
 !!! warning "Experimental"
-    Cursor integration is functional but undergoing optimization. Core harness features work — session banner, knowledge capture, convention enforcement, delegation. The dual hook/MCP architecture compensates for Cursor's limited hook event model.
+    Cursor support is experimental. See [Platform Overview](index.md#platform-maturity) for what this means.
 
 ## Hooks
 

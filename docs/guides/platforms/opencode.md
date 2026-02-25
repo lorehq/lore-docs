@@ -5,7 +5,7 @@ title: OpenCode
 # OpenCode
 
 !!! warning "Experimental"
-    OpenCode integration is functional but uses experimental plugin API hooks that may change in future OpenCode releases. Core harness features work — session banner, knowledge capture, convention enforcement, delegation.
+    OpenCode support is experimental. See [Platform Overview](index.md#platform-maturity) for what this means.
 
 ## Plugins
 

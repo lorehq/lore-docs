@@ -42,18 +42,13 @@ Lore supports three coding agent platforms. All share the same knowledge base �
 
 All platforms share common infrastructure:
 
-- **`.lore/lib/`** — Shared JavaScript modules (banner assembly, config reader, tree builder, memory guard, tool classification, hook logging). Platform hooks are thin adapters that call into `lib/`.
-- **`.lore/config.json`** — Central configuration (hook profile, subagent defaults, Docker search settings). Read by all platforms.
-- **`docs/`** — Knowledge base, conventions, work tracking. Platform-agnostic.
-- **`.lore/skills/`** and **`.lore/agents/`** — Canonical skill and agent definitions. Synced to platform-specific formats by `sync-platform-skills.sh`.
-
     .lore/lib/          → Shared logic (all platforms)
     .lore/hooks/        → Claude Code (subprocess per event)
     .cursor/hooks/      → Cursor (subprocess per event)
     .cursor/mcp/        → Cursor MCP server (long-lived process)
     .opencode/plugins/  → OpenCode (long-lived ESM modules)
 
-See [Hook Architecture](../hook-architecture.md) for the module layout, lifecycle diagrams, and the shared lib reference.
+See [Hook Architecture](../hook-architecture.md) for the shared lib reference, module layout, and lifecycle diagrams.
 
 ## Setup
 

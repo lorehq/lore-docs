@@ -12,7 +12,7 @@ A single Docker container that runs locally alongside the agent, providing seman
 
 A local HTTP API that indexes all knowledge files, skills, work items, and agents. Agents query by topic or meaning — not just filename — and get back ranked file paths. Hooks use the API automatically when the container is running.
 
-Without Docker, agents fall back to Grep/Glob (keyword search). Grep/Glob works fine for small knowledge bases and degrades as content grows.
+Without Docker, agents fall back to Grep/Glob (keyword search).
 
 ### MkDocs UI
 
@@ -49,11 +49,11 @@ Override in `.lore/config.json`:
 
 ## Without Docker
 
-Agents fall back to Grep/Glob silently — no configuration needed. The fallback works reliably for small-to-medium knowledge bases. If queries start missing relevant content or you want the visual docs site, start the container.
+Agents fall back to Grep/Glob silently — no configuration needed. The fallback works reliably for small-to-medium knowledge bases; for a brand-new project with minimal docs, it's fine. Once you have more than a few dozen knowledge files, the sidecar pays for itself in retrieval quality.
 
 ## When to Start the Sidecar
 
-Start it at project setup and leave it running. Semantic search improves knowledge retrieval as your docs grow — the value compounds over time. For a brand-new project with minimal docs, Grep/Glob fallback is fine. Once you have more than a few dozen knowledge files, the sidecar pays for itself in retrieval quality.
+Start it at project setup and leave it running. Semantic search improves knowledge retrieval as your docs grow — the value compounds over time.
 
 ## Environment Variables
 

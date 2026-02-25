@@ -23,9 +23,7 @@ Eight hooks cover all lifecycle events:
 
 ### Hook Lifecycle
 
-Static content (conventions, agent-rules) is embedded in `CLAUDE.md` at generation time by `sync-platform-skills.sh`. The `SessionStart` hook injects only the dynamic banner — active work items, the knowledge map tree, and the skill registry. This keeps the hook output small and current without re-reading static files every session.
-
-`SessionStart` re-fires after context compaction, so the full banner is always present.
+See [Hook Architecture](../hook-architecture.md) for the static vs. dynamic banner split and hook lifecycle details.
 
 ### JSON Control Flow
 

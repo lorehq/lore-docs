@@ -56,14 +56,6 @@ Harness-owned — overwritten on every `/lore-update`. Live in `docs/context/con
 | **Knowledge Base Structure** | Poor file naming, deep nesting, weak retrieval, missing frontmatter |
 | **Work Items** | Inconsistent formatting in plans, roadmaps, and brainstorms |
 
-### Ownership Tiers
-
-| Tier | Location | Sync behavior |
-|---|---|---|
-| **System** | `docs/context/conventions/system/` | Always overwritten |
-| **Seed** | `.lore/templates/seeds/conventions/` | Created if missing, opt-in update |
-| **Operator** | `docs/context/conventions/` | Never touched by harness |
-
 Operator files take precedence over system files with the same name.
 
 ## Creating Custom Conventions

@@ -108,6 +108,8 @@ This script runs 7 cross-reference checks. Common failures:
 
 ## Updates
 
+See [Production Readiness: Upgrade Policy](production-readiness.md#upgrade-policy) for the update process and conflict resolution.
+
 ### `/lore-update` shows conflicts
 
 `/lore-update` only touches harness-owned files (`lore-*` prefix). If you see conflicts, you may have modified a `lore-*` file directly. Harness files are overwritten on sync — move your changes to an operator-owned file (no `lore-` prefix).

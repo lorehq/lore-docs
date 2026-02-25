@@ -66,33 +66,7 @@ Model values in `subagentDefaults.claude` are the full deployment names your pla
 { "claude": { "fast": "haiku", "default": "sonnet", "powerful": "opus" } }
 ```
 
-**Foundry / Bedrock / Vertex:** Set full deployment names in config for display, and map the short aliases to your deployments via env vars in `~/.claude/settings.json`:
-
-```json
-{
-  "subagentDefaults": {
-    "claude": {
-      "fast": "claude-haiku-4-5",
-      "default": "claude-sonnet-4-6",
-      "powerful": "claude-opus-4-6"
-    }
-  }
-}
-```
-
-```json
-{
-  "env": {
-    "CLAUDE_CODE_USE_FOUNDRY": "1",
-    "ANTHROPIC_FOUNDRY_RESOURCE": "your-resource-name",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6"
-  }
-}
-```
-
-Claude Code resolves `haiku` → `ANTHROPIC_DEFAULT_HAIKU_MODEL`, `sonnet` → `ANTHROPIC_DEFAULT_SONNET_MODEL`, and `opus` → `ANTHROPIC_DEFAULT_OPUS_MODEL` at runtime. All three env vars must be set — without them, Claude Code falls back to its own hardcoded model IDs which may not exist in your deployment.
+For cloud deployments (Foundry, Bedrock, Vertex), see [Claude Code: Cloud Deployments](platforms/claude-code.md#cloud-deployments-foundry-bedrock-vertex).
 
 ### Hook Profile
 
@@ -111,18 +85,6 @@ Any unrecognized value (or a missing `profile` key) falls back to `standard`.
 | `standard` | Default. All hooks active. Capture nudges at normal thresholds. |
 | `minimal` | Per-tool nudges off. Session banner notes to use `/lore-capture` manually. Use when hooks feel noisy. |
 | `discovery` | All hooks active with lower default thresholds (nudge=5, warn=10). Banner adds aggressive capture instructions for environment mapping and skill creation. Use during initial setup or unfamiliar codebase exploration. |
-
-## MCP Search Server
-
-The Docker sidecar exposes three MCP tools for knowledge base access:
-
-| Tool | Description |
-|------|-------------|
-| `lore_search` | Semantic search — returns ranked snippets by topic |
-| `lore_read` | Read a full file by path (use after `lore_search`) |
-| `lore_health` | Container and index status |
-
-Configured via `.mcp.json` at the instance root (scaffolded by `create-lore`). Works in any platform with MCP support — Claude Code natively, Cursor via `.cursor/mcp.json`. Requires the Docker sidecar to be running. See [Docs UI & Semantic Search](docs-ui.md) for setup.
 
 ## Tuning for Large Instances
 
