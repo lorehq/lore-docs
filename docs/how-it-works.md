@@ -117,15 +117,17 @@ sequenceDiagram
 
 See [Platform Overview: Sync Boundaries](guides/platforms/index.md#sync-boundaries) for the `lore-*` prefix convention and what sync overwrites.
 
-#### How Skills and Agents Emerge
+#### How Skills Grow
+
+Skills are grown organically from gotchas encountered during work. Lore ships with built-in workers (`lore-worker` tiers and `lore-explore`) — dynamic, ephemeral agents that are spawned per-task with specific conventions and skills to load, then dissolved after the task completes.
 
 ```mermaid
 flowchart TD
-    op[Operation Completed] --> gotcha{Hit any\ngotchas?}
+    op[Operation Completed] --> gotcha{"Hit any<br/>gotchas?"}
     gotcha -->|No| skip[No skill needed]
     gotcha -->|Yes| createSkill[Create skill]
     createSkill --> registry[Update registries]
-    registry --> done[Skill available for\nworker delegation]
+    registry --> done["Skill available for<br/>worker delegation"]
 ```
 
 See [How Delegation Works](how-delegation-works.md) for the orchestrator-worker model, worker tiers, and session acceleration.
@@ -137,11 +139,11 @@ Lore uses indirection — telling the agent *where to find things* rather than l
 | Layer | What It Contains |
 |-------|------------------|
 | `.lore/instructions.md` | Harness rules, knowledge routing, naming conventions |
-| Session start: harness | Operating principles, active agents, active roadmaps/plans |
+| Session start: harness | Operating principles, available workers, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` |
 | Session start: operator profile | Identity and preferences from `docs/knowledge/local/operator-profile.md` (gitignored) |
 | Session start: conventions | Coding and docs standards from `docs/context/conventions/` |
-| Session start: knowledge map | Directory tree of `docs/`, `.lore/skills/`, and `.lore/agents/` |
+| Session start: knowledge map | Directory tree of `docs/` and `.lore/skills/` |
 | Session start: local memory | Scratch notes from `MEMORY.local.md` (gitignored) |
 | Per-prompt reinforcement | Delegation + knowledge discovery + work tracking nudges |
 | Post-tool-use reinforcement | Capture reminders with escalating urgency |
@@ -151,7 +153,7 @@ Lore uses indirection — telling the agent *where to find things* rather than l
 
 When the Docker sidecar is running, the session banner includes a semantic search URL. Agents query by topic to find relevant docs and skills without loading the full directory tree. See [Docs UI & Semantic Search](guides/docs-ui.md).
 
-Docs and skills have zero baseline session cost — they load on-demand. Agents and active roadmaps appear in every session banner but grow slowly in count. See [Configuration: Tuning](guides/configuration.md#tuning-for-large-instances) for managing growth.
+Docs and skills have zero baseline session cost — they load on-demand. Workers and active roadmaps appear in every session banner. See [Configuration: Tuning](guides/configuration.md#tuning-for-large-instances) for managing growth.
 
 ## Hook Architecture
 

@@ -22,7 +22,7 @@ Lore follows [semantic versioning](https://semver.org/). During 0.x:
 
 **What won't break:**
 
-- Your docs (`docs/`), operator skills, operator agents, operator conventions
+- Your docs (`docs/`), operator skills, operator conventions
 - The `lore-*` / non-`lore-*` ownership boundary and the `system/` subdirectory convention
 - Git-tracked knowledge (Lore never deletes operator content)
 
@@ -73,7 +73,7 @@ Hooks actively block reads and writes to `MEMORY.md` at the project root. This p
 
 - **AI compliance is probabilistic.** Hooks inject reminders, not commands. The agent may skip capture in long sessions or when tool calls accumulate rapidly. Running `/lore-capture` after substantive work improves consistency.
 - **Single-developer origin.** Lore was built and tested by one developer. The test suite covers hooks, lib modules, and the scaffolder across 3 OSes and 2 Node versions, but edge cases in team workflows are untested.
-- **No access control.** Anyone with repo access can read and modify all knowledge, skills, and agents. Lore trusts the git permission model.
+- **No access control.** Anyone with repo access can read and modify all knowledge and skills. Lore trusts the git permission model.
 - **Shell scripts require bash.** Core scripts (`validate-consistency.sh`, `generate-nav.sh`, etc.) require bash. Windows users need Git Bash, WSL, or equivalent. Hooks themselves are pure Node.js and work everywhere.
 - **Hook injection cost is unmeasured per-instance.** Hook injections consume tokens from the agent's context window. Measure your own instance with `LORE_HOOK_LOG=1` — see [Hook Event Logging](guides/configuration.md#hook-event-logging).
 

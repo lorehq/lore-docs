@@ -13,16 +13,16 @@ title: Working with Lore
 | **Ask for work** | "Connect us to Jira and pull all open INFRA tickets" |
 | **Share context** | "The VPN endpoint is 10.0.1.1 and the Azure tenant ID is abc-123 — remember that" |
 | **Request documentation** | "Document the architecture decisions we just made" |
-| **Ask questions** | "What agents do we have available?" |
+| **Ask questions** | "What workers do we have available?" |
 
-Skills and agents emerge from demonstrated need, not upfront planning.
+Skills emerge from demonstrated need, not upfront planning.
 
 ## Tips
 
 | Approach | Why |
 |----------|-----|
 | Work naturally, let skills emerge | Skills are best when they capture real gotchas from actual work |
-| Let workers handle complex tasks | The orchestrator delegates with curated skills — no upfront agent planning |
+| Let workers handle complex tasks | The orchestrator delegates to ephemeral workers with curated skills and conventions |
 | Break compound work into branches | Independent branches can run in parallel subagents; dependency chains stay sequential |
 | Bring your own skills | Copy them in, run `/lore-capture` — see below |
 | Let Lore maintain registries | Registries, nav, and cross-references are where consistency matters most |
@@ -59,7 +59,7 @@ Commands are slash-invoked skills.
 
 **`/lore-consolidate`** — Deep health check: find stale items, semantic overlaps, knowledge drift. See [Conventions](conventions.md).
 
-**`/lore-status`** — Show Lore version, hook health, skill/agent counts, and active work.
+**`/lore-status`** — Show Lore version, hook health, skill counts, worker tiers, and active work.
 
 **`/lore-update`** — Pull latest harness files from GitHub without touching operator content. See [Platform Overview: Sync Boundaries](platforms/index.md#sync-boundaries).
 
