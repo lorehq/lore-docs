@@ -5,19 +5,15 @@ title: Troubleshooting
 # Troubleshooting
 
 !!! tip "Your agent can diagnose most issues"
-    For anything after installation, describe the symptom to your agent and it will diagnose and fix. The reference below explains what goes wrong and why — useful context, but you rarely need to follow these steps manually.
+    For anything after installation, describe the symptom to your agent. Hooks not firing, consistency checks failing, version mismatches, capture reminders too aggressive — the agent diagnoses and fixes all of these.
 
 ## Installation
 
+These happen before the agent is alive — you fix them yourself.
+
 ### `npx create-lore` fails with "Could not find remote branch"
 
-The installer clones a specific version tag from GitHub. If the tag doesn't exist, the clone fails with an error like:
-
-```
-fatal: Remote branch vX.Y.Z not found in upstream origin
-```
-
-**Fix:** Update to the latest version of create-lore:
+The installer clones a specific version tag. If the tag doesn't exist:
 
 ```bash
 npx create-lore@latest my-project
@@ -25,49 +21,17 @@ npx create-lore@latest my-project
 
 If the problem persists, [open an issue](https://github.com/lorehq/create-lore/issues).
 
-### `npx create-lore` fails with a network error
+### Network errors
 
-```
-fatal: unable to access 'https://github.com/lorehq/lore.git/': Could not resolve host: github.com
-```
+The installer needs to reach `github.com`. Firewalls, VPNs, and corporate proxies can block git access.
 
-**Fix:** Check your internet connection and DNS. The installer needs to reach `github.com` to clone the template. Firewalls, VPNs, and corporate proxies can block git access.
-
-### Node version errors
+### Node version
 
 Lore requires Node.js 18 or later.
 
-```bash
-node --version  # must be >= 18
-```
+## Worker Tiers Not Routing Correctly
 
-## Hooks
-
-### Hooks aren't firing
-
-Tell your agent: "My hooks don't seem to be firing — can you run diagnostics?"
-
-Your agent will check the right things for your platform:
-
-- **Claude Code:** Whether `.lore/hooks/` exists and contains `.js` files, and whether `claude` is being run from the project root.
-- **Cursor:** Whether `.cursor/hooks.json` exists and references files in `.cursor/hooks/`, and whether the project folder is opened directly (not a parent directory).
-- **OpenCode:** Whether `opencode.json` exists and `.opencode/plugins/` contains `.js` files.
-
-### "MEMORY.md is intercepted" warning
-
-Lore blocks `MEMORY.md` to prevent platform-level memory from overwriting knowledge — the agent routes persistent knowledge to skills or docs instead. This is intentional. See [Production Readiness: MEMORY.md Protection](../concepts/production-readiness.md#memorymd-protection) for details and alternatives.
-
-### Escalating capture reminders are too aggressive
-
-Tell your agent to adjust the capture thresholds — it knows where `nudgeThreshold` and `warnThreshold` live and what values make sense. See [Configuration: Hook Profile](configuration.md#hook-profile) for profile options.
-
-## Worker Tiers
-
-### All workers run on the same model (not their configured tier)
-
-Worker agents inherit the orchestrator's model when Claude Code ignores the `model:` field in their agent frontmatter. This happens in two scenarios:
-
-**Scenario 1 — Using a cloud deployment (Foundry, Bedrock, Vertex):** Claude Code resolves short aliases (`haiku`, `sonnet`, `opus`) through `ANTHROPIC_DEFAULT_*_MODEL` env vars. If those vars aren't set, it falls back to its own hardcoded model IDs. Set all three in `~/.claude/settings.json`:
+Worker agents inherit the orchestrator's model when Claude Code can't resolve the tier aliases. This is pre-session configuration — set it in `~/.claude/settings.json` before launching:
 
 ```json
 {
@@ -79,32 +43,17 @@ Worker agents inherit the orchestrator's model when Claude Code ignores the `mod
 }
 ```
 
-**Scenario 2 — Full deployment names in config:** If `subagentDefaults.claude` contains full model IDs (e.g. `claude-opus-4-6`) instead of short aliases, Claude Code ignores the generated frontmatter value and workers inherit the orchestrator's model. Lore's `generate-agents.js` correctly stamps short aliases into `.claude/agents/` frontmatter. If you are on an older version, tell your agent to run an update.
+On the direct Anthropic API, short aliases (`haiku`, `sonnet`, `opus`) work without env vars. Cloud deployments (Foundry, Bedrock, Vertex) need the env vars above pointing to deployment names. If `opus` returns a 404, your deployment doesn't have that model — set the env var to match what exists.
 
-### `opus` tier returns a 404 deployment error
+## MEMORY.md Warning
 
-Claude Code maps `opus` to its internal default opus model ID, which may not exist in your deployment. Fix: set `ANTHROPIC_DEFAULT_OPUS_MODEL` in `~/.claude/settings.json` to match your deployed model name. Restart Claude Code after changing settings.
-
-## Consistency
-
-### Validation checks fail
-
-Tell your agent: "The consistency checks are failing — can you run a capture pass and fix what's out of sync?" Your agent will diagnose which checks failed (platform copies, nav, instructions) and apply the right fixes.
-
-### Update shows conflicts
-
-Harness updates only touch harness-owned files (`lore-*` prefix). If you see conflicts, you may have modified a `lore-*` file directly. Harness files are overwritten on sync — move your changes to an operator-owned file (no `lore-` prefix), then tell your agent to run the update again.
-
-### Version mismatch after update
-
-Tell your agent: "There's a version mismatch after the update — can you check version sync?" If `.lore/config.json` and `package.json` disagree, the update didn't complete cleanly and your agent can re-run it.
+Lore blocks `MEMORY.md` to prevent platform-level memory from overwriting knowledge. This is intentional — the agent routes persistent knowledge to skills or docs instead. See [Production Readiness: MEMORY.md Protection](../concepts/production-readiness.md#memorymd-protection) for details.
 
 ## Harness Bugs
 
-If the issue is a broken hook, script, or skill — not a configuration problem — see [Field Repair](../guides/field-repair.md). Your agent has a structured workflow for diagnosing and fixing harness bugs in source.
+If a hook, script, or skill is broken — not a configuration problem — see [Field Repair](../guides/field-repair.md).
 
 ## Still Stuck?
 
-- Check the [guides](../guides/working-with-lore.md) for detailed walkthroughs
 - [Open an issue](https://github.com/lorehq/lore/issues) with reproduction steps
 - For security issues, see [SECURITY.md](https://github.com/lorehq/lore/blob/main/SECURITY.md)
