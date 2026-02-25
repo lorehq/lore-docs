@@ -202,4 +202,3 @@ The runbook (`docs/knowledge/runbooks/system/knowledge-defrag.md`) handles every
 - [ ] All active services documented in `docs/knowledge/environment/`
 - [ ] Semantic search returning results
 - [ ] Active roadmaps and plans created for current initiatives
-
