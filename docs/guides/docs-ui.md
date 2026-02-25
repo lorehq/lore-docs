@@ -28,19 +28,15 @@ A live-reloading site at `localhost:PORT` that renders your full knowledge base 
 
 **Prerequisite:** Docker (Docker Desktop or Docker Engine).
 
-```bash
-/lore-docker          # start
-/lore-docker stop     # stop
-/lore-docker status   # health check
-```
+Tell your agent to start the docs sidecar. On first start, Docker pulls the image (`lorehq/lore-docker:latest`) and loads the semantic models — allow 1–3 minutes. The docs site comes up first; semantic search becomes available after model loading completes. Subsequent starts are fast — image and volumes are cached.
 
-On first start, Docker pulls the image (`lorehq/lore-docker:latest`) and loads the semantic models — allow 1–3 minutes. The docs site comes up first; semantic search becomes available after model loading completes. Subsequent starts are fast — image and volumes are cached.
+You can also ask your agent for a status check, or tell it to stop the sidecar when you're done.
 
 ## Ports & Configuration
 
 Ports are auto-computed per project (hash of project name, docs port range 9001–9999). Semantic search runs on docs port + 1000.
 
-Override in `.lore/config.json`:
+If you need specific ports, tell your agent which ports to use — it will update the config. The config looks like this:
 
 ```json
 {
@@ -51,7 +47,7 @@ Override in `.lore/config.json`:
 }
 ```
 
-`/lore-docker start` writes the resolved ports to `.lore/config.json` automatically after the first successful start.
+The agent writes the resolved ports to `.lore/config.json` automatically after the first successful start.
 
 ## Without Docker
 
@@ -62,5 +58,4 @@ For environment variable options and known issues, see [Configuration Reference]
 ## See Also
 
 - [Configuration Reference](../reference/configuration.md) — environment variables, CLAUDE.md auto-regeneration details, and known issues
-- [Command Reference](../reference/commands.md) — full `/lore-docker` command options
 - [Troubleshooting](../reference/troubleshooting.md) — fix-by-symptom table for Docker issues

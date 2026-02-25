@@ -42,25 +42,21 @@ node --version  # must be >= 18
 
 ### Hooks aren't firing
 
-**Claude Code:** Check that `.lore/hooks/` exists and contains `.js` files. Run `claude` from the project root.
+Tell your agent: "My hooks don't seem to be firing — can you run diagnostics?"
 
-**Cursor:** Check that `.cursor/hooks.json` exists and references files in `.cursor/hooks/`. Open the project folder directly in Cursor (not a parent directory).
+Your agent will check the right things for your platform:
 
-**OpenCode:** Check that `opencode.json` exists and `.opencode/plugins/` contains `.js` files.
-
-For all platforms, verify with:
-
-```bash
-bash .lore/scripts/validate-consistency.sh
-```
+- **Claude Code:** Whether `.lore/hooks/` exists and contains `.js` files, and whether `claude` is being run from the project root.
+- **Cursor:** Whether `.cursor/hooks.json` exists and references files in `.cursor/hooks/`, and whether the project folder is opened directly (not a parent directory).
+- **OpenCode:** Whether `opencode.json` exists and `.opencode/plugins/` contains `.js` files.
 
 ### "MEMORY.md is intercepted" warning
 
-Lore blocks `MEMORY.md` to prevent platform-level memory from overwriting knowledge; route persistent knowledge to skills or docs instead. See [Production Readiness: MEMORY.md Protection](../concepts/production-readiness.md#memorymd-protection) for details and alternatives.
+Lore blocks `MEMORY.md` to prevent platform-level memory from overwriting knowledge — the agent routes persistent knowledge to skills or docs instead. This is intentional. See [Production Readiness: MEMORY.md Protection](../concepts/production-readiness.md#memorymd-protection) for details and alternatives.
 
 ### Escalating capture reminders are too aggressive
 
-Adjust `nudgeThreshold` and `warnThreshold` in `.lore/config.json`. See [Configuration: Hook Profile](configuration.md#hook-profile) for profile options.
+Tell your agent to adjust the capture thresholds — it knows where `nudgeThreshold` and `warnThreshold` live and what values make sense. See [Configuration: Hook Profile](configuration.md#hook-profile) for profile options.
 
 ## Worker Tiers
 
@@ -80,44 +76,25 @@ Worker agents inherit the orchestrator's model when Claude Code ignores the `mod
 }
 ```
 
-**Scenario 2 — Full deployment names in config:** If `subagentDefaults.claude` contains full model IDs (e.g. `claude-opus-4-6`) instead of short aliases, Claude Code ignores the generated frontmatter value and workers inherit the orchestrator's model. Lore's `generate-agents.js` correctly stamps short aliases into `.claude/agents/` frontmatter regardless — but if you are on an older version, run `/lore-update` to get the fix.
-
-**Verify the generated agents look correct:**
-
-```bash
-grep "^model:" .claude/agents/lore-worker*.md
-# Should show: model: haiku / model: sonnet / model: opus
-```
+**Scenario 2 — Full deployment names in config:** If `subagentDefaults.claude` contains full model IDs (e.g. `claude-opus-4-6`) instead of short aliases, Claude Code ignores the generated frontmatter value and workers inherit the orchestrator's model. Lore's `generate-agents.js` correctly stamps short aliases into `.claude/agents/` frontmatter. If you are on an older version, tell your agent to run an update.
 
 ### `opus` tier returns a 404 deployment error
 
-Claude Code maps `opus` → its internal default opus model ID, which may not exist in your deployment. Fix: set `ANTHROPIC_DEFAULT_OPUS_MODEL` in `~/.claude/settings.json` to match your deployed model name. Restart Claude Code after changing settings.
+Claude Code maps `opus` to its internal default opus model ID, which may not exist in your deployment. Fix: set `ANTHROPIC_DEFAULT_OPUS_MODEL` in `~/.claude/settings.json` to match your deployed model name. Restart Claude Code after changing settings.
 
 ## Consistency
 
-### `validate-consistency.sh` fails
+### Validation checks fail
 
-This script runs 7 cross-reference checks. Common failures:
+Tell your agent: "The consistency checks are failing — can you run a capture pass and fix what's out of sync?" Your agent will diagnose which checks failed (platform copies, nav, instructions) and apply the right fixes.
 
-| Failure | Fix |
-|---------|-----|
-| Platform copies out of sync / Registry stale | `bash .lore/scripts/sync-platform-skills.sh` — syncs canonical `.lore/` sources to platform dirs (`.claude/skills/`, `.claude/agents/`, Cursor rules) |
-| Nav stale | `bash .lore/scripts/generate-nav.sh` — regenerates `mkdocs.yml` nav after adding or renaming docs |
-| Instructions out of sync | `bash .lore/scripts/sync-harness.sh` (via `/lore-update`) |
+### Update shows conflicts
 
-## `/lore-update` shows conflicts
+Harness updates only touch harness-owned files (`lore-*` prefix). If you see conflicts, you may have modified a `lore-*` file directly. Harness files are overwritten on sync — move your changes to an operator-owned file (no `lore-` prefix), then tell your agent to run the update again.
 
-`/lore-update` only touches harness-owned files (`lore-*` prefix). If you see conflicts, you may have modified a `lore-*` file directly. Harness files are overwritten on sync — move your changes to an operator-owned file (no `lore-` prefix).
+### Version mismatch after update
 
-## Version mismatch after update
-
-Check that `.lore/config.json` and `package.json` agree:
-
-```bash
-bash .lore/scripts/check-version-sync.sh
-```
-
-If they diverge, the update didn't complete cleanly. Run `/lore-update` again.
+Tell your agent: "There's a version mismatch after the update — can you check version sync?" If `.lore/config.json` and `package.json` disagree, the update didn't complete cleanly and your agent can re-run it.
 
 ## Still Stuck?
 

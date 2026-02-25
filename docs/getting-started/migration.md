@@ -8,19 +8,17 @@ title: Migration & Uninstalling
 
 ### From CLAUDE.md / .cursorrules
 
-1. Install Lore: `npx create-lore my-project`
-2. Move project-specific rules to `docs/context/agent-rules.md`
-3. Move coding conventions to `docs/context/conventions/`
-4. Move gotchas and tricks to skills via `/lore-create-skill`
-5. Move environment details (URLs, services, relationships) to `docs/knowledge/environment/`
-6. Delete the old file — Lore generates `CLAUDE.md` from `.lore/instructions.md`
+Install Lore: `npx create-lore my-project`
+
+Then start a session and tell your agent: "I'm migrating from an existing CLAUDE.md — here's the content. Migrate it into Lore: move project rules to agent-rules, coding conventions to conventions, gotchas and tricks to skills, and environment details to environment docs."
+
+Paste your old file content into the same message. The agent handles the file operations and will ask if anything is unclear.
 
 ### From Scratch Notes / No System
 
-1. Install Lore: `npx create-lore my-project`
-2. Work normally. Hooks will nudge the agent to capture knowledge as it discovers things.
-3. Run `/lore-capture` after substantive sessions to ensure nothing was missed.
-4. Knowledge accumulates naturally. Review `docs/` periodically to prune noise.
+Install Lore: `npx create-lore my-project`
+
+Work normally. Hooks nudge your agent to capture knowledge as it discovers things — environment facts, gotchas, recurring patterns. Knowledge accumulates naturally. Review `docs/` periodically to prune noise.
 
 ## Uninstalling
 

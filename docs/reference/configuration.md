@@ -4,7 +4,7 @@ title: Configuration
 
 # Configuration
 
-Lore reads settings from `.lore/config.json` (JSON) at the instance root and from environment variables.
+Lore reads settings from `.lore/config.json` (JSON) at the instance root and from environment variables. Your agent manages this config — tell it what you want changed and it will update the file and apply the change.
 
 ## `.lore/config.json`
 
@@ -83,7 +83,7 @@ Any unrecognized value (or a missing `profile` key) falls back to `standard`.
 | Value | Behavior |
 |-------|----------|
 | `standard` | Default. All hooks active. Capture nudges at normal thresholds. |
-| `minimal` | Per-tool nudges off. Session banner notes to use `/lore-capture` manually. Use when hooks feel noisy. |
+| `minimal` | Per-tool nudges off. Session banner notes to run a manual capture check. Use when hooks feel noisy. |
 | `discovery` | All hooks active with lower default thresholds (nudge=5, warn=10). Banner adds aggressive capture instructions for environment mapping and skill creation. Use during initial setup or unfamiliar codebase exploration. |
 
 ## Tuning for Large Instances
@@ -92,14 +92,16 @@ The largest contributor to session banner size is the **knowledge map** — a di
 
 **`treeDepth`** limits how many directory levels the knowledge map displays. Default is 5. Reducing to 3 or 4 hides deep nesting while showing top-level structure.
 
-**When to act:**
+Tell your agent when the instance feels noisy or slow. It will assess which signals apply and adjust config accordingly:
 
 - Knowledge map exceeds ~50 lines → reduce `treeDepth` or reorganize subdirectories
 - `.lore/memory.local.md` exceeds ~50 lines → route content to skills or `docs/knowledge/`
 - Conventions section growing → keep it focused on rules, move reference material to `docs/knowledge/`
-- Many active work items → archive completed items with `/lore-capture`
+- Many active work items → archive completed items
 
 ## Environment Variables
+
+These are set outside sessions — in your shell profile or before launching your editor — not managed by the agent.
 
 | Variable | Description |
 |----------|-------------|
@@ -119,19 +121,13 @@ Each entry records:
 
 ```json
 {
-  "ts": 1740000000000,        // Unix epoch milliseconds
-  "platform": "cursor",       // claude, cursor, or opencode
-  "hook": "capture-nudge",    // hook filename
-  "event": "beforeShellExecution", // platform event name
-  "output_size": 52,          // characters injected (0 for silent hooks)
-  "state": {"bash": 3}        // optional hook-specific snapshot
+  "ts": 1740000000000,
+  "platform": "cursor",
+  "hook": "capture-nudge",
+  "event": "beforeShellExecution",
+  "output_size": 52,
+  "state": {"bash": 3}
 }
 ```
 
-Analyze collected data:
-
-```bash
-bash .lore/scripts/analyze-hook-logs.sh
-```
-
-The report shows fires per platform, fires per hook, average output sizes, estimated accumulated context tokens, and any hooks that never fired. To reset: `rm .git/lore-hook-events.jsonl`.
+To analyze collected log data, tell your agent to analyze hook logs. The report covers fires per platform, fires per hook, average output sizes, estimated accumulated context tokens, and any hooks that never fired. To reset the log, tell your agent to clear it.

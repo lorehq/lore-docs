@@ -60,7 +60,7 @@ All platforms activate automatically after `npx create-lore`.
 | **Cursor** | `.cursor/rules/lore-*.mdc` + `.cursor/hooks.json` + `.cursor/mcp.json` |
 | **OpenCode** | `opencode.json` + `.opencode/plugins/` + `.opencode/commands/` |
 
-`CLAUDE.md` is generated from `.lore/instructions.md`. Cursor `.mdc` rules are generated from multiple sources (instructions, agent-rules, conventions, agent-registry). Run `bash .lore/scripts/sync-platform-skills.sh` after editing any of those source files to keep platform copies in sync.
+`CLAUDE.md` is generated from `.lore/instructions.md`. Cursor `.mdc` rules are generated from multiple sources (instructions, agent-rules, conventions, agent-registry). Your agent keeps platform copies in sync automatically — a capture pass handles this.
 
 ## Sync Boundaries
 

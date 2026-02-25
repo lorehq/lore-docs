@@ -33,7 +33,7 @@ The installer also scaffolds `.mcp.json` at the instance root for the MCP search
 
 ## Start the Docker Sidecar
 
-Run `/lore-docker` to start semantic search and a live docs UI. **Highly recommended — start it before your first session.**
+Tell your agent to start the docs sidecar — it handles Docker setup, port assignment, and health checks. **Highly recommended — start it before your first session.**
 
 See [Docs UI & Semantic Search](../guides/docs-ui.md) for setup, configuration, and details.
 
@@ -53,9 +53,9 @@ cursor .     # Cursor (open the project)
 opencode     # OpenCode
 ```
 
-Lore's hooks reinforce knowledge capture as you go. After substantive work, run `/lore-capture` for a full capture pass. To open a work repo in your IDE, see [/lore-link](../guides/working-across-repos.md#ide-workflow-lore-link).
+Lore's hooks reinforce knowledge capture as you go. After substantive work, ask your agent to run a capture pass. To open a work repo in your IDE, see [/lore-link](../guides/working-across-repos.md#ide-workflow-lore-link).
 
 ## Next Steps
 
 - [Working Across Repos](../guides/working-across-repos.md) — hub pattern and IDE linking
-- Use `/lore-status` to verify your instance is healthy and `/lore-update` to pull the latest harness updates. See [Commands](../reference/commands.md) for the full list.
+- Ask your agent to check status or update to the latest version. See [Commands](../reference/commands.md) for the full list.

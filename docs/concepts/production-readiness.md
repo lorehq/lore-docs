@@ -60,12 +60,7 @@ All hook source is in your repo after install:
 .lore/lib/                # Shared logic (all hooks import from here)
 ```
 
-Every file is plain JavaScript with no minification or bundling. Read them directly.
-
-```bash
-# Count all hook and lib code
-wc -l .lore/hooks/*.js .cursor/hooks/*.js .opencode/plugins/*.js .lore/lib/*.js
-```
+Every file is plain JavaScript with no minification or bundling. Ask your agent to audit the hook source — line counts, dependency checks, or anything else you want to verify.
 
 ### MEMORY.md Protection
 
@@ -73,7 +68,7 @@ Hooks actively block reads and writes to `MEMORY.md` at the project root. This p
 
 ## Known Limitations
 
-- **AI compliance is probabilistic.** Hooks inject reminders, not commands. The agent may skip capture in long sessions or when tool calls accumulate rapidly. Running `/lore-capture` after substantive work improves consistency.
+- **AI compliance is probabilistic.** Hooks inject reminders, not commands. The agent may skip capture in long sessions or when tool calls accumulate rapidly. Asking your agent to run a capture pass after substantive work improves consistency.
 - **Single-developer origin.** Lore was built and tested by one developer. The test suite covers hooks, lib modules, and the scaffolder across 3 OSes and 2 Node versions, but edge cases in team workflows are untested.
 - **No access control.** Anyone with repo access can read and modify all knowledge and skills. Lore trusts the git permission model.
 - **Shell scripts require bash.** Shell scripts in `.lore/scripts/` (`validate-consistency.sh`, `generate-nav.sh`, etc.) require bash. Windows users need Git Bash, WSL, or equivalent. Hooks themselves are pure Node.js and work everywhere.

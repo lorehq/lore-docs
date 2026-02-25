@@ -72,12 +72,12 @@ opencode     # OpenCode
 
 ### Usage
 
-```
-/lore-link ~/projects/my-app          # Link a work repo
-/lore-link --unlink ~/projects/my-app  # Remove the link
-/lore-link --list                       # Show linked repos (with stale detection)
-/lore-link --refresh                    # Regenerate configs in all linked repos
-```
+Tell your agent which repo to link:
+
+- "Link my-app to this hub" — connects a work repo
+- "Unlink my-app" — removes the link
+- "Show linked repos" — lists all links with stale detection
+- "Refresh linked repos" — regenerates configs with latest hooks
 
 ### What It Generates
 
@@ -97,7 +97,7 @@ Even when working from a linked repo, knowledge captures back to the hub. Skills
 
 ### After Harness Updates
 
-Run `/lore-link --refresh` after `/lore-update` to regenerate configs in all linked repos with the latest hooks.
+After a harness update, tell your agent to refresh linked repos — it regenerates configs with the latest hooks.
 
 ## Team Topologies
 

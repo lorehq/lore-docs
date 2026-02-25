@@ -23,33 +23,11 @@ For the path-routing table and default convention details, see [Configuration Re
 
 Convention enforcement works on all three platforms. See [Platform Overview](../reference/platforms/index.md) for the mechanism comparison.
 
-## Creating Custom Conventions
+## Adding Custom Conventions
 
-Add a markdown file to `docs/context/conventions/`:
+Tell your agent you want a new convention and describe the rules. For example: "Create a diagrams convention: prefer Mermaid over images, label every node and edge, store diagram source alongside rendered output."
 
-```markdown
-# Diagrams
-
-## 1. Keep Diagrams as Code
-
-**Mermaid over images. Text over binaries.**
-
-- Use Mermaid syntax for flowcharts, sequence diagrams, and architecture views.
-- Only use image files when the diagram can't be expressed as code.
-- Store diagram source alongside the rendered output.
-
-## 2. Label Everything
-
-**Unlabeled boxes are unlabeled confusion.**
-
-- Every node, edge, and swimlane gets a descriptive label.
-- Use consistent naming with the codebase (service names, API names).
-```
-
-### Format Requirements
-
-- **Numbered sections** help scanning. Match the pattern of the default conventions.
-- **File name** becomes the menu label. Use descriptive kebab-case: `api-design.md`, `email-drafting.md`, `diagrams.md`. The agent uses the file name to decide whether to load the convention, so prefer self-explanatory names (`email-drafting.md`) over vague ones (`comms.md`).
+One thing worth knowing: the file name becomes the convention's identity — the agent uses it to decide when to load the convention automatically. Prefer self-explanatory names (`email-drafting`, `api-design`) over vague ones (`comms`). Mention your preferred name when you ask.
 
 ## See Also
 

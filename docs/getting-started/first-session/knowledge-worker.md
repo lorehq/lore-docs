@@ -14,13 +14,9 @@ This guide covers what to do in your first working session — after installatio
 
 **Strongly recommended as your first step.** The Docker sidecar gives you semantic search across all knowledge and a live docs UI from the start. Every subsequent phase benefits from it — skills, environment docs, and runbooks you create become instantly searchable.
 
-    /lore-docker
+Tell your agent to start the docs sidecar. It will handle starting the Docker container, computing the port, and confirming when search is available.
 
-Ports are auto-computed per project. After starting, check the assigned port:
-
-    /lore-docker status
-
-On corporate networks, containers may need the org CA cert mounted. The embedding model (`BAAI/bge-small-en-v1.5`) is bundled in recent lore-docker releases.
+On corporate networks, containers may need the org CA cert mounted — mention this to your agent if you're on a managed network. The embedding model (`BAAI/bge-small-en-v1.5`) is bundled in recent lore-docker releases.
 
 If Docker isn't available, skip this and continue — everything works without it, you just lose semantic search and the live docs preview.
 
@@ -56,11 +52,9 @@ You can always add a remote later. Nothing about the instance structure changes 
 
 **Goal:** Tell the agent who it is and who it serves.
 
-**Operator profile** — Create `docs/knowledge/local/operator-profile.md` (gitignored). Minimum: name, role, org, accounts (VCS logins, cloud accounts), working style preferences, tool and CLI preferences. This is the first thing the agent reads each session — without it, every session starts cold.
+**Operator profile and machine inventory** — Tell your agent about yourself: your name, role, org, VCS logins, cloud accounts, working style preferences, and CLI tool preferences. Also describe your machine: hostname, OS, installed runtimes (Node, Python, .NET, Go, etc.), CLI tools, and shell environment. The agent will create `docs/knowledge/local/operator-profile.md` and `docs/knowledge/local/machine.md` (both gitignored) from what you share. These are the first things the agent reads each session — without them, every session starts cold.
 
-**Agent rules** — Edit `docs/context/agent-rules.md`. Minimum: deployment assignment (instance name, operator, org), scope (what domains this instance covers), behavioral rules specific to this deployment (default accounts, constraints, known gotchas). This file is injected as PROJECT context every session.
-
-**Machine inventory** — Create `docs/knowledge/local/machine.md` (gitignored). Capture: hostname, OS, installed runtimes (Node, Python, .NET, Go, etc.), CLI tools, shell environment. Prevents the agent from assuming a generic environment.
+**Agent rules** — `docs/context/agent-rules.md` is the agent's personality file: deployment assignment (instance name, operator, org), scope (what domains this instance covers), and behavioral rules specific to this deployment. Edit this file directly — it defines who the agent is, so the operator writes it. It is injected as PROJECT context every session.
 
 ---
 
@@ -68,7 +62,7 @@ You can always add a remote later. Nothing about the instance structure changes 
 
 **Goal:** Wire the three-tier worker system correctly before any delegation happens.
 
-Set model aliases in `~/.claude/settings.json` under `env`:
+Set model aliases in `~/.claude/settings.json` under `env` — this is system-level configuration outside the agent session, so you do it manually:
 
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "<fast-model>",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "<default-model>",
@@ -76,11 +70,7 @@ Set model aliases in `~/.claude/settings.json` under `env`:
 
 On hosted inference (Foundry, Bedrock, Vertex), these point to deployment names. On the direct Anthropic API, they point to model IDs.
 
-After setting aliases, regenerate agent frontmatter:
-
-    node .lore/lib/generate-agents.js
-
-**Do not skip this step.** Claude Code only accepts short aliases (`haiku`/`sonnet`/`opus`) in agent frontmatter. If frontmatter contains full model IDs or deployment names, Claude Code silently ignores the value — all workers run at the orchestrator's tier with no error.
+After setting the aliases, tell your agent to regenerate the agent frontmatter. This step is critical — Claude Code only accepts short aliases (`haiku`/`sonnet`/`opus`) in agent frontmatter. If frontmatter contains full model IDs or deployment names, Claude Code silently ignores the value and all workers run at the orchestrator's tier with no error.
 
 Verify by asking the agent to run a quick worker test. Each tier should report the model it's running on.
 
@@ -100,11 +90,9 @@ Verify by asking the agent to run a quick worker test. Each tier should report t
 | Cloud KMS (AWS Secrets Manager, Azure Key Vault, GCP Secret Manager) | Existing cloud infrastructure |
 | `pass` (GPG-based) | Unix environments; minimal dependencies |
 
-Authenticate the CLI, verify access, and document the tool name and item naming convention in `docs/knowledge/environment/identity/`.
+Authenticate the CLI and verify access yourself — keystore auth is interactive and involves credentials. If importing browser-saved passwords, export from your browser, import via the keystore CLI, then delete the export file immediately — it is plaintext.
 
-If importing browser-saved passwords, export from your browser and import via the keystore CLI. Delete the export file immediately — it is plaintext.
-
-After setup, add a table to the keystore environment doc: item names, types, and purposes. This is the index the agent uses to know what's retrievable at runtime.
+Once authenticated, tell your agent which keystore you set up and how items are named. It will document the tool, naming convention, and an index of item names and purposes in `docs/knowledge/environment/`.
 
 ---
 
@@ -112,20 +100,16 @@ After setup, add a table to the keystore environment doc: item names, types, and
 
 **Goal:** Authenticate external tooling in dependency order — keystore first, then tools that need keys from it.
 
-Authenticate in this sequence:
+CLI authentication is interactive, so you do it directly. Authenticate in this sequence:
 
 1. **Version control CLI** (GitHub CLI, GitLab CLI, Azure DevOps extension) — foundational; needed for all repo work
 2. **Cloud provider CLI** (e.g. `az login`, `aws configure`, `gcloud auth login`) — needed before cloud-dependent tools
 3. **Token-based tools** — anything needing a PAT or API key: retrieve from the keystore, export as env var or pass as flag
 
-For each tool, document in `docs/knowledge/environment/`:
-
-- Auth method and command
-- Keystore item name (if credentials are stored there)
-- Session management gotchas (expiry, CLI vs. SDK auth differences, multi-account switching)
-
 !!! note "VCS CLI ≠ cloud CLI"
     Version control and cloud provider auth are separate systems. For example, `az login` grants Azure Resource Manager access but does not grant Azure DevOps access — ADO requires its own PAT and extension.
+
+After authenticating each tool, tell your agent what you set up. It will document the auth method, keystore item name, and any session management gotchas (expiry, CLI vs. SDK auth differences, multi-account switching) in `docs/knowledge/environment/`.
 
 ---
 
@@ -133,50 +117,17 @@ For each tool, document in `docs/knowledge/environment/`:
 
 **Goal:** Map the services the agent will interact with. Don't rely on what you can recall.
 
-Document each service in `docs/knowledge/environment/<topic>/<service>.md`. Group by concern: `source-control/`, `cloud/`, `identity/`, `developer-tools/`, etc.
+Tell your agent to map your environment. It knows to check multiple sources rather than relying on your memory:
 
-### Discovery Techniques
+- **Browser bookmarks** — groups services you've used enough to bookmark
+- **Browser history** — surfaces the full range of tools and services you interact with
+- **Docker inventory** — reveals running services, stopped dev stacks, and available MCP images
+- **Repo scan** — surfaces active service domains and technology patterns across your VCS
+- **Company wiki** — Confluence, Notion, SharePoint — someone may have mapped the architecture already
 
-Don't rely on memory. These surface the full environment faster than asking:
+The agent will propose an environment doc structure, populate it with what it finds, and ask you to fill in gaps it can't discover automatically.
 
-**Browser bookmarks** — JSON files, readable while the browser is closed. Parse with Python's `json` module. Groups services you've used enough to bookmark.
-
-**Browser history** — SQLite, accessible even after the browser is uninstalled:
-
-    # Use Python's built-in sqlite3 — no CLI install required
-    python -c "
-    import sqlite3, os
-    db = os.path.expanduser('~/path/to/History')
-    con = sqlite3.connect(db)
-    rows = con.execute('SELECT url, title, visit_count FROM urls ORDER BY visit_count DESC LIMIT 500').fetchall()
-    for r in rows: print(r[2], r[1], r[0])
-    "
-
-**Docker inventory** — reveals running services, stopped dev stacks, and available MCP images:
-
-    docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
-    docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"
-
-Stopped containers = local dev stacks. Present images = available MCP servers. Both are faster than trying to recall what's running.
-
-**Repo scan** — scan your VCS for active service domains and technology patterns:
-
-    # GitHub CLI
-    gh repo list <org> --limit 200 --json name,description,updatedAt
-    # GitLab, ADO: equivalent list commands
-
-**Company wiki** — before writing any environment docs, search your org's wiki (Confluence, Notion, SharePoint) for domain models, architecture decisions, and system inventories. Someone may have done the work already.
-
-**Generate a bookmarks file** — once the environment is mapped, ask the agent to generate a structured HTML bookmarks file grouped by category, ready for browser import.
-
-### Active Work Context
-
-After the environment is mapped, capture what you're actively working on:
-
-- Ask about current initiatives, goals, and roadmaps
-- If your org uses a goal-tracking system (Workday, Lattice, Notion OKRs, Linear cycles, etc.), export your current goals and pass them to the agent as input. Goals map directly to roadmaps; milestones map to plans.
-- Create `docs/work/roadmaps/` for strategic initiatives (weeks to months)
-- Create `docs/work/plans/` for tactical work in flight
+Once the environment is mapped, tell your agent about your current initiatives and goals. If your org uses a goal-tracking system (Workday, Lattice, Notion OKRs, Linear cycles, etc.), export your current goals and share them as input — goals map to roadmaps, milestones map to plans. The agent will create the appropriate work tracking structure.
 
 ---
 
@@ -184,23 +135,19 @@ After the environment is mapped, capture what you're actively working on:
 
 **Run this after the environment is substantially documented — not before.**
 
-First-run generates environment docs fast. The result is usually a flat accumulation. Once Phases 2–6 are complete, run the knowledge defrag runbook to restructure `docs/knowledge/` by content rather than creation order.
-
-    git checkout -b knowledge-defrag-$(date +%Y%m%d)
-    # Then ask:
-    # "Run the knowledge defrag runbook"
-
-The runbook (`docs/knowledge/runbooks/system/knowledge-defrag.md`) handles everything: parallel inventory workers, structure proposal with operator review, execution, link repair, validation, and commit.
+First-run generates environment docs fast. The result is usually a flat accumulation. Once Phases 2–6 are complete, tell your agent to run the knowledge defrag runbook. It handles everything: parallel inventory workers, structure proposal with operator review, execution, link repair, validation, and commit.
 
 ---
 
-## Verification Checklist
+## Verification
 
-- [ ] Operator profile and agent rules reflect current deployment
-- [ ] Worker tiers (fast/default/powerful) route to the expected models
-- [ ] Keystore accessible — agent can retrieve a test item
-- [ ] VCS CLI authenticated and verified
-- [ ] Cloud CLI authenticated (if applicable)
-- [ ] All active services documented in `docs/knowledge/environment/`
-- [ ] Semantic search returning results
-- [ ] Active roadmaps and plans created for current initiatives
+Ask your agent to verify the setup is complete. It will check:
+
+- Operator profile and agent rules reflect current deployment
+- Worker tiers (fast/default/powerful) route to the expected models
+- Keystore accessible — agent can retrieve a test item
+- VCS CLI authenticated and verified
+- Cloud CLI authenticated (if applicable)
+- All active services documented in `docs/knowledge/environment/`
+- Semantic search returning results
+- Active roadmaps and plans created for current initiatives

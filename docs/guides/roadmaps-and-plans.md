@@ -20,23 +20,15 @@ Ask Lore to create work items conversationally:
 
 Plans can nest under roadmaps in two ways:
 
-**Folder nesting** (location implies relationship):
+**Folder nesting** — location implies relationship. A plan folder placed inside a roadmap folder is automatically associated with that roadmap.
 
-```
-docs/work/roadmaps/<initiative>/plans/<plan>/index.md
-```
+**Frontmatter link** — a standalone plan can reference a roadmap by slug. This is for plans that live in the standalone plans directory but belong to a roadmap conceptually.
 
-**Frontmatter link** (standalone plan referencing a roadmap):
-
-```yaml
-roadmap: <roadmap-slug>
-```
-
-Only for standalone plans that reference a roadmap — not for plans nested under a roadmap folder.
+Tell your agent which approach you want — it handles the structure.
 
 ## Archiving
 
-To archive: move the folder to the parent's `archive/` subdirectory — `docs/work/roadmaps/<slug>/archive/` for roadmap plans, `docs/work/plans/archive/` for standalone plans. `/lore-capture` prompts this step.
+When a roadmap or plan is complete, tell your agent to archive it. It will move the folder to the appropriate `archive/` subdirectory and update the status.
 
 For the full status workflow spec (`active → on-hold → archived`), see [Configuration Reference](../reference/configuration.md).
 
@@ -50,8 +42,6 @@ Use notes for:
 
 Notes use two status values: `open` (default) and `resolved`. Resolved notes stay in place for searchable context — don't delete them.
 
-See [Example Note](../reference/examples/note.md) for the template.
-
 ## Brainstorms
 
 Use brainstorms for:
@@ -60,10 +50,7 @@ Use brainstorms for:
 - Design trade-off analysis before committing to an approach
 - Exploratory discussions worth preserving for context
 
-See [Example Brainstorm](../reference/examples/brainstorm.md) for the template.
-
 ## See Also
 
 - [Configuration Reference](../reference/configuration.md) — comparison table, status workflow spec, and frontmatter field reference
 - [Working with Lore](working-with-lore.md) — day-to-day interaction patterns
-- [Command Reference](../reference/commands.md) — `/lore-create-roadmap`, `/lore-create-plan`, `/lore-create-note`, `/lore-create-brainstorm`
