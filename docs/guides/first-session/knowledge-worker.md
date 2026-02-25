@@ -178,15 +178,7 @@ On corporate networks, containers may need the org CA cert mounted. The embeddin
 
 ---
 
-## Phase 7: Repo Linking
-
-    /lore-link
-
-Link each active application repo. Creates `.lore/links/` entries the agent uses to navigate between repos without losing KB context.
-
----
-
-## Phase 8: Knowledge Defrag
+## Phase 7: Knowledge Defrag
 
 **Run this after the environment is substantially documented — not before.**
 
