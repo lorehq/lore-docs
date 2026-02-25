@@ -6,6 +6,30 @@ title: Changelog
 
 All notable changes to Lore are documented here. See [Production Readiness](production-readiness.md) for versioning policy. For full commit history, see [GitHub Releases](https://github.com/lorehq/lore/releases).
 
+## v0.13.0 — 2026-02-24
+
+Platform docs restructure, cost evidence transparency, Docker nav fix.
+
+**Documentation:**
+
+- Split `platform-support.md` into 4-page section: platform overview, Claude Code, Cursor, OpenCode
+- Platform maturity levels: Claude Code (Supported), Cursor and OpenCode (Experimental)
+- Feature parity matrix across all three platforms
+- Cost evidence page: added full caveats (Claude Code only, full integration not OOTB, small sample N=10, estimated costs, v0.11.0), contribute section inviting independent verification
+- `lore-gotcha-demo` README expanded with full methodology, exact operator inputs, calculation runbook, and verification scripts
+- First-session guide: added Phase 0 for optional version control / remote setup with backup advice for local-only instances
+- General pages (`how-it-works`, `hook-architecture`) made platform-agnostic — implementation details moved to per-platform pages
+
+**Docker runtime (`lorehq/lore-docker`):**
+
+- Fix Docs nav link pointing to `localhost` instead of external GitHub Pages URL — introduced `SITE_URL` separation from `DOCS_EXTERNAL_URL`
+
+**Housekeeping:**
+
+- Flagged `docs-code-alignment-sweep` runbook as a seed example with highlights
+- Removed leaked internal runbook from source repo
+- Platform table in README now shows maturity column
+
 ## v0.12.9 — 2026-02-24
 
 Harness rename, first-session guides, Docker runtime fixes.
