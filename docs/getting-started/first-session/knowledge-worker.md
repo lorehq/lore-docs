@@ -30,12 +30,7 @@ A Lore instance is a git repo by default (`create-lore` runs `git init`). If you
 
 **Option A — Remote repository:**
 
-Create a private repo on your SCM (GitHub, GitLab, Bitbucket, etc.) and add it as the remote:
-
-    git remote add origin <your-repo-url>
-    git push -u origin main
-
-Your knowledge base, skills, conventions, and work tracking are now version-controlled and backed up with every push. This is the recommended path for any instance you rely on.
+Create a private repo on your SCM (GitHub, GitLab, Bitbucket, etc.) and add it as the remote — or ask your agent to create one and push. Your knowledge base, skills, conventions, and work tracking are now version-controlled and backed up with every push. This is the recommended path for any instance you rely on.
 
 **Option B — Local-only:**
 
