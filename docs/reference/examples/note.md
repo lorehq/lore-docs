@@ -30,4 +30,4 @@ files or skills are helpful but not required.
 | `open` | Default. Needs attention or follow-up. |
 | `resolved` | Done. Keep for searchable context — don't delete. |
 
-See [Roadmaps, Plans, Notes & Brainstorms](../guides/roadmaps-and-plans.md) for the full comparison between notes, plans, roadmaps, and brainstorms.
+See [Roadmaps, Plans, Notes & Brainstorms](../../guides/roadmaps-and-plans.md) for the full comparison between notes, plans, roadmaps, and brainstorms.

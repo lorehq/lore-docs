@@ -34,7 +34,7 @@ title: When to Use Lore
 
 **You need team-wide real-time collaboration.**
 
-- Lore is single-agent, single-user. Team workflows use git (branches, PRs, merges). There's no live sync, no conflict resolution beyond git, no multi-user access control. See [Cross-Repo Workflow](guides/cross-repo-workflow.md) for team topology options.
+- Lore is single-agent, single-user. Team workflows use git (branches, PRs, merges). There's no live sync, no conflict resolution beyond git, no multi-user access control. See [Cross-Repo Workflow](../guides/working-across-repos.md) for team topology options.
 
 **Your environment prohibits local file writes.**
 
@@ -49,4 +49,10 @@ title: When to Use Lore
 | **Custom system prompts** | Yes — but manual maintenance | Your structure | Depends on platform |
 | **Lore** | Yes — git-tracked, multi-file | Yes — skills, agents, docs, conventions | Yes — harness hooks reinforce capture |
 
-A `CLAUDE.md` file works fine at 50 lines. At 500 lines the file becomes a wall of text the agent skims past. Lore routes knowledge to the right location (skill, doc, convention, runbook) and loads it on demand instead of dumping everything into every session. For measured cost data, see [Cost Evidence](cost-evidence/index.md). For migration from existing setups, see [Getting Started: Migration](getting-started.md#migration).
+A `CLAUDE.md` file works fine at 50 lines. At 500 lines the file becomes a wall of text the agent skims past. Lore routes knowledge to the right location (skill, doc, convention, runbook) and loads it on demand instead of dumping everything into every session. For measured cost data, see [Cost Evidence](../evidence/index.md). For migration from existing setups, see [Getting Started: Migration](../getting-started/migration.md).
+
+## See Also
+
+- [Production Readiness](production-readiness.md) — known limitations and stability policy
+- [How It Works](how-it-works.md) — architecture and knowledge capture explained
+- [Getting Started](../getting-started/index.md) — hands-on introduction

@@ -6,19 +6,15 @@ title: Roadmaps & Plans
 
 Lore tracks strategic and tactical work through **roadmaps** (multi-phase initiatives), **plans** (specific implementation tasks), **notes** (lightweight quick capture), and **brainstorms** (exploratory discussions and decision records). All are operator-initiated — Lore maintains them but asks before updating.
 
-## Comparison
+For a comparison table of roadmaps vs. plans vs. notes vs. brainstorms, see [Configuration Reference](../reference/configuration.md).
 
-| Aspect | Roadmap | Plan | Note | Brainstorm |
-|--------|---------|------|------|------------|
-| **Scope** | Strategic initiative (weeks-months) | Tactical task (days-weeks) | Single observation or idea | Exploratory discussion or ADR |
-| **Purpose** | Track overall progress across phases | Describe implementation approach | Quick capture during deep work | Document thinking and trade-offs |
-| **Structure** | Folder with `index.md` | Folder with `index.md` | Single flat file | Folder with `index.md` |
-| **Banner** | Active/on-hold shown | Active/on-hold shown | Not shown | Not shown |
-| **Creation** | `/lore-create-roadmap` | `/lore-create-plan` | `/lore-create-note` | `/lore-create-brainstorm` |
+## Creating
 
-## Format
+Ask Lore to create work items conversationally:
 
-See [Example Roadmap](../examples/roadmap.md), [Example Plan](../examples/plan.md), [Example Note](../examples/note.md), and [Example Brainstorm](../examples/brainstorm.md) for templates with full YAML frontmatter.
+- *"Create a roadmap for cloud migration"*
+- *"Create a plan for the networking setup"* — Lore will determine whether to nest it under a roadmap or keep it standalone
+- *"Start a brainstorm about auth options"* — for exploratory discussions and ADRs
 
 ## Hierarchy
 
@@ -38,31 +34,11 @@ roadmap: <roadmap-slug>
 
 Only for standalone plans that reference a roadmap — not for plans nested under a roadmap folder.
 
-## Creating
-
-Ask Lore to create work items conversationally:
-
-- *"Create a roadmap for cloud migration"*
-- *"Create a plan for the networking setup"* — Lore will determine whether to nest it under a roadmap or keep it standalone
-- *"Start a brainstorm about auth options"* — for exploratory discussions and ADRs
-
-## Status Workflow
-
-```
-active → on-hold → active (resumed)
-       ↘ archived (move folder to archive/)
-```
-
-- **active**: Shown in the session banner every session
-- **on-hold**: Shown in the session banner with `[ON HOLD]` suffix
-- **completed**: Finished; keep `status: completed` and move folder to `archive/`
-- **cancelled**: Stopped/abandoned; keep `status: cancelled` and move folder to `archive/`
-
-Use these four values in frontmatter: `active`, `on-hold`, `completed`, `cancelled`. Note: `archived` is a folder location, not a status value. The harness reads `active` and `on-hold` for banner display. `completed` and `cancelled` are conventions for archiving workflows, not validated by harness logic.
-
 ## Archiving
 
 To archive: move the folder to the parent's `archive/` subdirectory — `docs/work/roadmaps/<slug>/archive/` for roadmap plans, `docs/work/plans/archive/` for standalone plans. `/lore-capture` prompts this step.
+
+For the full status workflow spec (`active → on-hold → archived`), see [Configuration Reference](../reference/configuration.md).
 
 ## Notes
 
@@ -74,7 +50,7 @@ Use notes for:
 
 Notes use two status values: `open` (default) and `resolved`. Resolved notes stay in place for searchable context — don't delete them.
 
-See [Example Note](../examples/note.md) for the template.
+See [Example Note](../reference/examples/note.md) for the template.
 
 ## Brainstorms
 
@@ -84,4 +60,10 @@ Use brainstorms for:
 - Design trade-off analysis before committing to an approach
 - Exploratory discussions worth preserving for context
 
-See [Example Brainstorm](../examples/brainstorm.md) for the template.
+See [Example Brainstorm](../reference/examples/brainstorm.md) for the template.
+
+## See Also
+
+- [Configuration Reference](../reference/configuration.md) — comparison table, status workflow spec, and frontmatter field reference
+- [Working with Lore](working-with-lore.md) — day-to-day interaction patterns
+- [Command Reference](../reference/commands.md) — `/lore-create-roadmap`, `/lore-create-plan`, `/lore-create-note`, `/lore-create-brainstorm`

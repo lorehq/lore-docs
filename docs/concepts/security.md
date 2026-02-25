@@ -68,10 +68,14 @@ This means security enforcement doesn't depend on the orchestrator reviewing eve
 
 The security convention lives at `docs/context/conventions/security.md`. You own it — Lore never overwrites your modifications. Edit the principles to match your organization's security posture, and the hooks automatically enforce your version.
 
-To learn more about conventions, see the [Conventions guide](guides/conventions.md). For hook mechanics, see [Hook Architecture](guides/hook-architecture.md).
+To learn more about conventions, see the [Conventions guide](../guides/conventions.md). For hook mechanics, see [Hook Architecture](hook-architecture.md).
 
 ## Supply Chain
 
-Lore has **zero npm runtime dependencies**. All hook and lib code uses Node.js built-ins only. The installer clones the repo at a pinned version tag — no transitive dependency tree to audit. Every file is plain, unminified JavaScript you can read directly.
+Lore has zero npm runtime dependencies. For the full supply chain analysis and trust model, see [Production Readiness: Security and Trust Model](production-readiness.md#security-and-trust-model).
 
-For the full trust model, see [Production Readiness](production-readiness.md#security-and-trust-model).
+## See Also
+
+- [Production Readiness](production-readiness.md) — trust model, audit instructions, supply chain details
+- [Hook Architecture](hook-architecture.md) — how convention-guard fires and integrates with the lifecycle
+- [Conventions guide](../guides/conventions.md) — how to customize the security convention

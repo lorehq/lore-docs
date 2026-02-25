@@ -28,6 +28,8 @@ Lore follows [semantic versioning](https://semver.org/). During 0.x:
 
 **Post-1.0:** minor versions will be non-breaking. Breaking changes will require a major version bump.
 
+For upgrade steps, see [Upgrading](../guides/upgrading.md).
+
 ## Security and Trust Model
 
 ### What Hooks Can Do
@@ -75,27 +77,15 @@ Hooks actively block reads and writes to `MEMORY.md` at the project root. This p
 - **Single-developer origin.** Lore was built and tested by one developer. The test suite covers hooks, lib modules, and the scaffolder across 3 OSes and 2 Node versions, but edge cases in team workflows are untested.
 - **No access control.** Anyone with repo access can read and modify all knowledge and skills. Lore trusts the git permission model.
 - **Shell scripts require bash.** Shell scripts in `.lore/scripts/` (`validate-consistency.sh`, `generate-nav.sh`, etc.) require bash. Windows users need Git Bash, WSL, or equivalent. Hooks themselves are pure Node.js and work everywhere.
-- **Hook injection cost is unmeasured per-instance.** Hook injections consume tokens from the agent's context window. Measure your own instance with `LORE_HOOK_LOG=1` — see [Hook Event Logging](guides/configuration.md#hook-event-logging).
+- **Hook injection cost is unmeasured per-instance.** Hook injections consume tokens from the agent's context window. Measure your own instance with `LORE_HOOK_LOG=1` — see [Hook Event Logging](../reference/configuration.md#hook-event-logging).
+
+For CI and test coverage details, see [Reference: CI and Test Coverage](../reference/index.md).
 
 See [When to Use Lore: Poor Fit](when-to-use-lore.md#poor-fit) for what Lore intentionally doesn't do.
 
-## CI and Test Coverage
+## See Also
 
-All three repos run CI on every push and PR:
-
-| Repo | OSes | Node Versions | Key Checks |
-|------|------|---------------|------------|
-| lore | Ubuntu, macOS, Windows | 18, 20 | Unit tests, ShellCheck, Prettier, ESLint, npm audit, consistency validation |
-| create-lore | Ubuntu, macOS, Windows | 18, 20 | Unit tests, E2E scaffolding, consistency validation |
-| lore-docs | Ubuntu | -- | `mkdocs build --strict`, markdownlint |
-
-Releases are tag-driven via GitHub Actions. The `create-lore` release workflow verifies a matching `lore` tag exists before publishing to npm.
-
-## Upgrade Policy
-
-1. Check the [changelog](changelog.md) for breaking changes
-2. Run `/lore-update` from your Lore instance
-3. Review the diff — only `lore-*` files are touched
-4. Commit the update
-
-If something breaks, `git checkout` the previous state. All changes are local and reversible. See [Troubleshooting](troubleshooting.md) for the fix-by-symptom table.
+- [Security](security.md) — the three-layer security model and write-time enforcement
+- [When to Use Lore](when-to-use-lore.md) — good fit, poor fit, and intentional limitations
+- [Upgrading](../guides/upgrading.md) — step-by-step upgrade process
+- [Changelog](../changelog.md) — version history and breaking changes

@@ -23,5 +23,6 @@ npx create-lore my-project
 
 No configuration required. The harness activates through hooks when you start your agent. Customize `docs/context/agent-rules.md` to teach the agent about your project.
 
-- [How It Works](how-it-works.md) — architecture, knowledge capture, session acceleration
-- [Working with Lore](guides/interaction.md) — tips, commands, and effective use
+- [Getting Started](getting-started/index.md) — install, customize, first session
+- [How It Works](concepts/how-it-works.md) — architecture, knowledge capture, session acceleration
+- [Working with Lore](guides/working-with-lore.md) — tips, commands, and effective use

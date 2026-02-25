@@ -28,7 +28,7 @@ Lore brings harness engineering to the desktop — a single `npx create-lore` gi
 |---|---|---|
 | Knowledge the agent can't see doesn't exist | OpenAI | Git-tracked knowledge base (`docs/`), semantic search, session banner with knowledge map |
 | Mechanical enforcement over documentation | OpenAI, Bockeler | Pre-tool-use hooks enforce conventions before writes land; `validate-consistency.sh` catches drift |
-| Sub-agent architectures with focused context | Anthropic | Orchestrator delegates to tiered workers (Opus reasons, Haiku executes) — [59% cheaper](cost-evidence/index.md) at steady state |
+| Sub-agent architectures with focused context | Anthropic | Orchestrator delegates to tiered workers (Opus reasons, Haiku executes) — [59% cheaper](../evidence/index.md) at steady state |
 | Progressive disclosure and lazy loading | Anthropic | Skills and docs load on demand; only the knowledge map appears at session start |
 | Structured note-taking and persistent memory | Anthropic | Capture workflow routes knowledge to skills, environment docs, and runbooks — all git-tracked |
 | Entropy management | Bockeler | Consistency validation, convention guards, escalating capture reminders |
@@ -99,21 +99,9 @@ sequenceDiagram
     S2->>S2: Execute immediately with correct parameters
 ```
 
-### What Gets Captured Where
-
-| Knowledge Type | Destination | Example |
-|---------------|-------------|---------|
-| API endpoints, URLs, services | `docs/knowledge/environment/` | Service API base URL |
-| Tool gotchas, auth quirks | `.lore/skills/` | Case-sensitive org name |
-| Dependencies, relationships | `docs/knowledge/environment/` | Which services connect to what |
-| Strategic initiatives | `docs/work/roadmaps/` | Cloud migration phases |
-| Tactical work | `docs/work/plans/` | Phase 1 networking setup |
-| Quick observations, bugs | `docs/work/notes/` | Flaky auth timeout under load |
-| Multi-step procedures | `docs/knowledge/runbooks/` | Deploy to staging |
-
 ### Ownership
 
-See [Platform Overview: Sync Boundaries](guides/platforms/index.md#sync-boundaries) for the `lore-*` prefix convention and what sync overwrites.
+See [Platform Overview: Sync Boundaries](../reference/platforms/index.md#sync-boundaries) for the `lore-*` prefix convention and what sync overwrites.
 
 ### How Skills Grow
 
@@ -128,7 +116,9 @@ flowchart TD
     registry --> done["Skill available for<br/>worker delegation"]
 ```
 
-See [How Delegation Works](how-delegation-works.md) for the orchestrator-worker model, worker tiers, and session acceleration.
+For the full capture routing table, see [Knowledge Routing Reference](../reference/commands.md).
+
+See [How Delegation Works](delegation.md) for the orchestrator-worker model, worker tiers, and session acceleration.
 
 ## Context Efficiency
 
@@ -153,6 +143,13 @@ When the Docker sidecar is running, the session banner includes a semantic searc
 
 ## Hook Architecture
 
-Hooks fire at key lifecycle events — session start, prompt submit, pre-tool-use, post-tool-use, and post-tool-use-failure. Shared logic in `.lore/lib/` keeps behavior consistent; each platform has thin adapters that translate between its hook API and the shared modules. Hook implementations vary by platform — see [Hook Architecture](guides/hook-architecture.md) for the shared lib deep-dive and [Platform Overview](guides/platforms/index.md) for per-platform specifics.
+Hooks fire at key lifecycle events — session start, prompt submit, pre-tool-use, post-tool-use, and post-tool-use-failure. Shared logic in `.lore/lib/` keeps behavior consistent; each platform has thin adapters that translate between its hook API and the shared modules. Hook implementations vary by platform — see [Hook Architecture](hook-architecture.md) for the shared lib deep-dive and [Platform Overview](../reference/platforms/index.md) for per-platform specifics.
 
 For limitations and known gaps, see [Production Readiness](production-readiness.md#known-limitations).
+
+## See Also
+
+- [Delegation](delegation.md) — orchestrator-worker model and session acceleration
+- [Hook Architecture](hook-architecture.md) — lifecycle events, shared lib, platform adapters
+- [Security](security.md) — how security is enforced across every write
+- [Getting Started](../getting-started/index.md) — hands-on introduction

@@ -23,7 +23,7 @@ Eight hooks cover all lifecycle events:
 
 ### Hook Lifecycle
 
-See [Hook Architecture](../hook-architecture.md) for the static vs. dynamic banner split and hook lifecycle details.
+See [Hook Architecture](../../concepts/hook-architecture.md) for the static vs. dynamic banner split and hook lifecycle details.
 
 ### JSON Control Flow
 
@@ -33,7 +33,7 @@ Claude Code hooks communicate via JSON on stdout. A hook can:
 - Block a tool call (`decision: "block"`)
 - Allow silently (empty output or `decision: "allow"`)
 
-See [Hook Architecture](../hook-architecture.md) for the full module layout and shared lib reference.
+See [Hook Architecture](../../concepts/hook-architecture.md) for the full module layout and shared lib reference.
 
 ## Configuration
 
@@ -67,4 +67,4 @@ See [Configuration: subagentDefaults](../configuration.md#subagentdefaults) for 
 
 ## Cost Evidence
 
-Claude Code is the platform used for all cost evidence measurements. See [Cost Evidence](../../cost-evidence/index.md) for measured delegation results.
+Claude Code is the platform used for all cost evidence measurements. See [Cost Evidence](../../evidence/index.md) for measured delegation results.

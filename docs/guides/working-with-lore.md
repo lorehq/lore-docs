@@ -45,32 +45,16 @@ If you have skills from other projects or custom markdown files you've been copy
 
 3. Run `/lore-capture` — it updates registries and syncs to all platforms
 
-**After import, sharing is automatic.** Once skills are in your Lore hub, every [linked repo](cross-repo-workflow.md#ide-workflow-lore-link) gets them.
+**After import, sharing is automatic.** Once skills are in your Lore hub, every [linked repo](working-across-repos.md#ide-workflow-lore-link) gets them.
 
 ## Roadmaps, Plans, Notes & Brainstorms
 
 See [Roadmaps, Plans, Notes & Brainstorms](roadmaps-and-plans.md).
 
-## Command Reference
+For the full list of slash commands, see [Command Reference](../reference/commands.md).
 
-Commands are slash-invoked skills.
+## See Also
 
-**`/lore-capture`** — Review session work, capture skills, update registries, validate consistency.
-
-**`/lore-consolidate`** — Deep health check: find stale items, semantic overlaps, knowledge drift.
-
-**`/lore-status`** — Show Lore version, hook health, skill counts, worker tiers, and active work.
-
-**`/lore-update`** — Pull latest harness files from GitHub without touching operator content.
-
-**`/lore-link <target>`** — Link a work repo so hooks fire from the hub.
-
-**`/lore-docker`** — Start, stop, or check the local Docker sidecar for semantic search and a live MkDocs UI.
-
-**`/lore-create-note`** — Create a lightweight note for quick capture.
-
-**`/lore-create-roadmap`** — Create a strategic roadmap.
-
-**`/lore-create-plan`** — Create a tactical plan.
-
-**`/lore-create-brainstorm`** — Save a brainstorm for future reference.
+- [Working Across Repos](working-across-repos.md) — using Lore as a hub for multiple repositories
+- [Roadmaps & Plans](roadmaps-and-plans.md) — tracking work across sessions
+- [Command Reference](../reference/commands.md) — full slash command list
