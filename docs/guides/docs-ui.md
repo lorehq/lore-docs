@@ -78,7 +78,7 @@ When `REPO_ROOT` is set, the container watches `.lore/` and `docs/` for changes 
 
 The docs site enables panzoom on images: a full-screen button appears on hover, zoom works without a modifier key, and D2 diagrams are supported.
 
-## Gotchas
+## Known Issues
 
 - Model loading takes 30–60s on first start. The docs site appears before semantic search is ready. `/lore-docker status` reports semantic search health separately from site health.
 - During bulk file edits, the file watcher may crash (editor temp files cause a race condition). Restart the container after bulk edits complete.

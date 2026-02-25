@@ -203,17 +203,3 @@ The runbook (`docs/knowledge/runbooks/system/knowledge-defrag.md`) handles every
 - [ ] Semantic search returning results
 - [ ] Active roadmaps and plans created for current initiatives
 
----
-
-## Gotchas
-
-These surfaced across multiple first-run deployments:
-
-- **Keystore before credentials** — configure the keystore in Phase 3 before authenticating CLIs. Credentials ingested before a keystore exists have nowhere secure to go.
-- **Worker tier routing** — Claude Code silently ignores full model IDs in agent frontmatter. Must use short aliases (`haiku`/`sonnet`/`opus`) and regenerate with `generate-agents.js` after any alias change.
-- **VCS ≠ cloud auth** — version control and cloud provider CLI auth are independent. Authenticating one does not grant access to the other.
-- **TLS required for localhost secret stores** — `bw` CLI 2026.x raises `InsecureUrlNotAllowedError` for localhost HTTP. Self-hosted Vaultwarden must serve TLS; a self-signed cert is sufficient.
-- **Windows Git Bash path corruption** — strings with path-like segments (e.g. `-subj "/CN=localhost"`) are corrupted by Git Bash's automatic path conversion. Prefix with `MSYS_NO_PATHCONV=1`.
-- **Env vars don't cross process boundaries** — variables set in one shell session don't propagate to the agent's shell. Re-export in the same process, or use the keystore CLI directly.
-- **Browser history survives uninstall** — the SQLite `History` file remains in the user profile after a browser is uninstalled. Python's built-in `sqlite3` is sufficient to read it; no additional CLI required.
-- **`docker ps -a` beats memory** — stopped containers reveal local dev stacks faster than trying to recall what you had running.
