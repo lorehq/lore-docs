@@ -69,4 +69,8 @@ Commands are slash-invoked skills.
 
 **`/lore-create-note`** — Create a lightweight note for quick capture. See [Roadmaps, Plans & Notes](roadmaps-and-plans.md#notes).
 
-For work management commands, see [Roadmaps, Plans & Notes](roadmaps-and-plans.md).
+**`/lore-create-roadmap`** — Create a strategic roadmap. See [Roadmaps, Plans & Notes](roadmaps-and-plans.md).
+
+**`/lore-create-plan`** — Create a tactical plan. See [Roadmaps, Plans & Notes](roadmaps-and-plans.md).
+
+**`/lore-create-brainstorm`** — Save a brainstorm for future reference. See [Roadmaps, Plans & Notes](roadmaps-and-plans.md).
