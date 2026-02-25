@@ -17,46 +17,11 @@ Conventions reach your agent through four channels:
 
 The guard reads bold principle lines (`**Like this.**`) from the convention files.
 
-### Path-Based Routing
-
-| Target path | Conventions injected |
-|---|---|
-| Any file in the repo | Security |
-| `docs/` | Security + Docs |
-| `docs/work/` | Security + Docs + Work Items |
-| `docs/knowledge/` | Security + Docs + Knowledge Capture |
-
-After injecting matched conventions, the guard lists remaining conventions as a menu so the agent can self-serve those that aren't path-matched.
+For the path-routing table and default convention details, see [Configuration Reference](../reference/configuration.md).
 
 ### Platform Support
 
-Convention enforcement works on all three platforms. See [Platform Overview](platforms/index.md) for the mechanism comparison.
-
-## Default Conventions
-
-Every new Lore instance ships with conventions across two ownership tiers:
-
-### Operator Conventions (seed files)
-
-Created from seed templates on first install. You own these — the harness never overwrites them. On `/lore-update`, Lore compares seed templates to your versions and offers opt-in adoption of any changes.
-
-| Convention | What it corrects |
-|---|---|
-| **Coding** | Over-engineering, speculative features, unrelated changes, unverified work |
-| **Documentation** | Duplication, sprawl, doc rot, unsolicited docs, vague references |
-| **Security** | Secrets in version control, excessive privileges, missing boundary validation |
-
-### System Conventions (`system/` subdirectory)
-
-Harness-owned — overwritten on every `/lore-update`. Live in `docs/context/conventions/system/`. To override a system convention, create a file with the same name in the parent directory.
-
-| Convention | What it corrects |
-|---|---|
-| **Knowledge Capture** | Scattered facts, one-page-per-tiny-thing proliferation, high update cost |
-| **Knowledge Base Structure** | Poor file naming, deep nesting, weak retrieval, missing frontmatter |
-| **Work Items** | Inconsistent formatting in plans, roadmaps, and brainstorms |
-
-Operator files take precedence over system files with the same name.
+Convention enforcement works on all three platforms. See [Platform Overview](../reference/platforms/index.md) for the mechanism comparison.
 
 ## Creating Custom Conventions
 
@@ -85,3 +50,9 @@ Add a markdown file to `docs/context/conventions/`:
 
 - **Numbered sections** help scanning. Match the pattern of the default conventions.
 - **File name** becomes the menu label. Use descriptive kebab-case: `api-design.md`, `email-drafting.md`, `diagrams.md`. The agent uses the file name to decide whether to load the convention, so prefer self-explanatory names (`email-drafting.md`) over vague ones (`comms.md`).
+
+## See Also
+
+- [Configuration Reference](../reference/configuration.md) — path-routing table and default conventions list
+- [Platform Overview](../reference/platforms/index.md) — how convention enforcement differs per agent
+- [Working with Lore](working-with-lore.md) — day-to-day interaction patterns

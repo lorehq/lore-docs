@@ -59,4 +59,4 @@ target: 2026-06-30
 | <What could go wrong> | <How to prevent or recover> |
 ```
 
-See [Roadmaps, Plans, Notes & Brainstorms](../guides/roadmaps-and-plans.md) for status workflow, archiving, and hierarchy.
+See [Roadmaps, Plans, Notes & Brainstorms](../../guides/roadmaps-and-plans.md) for status workflow, archiving, and hierarchy.

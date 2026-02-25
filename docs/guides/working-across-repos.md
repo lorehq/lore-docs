@@ -102,3 +102,9 @@ Run `/lore-link --refresh` after `/lore-update` to regenerate configs in all lin
 ## Team Topologies
 
 For teams, a shared instance in git or per-developer instances both work — knowledge sharing happens through normal git workflows.
+
+## See Also
+
+- [Working with Lore](working-with-lore.md) — day-to-day interaction patterns
+- [Platform Overview](../reference/platforms/index.md) — how hooks work per agent
+- [Command Reference](../reference/commands.md) — full slash command list

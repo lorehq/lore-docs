@@ -56,11 +56,11 @@ bash .lore/scripts/validate-consistency.sh
 
 ### "MEMORY.md is intercepted" warning
 
-Lore blocks `MEMORY.md` to prevent platform-level memory from overwriting knowledge; route persistent knowledge to skills or docs instead. See [Production Readiness: MEMORY.md Protection](production-readiness.md#memorymd-protection) for details and alternatives.
+Lore blocks `MEMORY.md` to prevent platform-level memory from overwriting knowledge; route persistent knowledge to skills or docs instead. See [Production Readiness: MEMORY.md Protection](../concepts/production-readiness.md#memorymd-protection) for details and alternatives.
 
 ### Escalating capture reminders are too aggressive
 
-Adjust `nudgeThreshold` and `warnThreshold` in `.lore/config.json`. See [Configuration: Hook Profile](guides/configuration.md#hook-profile) for profile options.
+Adjust `nudgeThreshold` and `warnThreshold` in `.lore/config.json`. See [Configuration: Hook Profile](configuration.md#hook-profile) for profile options.
 
 ## Worker Tiers
 
@@ -121,6 +121,6 @@ If they diverge, the update didn't complete cleanly. Run `/lore-update` again.
 
 ## Still Stuck?
 
-- Check the [guides](guides/interaction.md) for detailed walkthroughs
+- Check the [guides](../guides/working-with-lore.md) for detailed walkthroughs
 - [Open an issue](https://github.com/lorehq/lore/issues) with reproduction steps
 - For security issues, see [SECURITY.md](https://github.com/lorehq/lore/blob/main/SECURITY.md)

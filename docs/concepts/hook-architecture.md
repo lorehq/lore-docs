@@ -4,7 +4,7 @@ title: Hook Architecture
 
 # Hook Architecture
 
-Lore's hook system shapes agent behavior across the session lifecycle. Shared logic lives in `.lore/lib/`, with thin adapters for each platform. This page covers the shared foundation — see the [platform pages](platforms/index.md) for per-platform hook lists, configuration, and coverage gaps.
+Lore's hook system shapes agent behavior across the session lifecycle. Shared logic lives in `.lore/lib/`, with thin adapters for each platform. This page covers the shared foundation — see the [platform pages](../reference/platforms/index.md) for per-platform hook lists, configuration, and coverage gaps.
 
 ## Hook Lifecycle
 
@@ -109,11 +109,11 @@ Each platform has a different hook API. Adapters translate between the platform'
 
 | Platform | Adapter Style | Hook Count | Details |
 |----------|--------------|:----------:|---------|
-| Claude Code | Subprocess per event | 8 | [Claude Code](platforms/claude-code.md) |
-| Cursor | Subprocess + MCP server | 6 + MCP | [Cursor](platforms/cursor.md) |
-| OpenCode | Long-lived ESM plugins | 7 | [OpenCode](platforms/opencode.md) |
+| Claude Code | Subprocess per event | 8 | [Claude Code](../reference/platforms/claude-code.md) |
+| Cursor | Subprocess + MCP server | 6 + MCP | [Cursor](../reference/platforms/cursor.md) |
+| OpenCode | Long-lived ESM plugins | 7 | [OpenCode](../reference/platforms/opencode.md) |
 
-See [Platform Overview](platforms/index.md) for the full feature matrix.
+See [Platform Overview](../reference/platforms/index.md) for the full feature matrix.
 
 ## Hook Behavior Notes
 
@@ -140,3 +140,9 @@ On `PreToolUse` for Read/Glob, nudges the agent toward semantic search when the 
 ### Tool counter reset
 
 When the agent uses a read-only tool (Read, Glob, Grep) or writes to a knowledge path (`docs/`, `.lore/skills/`, `.claude/skills/`), the Bash command counter resets to 0. Capture nudges only accumulate against consecutive shell commands — reading files and writing knowledge do not count toward the nudge or warn thresholds.
+
+## See Also
+
+- [How It Works](how-it-works.md) — full system architecture and harness engineering
+- [Security](security.md) — how convention-guard enforces security at write time
+- [Platform Overview](../reference/platforms/index.md) — per-platform hook lists and feature matrix

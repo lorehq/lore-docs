@@ -57,23 +57,10 @@ Override in `.lore/config.json`:
 
 Agents fall back to Grep/Glob silently — no configuration needed. The fallback works reliably for small-to-medium knowledge bases; for a brand-new project with minimal docs, it's fine. Once you have more than a few dozen knowledge files, the sidecar provides meaningfully better retrieval quality.
 
-## Environment Variables
+For environment variable options and known issues, see [Configuration Reference](../reference/configuration.md).
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `REPO_ROOT` | — | Set in `docker-compose.yml` to enable CLAUDE.md auto-regeneration. Required for the watcher to locate the instance root. |
-| `WATCH_CLAUDEMD_DEBOUNCE_SECONDS` | `2.0` | Debounce delay before CLAUDE.md is regenerated after a file change. |
+## See Also
 
-### CLAUDE.md Auto-Regeneration
-
-When `REPO_ROOT` is set, the container watches `.lore/` and `docs/` for changes and automatically regenerates `CLAUDE.md`. This keeps the session banner in sync with edits to instructions, conventions, and context files without a manual `sync-platform-skills.sh` run.
-
-### Panzoom for Images
-
-The docs site enables panzoom on images: a full-screen button appears on hover, zoom works without a modifier key, and D2 diagrams are supported.
-
-## Known Issues
-
-- Model loading takes 30–60s on first start. The docs site appears before semantic search is ready. `/lore-docker status` reports semantic search health separately from site health.
-- During bulk file edits, the file watcher may crash (editor temp files cause a race condition). Restart the container after bulk edits complete.
-- The container creates a named Docker volume per project for the search index. First start triggers a full index build; subsequent starts are fast.
+- [Configuration Reference](../reference/configuration.md) — environment variables, CLAUDE.md auto-regeneration details, and known issues
+- [Command Reference](../reference/commands.md) — full `/lore-docker` command options
+- [Troubleshooting](../reference/troubleshooting.md) — fix-by-symptom table for Docker issues

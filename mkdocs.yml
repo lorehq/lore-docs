@@ -19,7 +19,12 @@ theme:
         icon: material/brightness-7
         name: Switch to dark mode
   features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
     - navigation.sections
+    - navigation.path
+    - navigation.instant
     - toc.follow
     - search.highlight
 
@@ -55,43 +60,53 @@ plugins:
 
 nav:
   - Home: index.md
-  - Getting Started: getting-started.md
-  - About:
-    - How It Works: how-it-works.md
-    - How Delegation Works: how-delegation-works.md
-    - Security: security.md
-    - When to Use Lore: when-to-use-lore.md
-    - Production Readiness: production-readiness.md
-    - Cost Evidence:
-      - Overview: cost-evidence/index.md
-      - Analysis: cost-evidence/analysis.md
-      - Methodology: cost-evidence/methodology.md
-      - Raw Session Data: cost-evidence/raw-data.md
-      - Operator Inputs: cost-evidence/operator-inputs.md
+  - Getting Started:
+    - getting-started/index.md
+    - First Session:
+      - getting-started/first-session/index.md
+      - Knowledge Worker: getting-started/first-session/knowledge-worker.md
+      - Homelab: getting-started/first-session/homelab.md
+    - Migration & Uninstalling: getting-started/migration.md
   - Guides:
-    - First Session Setup:
-      - Overview: guides/first-session/index.md
-      - Knowledge Worker: guides/first-session/knowledge-worker.md
-      - Homelab: guides/first-session/homelab.md
-    - Working with Lore: guides/interaction.md
-    - Working Across Repos: guides/cross-repo-workflow.md
-    - Configuration: guides/configuration.md
-    - Docs UI & Search: guides/docs-ui.md
-    - Platform Support:
-      - Overview: guides/platforms/index.md
-      - Claude Code: guides/platforms/claude-code.md
-      - Cursor: guides/platforms/cursor.md
-      - OpenCode: guides/platforms/opencode.md
-    - Hook Architecture: guides/hook-architecture.md
+    - guides/index.md
+    - Working with Lore: guides/working-with-lore.md
+    - Working Across Repos: guides/working-across-repos.md
     - Conventions: guides/conventions.md
-    - Roadmaps, Plans, Notes & Brainstorms: guides/roadmaps-and-plans.md
+    - Docs UI & Search: guides/docs-ui.md
+    - Roadmaps & Plans: guides/roadmaps-and-plans.md
+    - Upgrading: guides/upgrading.md
+  - Concepts:
+    - concepts/index.md
+    - How It Works: concepts/how-it-works.md
+    - Delegation: concepts/delegation.md
+    - Hook Architecture: concepts/hook-architecture.md
+    - Security: concepts/security.md
+    - When to Use Lore: concepts/when-to-use-lore.md
+    - Production Readiness: concepts/production-readiness.md
+  - Reference:
+    - reference/index.md
+    - Commands: reference/commands.md
+    - Configuration: reference/configuration.md
+    - Platforms:
+      - reference/platforms/index.md
+      - Claude Code: reference/platforms/claude-code.md
+      - Cursor: reference/platforms/cursor.md
+      - OpenCode: reference/platforms/opencode.md
+    - Troubleshooting: reference/troubleshooting.md
+    - CI & Testing: reference/ci-and-testing.md
     - Examples:
-      - Skill: examples/skill.md
-      - Roadmap: examples/roadmap.md
-      - Plan: examples/plan.md
-      - Note: examples/note.md
-      - Brainstorm: examples/brainstorm.md
-  - Troubleshooting: troubleshooting.md
+      - reference/examples/index.md
+      - Skill: reference/examples/skill.md
+      - Roadmap: reference/examples/roadmap.md
+      - Plan: reference/examples/plan.md
+      - Note: reference/examples/note.md
+      - Brainstorm: reference/examples/brainstorm.md
+  - Evidence:
+    - evidence/index.md
+    - Analysis: evidence/analysis.md
+    - Methodology: evidence/methodology.md
+    - Raw Session Data: evidence/raw-data.md
+    - Operator Inputs: evidence/operator-inputs.md
   - Changelog:
-    - Current: changelog.md
+    - changelog.md
     - Archive: changelog-archive.md

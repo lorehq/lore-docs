@@ -20,7 +20,7 @@ Lore supports three coding agent platforms. All share the same knowledge base �
     - **Cursor** compensates for missing hook events via an MCP server; this architecture is functional but undergoing optimization.
     - **OpenCode** uses experimental plugin API hooks (`experimental.chat.system.transform`, `experimental.session.compacting`) that may change in future OpenCode releases.
 
-    The [cost evidence](../../cost-evidence/index.md) was measured on Claude Code only. Cursor and OpenCode should see similar benefits from delegation and knowledge reuse, but this has not been independently verified.
+    The [cost evidence](../../evidence/index.md) was measured on Claude Code only. Cursor and OpenCode should see similar benefits from delegation and knowledge reuse, but this has not been independently verified.
 
 ## Feature Matrix
 
@@ -48,7 +48,7 @@ Common infrastructure:
     .cursor/mcp/        → Cursor MCP server (long-lived process)
     .opencode/plugins/  → OpenCode (long-lived ESM modules)
 
-See [Hook Architecture](../hook-architecture.md) for the shared lib reference, module layout, and lifecycle diagrams.
+See [Hook Architecture](../../concepts/hook-architecture.md) for the shared lib reference, module layout, and lifecycle diagrams.
 
 ## Setup
 
@@ -77,7 +77,7 @@ All platforms activate automatically after `npx create-lore`.
 
 `.lore/config.json` controls subagent model defaults — see [Configuration: subagentDefaults](../configuration.md#subagentdefaults).
 
-See [Cross-Repo Workflow](../cross-repo-workflow.md) for how `/lore-link` generates and gitignores config files in work repos.
+See [Cross-Repo Workflow](../../guides/working-across-repos.md) for how `/lore-link` generates and gitignores config files in work repos.
 
 ## Per-Platform Details
 

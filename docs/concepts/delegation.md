@@ -8,7 +8,7 @@ Delegation is one of the harness's core functions — see [How It Works](how-it-
 
 ## Delegation
 
-The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and conventions per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent subtasks and keeps dependency-gated steps sequential. For measured cost impact, see [Cost Evidence](cost-evidence/index.md).
+The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and conventions per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent subtasks and keeps dependency-gated steps sequential. For measured cost impact, see [Cost Evidence](../evidence/index.md).
 
 ```mermaid
 flowchart TD
@@ -39,7 +39,7 @@ Workers receive what the orchestrator specifies: task description, skill file pa
 
 ### Per-Platform Model Configuration
 
-Worker agent tiers (`lore-worker`, `lore-worker-fast`, `lore-worker-powerful`) and their models are configured via `subagentDefaults` in `.lore/config.json` — not via agent frontmatter. See [Configuration: subagentDefaults](guides/configuration.md#subagentdefaults).
+Worker agent tiers (`lore-worker`, `lore-worker-fast`, `lore-worker-powerful`) and their models are configured via `subagentDefaults` in `.lore/config.json` — not via agent frontmatter. See [Configuration: subagentDefaults](../reference/configuration.md#subagentdefaults).
 
 ## Session Acceleration
 
@@ -65,3 +65,9 @@ flowchart TB
 
     P1 --> P2 --> P3
 ```
+
+## See Also
+
+- [How It Works](how-it-works.md) — full system architecture and harness engineering
+- [Hook Architecture](hook-architecture.md) — how hooks reinforce delegation patterns
+- [Working with Lore](../guides/working-with-lore.md) — practical delegation patterns
