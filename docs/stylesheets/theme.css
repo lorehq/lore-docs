@@ -34,17 +34,6 @@
   text-shadow: 0 0 8px rgba(180, 190, 255, 0.3);
 }
 
-/* External link indicator in nav and tabs */
-.md-nav a[href^="http"]::after,
-.md-tabs a[href^="http"]::after {
-  content: "open_in_new";
-  font-family: "Material Icons";
-  font-size: 1em;
-  margin-left: 0.2em;
-  vertical-align: middle;
-  opacity: 0.6;
-}
-
 /* Center mermaid diagrams in panzoom viewport */
 .mermaid {
   display: flex;
