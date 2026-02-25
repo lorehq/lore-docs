@@ -63,6 +63,12 @@ nav:
     - How Delegation Works: how-delegation-works.md
     - When to Use Lore: when-to-use-lore.md
     - Production Readiness: production-readiness.md
+    - Cost Evidence:
+      - Overview: cost-evidence/index.md
+      - Analysis: cost-evidence/analysis.md
+      - Methodology: cost-evidence/methodology.md
+      - Raw Session Data: cost-evidence/raw-data.md
+      - Operator Inputs: cost-evidence/operator-inputs.md
   - Guides:
     - First Session Setup:
       - Overview: guides/first-session/index.md
@@ -81,18 +87,13 @@ nav:
     - Hook Architecture: guides/hook-architecture.md
     - Conventions: guides/conventions.md
     - Roadmaps, Plans & Notes: guides/roadmaps-and-plans.md
-  - Cost Evidence:
-    - Overview: cost-evidence/index.md
-    - Analysis: cost-evidence/analysis.md
-    - Methodology: cost-evidence/methodology.md
-    - Raw Session Data: cost-evidence/raw-data.md
-    - Operator Inputs: cost-evidence/operator-inputs.md
+    - Examples:
+      - Skill: examples/skill.md
+      - Roadmap: examples/roadmap.md
+      - Plan: examples/plan.md
+      - Note: examples/note.md
+      - Brainstorm: examples/brainstorm.md
   - Troubleshooting: troubleshooting.md
-  - Changelog: changelog.md
-  - Changelog Archive: changelog-archive.md
-  - Examples:
-    - Skill: examples/skill.md
-    - Roadmap: examples/roadmap.md
-    - Plan: examples/plan.md
-    - Note: examples/note.md
-    - Brainstorm: examples/brainstorm.md
+  - Changelog:
+    - Current: changelog.md
+    - Archive: changelog-archive.md
