@@ -6,7 +6,7 @@ Task-oriented walkthroughs for common Lore workflows. Each guide assumes you've 
 
 | Guide | What it covers |
 |-------|---------------|
-| [Working with Lore](working-with-lore.md) | Day-to-day interaction: asking for work, sharing context, importing skills |
+| [Working with Lore](working-with-lore.md) | Day-to-day interaction: asking for work, sharing context, importing skills and fieldnotes |
 | [Working Across Repos](working-across-repos.md) | Using Lore as a hub, cross-repo operations, IDE linking with `/lore-link` |
 | [Rules](rules.md) | How behavioral rules work and how to create custom ones |
 | [Docs UI & Semantic Search](docs-ui.md) | Setting up the local Docker sidecar for search and live docs |

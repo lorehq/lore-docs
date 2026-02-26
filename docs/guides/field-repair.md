@@ -27,7 +27,7 @@ Your agent follows the **field-repair rule** (`docs/context/rules/field-repair.m
 4. **Test in your instance** — the agent copies the fixed file(s) into your local instance, then asks you to trigger the failing path again. You confirm whether the fix works. The agent reverts the copies after confirmation — the sync path delivers the real fix.
 5. **Push and sync** — the agent commits and pushes in the source repo, then runs an update from your instance to pull the fix through the official sync path. It verifies one final time that the fix survived the sync.
 6. **Report** — the agent opens a GitHub issue documenting the root cause and fix, so other instances and maintainers know about it.
-7. **Capture** — the agent turns the fix into reusable knowledge: a skill for non-obvious failures, an environment doc for new facts, or a runbook update for affected procedures.
+7. **Capture** — the agent turns the fix into reusable knowledge: a fieldnote for non-obvious failures, an environment doc for new facts, or a runbook update for affected procedures.
 
 ## The Operator-Agent Feedback Loop
 

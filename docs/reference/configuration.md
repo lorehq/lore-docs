@@ -87,7 +87,7 @@ Any unrecognized value (or a missing `profile` key) falls back to `standard`.
 |-------|----------|
 | `standard` | Default. All hooks active. Capture nudges at normal thresholds. |
 | `minimal` | Per-tool nudges off. Session banner notes to run a manual capture check. Use when hooks feel noisy. |
-| `discovery` | All hooks active with lower default thresholds (nudge=5, warn=10). Banner adds aggressive capture instructions for environment mapping and skill creation. Use during initial setup or unfamiliar codebase exploration. |
+| `discovery` | All hooks active with lower default thresholds (nudge=5, warn=10). Banner adds aggressive capture instructions for environment mapping and fieldnote creation. Use during initial setup or unfamiliar codebase exploration. |
 
 ## Tuning for Large Instances
 

@@ -17,7 +17,7 @@ title: Working with Lore
 | **Capture knowledge** | "Run a capture pass" or `/lore-capture` |
 | **Create work items** | "Let's create a roadmap for the API migration" |
 
-Skills emerge from demonstrated need, not upfront planning.
+Fieldnotes and skills emerge from demonstrated need, not upfront planning.
 
 ## Tips
 
@@ -28,9 +28,9 @@ Skills emerge from demonstrated need, not upfront planning.
 | Break compound work into branches | Independent branches can run in parallel subagents; dependency chains stay sequential |
 | Let Lore maintain registries | Registries, nav, and cross-references are where consistency matters most |
 
-## Bringing Existing Skills
+## Bringing Existing Skills and Fieldnotes
 
-If you have skills from other projects or custom markdown files you've been copying between repos, tell your agent to import them. Point it at the files or directory and it handles naming, frontmatter, and registry updates.
+If you have skills or fieldnotes from other projects or custom markdown files you've been copying between repos, tell your agent to import them. Point it at the files or directory and it handles naming, frontmatter, and registry updates.
 
 Once skills are in your Lore hub, every [linked repo](working-across-repos.md#ide-workflow-lore-link) gets them automatically.
 
