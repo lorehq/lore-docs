@@ -22,13 +22,13 @@ The update overwrites harness-owned files only:
 - `.lore/hooks/`, `.cursor/hooks/`, `.opencode/plugins/` — hook implementations
 - `.lore/lib/` — shared library modules
 - `.lore/skills/lore-*` — built-in skills (the `lore-` prefix is reserved)
-- `docs/context/conventions/system/` — system conventions
+- `docs/context/rules/system/` — system rules
 
 **Never touched by an update:**
 
-- `docs/` — your knowledge base, conventions, runbooks, and work items
+- `docs/` — your knowledge base, rules, runbooks, and work items
 - `.lore/skills/` entries without the `lore-` prefix — your operator skills
-- `docs/context/conventions/` files you own — operator conventions
+- `docs/context/rules/` files you own — operator rules
 
 ## After Upgrading
 

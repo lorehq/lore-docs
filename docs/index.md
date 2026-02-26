@@ -6,7 +6,7 @@ title: Home
 
 **Your coding agent forgets everything between sessions. Lore fixes that.**
 
-Lore is a harness for AI coding agents. It wraps your agent to manage persistent memory, enforce conventions, orchestrate delegation, and track work — so every session builds on the last.
+Lore is a harness for AI coding agents. It wraps your agent to manage persistent memory, enforce rules, orchestrate delegation, and track work — so every session builds on the last.
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 1.5em 0;">
   <iframe src="https://www.youtube.com/embed/u2rkR1XeHZk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allowfullscreen></iframe>
@@ -16,7 +16,7 @@ Lore is a harness for AI coding agents. It wraps your agent to manage persistent
 
 ## What You Get
 
-- **Knowledge Capture** — Gotchas, API quirks, and environment details persist as searchable skills and docs.
+- **Knowledge Capture** — Gotchas, API quirks, and environment details persist as searchable fieldnotes and docs.
 - **Semantic Search & Docs UI** — Local semantic search and a live docs UI via Docker sidecar.
 - **Delegation** — Orchestrator/worker pattern that dispatches work to cheaper models in parallel.
 - **Work Continuity** — Roadmaps and plans surface at session start so long-running projects pick up where they left off.

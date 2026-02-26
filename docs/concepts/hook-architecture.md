@@ -57,7 +57,7 @@ flowchart TB
         cc_si[session-init.js]
         cc_pp[prompt-preamble.js]
         cc_pm[protect-memory.js]
-        cc_cg[convention-guard.js]
+        cc_cg[rule-guard.js]
         cc_fg[harness-guard.js]
         cc_kt[knowledge-tracker.js]
         cc_cp[context-path-guide.js]
@@ -77,7 +77,7 @@ flowchart TB
     subgraph opencode["OpenCode (.opencode/plugins/)"]
         oc_si[session-init.js]
         oc_pm[protect-memory.js]
-        oc_cg[convention-guard.js]
+        oc_cg[rule-guard.js]
         oc_fg[harness-guard.js]
         oc_kt[knowledge-tracker.js]
         oc_cp[context-path-guide.js]
@@ -130,5 +130,5 @@ See [Platform Overview](../reference/platforms/index.md) for the full feature ma
 ## See Also
 
 - [How It Works](how-it-works.md) — full system architecture and harness engineering
-- [Security](security.md) — how convention-guard enforces security at write time
+- [Security](security.md) — how rule-guard enforces security at write time
 - [Platform Overview](../reference/platforms/index.md) — per-platform hook lists and feature matrix

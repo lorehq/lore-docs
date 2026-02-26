@@ -15,7 +15,7 @@ Seven long-lived ESM plugins:
 |--------|-------|---------|
 | `session-init.js` | `experimental.chat.system.transform` | Inject dynamic session banner on first LLM call |
 | `protect-memory.js` | `tool.execute.before` | Block reads/writes to `MEMORY.md` |
-| `convention-guard.js` | `tool.execute.before` | Enforce conventions before file writes |
+| `rule-guard.js` | `tool.execute.before` | Enforce rules before file writes |
 | `harness-guard.js` | `tool.execute.before` | Enforce hub vs. linked-repo guardrails |
 | `knowledge-tracker.js` | `tool.execute.after` | Escalating capture reminders after tool use |
 | `context-path-guide.js` | `tool.execute.before` | Show knowledge map tree on writes under `docs/` |

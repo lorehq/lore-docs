@@ -22,8 +22,8 @@ Lore follows [semantic versioning](https://semver.org/). During 0.x:
 
 **What won't break:**
 
-- Your docs (`docs/`), operator skills, operator conventions
-- The `lore-*` / non-`lore-*` ownership boundary and the `system/` subdirectory convention
+- Your docs (`docs/`), operator skills, operator rules
+- The `lore-*` / non-`lore-*` ownership boundary and the `system/` subdirectory rule
 - Git-tracked knowledge (Lore never deletes operator content)
 
 **Post-1.0:** minor versions will be non-breaking. Breaking changes will require a major version bump.
@@ -42,6 +42,7 @@ Lore hooks are plain JavaScript files that run as child processes of your coding
 - Write state files to `.git/` (tracker counters, nav-dirty flags, hook event logs)
 - Write to stdout (injecting context into the agent's conversation)
 - Scaffold sticky files ([`sticky.js`](https://github.com/lorehq/lore/blob/main/.lore/lib/sticky.js)) if missing — `MEMORY.local.md`, `.gitignore` entries
+
 
 ### Supply Chain
 

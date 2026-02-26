@@ -10,7 +10,7 @@ title: Migration & Uninstalling
 
 Install Lore: `npx create-lore my-project`
 
-Then start a session and tell the agent to migrate your old file. Paste the content or point it at the path — the agent reads it, categorizes the content (rules, conventions, gotchas, environment details), and distributes it into the right Lore locations.
+Then start a session and tell the agent to migrate your old file. Paste the content or point it at the path — the agent reads it, categorizes the content (rules, fieldnotes, environment details), and distributes it into the right Lore locations.
 
 ### From Scratch Notes / No System
 

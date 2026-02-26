@@ -33,7 +33,7 @@ A Lore instance is a git repo by default (`create-lore` runs `git init`). If you
 
 **Option A — Remote repository:**
 
-Create a private repo on your SCM (GitHub, GitLab, Bitbucket, etc.) and add it as the remote — or ask your agent to create one and push. Your knowledge base, skills, conventions, and work tracking are now version-controlled and backed up with every push. This is the recommended path for any instance you rely on.
+Create a private repo on your SCM (GitHub, GitLab, Bitbucket, etc.) and add it as the remote — or ask your agent to create one and push. Your knowledge base, skills, rules, and work tracking are now version-controlled and backed up with every push. This is the recommended path for any instance you rely on.
 
 **Option B — Local-only:**
 
@@ -54,7 +54,7 @@ You can always add a remote later. Nothing about the instance structure changes 
 
 **Machine inventory** — Tell the agent to discover your local machine. It can detect hostname, OS, installed runtimes, CLI tools, and shell environment on its own. It writes `docs/knowledge/local/machine.md` (gitignored).
 
-**Agent rules** — Tell the agent what this instance is for: its name, scope, and any behavioral rules you want. Describe it conversationally — "this instance covers our cloud infra, always use the prod AWS account by default, never auto-commit." The agent writes `docs/context/agent-rules.md`, which is injected as PROJECT context every session.
+**Agent rules** — Tell the agent what this instance is for: its name, scope, and any behavioral standards you want. Describe it conversationally — "this instance covers our cloud infra, always use the prod AWS account by default, never auto-commit." The agent writes `docs/context/agent-rules.md`, which is injected as PROJECT context every session.
 
 ---
 

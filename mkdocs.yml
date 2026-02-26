@@ -71,7 +71,7 @@ nav:
     - guides/index.md
     - Working with Lore: guides/working-with-lore.md
     - Working Across Repos: guides/working-across-repos.md
-    - Conventions: guides/conventions.md
+    - Rules: guides/rules.md
     - Docs UI & Search: guides/docs-ui.md
     - Roadmaps & Plans: guides/roadmaps-and-plans.md
     - Upgrading: guides/upgrading.md

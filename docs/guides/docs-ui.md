@@ -22,7 +22,7 @@ A local HTTP API that indexes all knowledge files, skills, work items, and agent
 
 ### MkDocs UI
 
-A live-reloading site at `localhost:PORT` that renders your full knowledge base as a browsable site. Useful for seeing exactly what the agent sees, verifying conventions, and navigating large knowledge bases without opening individual files.
+A live-reloading site at `localhost:PORT` that renders your full knowledge base as a browsable site. Useful for seeing exactly what the agent sees, verifying rules and fieldnotes, and navigating large knowledge bases without opening individual files.
 
 ## Setup
 

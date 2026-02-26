@@ -15,7 +15,7 @@ Lore supports three coding agent platforms. All share the same knowledge base �
 | **OpenCode** | ESM plugins + `opencode.json` | **Experimental** — core features work, uses experimental API hooks |
 
 !!! info "What experimental means"
-    Cursor and OpenCode integrations deliver the same core harness functions — session banner, knowledge capture, convention enforcement, delegation. They are marked experimental because:
+    Cursor and OpenCode integrations deliver the same core harness functions — session banner, knowledge capture, rule enforcement, delegation. They are marked experimental because:
 
     - **Cursor** compensates for missing hook events via an MCP server; this architecture is functional but undergoing optimization.
     - **OpenCode** uses experimental plugin API hooks (`experimental.chat.system.transform`, `experimental.session.compacting`) that may change in future OpenCode releases.
@@ -60,7 +60,7 @@ All platforms activate automatically after `npx create-lore`.
 | **Cursor** | `.cursor/rules/lore-*.mdc` + `.cursor/hooks.json` + `.cursor/mcp.json` |
 | **OpenCode** | `opencode.json` + `.opencode/plugins/` + `.opencode/commands/` |
 
-`CLAUDE.md` is generated from `.lore/instructions.md`. Cursor `.mdc` rules are generated from multiple sources (instructions, agent-rules, conventions, agent-registry). Your agent keeps platform copies in sync automatically — a capture pass handles this.
+`CLAUDE.md` is generated from `.lore/instructions.md`. Cursor `.mdc` rules are generated from multiple sources (instructions, agent-rules, rules, agent-registry). Your agent keeps platform copies in sync automatically — a capture pass handles this.
 
 ## Sync Boundaries
 
@@ -71,7 +71,7 @@ All platforms activate automatically after `npx create-lore`.
 | `lore-*` skills/agents | Yes | — |
 | Operator skills/agents | — | Yes |
 | `.lore/hooks/`, `.lore/lib/`, `.lore/scripts/` | Yes | — |
-| `docs/context/conventions/system/` | Yes | — |
+| `docs/context/rules/system/` | Yes | — |
 | `docs/knowledge/runbooks/system/` | Yes | — |
 | `docs/` (except `system/` subdirs), `mkdocs.yml`, `.lore/config.json` | — | Yes |
 

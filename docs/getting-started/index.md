@@ -25,7 +25,7 @@ cd my-project
 Start a session and tell the agent about your project — what it does, what domain it's in, how you like to work. The agent writes `docs/context/agent-rules.md` from your description. This file is injected into every session as project context.
 
 !!! tip "What to customize now vs. later"
-    `docs/context/` benefits from early setup — agent-rules, conventions, and operator-profile all shape how the agent behaves from day one. `docs/knowledge/` is different: the agent builds it as it learns, not pre-structured by hand. Don't create folders or files there manually. Let the agent populate it during environment mapping, then tell it to run [knowledge defrag](first-session/knowledge-worker.md#phase-7-knowledge-defrag) to organize by content.
+    `docs/context/` benefits from early setup — agent-rules, rules, and operator-profile all shape how the agent behaves from day one. `docs/knowledge/` is different: the agent builds it as it learns, not pre-structured by hand. Don't create folders or files there manually. Let the agent populate it during environment mapping, then tell it to run [knowledge defrag](first-session/knowledge-worker.md#phase-7-knowledge-defrag) to organize by content.
 
 The installer also scaffolds `.mcp.json` at the instance root for the MCP search server — used by Claude Code (and Cursor via `.cursor/mcp.json`) when the Docker sidecar is running. See [Docs UI & Search](../guides/docs-ui.md) for setup details.
 

@@ -60,7 +60,7 @@ Harness rename, first-session guides, Docker runtime fixes.
 
 - `release.sh` now tags `lore-docker` alongside `lore` and `create-lore`
 - `bump-version.sh` regenerates derived files after version update
-- Added prompt-engineering convention as seed template
+- Added prompt-engineering convention (now called rule) as seed template
 
 ## v0.12.0 — 2026-02-23
 
@@ -78,7 +78,7 @@ OpenCode config fix, search-guard hook, notes support.
 Default config template and MCP tool renames.
 
 - Default `config.json` template now ships with docker ports (9184/9185), `standard` profile, `subagentDefaults`, and semantic search settings
-- Static/dynamic banner split: conventions and project context baked into `CLAUDE.md` at generation time; active work items and knowledge map injected by `SessionStart` hook each session
+- Static/dynamic banner split: conventions (now called rules) and project context baked into `CLAUDE.md` at generation time; active work items and knowledge map injected by `SessionStart` hook each session
 - MCP search server tools renamed: `lore_search`, `lore_read`, `lore_health`
 
 ## v0.11.0 — 2026-02-22

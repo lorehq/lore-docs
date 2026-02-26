@@ -47,9 +47,9 @@ title: When to Use Lore
 | **MEMORY.md** (platform built-in) | Partial — platforms overwrite between sessions | No — free-form text blob | Yes |
 | **CLAUDE.md / .cursorrules** | Yes — git-tracked | Minimal — single file | Yes |
 | **Custom system prompts** | Yes — but manual maintenance | Your structure | Depends on platform |
-| **Lore** | Yes — git-tracked, multi-file | Yes — skills, agents, docs, conventions | Yes — harness hooks reinforce capture |
+| **Lore** | Yes — git-tracked, multi-file | Yes — rules, fieldnotes, skills, agents, docs | Yes — harness hooks reinforce capture |
 
-A `CLAUDE.md` file works fine at 50 lines. At 500 lines the file becomes a wall of text the agent skims past. Lore routes knowledge to the right location (skill, doc, convention, runbook) and loads it on demand instead of dumping everything into every session. For measured cost data, see [Cost Evidence](../evidence/index.md). For migration from existing setups, see [Getting Started: Migration](../getting-started/migration.md).
+A `CLAUDE.md` file works fine at 50 lines. At 500 lines the file becomes a wall of text the agent skims past. Lore routes knowledge to the right location (rule, fieldnote, skill, doc, runbook) and loads it on demand instead of dumping everything into every session. For measured cost data, see [Cost Evidence](../evidence/index.md). For migration from existing setups, see [Getting Started: Migration](../getting-started/migration.md).
 
 ## See Also
 

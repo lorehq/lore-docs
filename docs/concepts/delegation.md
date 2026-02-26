@@ -8,14 +8,14 @@ Delegation is one of the harness's core functions — see [How It Works](how-it-
 
 ## Delegation
 
-The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and conventions per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent subtasks and keeps dependency-gated steps sequential. For measured cost impact, see [Cost Evidence](../evidence/index.md).
+The orchestrator delegates work to worker agents — ephemeral context windows loaded with curated skills and rules per-task. For compound requests, the orchestrator spawns multiple workers in parallel for independent subtasks and keeps dependency-gated steps sequential. For measured cost impact, see [Cost Evidence](../evidence/index.md).
 
 ```mermaid
 flowchart TD
     Request[Incoming Request] --> Q1{"Benefits from<br/>fresh context?"}
     Q1 -->|No| Direct[Handle Directly]
     Q1 -->|Yes| Skills[Select skills from registry]
-    Skills --> Spawn["Spawn worker with<br/>skills + conventions + scope"]
+    Skills --> Spawn["Spawn worker with<br/>skills + rules + scope"]
     Spawn --> Execute[Worker executes task]
     Execute --> Review[Orchestrator reviews results]
     Direct --> Review
@@ -35,7 +35,7 @@ Before spawning a worker, the orchestrator searches the knowledge base. If resul
 
 ### Subagent Context Contract
 
-Workers receive what the orchestrator specifies: task description, skill file paths, convention file paths, and scope boundaries. `docs/context/agent-rules.md` is injected into the orchestrator's session banner; workers receive conventions and skills selected by the orchestrator per-task.
+Workers receive what the orchestrator specifies: task description, skill file paths, rule file paths, and scope boundaries. `docs/context/agent-rules.md` is injected into the orchestrator's session banner; workers receive rules and skills selected by the orchestrator per-task.
 
 ### Per-Platform Model Configuration
 
@@ -47,7 +47,7 @@ Worker agent tiers (`lore-worker`, `lore-worker-fast`, `lore-worker-powerful`) a
 flowchart TB
     subgraph P1["Phase 1: Foundation"]
         P1a[Explore integrations]
-        P1b[Hit gotchas, create first skills]
+        P1b[Hit gotchas, create first fieldnotes]
         P1c["Heavy discovery cost"]
     end
 

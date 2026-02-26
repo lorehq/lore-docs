@@ -12,14 +12,14 @@ Tell your agent the symptom, or say `/lore-field-repair` for the guided workflow
 
 - A hook throws an error or produces wrong output
 - A script crashes or behaves unexpectedly
-- Agent behavior degrades (missed captures, wrong conventions loading, broken delegation)
+- Agent behavior degrades (missed captures, wrong rules loading, broken delegation)
 - Another deployed instance reports a failure
 
 Field repair is for harness bugs — not feature requests, config changes, or application code.
 
 ## How It Works
 
-Your agent follows the **field-repair convention** (`docs/context/conventions/field-repair.md`) — a 7-step workflow that every Lore instance ships with:
+Your agent follows the **field-repair rule** (`docs/context/rules/field-repair.md`) — a 7-step workflow that every Lore instance ships with:
 
 1. **Reproduce** — recreate the failure in the current instance before touching the Lore source repo. The agent will ask you to describe what you see — terminal output, UI behavior, error messages. You're its eyes for anything that isn't visible through tool output.
 2. **Isolate** — instrument the failing path with temporary debug output (written to `/tmp`, never stderr — stderr corrupts hook responses). The agent triggers the failure, reads the debug output, and forms a hypothesis. It removes all instrumentation before moving on.
@@ -53,16 +53,16 @@ The Lore ecosystem spans four repos. When the agent asks which one likely owns t
 
 | Repo | What it owns |
 |------|-------------|
-| [**lorehq/lore**](https://github.com/lorehq/lore) | Hooks, lib modules, scripts, skills, conventions, templates — the harness itself |
+| [**lorehq/lore**](https://github.com/lorehq/lore) | Hooks, lib modules, scripts, skills, rules, templates — the harness itself |
 | [**lorehq/create-lore**](https://github.com/lorehq/create-lore) | Installer, `npx create-lore` entry point |
 | [**lorehq/lore-docker**](https://github.com/lorehq/lore-docker) | Docker image, semantic search API, docs UI, filesystem watcher |
 | [**lorehq/lore-docs**](https://github.com/lorehq/lore-docs) | Public documentation site |
 
-Most harness bugs live in `lorehq/lore`. The convention includes this table so the agent routes to the right repo without guessing.
+Most harness bugs live in `lorehq/lore`. The rule includes this table so the agent routes to the right repo without guessing.
 
 ## Every Instance Ships the Full Workflow
 
-The field-repair convention and the `/lore-field-repair` skill are part of the Lore harness — every instance created with `npx create-lore` has them. This means every deployed instance has detailed instructions for properly diagnosing bugs, fixing them in source, and contributing verified fixes back. The agent doesn't improvise; it follows a tested, structured procedure.
+The field-repair rule and the `/lore-field-repair` skill are part of the Lore harness — every instance created with `npx create-lore` has them. This means every deployed instance has detailed instructions for properly diagnosing bugs, fixing them in source, and contributing verified fixes back. The agent doesn't improvise; it follows a tested, structured procedure.
 
 ## The Bigger Picture
 

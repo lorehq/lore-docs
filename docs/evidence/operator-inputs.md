@@ -26,7 +26,7 @@ The model received no other guidance. It had to discover API versioning, require
 
 ## Lore Cold
 
-Three operator messages per session. The Lore framework's session banner and hooks inject context about the knowledge base, delegation rules, and capture conventions — but the operator's task input follows the same pattern.
+Three operator messages per session. The Lore framework's session banner and hooks inject context about the knowledge base, delegation rules, and capture rules — but the operator's task input follows the same pattern.
 
 **Message 1** (task prompt — identical across all 10 sessions):
 

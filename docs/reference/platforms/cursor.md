@@ -44,7 +44,7 @@ Cursor's hook model fires hooks on specific events but cannot inject advisory co
 
 **MCP:** `.cursor/mcp.json` — configures the MCP server.
 
-**Rules:** `.cursor/rules/lore-*.mdc` — generated from `.lore/instructions.md`, agent-rules, conventions, and agent-registry by `sync-platform-skills.sh`.
+**Rules:** `.cursor/rules/lore-*.mdc` — generated from `.lore/instructions.md`, agent-rules, rules, and agent-registry by `sync-platform-skills.sh`.
 
 ## Coverage Gaps
 

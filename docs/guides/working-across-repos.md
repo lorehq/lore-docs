@@ -30,7 +30,7 @@ flowchart TD
     "Update the Terraform config in ~/projects/infra"
     ```
 
-3. **Knowledge captures back to Lore.** Gotchas become skills, endpoints go to context docs, multi-step procedures become runbooks — all stored in the Lore instance, available next session.
+3. **Knowledge captures back to Lore.** Gotchas become fieldnotes, endpoints go to context docs, multi-step procedures become runbooks — all stored in the Lore instance, available next session.
 
 ## Boundaries
 

@@ -23,8 +23,8 @@ Skills emerge from demonstrated need, not upfront planning.
 
 | Approach | Why |
 |----------|-----|
-| Work naturally, let skills emerge | Skills are best when they capture real gotchas from actual work |
-| Let workers handle complex tasks | The orchestrator delegates to ephemeral workers with curated skills and conventions |
+| Work naturally, let fieldnotes emerge | Fieldnotes are best when they capture real gotchas from actual work |
+| Let workers handle complex tasks | The orchestrator delegates to ephemeral workers with curated skills, rules, and fieldnotes |
 | Break compound work into branches | Independent branches can run in parallel subagents; dependency chains stay sequential |
 | Let Lore maintain registries | Registries, nav, and cross-references are where consistency matters most |
 

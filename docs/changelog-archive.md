@@ -24,7 +24,7 @@ Knowledge architecture restructure and platform parity.
 
 **Knowledge architecture:**
 
-- Split `docs/context/` into `context/` (rules, conventions) + `knowledge/` (reference material)
+- Split `docs/context/` into `context/` (rules, conventions — now consolidated as rules) + `knowledge/` (reference material)
 - Broader environment subdirs: `inventory/`, `decisions/`, `reference/`, `diagrams/`
 - Nav reorder: Work → Knowledge → Context → Guides
 

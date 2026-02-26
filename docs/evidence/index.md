@@ -32,8 +32,8 @@ If you're skeptical, good. Read the [limitations](#limitations) first, then run 
 |-----------|---|-----------|-------------|---------|-----------------|
 | Raw Cold | 10 | None | Opus 4.6 | — (inline) | None |
 | Lore Cold | 10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | None |
-| Lore Warm | 10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | Skills + env docs from cold |
-| Lore Hot | 10 | Lore v0.11.0 | Opus 4.6 | varies | Skills + env docs, writes runbook |
+| Lore Warm | 10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | Fieldnotes + env docs from cold |
+| Lore Hot | 10 | Lore v0.11.0 | Opus 4.6 | varies | Fieldnotes + env docs, writes runbook |
 | Lore Runbook | 10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | Full knowledge + runbook |
 
 Each Lore condition ran on a separate instance (lore-01 through lore-10), one session per condition per instance. "Cold" = no prior knowledge. "Warm" = knowledge captured from cold. "Hot" = knowledge from cold+warm, writes a runbook. "Runbook" = full knowledge stack, pure execution.
@@ -90,8 +90,8 @@ Capture is a one-time investment that pays off on every subsequent run.
 
 | Phase | Mean Capture Cost | What Was Captured |
 |-------|-------------------|-------------------|
-| Cold | $0.0814 | Skills (API gotchas), environment docs (endpoints, params, headers) |
-| Warm | $0.0087 | Minor environment doc updates (1 of 10 sessions) |
+| Cold | $0.0814 | Fieldnotes (API gotchas), environment docs (endpoints, params, headers) |
+| Warm | $0.0087 | Minor doc updates (1 of 10 sessions) |
 | Hot | $0.0795 | Runbook (step-by-step procedure for the full task) |
 | **Total investment** | **$0.17** | |
 
@@ -110,7 +110,7 @@ The capture investment pays for itself on the very first reuse.
 |-----------|-----------|-------------|--------|
 | Model tiering | Yes | Yes | Workers on Haiku ($0.10/MTok cache read) instead of Opus ($0.50/MTok) — 5x cheaper per token |
 | Context isolation | Yes | Yes | Workers run in fresh contexts instead of accumulating in one growing Opus thread |
-| Knowledge reuse | No | Yes | Workers skip exploration — endpoints and gotchas are documented |
+| Knowledge reuse | No | Yes | Workers skip exploration — endpoints and gotchas are documented as fieldnotes |
 | Runbook procedure | No | Yes | Orchestrator follows a known procedure instead of reasoning from scratch |
 
 Model tiering and context isolation are structural — they apply from the first run. Knowledge reuse and runbook procedures compound over time.

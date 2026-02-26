@@ -25,17 +25,17 @@ Five conditions, same task, same day (2026-02-22), 10 sessions each:
 |-----------|---|-----------|-----------|-------------|---------|-----------------|
 | Raw Cold | 10 | test/control-01 | None | Opus 4.6 | — (inline) | None |
 | Lore Cold | 10 | test/lore-01..10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | None |
-| Lore Warm | 10 | test/lore-01..10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | Skills + env docs from cold |
-| Lore Hot | 10 | test/lore-01..10 | Lore v0.11.0 | Opus 4.6 | varies | Skills + env docs, writes runbook |
+| Lore Warm | 10 | test/lore-01..10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | Fieldnotes + env docs from cold |
+| Lore Hot | 10 | test/lore-01..10 | Lore v0.11.0 | Opus 4.6 | varies | Fieldnotes + env docs, writes runbook |
 | Lore Runbook | 10 | test/lore-01..10 | Lore v0.11.0 | Opus 4.6 | Haiku 4.5 | Full knowledge + runbook |
 
 ### Condition Details
 
 **Raw Cold** — 10 fresh sessions in a single control workspace. Static CLAUDE.md containing a TypeScript API project description (serves as a cache-breaker — ensures the model's prompt cache doesn't carry over task-relevant context). No framework, no hooks, no knowledge base. All compute runs on Opus 4.6 inline.
 
-**Lore Cold** — One fresh session per instance (lore-01 through lore-10). Clean knowledge base with only the Lore framework hooks and scripts active. The orchestrator runs on Opus 4.6 and delegates API exploration to Haiku 4.5 workers. Knowledge capture (skills, environment docs) happens at the end of each session when the operator approves.
+**Lore Cold** — One fresh session per instance (lore-01 through lore-10). Clean knowledge base with only the Lore framework hooks and scripts active. The orchestrator runs on Opus 4.6 and delegates API exploration to Haiku 4.5 workers. Knowledge capture (fieldnotes, environment docs) happens at the end of each session when the operator approves.
 
-**Lore Warm** — One session per instance. The knowledge captured during the cold session persists — skills documenting API gotchas and environment docs mapping endpoints, params, and headers. No additional capture in most sessions.
+**Lore Warm** — One session per instance. The knowledge captured during the cold session persists — fieldnotes documenting API gotchas and environment docs mapping endpoints, params, and headers. No additional capture in most sessions.
 
 **Lore Hot** — One session per instance. Knowledge from both cold and warm persists. After answering the task, the session creates a runbook — a step-by-step procedure for the full operation. This is the capture investment phase.
 

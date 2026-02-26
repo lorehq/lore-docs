@@ -159,8 +159,8 @@ If you're running an Arr stack, Jellyfin/Plex, Immich, Home Assistant, or simila
 ??? example "What your agent produces"
     Service docs in `docs/knowledge/environment/` — one per logical group (containers, dns, backups, media) or one per host, depending on your preference. The agent proposes the structure and you approve before it writes.
 
-!!! tip "Gotchas become skills"
-    During service mapping, the agent will inevitably hit quirks — a container that needs a specific network mode, a backup job that fails silently, a DNS rebinding issue. Each of these is a skill candidate. The agent proposes them; you approve.
+!!! tip "Gotchas become fieldnotes"
+    During service mapping, the agent will inevitably hit quirks — a container that needs a specific network mode, a backup job that fails silently, a DNS rebinding issue. Each of these is a fieldnote candidate. The agent proposes them; you approve.
 
 ---
 
@@ -184,7 +184,7 @@ This phase is entirely optional. Plenty of productive homelabs run on manual con
 
 **Goal:** Organize what was discovered, verify it's searchable, and establish a working rhythm.
 
-**Review and capture** — The agent reviews everything created in Phases 3–5. Any gotchas discovered during setup become skills. Any procedures that took multiple steps become runbooks.
+**Review and capture** — The agent reviews everything created in Phases 3–5. Any gotchas discovered during setup become fieldnotes. Any procedures that took multiple steps become runbooks.
 
 **Knowledge defrag** — First-run generates docs fast. The result is usually a flat pile of environment files. Tell the agent to run the knowledge defrag runbook — it restructures, deduplicates, and organizes without losing information.
 

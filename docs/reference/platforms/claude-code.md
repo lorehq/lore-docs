@@ -15,7 +15,7 @@ Eight hooks cover all lifecycle events:
 | `session-init.js` | `SessionStart` | Inject dynamic session banner (active work, knowledge map, skill registry) |
 | `prompt-preamble.js` | `UserPromptSubmit` | Knowledge-base-first search prompt + ambiguity scan |
 | `protect-memory.js` | `PreToolUse` | Block reads/writes to `MEMORY.md` |
-| `convention-guard.js` | `PreToolUse` | Enforce conventions before file writes |
+| `rule-guard.js` | `PreToolUse` | Enforce rules before file writes |
 | `harness-guard.js` | `PreToolUse` | Enforce hub vs. linked-repo guardrails |
 | `context-path-guide.js` | `PreToolUse` | Show knowledge map tree on writes under `docs/` |
 | `search-guard.js` | `PreToolUse` | Nudge semantic search over speculative file reads |

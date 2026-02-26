@@ -15,32 +15,41 @@ The harness is everything that wraps the agent: hooks, delegation patterns, work
 | What Lore does | How |
 |---|---|
 | Make knowledge findable | Git-tracked knowledge base (`docs/`), semantic search, session banner with knowledge map |
-| Enforce conventions mechanically | Pre-tool-use hooks validate before writes land; `validate-consistency.sh` catches drift |
+| Enforce rules mechanically | Pre-tool-use hooks validate before writes land; `validate-consistency.sh` catches drift |
 | Delegate with focused context | Orchestrator routes to tiered workers (Opus reasons, Haiku executes) — [59% cheaper](../evidence/index.md) at steady state |
 | Load knowledge on demand | Skills and docs load when needed; only the knowledge map appears at session start |
-| Capture knowledge automatically | Gotchas become skills, environment facts become docs, procedures become runbooks — all git-tracked |
-| Manage entropy | Consistency validation, convention guards, escalating capture reminders |
+| Capture knowledge automatically | Gotchas become fieldnotes, environment facts become docs, procedures become runbooks — all git-tracked |
+| Manage entropy | Consistency validation, rule guards, escalating capture reminders |
 
 !!! note "Further reading"
     The term gained traction in early 2026: [OpenAI's Codex team](https://openai.com/index/harness-engineering/) on designing environments over writing code, [Birgitta Bockeler](https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html) on context engineering + architectural constraints + entropy management, [Anthropic](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) on subagent architectures and progressive disclosure, and [Karpathy](https://karpathy.bearblog.dev/year-in-review-2025/) on the LLM-as-operating-system metaphor.
 
-## Three Components
+## Four Primitives
 
-Most tools treat agent context as one thing — a static file of rules and memories. Lore separates it into three components with different lifecycles.
+The industry has converged on three primitives for coding agents: rules, skills, and agents. Every major tool uses some version of this — `.cursorrules`, `CLAUDE.md`, Aider's `CONVENTIONS.md`, Windsurf's `.windsurfrules`. Lore uses the same primitives but adds a fourth — fieldnotes — and differentiates on how they interact:
 
-**Conventions** are the operator's one concern. Coding standards, security policies, documentation rules — written and revised by the operator, loaded by name or injected by the harness before relevant actions. Most tools put these in a single rules file (`.cursorrules`, `CLAUDE.md`, custom instructions). Lore separates them from system-captured knowledge so the operator's authored standards don't get tangled with machine-generated content.
+1. **Auto-capture loop** — fieldnotes (environmental gotchas) are captured during work and reinjected by relevance in future sessions
+2. **Separation of operator-authored rules from system-captured fieldnotes** — your coding standards never get tangled with machine-generated knowledge
+3. **Tiered cost-optimized delegation** — workers at different price points (fast/cheap to slow/powerful) spawned per-task
+4. **Cross-session compound learning** — every session makes the next one better, with knowledge accumulating in git
+5. **Pre-write enforcement hooks** — rules are enforced at write time, not just loaded at session start
 
-**Skills** are managed by the system. Most tools lump operator-written rules and agent-discovered knowledge into the same file. Lore separates them. When the agent hits a gotcha — an API that returns 403 because path segments need URL-encoded slashes, a CLI flag that silently breaks on macOS — that fix becomes a skill. Skills aren't written by the operator. They emerge from work, extend the knowledge base, and get reinjected in future sessions when relevant. The operator can review and browse them in the docs UI or through conversation with the agent, but the system captures, organizes, and loads them.
+**Rules** are the operator's concern. Coding standards, security policies, documentation guidelines — written and revised by the operator, loaded by name or injected by the harness before relevant actions. Most tools put these in a single rules file (`.cursorrules`, `CLAUDE.md`, custom instructions). Lore separates them from system-captured knowledge so operator-authored standards stay clean.
 
-**Agents** are managed by the system. Tiered workers (from fast/cheap to slow/powerful) that the orchestrator spawns per-task with curated skills and conventions. Dynamic and ephemeral — created for a task, dissolved after. The operator doesn't configure or manage agents — the harness handles delegation.
+**Skills** are procedural capabilities managed by the system. Step-by-step instructions for specific operations — how to deploy, how to run a field repair, how to construct a worker prompt. Skills are loaded on demand when the orchestrator delegates related tasks.
 
-| Component | Source | Lifecycle | Loaded |
+**Fieldnotes** are environmental knowledge captured automatically. When the agent hits a gotcha — an API that returns 403 because path segments need URL-encoded slashes, a CLI flag that silently breaks on macOS — that fix becomes a fieldnote. Fieldnotes aren't written by the operator. They emerge from work, grow the knowledge base, and get reinjected in future sessions when semantically relevant. The operator can review and browse them in the docs UI or through conversation with the agent.
+
+**Agents** are managed by the system. Tiered workers (from fast/cheap to slow/powerful) that the orchestrator spawns per-task with curated skills, rules, and fieldnotes. Dynamic and ephemeral — created for a task, dissolved after. The operator doesn't configure or manage agents — the harness handles delegation.
+
+| Primitive | Source | Lifecycle | Loaded |
 |-----------|--------|-----------|--------|
-| Conventions | Decided by the operator | Stable — updated deliberately | Lazy-loaded by name or injected before relevant actions |
-| Skills | Discovered during work | Growing — captured from gotchas | On demand, by relevance |
+| Rules | Authored by the operator | Stable — updated deliberately | Lazy-loaded by name or injected before relevant actions |
+| Skills | Defined by the harness | Procedural — loaded on demand | Per delegation, by task relevance |
+| Fieldnotes | Captured during work | Growing — system-captured from gotchas | On demand, by semantic relevance |
 | Agents | Defined by the harness | Dynamic — spawned and dissolved per-task | Per delegation |
 
-Conventions make the agent consistent. Skills prevent repeated failures. Agents make it scalable.
+Rules make the agent consistent. Skills give it capabilities. Fieldnotes prevent repeated failures. Agents make it scalable.
 
 ## System Architecture
 
@@ -59,7 +68,7 @@ flowchart TB
 
     subgraph Worker["Worker Agent"]
         direction TB
-        Load[Load skills + conventions] --> Tools[Call Tools]
+        Load[Load skills + rules] --> Tools[Call Tools]
         Tools --> Result[Return Result]
     end
 
@@ -82,7 +91,7 @@ flowchart TB
 
 ## Knowledge Capture
 
-Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract that knowledge into persistent documentation. When an operation produces non-obvious knowledge, it becomes a skill. The orchestrator finds relevant skills by name and description when delegating related tasks.
+Every session produces knowledge as a byproduct — endpoints, gotchas, org structure, tool parameters. Post-tool-use reminders encourage the agent to extract that knowledge into persistent documentation. When an operation produces non-obvious environmental knowledge, it becomes a fieldnote. When it produces a reusable procedure, it becomes a skill. The orchestrator finds relevant fieldnotes and skills by name and description when delegating related tasks.
 
 ### The Capture-and-Reuse Loop
 
@@ -97,7 +106,7 @@ sequenceDiagram
     S1->>S1: Discovers available projects
 
     Note over S1: Capture checkpoint
-    S1->>Docs: Write integration docs + create skill with gotchas
+    S1->>Docs: Write integration docs + create fieldnote with gotchas
 
     Note over S2: Different session, same question
     S2->>Docs: Read docs — already knows org, projects, auth
@@ -109,17 +118,17 @@ sequenceDiagram
 
 See [Platform Overview: Sync Boundaries](../reference/platforms/index.md#sync-boundaries) for the `lore-*` prefix convention and what sync overwrites.
 
-### How Skills Grow
+### How Fieldnotes Grow
 
-Skills are created from gotchas encountered during work. Lore ships with built-in workers (`lore-worker` tiers and `lore-explore`) — dynamic, ephemeral agents that are spawned per-task with specific conventions and skills to load, then dissolved after the task completes.
+Fieldnotes are created from gotchas encountered during work. Lore ships with built-in workers (`lore-worker` tiers and `lore-explore`) — dynamic, ephemeral agents that are spawned per-task with specific rules, skills, and fieldnotes to load, then dissolved after the task completes.
 
 ```mermaid
 flowchart TD
     op[Operation Completed] --> gotcha{"Hit any<br/>gotchas?"}
-    gotcha -->|No| skip[No skill needed]
-    gotcha -->|Yes| createSkill[Create skill]
-    createSkill --> registry[Update registries]
-    registry --> done["Skill available for<br/>worker delegation"]
+    gotcha -->|No| skip[No fieldnote needed]
+    gotcha -->|Yes| createFieldnote[Create fieldnote]
+    createFieldnote --> registry[Update registries]
+    registry --> done["Fieldnote available for<br/>worker delegation"]
 ```
 
 For the full capture routing table, see [Knowledge Routing Reference](../reference/commands.md).
@@ -136,14 +145,14 @@ Lore uses indirection — telling the agent *where to find things* rather than l
 | Session start: harness | Operating principles, available workers, active roadmaps/plans |
 | Session start: project context | Operator customization from `docs/context/agent-rules.md` |
 | Session start: operator profile | Identity and preferences from `docs/knowledge/local/operator-profile.md` (gitignored) |
-| Session start: conventions | Coding and docs standards from `docs/context/conventions/` |
+| Session start: rules | Coding and docs standards from `docs/context/rules/` |
 | Session start: knowledge map | Directory tree of `docs/` and `.lore/skills/` |
 | Session start: local memory | Scratch notes from `.lore/memory.local.md` (gitignored) |
 | Per-prompt reinforcement | Delegation + knowledge discovery + work tracking nudges |
 | Post-tool-use reinforcement | Capture reminders with escalating urgency |
 | Skills and docs | Loaded on-demand when invoked or needed |
 
-**Static vs. dynamic banner split:** Conventions, agent-rules, and project context are baked into `CLAUDE.md` at generation time — these are stable and benefit from prompt cache hits. Active work items, the knowledge map, and the skill registry are injected by the `SessionStart` hook each session, so they stay current without regenerating `CLAUDE.md`.
+**Static vs. dynamic banner split:** Rules, agent-rules, and project context are baked into `CLAUDE.md` at generation time — these are stable and benefit from prompt cache hits. Active work items, the knowledge map, and the fieldnote/skill registries are injected by the `SessionStart` hook each session, so they stay current without regenerating `CLAUDE.md`.
 
 When the Docker sidecar is running, the session banner includes a semantic search URL. Agents query by topic to find relevant docs and skills without loading the full directory tree.
 
