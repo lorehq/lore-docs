@@ -49,6 +49,15 @@ Lore has **zero npm runtime dependencies**. All [`lib/` modules](https://github.
 
 The installer ([`create-lore`](https://github.com/lorehq/create-lore)) clones the lore repo at a pinned version tag — no transitive dependency tree to audit.
 
+### Internal Fork Model
+
+Organizations that require full supply chain control can fork the [`lore`](https://github.com/lorehq/lore) repo into their internal SCM (GitHub Enterprise, GitLab, Bitbucket, etc.) and install from the fork instead of the public repo. Two approaches:
+
+- **`LORE_TEMPLATE` env var** — point `create-lore` at a local clone of your fork: `LORE_TEMPLATE=/path/to/your-fork npx create-lore my-instance`. No changes to any tooling required.
+- **Fork `create-lore`** — change the [`REPO_URL`](https://github.com/lorehq/create-lore/blob/main/bin/create-lore.js#L20) constant to your internal repo URL and publish to your private registry. All new instances install from your controlled source.
+
+Either way, your security team controls what code enters the harness. Review upstream releases on your schedule, merge what you approve, and your instances never pull code you haven't vetted.
+
 ### How to Audit
 
 All hook source is in your repo after install:
