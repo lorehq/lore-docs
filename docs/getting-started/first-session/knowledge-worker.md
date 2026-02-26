@@ -50,7 +50,7 @@ You can always add a remote later. Nothing about the instance structure changes 
 
 **Goal:** Ground the agent in who you are, what you have, and how you work.
 
-**Operator profile** — Tell the agent your name, role, org, and how you like to work. It will ask follow-up questions for anything it needs (accounts, preferences, constraints). The profile it writes (`docs/knowledge/local/operator-profile.md`, gitignored) gives the agent operator context — without it, the agent knows the KB but not who it's working for.
+**Operator profile** — Tell the agent your name, role, org, and how you like to work. It will ask follow-up questions for anything it needs (accounts, preferences, constraints). The profile it writes (`docs/knowledge/local/operator-profile.md`, gitignored) gives the agent operator context — without it, the agent knows the knowledge base but not who it's working for.
 
 **Machine inventory** — Tell the agent to discover your local machine. It can detect hostname, OS, installed runtimes, CLI tools, and shell environment on its own. It writes `docs/knowledge/local/machine.md` (gitignored).
 
@@ -80,7 +80,7 @@ Verify by asking the agent to run a quick worker test. Each tier should report t
 
 **Goal:** Establish a secret store before ingesting any credentials.
 
-**Rule:** Secrets never go in the KB. The KB documents item names and what they're for — never values.
+**Rule:** Secrets never go in the knowledge base. The knowledge base documents item names and what they're for — never values.
 
 Common options: [Vaultwarden](https://github.com/dani-garcia/vaultwarden) (self-hosted), 1Password CLI, Bitwarden (cloud), cloud KMS (AWS/Azure/GCP), or `pass` (GPG-based).
 

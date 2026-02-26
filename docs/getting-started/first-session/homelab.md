@@ -45,7 +45,7 @@ If Docker isn't available on the machine running your agent, skip this and conti
 
 **Goal:** Establish a secret store before ingesting any credentials.
 
-**Rule:** Secrets never go in the KB. The KB documents item names and what they're for — never values.
+**Rule:** Secrets never go in the knowledge base. The knowledge base documents item names and what they're for — never values.
 
 Homelab operators typically use one of:
 
