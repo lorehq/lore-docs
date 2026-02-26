@@ -16,9 +16,9 @@ Lore solves this with layered reinforcement: security rules are baked into the a
 
 ### 1. Core Identity
 
-The agent's instructions (`instructions.md`) define it as a **security gatekeeper** — not as an afterthought, but as one of its primary roles. This isn't a tip buried in a long document. It's a top-level identity trait that shapes how the agent approaches every task.
+The agent's instructions ([`.lore/instructions.md`](https://github.com/lorehq/lore/blob/main/.lore/instructions.md)) define it as a **security gatekeeper** — not as an afterthought, but as one of its primary roles. This isn't a tip buried in a long document. It's a top-level identity trait that shapes how the agent approaches every task.
 
-The security convention itself is a concise set of principles:
+The security convention itself ([seed template](https://github.com/lorehq/lore/blob/main/.lore/templates/seeds/conventions/security.md)) is a concise set of principles:
 
 - **Reference, don't embed** — store vault paths and env var names, never secret values
 - **Sanitize what you generate** — use obviously fake placeholders in examples and configs
@@ -29,7 +29,7 @@ These principles load into the session banner at startup, so the agent sees them
 
 ### 2. Write-Time Reinforcement
 
-Knowing the rules at session start isn't enough. Context windows are long, sessions are longer, and instructions drift out of attention. Lore's **convention guard** hook fires before every file write or edit, injecting a security checkpoint at the moment it matters most — right before content hits disk.
+Knowing the rules at session start isn't enough. Context windows are long, sessions are longer, and instructions drift out of attention. Lore's **convention guard** hook ([`convention-guard.js`](https://github.com/lorehq/lore/blob/main/.lore/hooks/convention-guard.js)) fires before every file write or edit, injecting a security checkpoint at the moment it matters most — right before content hits disk.
 
 The checkpoint forces a decision:
 
@@ -41,7 +41,7 @@ Other conventions (docs, work items) are path-scoped. Security fires for *every*
 
 ### 3. Self-Healing Convention
 
-The security convention is a **sticky file**. If it's missing when a session starts, Lore regenerates it from the shipped seed template. This covers accidental deletion, bad merges, or clean installs.
+The security convention is a **sticky file** ([`sticky.js`](https://github.com/lorehq/lore/blob/main/.lore/lib/sticky.js)). If it's missing when a session starts, Lore regenerates it from the shipped seed template. This covers accidental deletion, bad merges, or clean installs.
 
 But what if the file is deleted *during* a session? The convention guard handles that too — if it detects the security convention is gone, it regenerates from the seed before continuing. Security enforcement doesn't wait for the next session.
 
