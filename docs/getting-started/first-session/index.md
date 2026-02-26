@@ -9,7 +9,7 @@ Lore ships with first-session setup runbooks for different deployment contexts. 
 | Profile | Best for |
 |---------|----------|
 | [**Knowledge Worker**](knowledge-worker.md) | Enterprise or professional environments — cloud infrastructure, VCS, secret stores, org wikis, multiple CLI tools |
-| [**Homelab**](homelab.md) *(coming soon)* | Personal infrastructure — self-hosted services, home automation, local dev stacks, no org context |
+| [**Homelab**](homelab.md) | Personal infrastructure — self-hosted services, home automation, local dev stacks, no org context |
 | **Personal** *(coming soon)* | Personal productivity — notes, tasks, research, daily workflow; minimal auth complexity. Differs from Knowledge Worker: no org context, optional secret store, single GitHub account at most, simpler model config |
 
 ## How to Run
