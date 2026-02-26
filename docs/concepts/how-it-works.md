@@ -8,33 +8,21 @@ Every session starts from zero. Lore is the harness that changes that.
 
 ## Harness Engineering
 
-Prompt engineering is about crafting individual prompts. [Context engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) is about curating what goes into the context window — what Andrej Karpathy calls "the delicate art and science of filling the context window with just the right information for the next step." Lore does both, but they're means to an end. The actual product is the **harness**: the hooks, delegation patterns, worker tiers, capture lifecycle, semantic search, skill system, and the rules that govern how all of it interacts.
+Prompt engineering optimizes a single interaction. Context engineering optimizes a single session. Harness engineering optimizes **all sessions** — the system that makes every future session better than the last.
 
-This distinction matters because it changes what you optimize for. Prompt engineering optimizes for a single interaction. Context engineering optimizes for a single session. Harness engineering optimizes for **all sessions** — the system that makes every future session better than the last.
+The harness is everything that wraps the agent: hooks, delegation patterns, worker tiers, capture lifecycle, semantic search, the skill system, and the rules governing how they interact. A single `npx create-lore` gives you the scaffolding.
 
-### The emerging discipline
+| What Lore does | How |
+|---|---|
+| Make knowledge findable | Git-tracked knowledge base (`docs/`), semantic search, session banner with knowledge map |
+| Enforce conventions mechanically | Pre-tool-use hooks validate before writes land; `validate-consistency.sh` catches drift |
+| Delegate with focused context | Orchestrator routes to tiered workers (Opus reasons, Haiku executes) — [59% cheaper](../evidence/index.md) at steady state |
+| Load knowledge on demand | Skills and docs load when needed; only the knowledge map appears at session start |
+| Capture knowledge automatically | Gotchas become skills, environment facts become docs, procedures become runbooks — all git-tracked |
+| Manage entropy | Consistency validation, convention guards, escalating capture reminders |
 
-The term "harness engineering" entered the industry vocabulary in early 2026 when OpenAI's Codex team [published five principles](https://openai.com/index/harness-engineering/) from building a million-line codebase entirely with agents. Their core finding: the engineering shifted from writing code to designing environments — making knowledge accessible in the repo, enforcing architectural constraints mechanically rather than through documentation, and giving agents concise structural maps instead of exhaustive manuals.
-
-Birgitta Bockeler, writing on [martinfowler.com](https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html), formalized harness engineering as three components: **context engineering** (curating what the agent sees), **architectural constraints** (deterministic linters and structural tests that enforce boundaries), and **entropy management** (agents that periodically find inconsistencies and violations). Her argument: maintainable AI-generated code requires trading unlimited generative flexibility for standardized, enforceable patterns.
-
-These ideas build on earlier groundwork. Anthropic's Applied AI team described [context engineering patterns](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) for agents — subagent architectures where specialized workers handle focused tasks with clean context windows, progressive disclosure that loads knowledge on demand rather than upfront, and structured note-taking that persists memory outside the context window. Karpathy's [LLM-as-operating-system metaphor](https://karpathy.bearblog.dev/year-in-review-2025/) frames the same problem from the infrastructure side: the LLM is the CPU, the context window is RAM, and something needs to play the role of OS — managing memory, orchestrating processes, and supplying the right data at the right time.
-
-### How Lore implements it
-
-Lore brings harness engineering to the desktop — a single `npx create-lore` gives you the scaffolding that these teams built internally.
-
-| Harness principle | Industry reference | Lore implementation |
-|---|---|---|
-| Knowledge the agent can't see doesn't exist | OpenAI | Git-tracked knowledge base (`docs/`), semantic search, session banner with knowledge map |
-| Mechanical enforcement over documentation | OpenAI, Bockeler | Pre-tool-use hooks enforce conventions before writes land; `validate-consistency.sh` catches drift |
-| Sub-agent architectures with focused context | Anthropic | Orchestrator delegates to tiered workers (Opus reasons, Haiku executes) — [59% cheaper](../evidence/index.md) at steady state |
-| Progressive disclosure and lazy loading | Anthropic | Skills and docs load on demand; only the knowledge map appears at session start |
-| Structured note-taking and persistent memory | Anthropic | Capture workflow routes knowledge to skills, environment docs, and runbooks — all git-tracked |
-| Entropy management | Bockeler | Consistency validation, convention guards, escalating capture reminders |
-| Architectural context mapping | OpenAI | Convention docs, agent-rules, environment mapping — concise structure, not exhaustive manuals |
-
-The difference from these reference implementations: they describe harness engineering for a single application repo or a single team's internal tooling. Lore is the harness itself, packaged as infrastructure that works across repos, platforms, and sessions — with the knowledge compounding over time rather than starting from zero.
+!!! note "Further reading"
+    The term gained traction in early 2026: [OpenAI's Codex team](https://openai.com/index/harness-engineering/) on designing environments over writing code, [Birgitta Bockeler](https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html) on context engineering + architectural constraints + entropy management, [Anthropic](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) on subagent architectures and progressive disclosure, and [Karpathy](https://karpathy.bearblog.dev/year-in-review-2025/) on the LLM-as-operating-system metaphor.
 
 ## System Architecture
 
