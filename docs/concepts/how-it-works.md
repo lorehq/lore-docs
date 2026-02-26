@@ -24,6 +24,24 @@ The harness is everything that wraps the agent: hooks, delegation patterns, work
 !!! note "Further reading"
     The term gained traction in early 2026: [OpenAI's Codex team](https://openai.com/index/harness-engineering/) on designing environments over writing code, [Birgitta Bockeler](https://martinfowler.com/articles/exploring-gen-ai/harness-engineering.html) on context engineering + architectural constraints + entropy management, [Anthropic](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents) on subagent architectures and progressive disclosure, and [Karpathy](https://karpathy.bearblog.dev/year-in-review-2025/) on the LLM-as-operating-system metaphor.
 
+## Three Components
+
+Most tools treat agent context as one thing — a static file of rules and memories. Lore separates it into three components with different lifecycles.
+
+**Conventions** are the operator's one concern. Coding standards, security policies, documentation rules — written and revised by the operator, loaded by name or injected by the harness before relevant actions. What the industry currently calls "skills" — static prompt files with rules and instructions — are conventions. Lore calls them what they are.
+
+**Skills** are managed by the system. Lore uses the coding agent's existing skill infrastructure for something new: system-level environmental knowledge captured from real failures. When the agent hits a gotcha — an API that returns 403 because path segments need URL-encoded slashes, a CLI flag that silently breaks on macOS — that fix becomes a skill. Skills aren't written by the operator. They emerge from work, extend the knowledge base, and get reinjected in future sessions when relevant. The operator can review and browse them in the docs UI or through conversation with the agent, but the system captures, organizes, and loads them.
+
+**Agents** are managed by the system. Tiered workers (from fast/cheap to slow/powerful) that the orchestrator spawns per-task with curated skills and conventions. Dynamic and ephemeral — created for a task, dissolved after. The operator doesn't configure or manage agents — the harness handles delegation.
+
+| Component | Source | Lifecycle | Loaded |
+|-----------|--------|-----------|--------|
+| Conventions | Decided by the operator | Stable — updated deliberately | Lazy-loaded by name or injected before relevant actions |
+| Skills | Discovered during work | Growing — captured from gotchas | On demand, by relevance |
+| Agents | Defined by the harness | Dynamic — spawned and dissolved per-task | Per delegation |
+
+Conventions make the agent consistent. Skills prevent repeated failures. Agents make it scalable.
+
 ## System Architecture
 
 ```mermaid
