@@ -41,30 +41,30 @@ Lore hooks are plain JavaScript files that run as child processes of your coding
 - Read `.lore-config`, `docs/`, `.lore/`, registry files, and `.git/` (state files) to build the session banner
 - Write state files to `.git/` (tracker counters, nav-dirty flags, hook event logs)
 - Write to stdout (injecting context into the agent's conversation)
-- Scaffold sticky files (`MEMORY.local.md`, `.gitignore` entries) if missing
+- Scaffold sticky files ([`sticky.js`](https://github.com/lorehq/lore/blob/main/.lore/lib/sticky.js)) if missing — `MEMORY.local.md`, `.gitignore` entries
 
 ### Supply Chain
 
-Lore has **zero npm runtime dependencies**. All `lib/` modules use only Node.js built-ins (`fs`, `path`, `os`, `crypto`, `util`). Dev dependencies (eslint, prettier) are not installed by `create-lore` and do not run in hooks.
+Lore has **zero npm runtime dependencies**. All [`lib/` modules](https://github.com/lorehq/lore/tree/main/.lore/lib) use only Node.js built-ins (`fs`, `path`, `os`, `crypto`, `util`). Dev dependencies (eslint, prettier) are not installed by `create-lore` and do not run in hooks.
 
-The installer (`create-lore`) clones the lore repo at a pinned version tag — no transitive dependency tree to audit.
+The installer ([`create-lore`](https://github.com/lorehq/create-lore)) clones the lore repo at a pinned version tag — no transitive dependency tree to audit.
 
 ### How to Audit
 
 All hook source is in your repo after install:
 
-```
-.lore/hooks/              # Claude Code hooks
-.cursor/hooks/            # Cursor hooks
-.opencode/plugins/        # OpenCode hooks
-.lore/lib/                # Shared logic (all hooks import from here)
-```
+| Directory | Purpose |
+|-----------|---------|
+| [`.lore/hooks/`](https://github.com/lorehq/lore/tree/main/.lore/hooks) | Claude Code hooks |
+| [`.cursor/hooks/`](https://github.com/lorehq/lore/tree/main/.cursor/hooks) | Cursor hooks |
+| [`.opencode/plugins/`](https://github.com/lorehq/lore/tree/main/.opencode/plugins) | OpenCode hooks |
+| [`.lore/lib/`](https://github.com/lorehq/lore/tree/main/.lore/lib) | Shared logic (all hooks import from here) |
 
 Every file is plain JavaScript with no minification or bundling. Ask your agent to audit the hook source — line counts, dependency checks, or anything else you want to verify.
 
 ### MEMORY.md Protection
 
-Hooks actively block reads and writes to `MEMORY.md` at the project root. This prevents the agent's platform-level memory feature from overwriting knowledge that should be routed to skills or docs. Access attempts are redirected to `MEMORY.local.md` (gitignored scratch space) or the appropriate knowledge route.
+Hooks actively block reads and writes to `MEMORY.md` at the project root ([`protect-memory.js`](https://github.com/lorehq/lore/blob/main/.lore/hooks/protect-memory.js)). This prevents the agent's platform-level memory feature from overwriting knowledge that should be routed to skills or docs. Access attempts are redirected to `MEMORY.local.md` (gitignored scratch space) or the appropriate knowledge route.
 
 ## Known Limitations
 
