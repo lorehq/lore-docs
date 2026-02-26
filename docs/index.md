@@ -8,6 +8,12 @@ title: Home
 
 Lore is a harness for AI coding agents. It wraps your agent to manage persistent memory, enforce conventions, orchestrate delegation, and track work — so every session builds on the last.
 
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; margin: 1.5em 0;">
+  <iframe src="https://www.youtube.com/embed/u2rkR1XeHZk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allowfullscreen></iframe>
+</div>
+
+*Two different agents, one knowledge base. What one learns, the other knows.*
+
 ## What You Get
 
 - **Knowledge Capture** — Gotchas, API quirks, and environment details persist as searchable skills and docs.
