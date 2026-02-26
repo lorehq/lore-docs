@@ -1,0 +1,2906 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Coding agent harness">
+      
+      
+      
+        <link rel="canonical" href="https://lorehq.github.io/lore-docs/evidence/analysis/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../methodology/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Analysis - Lore</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/panzoom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <meta name="panzoom-theme" content="material">
+<meta name="panzoom-data" content='{"selectors": [".d2", "img", ".mermaid"], "initial_zoom_level": 1.0}'> </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#analysis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Lore" class="md-header__button md-logo" aria-label="Lore" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lore
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Analysis
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lorehq/lore" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lorehq/lore
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../concepts/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Evidence
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../changelog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Changelog
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Lore" class="md-nav__button md-logo" aria-label="Lore" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Lore
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lorehq/lore" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lorehq/lore
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../getting-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../getting-started/first-session/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Session
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    First Session
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/first-session/knowledge-worker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Knowledge Worker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/first-session/homelab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Homelab
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/migration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Migration & Uninstalling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../guides/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/working-with-lore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working with Lore
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/working-across-repos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Working Across Repos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/docs-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docs UI & Search
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/roadmaps-and-plans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmaps & Plans
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/upgrading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/field-repair/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Field Repair
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../concepts/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/how-it-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How It Works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/delegation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Delegation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/hook-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hook Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/when-to-use-lore/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    When to Use Lore
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/production-readiness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production Readiness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../reference/platforms/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Platforms
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Platforms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/platforms/claude-code/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/platforms/cursor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cursor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/platforms/opencode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpenCode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/ci-and-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CI & Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evidence
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Evidence
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-progression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Progression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cost Progression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#answer-cost-by-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer cost by condition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-lore-cold-has-higher-variance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Lore Cold has higher variance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capture-investment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capture Investment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capture Investment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-capture-buys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What capture buys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution Time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cumulative-roi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cumulative ROI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mechanisms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mechanisms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-delegation-to-cheaper-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Delegation to cheaper models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-cache-efficient-knowledge-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Cache-efficient knowledge injection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-elimination-of-discovery-cycles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Elimination of discovery cycles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-operator-effort-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Operator effort reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#honest-observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Honest Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../raw-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Raw Session Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operator-inputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Operator Inputs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Changelog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../changelog-archive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-progression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost Progression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cost Progression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#answer-cost-by-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Answer cost by condition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-lore-cold-has-higher-variance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Lore Cold has higher variance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capture-investment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capture Investment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capture Investment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-capture-buys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What capture buys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution Time
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cumulative-roi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cumulative ROI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mechanisms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mechanisms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-delegation-to-cheaper-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Delegation to cheaper models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-cache-efficient-knowledge-injection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Cache-efficient knowledge injection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-elimination-of-discovery-cycles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Elimination of discovery cycles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-operator-effort-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Operator effort reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#honest-observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Honest Observations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Evidence
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="analysis">Analysis<a class="headerlink" href="#analysis" title="Permanent link">&para;</a></h1>
+<p>Findings from 50 Claude Code sessions across 5 conditions. All figures are API-equivalent costs (tests ran on Claude Max subscription). Per-session data in <a href="../raw-data/">raw-data.md</a>. Test design in <a href="../methodology/">methodology.md</a>. Operator messages in <a href="../operator-inputs/">operator-inputs.md</a>.</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>N</th>
+<th>Answer Cost</th>
+<th>Capture Cost</th>
+<th>Total Cost</th>
+<th>Answer Time</th>
+<th>Capture Time</th>
+<th>vs Raw Cold</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw Cold</td>
+<td>10</td>
+<td>$0.45</td>
+<td>—</td>
+<td>$0.45</td>
+<td>1m 12s</td>
+<td>—</td>
+<td>baseline</td>
+</tr>
+<tr>
+<td>Lore Cold</td>
+<td>10</td>
+<td>$0.32</td>
+<td>$0.08</td>
+<td>$0.43</td>
+<td>1m 22s</td>
+<td>0m 35s</td>
+<td>cost -29%</td>
+</tr>
+<tr>
+<td>Lore Warm</td>
+<td>10</td>
+<td>$0.24</td>
+<td>~$0.01</td>
+<td>$0.24</td>
+<td>1m 4s</td>
+<td>—</td>
+<td>cost -46%, time -11%</td>
+</tr>
+<tr>
+<td>Lore Hot</td>
+<td>10</td>
+<td>$0.24</td>
+<td>$0.08</td>
+<td>$0.35</td>
+<td>0m 57s</td>
+<td>0m 37s *</td>
+<td>cost -46%, time -21%</td>
+</tr>
+<tr>
+<td>Lore Runbook</td>
+<td>10</td>
+<td>$0.19</td>
+<td>—</td>
+<td>$0.19</td>
+<td>0m 40s</td>
+<td>—</td>
+<td>cost -59%, time -44%</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition danger">
+<p><strong>*</strong> Lore Hot capture time is <strong>operator-initiated runbook creation</strong> — the operator explicitly asked the agent to write a runbook after getting the answer. This is not automatic framework behavior.</p>
+</div>
+<p>All values are medians except capture cost (mean — most sessions have zero capture, so median would be $0). "vs Raw Cold" compares answer cost and answer time against the Raw Cold baseline.</p>
+<p>Key findings:</p>
+<ul>
+<li><strong>59% cost reduction</strong> from raw baseline to runbook execution</li>
+<li><strong>44% faster execution</strong> at runbook stage (answer time drops from 1m 12s to 40s)</li>
+<li><strong>Total capture investment of $0.17</strong> pays back in less than 1 runbook run</li>
+<li><strong>Operator input drops</strong> from 2 messages with service URLs to 1 word ("fulfillment")</li>
+<li><strong>Variance halves</strong> — std dev drops from $0.11 (raw) to $0.04 (runbook)</li>
+</ul>
+<hr />
+<h2 id="cost-progression">Cost Progression<a class="headerlink" href="#cost-progression" title="Permanent link">&para;</a></h2>
+<h3 id="answer-cost-by-condition">Answer cost by condition<a class="headerlink" href="#answer-cost-by-condition" title="Permanent link">&para;</a></h3>
+<p>The "answer cost" is the cost of getting the result — everything before the first write to skills, environment docs, or runbooks. This isolates the cost of the task itself from the knowledge capture investment.</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Mean</th>
+<th>Median</th>
+<th>Std Dev</th>
+<th>Min</th>
+<th>Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw Cold</td>
+<td>$0.4542</td>
+<td>$0.4532</td>
+<td>$0.1098</td>
+<td>$0.3017</td>
+<td>$0.6080</td>
+</tr>
+<tr>
+<td>Lore Cold</td>
+<td>$0.3495</td>
+<td>$0.3226</td>
+<td>$0.1548</td>
+<td>$0.1919</td>
+<td>$0.6417</td>
+</tr>
+<tr>
+<td>Lore Warm</td>
+<td>$0.2284</td>
+<td>$0.2429</td>
+<td>$0.0520</td>
+<td>$0.1032</td>
+<td>$0.2945</td>
+</tr>
+<tr>
+<td>Lore Hot</td>
+<td>$0.2728</td>
+<td>$0.2446</td>
+<td>$0.0710</td>
+<td>$0.1951</td>
+<td>$0.4570</td>
+</tr>
+<tr>
+<td>Lore Runbook</td>
+<td>$0.1951</td>
+<td>$0.1870</td>
+<td>$0.0421</td>
+<td>$0.1431</td>
+<td>$0.2696</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cold → Cold (-29%):</strong> Even on the first run with an empty knowledge base, Lore's answer cost is lower than raw Claude Code. The mechanism: Lore delegates API exploration to Haiku workers (cache reads at $0.10/MTok vs Opus at $0.50/MTok). The orchestrator reasons about the task while cheaper models do the trial-and-error HTTP calls.</p>
+<p><strong>Cold → Warm (-46%):</strong> The largest single drop. Knowledge captured during the cold session — endpoint URLs, required parameters, required headers, API gotchas — eliminates all trial and error. The model goes directly to the correct API paths on the first attempt.</p>
+<p><strong>Warm → Runbook (-59%):</strong> A documented procedure eliminates even the need for the model to reason about the task structure. One word triggers the complete operation.</p>
+<h3 id="why-lore-cold-has-higher-variance">Why Lore Cold has higher variance<a class="headerlink" href="#why-lore-cold-has-higher-variance" title="Permanent link">&para;</a></h3>
+<p>Lore Cold std dev ($0.15) is higher than Raw Cold ($0.11). This is expected: the cold session involves more moving parts (framework hooks, worker delegation, capture decision) and the model explores different API paths across instances. Once knowledge stabilizes the approach, variance drops sharply.</p>
+<hr />
+<h2 id="capture-investment">Capture Investment<a class="headerlink" href="#capture-investment" title="Permanent link">&para;</a></h2>
+<p>Capture cost is the cost of writing knowledge artifacts — skills, environment docs, and runbooks — at the end of a session. This is the investment that makes future runs cheaper.</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Sessions with Capture</th>
+<th>Mean Capture Cost</th>
+<th>What's Captured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lore Cold</td>
+<td>10/10</td>
+<td>$0.0814</td>
+<td>Skills (API gotchas) + environment docs (endpoints, params, headers)</td>
+</tr>
+<tr>
+<td>Lore Warm</td>
+<td>1/10</td>
+<td>$0.0087</td>
+<td>Minor doc updates (lore-01 only)</td>
+</tr>
+<tr>
+<td>Lore Hot</td>
+<td>10/10</td>
+<td>$0.0795</td>
+<td>Runbook (step-by-step procedure)</td>
+</tr>
+<tr>
+<td>Lore Runbook</td>
+<td>0/10</td>
+<td>—</td>
+<td>Nothing — pure execution</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total capture investment per instance:</strong> $0.0814 + $0.0087 + $0.0795 = <strong>$0.17</strong></p>
+<p><strong>Savings per runbook run vs raw cold:</strong> $0.4532 - $0.1870 = <strong>$0.27</strong> (median)</p>
+<p><strong>Payback:</strong> The $0.17 capture investment is recovered in <strong>less than 1 runbook execution</strong>. Every run after that is pure savings.</p>
+<h3 id="what-capture-buys">What capture buys<a class="headerlink" href="#what-capture-buys" title="Permanent link">&para;</a></h3>
+<p>The $0.17 investment produces three categories of reusable knowledge:</p>
+<ol>
+<li>
+<p><strong>Skills</strong> (~$0.04): Document API gotchas — the orders endpoint requires both <code>from</code> and <code>to</code> params, the inventory endpoint requires an <code>X-Warehouse: primary</code> header, the versioned paths differ from the obvious ones. These prevent the model from repeating discovery mistakes.</p>
+</li>
+<li>
+<p><strong>Environment docs</strong> (~$0.04): Map the service topology — which URLs serve which APIs, what parameters each endpoint accepts, what headers are required. This is the reference material that makes warm sessions possible.</p>
+</li>
+<li>
+<p><strong>Runbook</strong> (~$0.08): A step-by-step procedure that codifies the complete operation — fetch orders for the date range, extract SKUs, check inventory for each, compare quantities, report shortfalls. This is what enables the single-word trigger.</p>
+</li>
+</ol>
+<hr />
+<h2 id="execution-time">Execution Time<a class="headerlink" href="#execution-time" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Exec Median</th>
+<th>Answer Median</th>
+<th>vs Raw Cold (exec)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw Cold</td>
+<td>1m 12s</td>
+<td>1m 12s</td>
+<td>baseline</td>
+</tr>
+<tr>
+<td>Lore Cold</td>
+<td>2m 1s</td>
+<td>1m 22s</td>
+<td>+68% (slower)</td>
+</tr>
+<tr>
+<td>Lore Warm</td>
+<td>1m 5s</td>
+<td>1m 4s</td>
+<td>-10%</td>
+</tr>
+<tr>
+<td>Lore Hot</td>
+<td>1m 32s</td>
+<td>0m 57s</td>
+<td>+28% (slower)</td>
+</tr>
+<tr>
+<td>Lore Runbook</td>
+<td>0m 40s</td>
+<td>0m 40s</td>
+<td>-44%</td>
+</tr>
+</tbody>
+</table>
+<p>Execution time = sum of <code>durationMs</code> from Claude Code system events (per-turn active processing timer). See <a href="../methodology/">methodology.md</a> for details.</p>
+<p><strong>Cold and hot sessions are slower due to capture.</strong> Lore Cold (+68%) and Lore Hot (+28%) include time spent writing skills, environment docs, and runbooks. Answer time alone tells a different story: Cold is only +14% slower, and Hot is actually 21% faster than raw — knowledge from prior sessions accelerates the answer even before the runbook exists.</p>
+<p><strong>Runbook sessions are 44% faster.</strong> Full knowledge plus a documented procedure eliminates trial-and-error API exploration. The model follows the runbook directly, completing in under a minute.</p>
+<p><strong>Warm sessions show modest time improvement.</strong> 10% faster overall — knowledge prevents dead-end API calls but the task is short enough that the absolute time savings are small (~7 seconds).</p>
+<hr />
+<h2 id="variance">Variance<a class="headerlink" href="#variance" title="Permanent link">&para;</a></h2>
+<p>Knowledge makes outcomes more predictable. Standard deviation of answer cost:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Std Dev</th>
+<th>Relative to Raw</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw Cold</td>
+<td>$0.1098</td>
+<td>baseline</td>
+</tr>
+<tr>
+<td>Lore Cold</td>
+<td>$0.1548</td>
+<td>1.4x (more variable)</td>
+</tr>
+<tr>
+<td>Lore Warm</td>
+<td>$0.0520</td>
+<td>0.47x</td>
+</tr>
+<tr>
+<td>Lore Hot</td>
+<td>$0.0710</td>
+<td>0.65x</td>
+</tr>
+<tr>
+<td>Lore Runbook</td>
+<td>$0.0421</td>
+<td>0.38x</td>
+</tr>
+</tbody>
+</table>
+<p>The coefficient of variation (std/mean) tells the same story:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>CV</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw Cold</td>
+<td>24%</td>
+</tr>
+<tr>
+<td>Lore Cold</td>
+<td>44%</td>
+</tr>
+<tr>
+<td>Lore Warm</td>
+<td>23%</td>
+</tr>
+<tr>
+<td>Lore Hot</td>
+<td>26%</td>
+</tr>
+<tr>
+<td>Lore Runbook</td>
+<td>22%</td>
+</tr>
+</tbody>
+</table>
+<p>Cold sessions are unpredictable — the model may find the right API path quickly or spend many turns exploring dead ends. Once knowledge captures the correct approach, the model follows a consistent path every time.</p>
+<hr />
+<h2 id="cumulative-roi">Cumulative ROI<a class="headerlink" href="#cumulative-roi" title="Permanent link">&para;</a></h2>
+<p>The economic case for knowledge capture depends on task recurrence. Below: cumulative cost of running the same task N times under raw cold vs the Lore progression path (cold → warm → hot → runbook → runbook → ...).</p>
+<table>
+<thead>
+<tr>
+<th>Total Runs</th>
+<th>Raw Cold</th>
+<th>Lore Path</th>
+<th>Savings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>$0.45</td>
+<td>$0.43</td>
+<td>$0.02 (5%)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>$0.91</td>
+<td>$0.67</td>
+<td>$0.24 (26%)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$1.36</td>
+<td>$1.02</td>
+<td>$0.34 (25%)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>$2.27</td>
+<td>$1.41</td>
+<td>$0.86 (38%)</td>
+</tr>
+<tr>
+<td>10</td>
+<td>$4.54</td>
+<td>$2.39</td>
+<td>$2.16 (47%)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>$9.08</td>
+<td>$4.34</td>
+<td>$4.75 (52%)</td>
+</tr>
+</tbody>
+</table>
+<p>Uses mean total cost per condition: Raw Cold $0.4542, Lore Cold $0.4310, Warm $0.2371, Hot $0.3524, Runbook $0.1951.</p>
+<p><strong>Break-even is immediate.</strong> Even the first Lore cold session is slightly cheaper than raw cold (the delegation savings offset framework overhead). By 10 runs, the Lore path costs 47% less. The savings percentage asymptotically approaches 57% — the ratio of runbook cost to raw cold cost.</p>
+<hr />
+<h2 id="mechanisms">Mechanisms<a class="headerlink" href="#mechanisms" title="Permanent link">&para;</a></h2>
+<p>Four mechanisms drive the cost and time reductions:</p>
+<h3 id="1-delegation-to-cheaper-models">1. Delegation to cheaper models<a class="headerlink" href="#1-delegation-to-cheaper-models" title="Permanent link">&para;</a></h3>
+<p>The orchestrator (Opus 4.6, $0.50/MTok cache reads) delegates API exploration to workers (Haiku 4.5, $0.10/MTok cache reads). This is a 5x cost reduction on cache reads, which dominate token volume in Claude Code sessions.</p>
+<p>Raw Cold uses Opus for everything — including trial-and-error HTTP calls that don't require advanced reasoning. Lore routes these to the cheapest model that can execute them.</p>
+<h3 id="2-cache-efficient-knowledge-injection">2. Cache-efficient knowledge injection<a class="headerlink" href="#2-cache-efficient-knowledge-injection" title="Permanent link">&para;</a></h3>
+<p>Lore's knowledge base is injected via the session banner at conversation start. This content lands in the prompt cache prefix, where it's read at cache rates (10% of input cost) for every subsequent turn. The knowledge itself is small (a few hundred tokens of endpoint/parameter documentation), but it eliminates thousands of tokens of Opus output that would otherwise be spent on API exploration.</p>
+<h3 id="3-elimination-of-discovery-cycles">3. Elimination of discovery cycles<a class="headerlink" href="#3-elimination-of-discovery-cycles" title="Permanent link">&para;</a></h3>
+<p>Raw Cold sessions spend 17-32 API requests discovering the correct endpoints, parameters, and headers through trial and error. Each failed attempt costs output tokens (the model reasons about what went wrong) and input tokens (the growing context window). Knowledge-equipped sessions skip this entirely — the model knows the correct API paths from the first turn.</p>
+<h3 id="4-operator-effort-reduction">4. Operator effort reduction<a class="headerlink" href="#4-operator-effort-reduction" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Operator Messages</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw Cold</td>
+<td>2</td>
+<td>Full task prompt + service URLs after dead end</td>
+</tr>
+<tr>
+<td>Lore Cold</td>
+<td>3</td>
+<td>Full task prompt + clarification answers + capture approval</td>
+</tr>
+<tr>
+<td>Lore Warm</td>
+<td>1</td>
+<td>Full task prompt</td>
+</tr>
+<tr>
+<td>Lore Hot</td>
+<td>2</td>
+<td>Full task prompt + runbook creation request</td>
+</tr>
+<tr>
+<td>Lore Runbook</td>
+<td>1</td>
+<td>One word ("fulfillment")</td>
+</tr>
+</tbody>
+</table>
+<p>See <a href="../operator-inputs/">operator-inputs.md</a> for exact messages. The operator's cognitive load decreases with each phase: from providing service URLs and answering clarifying questions, to typing a single trigger word.</p>
+<hr />
+<h2 id="honest-observations">Honest Observations<a class="headerlink" href="#honest-observations" title="Permanent link">&para;</a></h2>
+<p><strong>Lore Cold is not strictly better than Raw Cold.</strong> The total session cost (answer + capture) is comparable: $0.43 vs $0.45. The execution time is significantly worse: 2m 1s vs 1m 12s — the capture phase adds ~35 seconds of knowledge writing on top of a comparable answer time. The value of the cold session is the knowledge it produces, not the efficiency of that specific run.</p>
+<p><strong>Lore Cold has higher variance.</strong> The framework's multi-agent architecture introduces more variability in the exploration phase. Some sessions find the right path quickly; others spend more time coordinating workers. This variance disappears once knowledge stabilizes the approach.</p>
+<p><strong>Capture cost is not free.</strong> The $0.17 total investment is small relative to the per-run savings, but it requires operator participation — answering clarifying questions, approving capture writes, and requesting runbook creation. This is a design choice: Lore treats the operator as the authority on what knowledge to persist.</p>
+<p><strong>One task type.</strong> These results are from API exploration with mock services. Code generation, refactoring, debugging, and other task patterns may show different cost profiles. The delegation advantage (routing execution to cheaper models) should generalize; the knowledge reuse advantage depends on task recurrence.</p>
+<p><strong>No cross-tool validation.</strong> Knowledge captured in Claude Code should benefit sessions in Cursor and OpenCode — the knowledge base is tool-agnostic. This has not been tested.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.sections", "navigation.path", "navigation.instant", "toc.follow", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../assets/javascripts/panzoom.min.js"></script>
+      
+        <script src="../../assets/javascripts/zoompan.js"></script>
+      
+    
+  </body>
+</html>
