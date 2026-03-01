@@ -93,6 +93,7 @@ nav:
       - Claude Code: reference/platforms/claude-code.md
       - Gemini CLI: reference/platforms/gemini-cli.md
       - Cursor: reference/platforms/cursor.md
+      - Windsurf: reference/platforms/windsurf.md
       - OpenCode: reference/platforms/opencode.md
     - Troubleshooting: reference/troubleshooting.md
     - CI & Testing: reference/ci-and-testing.md
