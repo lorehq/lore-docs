@@ -46,10 +46,17 @@ Cursor's hook model fires hooks on specific events but cannot inject advisory co
 
 **Rules:** `.cursor/rules/lore-*.mdc` — generated from `.lore/instructions.md`, agent-rules, rules, and agent-registry by `sync-platform-skills.sh`.
 
+## Passive Enforcement Rules
+
+To compensate for the lack of `BeforeTool` hooks, Cursor uses targeted `.mdc` rules for passive enforcement:
+
+- **`lore-ambiguity.mdc`:** Scans for vague terms and forces the agent to ask for concrete bounds.
+- **`lore-search-discipline.mdc`:** Enforces the Knowledge-base-first search strategy to prevent token waste.
+
 ## Coverage Gaps
 
 | Gap | Impact | Mitigation |
 |-----|--------|------------|
-| No per-prompt hook | No knowledge-base-first reinforcement per turn | `lore_check_in` MCP tool provides on-demand reinforcement |
+| No per-prompt hook | No ambiguity scanning per turn | `lore-ambiguity.mdc` rule provides passive enforcement |
 | No context-path-guide in hooks | No automatic tree display on `docs/` writes | `lore_context` MCP tool provides on-demand tree |
-| No search-guard | No nudge toward semantic search over speculative reads | `lore_write_guard` MCP tool includes search suggestions |
+| No search-guard | No active hook to block speculative reads | `lore-search-discipline.mdc` rule provides passive enforcement |

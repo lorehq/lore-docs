@@ -91,6 +91,7 @@ nav:
     - Platforms:
       - reference/platforms/index.md
       - Claude Code: reference/platforms/claude-code.md
+      - Gemini CLI: reference/platforms/gemini-cli.md
       - Cursor: reference/platforms/cursor.md
       - OpenCode: reference/platforms/opencode.md
     - Troubleshooting: reference/troubleshooting.md
