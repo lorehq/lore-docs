@@ -94,6 +94,7 @@ nav:
       - Gemini CLI: reference/platforms/gemini-cli.md
       - Cursor: reference/platforms/cursor.md
       - Windsurf: reference/platforms/windsurf.md
+      - Roo Code: reference/platforms/roocode.md
       - OpenCode: reference/platforms/opencode.md
     - Troubleshooting: reference/troubleshooting.md
     - CI & Testing: reference/ci-and-testing.md

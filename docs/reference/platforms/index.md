@@ -4,7 +4,7 @@ title: Platform Overview
 
 # Platform Overview
 
-Lore supports five coding agent platforms. All share the same knowledge base — skills, agents, docs, and work tracking persist across platforms.
+Lore supports six coding agent platforms. All share the same knowledge base — skills, agents, docs, and work tracking persist across platforms.
 
 ## Platform Maturity
 
@@ -14,6 +14,7 @@ Lore supports five coding agent platforms. All share the same knowledge base —
 | **Gemini CLI** | Hooks + `GEMINI.md` + MCP | **Supported** — comprehensive hook parity |
 | **Cursor** | Hooks + MCP server + `.mdc` rules | **Experimental** — core features work, undergoing optimization |
 | **Windsurf** | `.windsurfrules` file | **Experimental** — relies on passive enforcement rules |
+| **Roo Code** | `.clinerules` + MCP | **Experimental** — full context + tool support |
 | **OpenCode** | ESM plugins + `opencode.json` | **Experimental** — core features work, uses experimental API hooks |
 
 !!! info "What experimental means"
@@ -26,19 +27,19 @@ Lore supports five coding agent platforms. All share the same knowledge base —
 
 ## Feature Matrix
 
-| Feature | Claude Code | Gemini CLI | Cursor | Windsurf | OpenCode |
-|---------|:-----------:|:----------:|:------:|:--------:|:--------:|
-| Session banner | Yes | Yes | Yes | Yes | Yes |
-| Per-prompt reinforcement | Yes (conversation history) | Yes | No (compensated by `.mdc` rules and MCP tools) | No (compensated by `.windsurfrules`) | Yes (system prompt, zero accumulation) |
-| MCP tools | Yes (`lore_search`, `lore_read`, `lore_health` via `.mcp.json`) | Yes (`lore_search`, `lore-cursor` via `.gemini/settings.json`) | Yes (`lore_check_in`, `lore_context`, `lore_write_guard`) | No | No |
-| MEMORY.md guard | Yes | Yes | Yes | No | Yes |
-| Knowledge capture reminders | Yes | Yes | Yes | No | Yes |
-| Bash escalation tracking | Yes | Yes | Yes | No | Yes |
-| Context path guide | Yes | Yes | No | No | Yes |
-| Search guard | Yes | Yes | Yes (via `.mdc`) | Yes (via `.windsurfrules`) | Yes |
-| Compaction resilience | SessionStart re-fires | PreCompress hook | Flag + re-orientation on next cmd/MCP | N/A (Cascade Flow) | Compacting event re-injects |
-| Hook event logging | Yes | Yes | Yes | No | Yes |
-| Instructions | `CLAUDE.md` | `GEMINI.md` | `.cursor/rules/lore-*.mdc` | `.windsurfrules` | `.lore/instructions.md` |
+| Feature | Claude Code | Gemini CLI | Cursor | Windsurf | Roo Code | OpenCode |
+|---------|:-----------:|:----------:|:------:|:--------:|:--------:|:--------:|
+| Session banner | Yes | Yes | Yes | Yes | Yes | Yes |
+| Per-prompt reinforcement | Yes (conversation history) | Yes | No (compensated by `.mdc` rules and MCP tools) | No (compensated by `.windsurfrules`) | No (compensated by `.clinerules`) | Yes (system prompt, zero accumulation) |
+| MCP tools | Yes (`lore_search`, `lore_read`, `lore_health` via `.mcp.json`) | Yes (`lore_search`, `lore-cursor` via `.gemini/settings.json`) | Yes (`lore_check_in`, `lore_context`, `lore_write_guard`) | No | Yes | No |
+| MEMORY.md guard | Yes | Yes | Yes | No | No | Yes |
+| Knowledge capture reminders | Yes | Yes | Yes | No | No | Yes |
+| Bash escalation tracking | Yes | Yes | Yes | No | No | Yes |
+| Context path guide | Yes | Yes | No | No | No | Yes |
+| Search guard | Yes | Yes | Yes (via `.mdc`) | Yes (via `.windsurfrules`) | Yes (via `.clinerules`) | Yes |
+| Compaction resilience | SessionStart re-fires | PreCompress hook | Flag + re-orientation on next cmd/MCP | N/A | N/A | Compacting event re-injects |
+| Hook event logging | Yes | Yes | Yes | No | No | Yes |
+| Instructions | `CLAUDE.md` | `GEMINI.md` | `.cursor/rules/lore-*.mdc` | `.windsurfrules` | `.clinerules` | `.lore/instructions.md` |
 
 ## Shared Architecture
 
@@ -63,6 +64,7 @@ All platforms activate automatically after `npx create-lore`.
 | **Gemini CLI** | `GEMINI.md` + `.gemini/settings.json` |
 | **Cursor** | `.cursor/rules/lore-*.mdc` + `.cursor/hooks.json` + `.cursor/mcp.json` |
 | **Windsurf** | `.windsurfrules` |
+| **Roo Code** | `.clinerules` |
 | **OpenCode** | `opencode.json` + `.opencode/plugins/` + `.opencode/commands/` |
 
 `CLAUDE.md` and `GEMINI.md` are generated from `.lore/instructions.md`. Cursor `.mdc` rules are generated from multiple sources (instructions, agent-rules, rules, agent-registry). Your agent keeps platform copies in sync automatically — a capture pass handles this.
@@ -90,4 +92,5 @@ See [Cross-Repo Workflow](../../guides/working-across-repos.md) for how `/lore-l
 - [Gemini CLI](gemini-cli.md) — 8 hooks, full lifecycle coverage, native MCP
 - [Cursor](cursor.md) — 6 hooks + MCP server, dual architecture
 - [Windsurf](windsurf.md) — single file global rules
+- [Roo Code](roocode.md) — Custom instructions + MCP
 - [OpenCode](opencode.md) — 7 ESM plugins, experimental API hooks
