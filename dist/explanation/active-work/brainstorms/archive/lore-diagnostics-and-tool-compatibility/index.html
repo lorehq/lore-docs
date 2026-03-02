@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Lore Diagnostics and Tool Compatibility | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Lore Diagnostics and Tool Compatibility ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="lore-diagnostics-and-tool-compatibility">Lore Diagnostics and Tool Compatibility</h1>
+<p>Three related ideas around runtime awareness, self-testing, and cross-tool compatibility tracking.</p>
+<h2 id="1-version-awareness-lore-version">1. Version Awareness (<code>/lore-version</code>)</h2>
+<p>Users should be able to ask their instance what version of Lore they’re running.</p>
+<p><strong>Mechanism:</strong></p>
+<ul>
+<li><code>sync-framework.sh</code> stamps <code>framework.version</code> (tag or SHA) into <code>.lore-config</code> at sync time</li>
+<li>Every level in the chain carries the version it last synced from</li>
+<li>A <code>/lore-version</code> command (or skill) reads <code>.lore-config</code> and reports:
+<ul>
+<li>Framework version (e.g., <code>v0.1.0</code>)</li>
+<li>Last sync timestamp</li>
+<li>Current level (org/team/instance/standalone)</li>
+<li>Parent URL and pin (if applicable)</li>
+</ul>
+</li>
+</ul>
+<p><strong><code>.lore-config</code> addition:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">framework</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  source_repo</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">https://github.com/lorehq/lore.git</span></span>
+<span class="line"><span style="color:#85E89D">  version</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">v0.1.0</span><span style="color:#6A737D">          # stamped by sync-framework.sh</span></span>
+<span class="line"><span style="color:#85E89D">  synced_at</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2026-02-12</span><span style="color:#6A737D">    # when last synced</span></span></code></pre>
+<p><strong>Bonus:</strong> Could warn if the local version is behind source (stale sync detection).</p>
+<h2 id="2-integration-health-check-lore-check">2. Integration Health Check (<code>/lore-check</code>)</h2>
+<p>A diagnostic command that verifies Lore is properly integrated with the current tool (Claude Code, OpenCode, etc.).</p>
+<p><strong>What it would test:</strong></p>
+<ul>
+<li>Hooks are registered and firing (SessionStart, UserPromptSubmit, PreToolUse, PostToolUse)</li>
+<li>Skills are discoverable (registry matches skill dirs)</li>
+<li>MkDocs builds cleanly (if applicable)</li>
+<li><code>.lore-config</code> is valid</li>
+<li>Framework manifest matches expected files</li>
+<li>Agents and registries are in sync</li>
+</ul>
+<p><strong>Difference from <code>validate-consistency.sh</code>:</strong></p>
+<ul>
+<li><code>validate-consistency.sh</code> checks file/registry consistency (already exists)</li>
+<li><code>/lore-check</code> would be broader — also tests runtime integration (are hooks actually firing? can the agent read skills? does the tool support all expected hook events?)</li>
+</ul>
+<p><strong>Hook smoke test idea:</strong></p>
+<ul>
+<li><code>/lore-check</code> triggers each hook type and checks for expected output</li>
+<li>Reports which hooks fired vs which were silent (tool may not support all events)</li>
+</ul>
+<h2 id="3-tool-compatibility-matrix">3. Tool Compatibility Matrix</h2>
+<p>Different AI coding tools support different hook events, permission models, and capabilities. Lore should track what works where and how well.</p>
+<p><strong>Proposed matrix:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Capability</th><th>Claude Code</th><th>OpenCode</th><th>[Future Tool]</th></tr></thead><tbody><tr><td><strong>SessionStart hook</strong></td><td>?</td><td>?</td><td></td></tr><tr><td><strong>UserPromptSubmit hook</strong></td><td>?</td><td>?</td><td></td></tr><tr><td><strong>PreToolUse hook</strong></td><td>?</td><td>?</td><td></td></tr><tr><td><strong>PostToolUse hook</strong></td><td>?</td><td>?</td><td></td></tr><tr><td><strong>PostToolUseFailure hook</strong></td><td>?</td><td>?</td><td></td></tr><tr><td><strong>Hook matcher filtering</strong></td><td>?</td><td>?</td><td></td></tr><tr><td><strong>Skill discovery</strong></td><td>?</td><td>?</td><td></td></tr><tr><td><strong>Agent delegation (Task)</strong></td><td>?</td><td>?</td><td></td></tr><tr><td><strong>Permission profiles</strong></td><td>?</td><td>?</td><td></td></tr><tr><td><strong>MCP tool integration</strong></td><td>?</td><td>?</td><td></td></tr></tbody></table>
+<p><strong>Effectiveness scoring (0-10):</strong></p>
+<p>Not just “does it work” but “how well does it nudge/enforce”:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Level</th><th>Score</th><th>Meaning</th></tr></thead><tbody><tr><td>0</td><td>No support</td><td>Tool doesn’t support this capability at all</td></tr><tr><td>1-3</td><td>Weak</td><td>Fires but easily ignored, no enforcement</td></tr><tr><td>4-6</td><td>Moderate</td><td>Reliable nudge, agent usually follows</td></tr><tr><td>7-9</td><td>Strong</td><td>Consistent enforcement, hard to bypass</td></tr><tr><td>10</td><td>Absolute</td><td>Blocking — agent cannot proceed without compliance</td></tr></tbody></table>
+<p><strong>Example scoring:</strong></p>
+<ul>
+<li>Claude Code <code>PostToolUse</code> hook → maybe 4/10 (fires reliably but agent can ignore the reminder)</li>
+<li>Claude Code <code>PreToolUse</code> hook with block → maybe 9/10 (actually prevents the action)</li>
+<li>OpenCode permission <code>deny</code> → 10/10 (hard block)</li>
+</ul>
+<p><strong>Where this lives:</strong></p>
+<ul>
+<li><code>docs/operations/tool-compatibility.md</code> in source — framework-level reference</li>
+<li>Updated when new tools are added or existing tool behavior changes</li>
+<li><code>/lore-check</code> could auto-populate scores based on runtime testing</li>
+</ul>
+<h2 id="open-questions">Open Questions</h2>
+<ol>
+<li><strong>Version propagation depth</strong>: Does every level stamp its own version, or just pass through the source version?</li>
+<li><strong>Staleness threshold</strong>: How old is “too old” for a sync? 30 days? Configurable?</li>
+<li><strong>Hook testing</strong>: Can we actually test hooks programmatically, or do we need the agent to self-report?</li>
+<li><strong>Scoring methodology</strong>: Should effectiveness scores be subjective (maintainer judgment) or measured (automated compliance rate)?</li>
+<li><strong>Tool-specific adapters</strong>: If a tool doesn’t support a hook type, should Lore try to emulate it through other means?</li>
+<li><strong>Breaking changes</strong>: When a tool updates and loses functionality, how do we detect and alert?</li>
+</ol>
+<h2 id="priority-assessment">Priority Assessment</h2>
+<ul>
+<li><strong><code>/lore-version</code></strong>: Low effort, high value — implement soon (sync script change + new <code>.lore-config</code> field)</li>
+<li><strong>Tool compatibility matrix</strong>: Medium effort, high reference value — document what we already know</li>
+<li><strong><code>/lore-check</code></strong>: Higher effort, valuable for onboarding and debugging — plan after matrix exists</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

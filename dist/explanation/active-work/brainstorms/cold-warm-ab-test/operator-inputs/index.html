@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Operator Inputs | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Operator Inputs ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="operator-inputs">Operator Inputs</h1>
+<p>Exact operator messages for each condition, extracted from session JSONL transcripts. Tool approval clicks and CLI commands (<code>/rename</code>, <code>/exit</code>) are excluded — only substantive task inputs are shown.</p>
+<h2 id="raw-cold">Raw Cold</h2>
+<p>Identical across all 10 sessions. Two operator messages per session:</p>
+<p><strong>Message 1</strong> (task prompt):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>See if we have enough inventory to fill all orders from last week.</span></span></code></pre>
+<p><strong>Message 2</strong> (service discovery — sent after the model asked for clarification or hit a dead end):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Orders service is at http://localhost:8787. Inventory service is at http://localhost:8791.</span></span></code></pre>
+<p>The model received no other guidance. It had to discover API versioning, required parameters, and required headers through trial and error. The static CLAUDE.md in the control workspace described a TypeScript API project (unrelated to the task) — this served as a cache-breaker to prevent cross-session prompt cache hits.</p>
+<h2 id="lore-cold">Lore Cold</h2>
+<p>Three operator messages per session. The Lore framework’s session banner and hooks inject context about the knowledge base, delegation rules, and capture conventions — but the operator’s task input follows the same pattern.</p>
+<p><strong>Message 1</strong> (task prompt — identical across all 10 sessions):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>See if we have enough inventory to fill all orders from last week.</span></span></code></pre>
+<p><strong>Message 2</strong> (clarification — slight wording variation across sessions):</p>
+<p>The model asked clarifying questions. Representative responses:</p>
+<ul>
+<li>lore-01: <code>1. Orders service is at http://localhost:8787. Inventory service is at http://localhost:8791. 2. LAST week. 3. duh</code></li>
+<li>lore-05: <code>1: Orders service is at http://localhost:8787. Inventory service is at http://localhost:8791. 2: Last business week 3. on-hand</code></li>
+<li>lore-10: <code>1. Orders service is at http://localhost:8787. Inventory service is at http://localhost:8791. 2. LAST week. 3. enough to fulfill</code></li>
+</ul>
+<p>All responses provide the same two service URLs. The wording of “last week” and “enough inventory” varied slightly but conveyed the same intent.</p>
+<p><strong>Message 3</strong> (capture approval):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>yes</span></span></code></pre>
+<p>After delivering the answer, the model proposed writing environment documentation (service endpoints, required params/headers, API gotchas). The operator approved with “yes” (or “yes, write those up” in some sessions). This triggered the capture phase.</p>
+<h2 id="lore-warm">Lore Warm</h2>
+<p>One operator message. Knowledge from the cold session persists — the model already knows the endpoints, parameters, headers, and gotchas.</p>
+<p><strong>Message 1</strong> (task prompt — identical to cold):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>See if we have enough inventory to fill all orders from last week.</span></span></code></pre>
+<p>No clarification needed. No capture approval needed. The model used existing knowledge to answer directly.</p>
+<h2 id="lore-hot">Lore Hot</h2>
+<p>Two operator messages. Knowledge from cold and warm persists. After answering, the operator requests a runbook.</p>
+<p><strong>Message 1</strong> (task prompt — identical):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>See if we have enough inventory to fill all orders from last week.</span></span></code></pre>
+<p><strong>Message 2</strong> (runbook creation request):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>create a runbook for this, using the prior business week up until end of business on the previous friday from when the run occurs. Make sure the runbook includes the appropriate skills and uses delegation for the whole operation.</span></span></code></pre>
+<p>This triggers the capture phase — the model writes a step-by-step runbook to <code>docs/knowledge/runbooks/</code>.</p>
+<h2 id="lore-runbook">Lore Runbook</h2>
+<p>One operator message. Full knowledge stack persists: skills, environment docs, and the runbook from the hot session.</p>
+<p><strong>Message 1</strong> (minimal trigger):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>fulfillment</span></span></code></pre>
+<p>A single word. The runbook is surfaced via the session banner’s knowledge map. The model matches the trigger to the documented procedure and executes it without further guidance.</p>
+<h2 id="operator-input-progression">Operator Input Progression</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Condition</th><th>Messages</th><th>What the operator provides</th></tr></thead><tbody><tr><td>Raw Cold</td><td>2</td><td>Full task prompt + service URLs after dead end</td></tr><tr><td>Lore Cold</td><td>3</td><td>Full task prompt + clarification + capture approval</td></tr><tr><td>Lore Warm</td><td>1</td><td>Full task prompt (knowledge handles the rest)</td></tr><tr><td>Lore Hot</td><td>2</td><td>Full task prompt + runbook creation request</td></tr><tr><td>Lore Runbook</td><td>1</td><td>One word (“fulfillment”)</td></tr></tbody></table>
+<p>The operator’s effort decreases as knowledge accumulates. By the runbook stage, a single word triggers a complete, documented procedure.</p>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

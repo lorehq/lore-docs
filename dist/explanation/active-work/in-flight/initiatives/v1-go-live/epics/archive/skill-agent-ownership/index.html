@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Skill and Agent Ownership | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Skill and Agent Ownership ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="skill-and-agent-ownership">Skill and Agent Ownership</h1>
+<p>Implement the decisions from the <a href="../../../../brainstorms/skill-agent-ownership/index.md">skill-agent-ownership brainstorm</a>. Formalizes the <code>lore-*</code> prefix as the ownership boundary, adds per-platform model configuration, and updates all affected documentation across three repos.</p>
+<h2 id="goal">Goal</h2>
+<p>Clear separation between framework-owned and operator-owned skills/agents. Operators never worry about Lore overwriting their content. Per-platform model preferences work across Claude Code, OpenCode, and Cursor.</p>
+<h2 id="scope">Scope</h2>
+<h3 id="batch-1-lore-source--frontmatter-and-schema-cleanup">Batch 1: Lore Source — Frontmatter and Schema Cleanup</h3>
+<p>Remove dead metadata and establish the new frontmatter schema.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Remove <code>scope: internal</code> from all 14 framework skill frontmatter files</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Rename <code>documentation-agent.md</code> → <code>lore-documentation-agent.md</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Replace <code>model: sonnet</code> with per-platform fields (<code>claude-model</code>, <code>opencode-model</code>, <code>cursor-model</code>) on agent</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>subagentDefaults</code> to <code>.lore-config</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Regenerate platform copies and registries</del></li>
+</ul>
+<h3 id="batch-2-lore-source--script-changes">Batch 2: Lore Source — Script Changes</h3>
+<p>Update scripts to respect the <code>lore-*</code> ownership boundary.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>sync-framework.sh</code> — filter skill/agent sync loop to <code>lore-*</code> only</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>generate-agents.sh</code> — filter to <code>lore-*</code> skill domains only</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>sync-platform-skills.sh</code> — resolve model cascade (agent frontmatter → <code>subagentDefaults</code> → omit), write platform-native <code>model</code> field</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>lib/config.js</code> — read <code>subagentDefaults</code> from <code>.lore-config</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>validate-consistency.sh</code> — tiered validation (basic for all skills, strict for <code>lore-*</code>)</del></li>
+</ul>
+<h3 id="batch-3-lore-source--templates-and-instructions">Batch 3: Lore Source — Templates and Instructions</h3>
+<p>Update the canonical instructions and skill/agent creation flows.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>.lore/instructions.md</code> — add ownership rules, agent naming convention, model field guidance</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>.lore/skills/lore-create-skill/SKILL.md</code> — drop <code>scope</code> from template, add naming/ownership guidance</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>.lore/skills/lore-create-agent/SKILL.md</code> — per-platform model fields in template, <code>lore-</code> prefix for framework agents, <code>subagentDefaults</code> reference</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>README.md</code> — ownership convention clarity</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>CONTRIBUTING.md</code> — framework/operator distinction</del></li>
+</ul>
+<h3 id="batch-4-lore-docs-site">Batch 4: Lore Docs Site</h3>
+<p>Update public documentation to reflect new conventions.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>guides/configuration.md</code> — add <code>subagentDefaults</code> section, per-platform model docs</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>how-it-works.md</code> — ownership convention, model configuration section</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>guides/platform-support.md</code> — sync boundaries section</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>examples/skill.md</code> — remove scope from example, add naming convention note</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>getting-started.md</code> — ownership convention in directory structure</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>guides/commands.md</code> — <code>/lore-update</code> boundary docs</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>index.md</code> — clarify framework vs operator in component table</del></li>
+</ul>
+<h3 id="batch-5-sync-and-validate">Batch 5: Sync and Validate</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Run full test suite in lore source (<code>npm test</code> — 156/156 pass)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Commit and push lore source</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Commit and push lore-docs</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Sync framework into lorehq</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>bash scripts/validate-consistency.sh</code> in lorehq</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Commit and push lorehq</del></li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>All 14 skills have no <code>scope</code> field</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Agent renamed to <code>lore-documentation-agent</code> with per-platform model fields</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>sync-framework.sh</code> only overwrites <code>lore-*</code> skills/agents</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>generate-agents.sh</code> only processes <code>lore-*</code> skill domains</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>sync-platform-skills.sh</code> resolves model cascade and writes platform-native values</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>.lore-config</code> supports <code>subagentDefaults</code> with per-platform model keys</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>All 7 lore-docs pages updated</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>All 3 repos committed and passing validation</del></li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Operator-created skill (non-<code>lore-*</code>) survives <code>/lore-update</code> without being overwritten</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Agent with per-platform model fields generates correct platform-native copies</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>subagentDefaults</code> in <code>.lore-config</code> are inherited by agents that omit model fields</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>npm test</code> passes with no regressions</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>validate-consistency.sh</code> passes in both lore source and lorehq</del></li>
+</ul>
+<h2 id="test-plan">Test Plan</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Lore source</span></span>
+<span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> test</span></span>
+<span class="line"><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> lint</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-consistency.sh</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/check-version-sync.sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># lorehq (after sync)</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-consistency.sh</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/generate-nav.sh</span></span></code></pre>
+<p>Manual verification:</p>
+<ul>
+<li>Create a test skill without <code>lore-</code> prefix, run <code>sync-framework.sh</code>, confirm it survives</li>
+<li>Set <code>subagentDefaults</code> in <code>.lore-config</code>, create agent without model fields, confirm platform copy gets the default</li>
+<li>Set per-platform model on agent, confirm it overrides the instance default</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

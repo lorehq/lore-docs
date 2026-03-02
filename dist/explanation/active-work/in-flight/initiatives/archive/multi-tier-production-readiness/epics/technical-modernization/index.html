@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Technical Modernization | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Technical Modernization ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="technical-modernization">Technical Modernization</h1>
+<h2 id="goal">Goal</h2>
+<p>Reduce maintenance burden, thin accumulated development archaeology, and make strategic decisions about platform support scope.</p>
+<p>This plan is intentionally sequenced after live validation (roadmap Phase 4) and does not own Phase 0 pilot-readiness safety fixes.</p>
+<h2 id="context">Context</h2>
+<p>The 2026-02-11 assessments identified:</p>
+<ol>
+<li><strong>17 archived plans</strong> document the framework’s development history — useful for the author, noise for evaluators</li>
+<li><strong><code>generate-mkdocs-nav.sh</code> is 526 lines of bash</strong> — the most complex script, hard to test</li>
+<li><strong>Dual platform support (Claude Code + OpenCode)</strong> doubles the reinforcement system maintenance</li>
+<li><strong><code>sync-framework.sh</code> line 214</strong> has a glob bug: <code>"$d"*</code> inside quotes doesn’t expand</li>
+<li><strong>6 skills exceed the 30-50 line target</strong>, ranging from 136 to 181 lines</li>
+<li><strong>Standalone registry mapping drift</strong> can misclassify unprefixed framework skills/agents in generated standalone repos</li>
+</ol>
+<p>Fourth assessment (2026-02-11) added:</p>
+<ol start="7">
+<li><strong>DRY violations in sync/contribute skills:</strong> <code>sync-from-org</code> and <code>sync-from-team</code> are 95% identical (260+ combined lines). <code>contribute-to-org</code> and <code>contribute-to-team</code> are 90% identical (360+ combined lines). Should be shared implementation with level parameter.</li>
+<li><strong>No shellcheck in CI:</strong> 23 shell scripts with zero static analysis in CI pipeline. <code>grep -oP</code> (Perl regex) in <code>validate-consistency.sh</code> may not work on BSD systems.</li>
+<li><strong>YAML parsing fragility:</strong> <code>generate-mkdocs-nav.sh</code> and hooks use grep/awk to parse YAML. Special characters or quotes in YAML values could break parsing.</li>
+<li><strong>No skill versioning or compatibility checking:</strong> Skills reference other skills by name but no version pinning. Cross-tier version skew possible.</li>
+<li><strong>Hook state lifecycle unclear:</strong> <code>post-edit-reminder.js</code> tracks state in <code>.git/lore-tool-tracker.json</code> — session-scoped behavior stored in repo-scoped location. No clear cleanup lifecycle.</li>
+<li><strong>No conflict policy framework:</strong> Only keep-local or take-parent. At scale, need automated merge strategies for known-safe files and escalation policies for ambiguous ones.</li>
+</ol>
+<h2 id="approach">Approach</h2>
+<h3 id="1-archive-thinning">1. Archive thinning</h3>
+<p><strong>Problem:</strong> 17 archived plans + 5 demo ecosystem plans = 22 archived items. Each has an <code>index.md</code> with full context. This is development archaeology that adds ~1,800 lines to the docs tree.</p>
+<p><strong>Options:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Pros</th><th>Cons</th></tr></thead><tbody><tr><td>A. Collapse to summary page</td><td>Clean docs, easy to scan</td><td>Loses detail</td></tr><tr><td>B. Move to separate branch</td><td>Clean main, preservable</td><td>Discoverability lost</td></tr><tr><td>C. Keep as-is</td><td>Full context preserved</td><td>Bulk, noise for evaluators</td></tr><tr><td>D. Thin individual plans</td><td>Balanced cleanup</td><td>Per-plan editing effort</td></tr></tbody></table>
+<p><strong>Recommendation:</strong> Option A — Create a single <code>archive/development-history.md</code> per roadmap that summarizes all archived plans in a table (title, dates, status, one-line summary). Keep the full plan files in git history but remove them from the docs tree. This reduces ~22 folders to ~2 summary files.</p>
+<h3 id="2-generate-mkdocs-navsh-rewrite-evaluation">2. generate-mkdocs-nav.sh rewrite evaluation</h3>
+<p><strong>Current state:</strong> 526 lines of bash handling YAML generation, frontmatter extraction, title quoting, level-aware nav construction.</p>
+<p><strong>Evaluation criteria:</strong></p>
+<ul>
+<li>How often does this script change? (If stable, rewrite has low ROI)</li>
+<li>Are there known bugs? (Assessment found potential edge cases but no confirmed bugs)</li>
+<li>Would Python improve testability? (Yes — pytest vs bash assertions)</li>
+</ul>
+<p><strong>Recommendation:</strong> Evaluate during Phase 4 (Technical Modernization). If the script hasn’t needed changes during Phases 0-3, deprioritize. If bugs surface during pilot, prioritize the rewrite.</p>
+<h3 id="3-platform-support-scope-evaluation">3. Platform support scope evaluation</h3>
+<p><strong>Current state:</strong> Two parallel enforcement systems:</p>
+<ul>
+<li>Claude Code: 5 hooks in <code>hooks/</code> (JavaScript)</li>
+<li>OpenCode: 3 plugins in <code>.opencode/plugins/</code> (JavaScript)</li>
+</ul>
+<p><strong>Trade-offs:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Factor</th><th>Keep Both</th><th>Claude Code Only</th></tr></thead><tbody><tr><td>Maintenance</td><td>2x hook surface</td><td>1x hook surface</td></tr><tr><td>User reach</td><td>Broader</td><td>Narrower</td></tr><tr><td>Feature parity</td><td>Different capabilities (hard vs soft enforcement)</td><td>Consistent behavior</td></tr><tr><td>Development velocity</td><td>Slower (changes in two places)</td><td>Faster</td></tr></tbody></table>
+<p><strong>Recommendation:</strong> Keep both for now but document a support tier:</p>
+<ul>
+<li><strong>Tier 1 (primary):</strong> Claude Code — full hook support, tested in pilot</li>
+<li><strong>Tier 2 (community):</strong> OpenCode — maintained but not tested in pilot</li>
+</ul>
+<p>This avoids breaking existing OpenCode users while focusing development effort.</p>
+<h3 id="4-fix-sync-frameworksh-glob-bug">4. Fix sync-framework.sh glob bug</h3>
+<p><strong>File:</strong> <code>scripts/sync-framework.sh</code> line 214</p>
+<p><strong>Current:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">cp</span><span style="color:#79B8FF"> -r</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$d</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">*</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$REPO_ROOT</span><span style="color:#9ECBFF">/.claude/skills/</span><span style="color:#E1E4E8">$name</span><span style="color:#9ECBFF">/"</span><span style="color:#F97583"> 2></span><span style="color:#9ECBFF">/dev/null</span><span style="color:#F97583"> ||</span><span style="color:#79B8FF"> true</span></span></code></pre>
+<p><strong>Problem:</strong> <code>"$d"*</code> doesn’t glob-expand because the <code>*</code> is outside the quotes but adjacent. Shell interprets this as the literal path <code>$d</code> followed by glob <code>*</code>, which may or may not work depending on whether the path has spaces.</p>
+<p><strong>Fix:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">cp</span><span style="color:#79B8FF"> -r</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$d</span><span style="color:#9ECBFF">"/</span><span style="color:#79B8FF">*</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$REPO_ROOT</span><span style="color:#9ECBFF">/.claude/skills/</span><span style="color:#E1E4E8">$name</span><span style="color:#9ECBFF">/"</span><span style="color:#F97583"> 2></span><span style="color:#9ECBFF">/dev/null</span><span style="color:#F97583"> ||</span><span style="color:#79B8FF"> true</span></span></code></pre>
+<h3 id="5-oversized-skills-review">5. Oversized skills review</h3>
+<p>Review each skill exceeding 80 lines using the <strong>skill split conventions</strong> established during the pilot-readiness hardening wave (see <code>create-skill/SKILL.md</code> “When to Split” section and <a href="https://github.com/lorehq/lorehq-legacy/blob/main/docs/work/brainstorms/archive/skill-split-conventions-reasoning/index.md">reasoning</a> (archived in lorehq-legacy)):</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Skill</th><th>Lines</th><th>Assessment Needed</th></tr></thead><tbody><tr><td>contribute-to-team</td><td>181</td><td>Error handling section may justify length</td></tr><tr><td>contribute-to-org</td><td>180</td><td>Mirror of contribute-to-team; same assessment</td></tr><tr><td>create-skill</td><td>156</td><td>Complex workflow with many decision points</td></tr><tr><td>sync-from-team</td><td>144</td><td>Includes sync patterns and gotchas</td></tr><tr><td>create-agent</td><td>143</td><td>Multi-step workflow with examples</td></tr><tr><td>sync-from-org</td><td>136</td><td>Mirror of sync-from-team</td></tr></tbody></table>
+<p><strong>Apply the split evaluation</strong> for each skill:</p>
+<ol>
+<li>Does it mix interaction methods (API, CLI, MCP, SDK, UI)? → Split by method (always)</li>
+<li>Does it exceed ~80 lines covering a single method? → Evaluate splitting by concern (setup/operation/troubleshooting)</li>
+<li>Is it a cross-cutting policy mixed with procedural content? → Separate policy skill</li>
+</ol>
+<p><strong>Orchestrator exception</strong>: Multi-step workflows (create-skill, create-agent) up to 200 lines with documented justification.</p>
+<p><strong>Legacy decision framework</strong> (still applies within a single concern): If a skill’s length comes from:</p>
+<ul>
+<li>Multiple distinct operations → split into sub-skills</li>
+<li>Error handling for a single operation → keep together (splitting loses context)</li>
+<li>Examples and gotchas → keep together (the examples ARE the value)</li>
+</ul>
+<h3 id="6-standalone-registry-mapping-hardening">6. Standalone registry mapping hardening</h3>
+<p><strong>File:</strong> <code>scripts/generate-registries.sh</code></p>
+<p><strong>Problem:</strong> Standalone repos may treat unprefixed framework entries as source-only instead of local framework payload, causing false “missing” inconsistencies.</p>
+<p><strong>Fix:</strong> Normalize standalone mapping so unprefixed framework skills/agents are rendered under standalone sections (<code>My Skills</code>, <code>My Agents</code>) unless explicitly inherited.</p>
+<h3 id="7-script-consolidation-and-parser-hardening">7. Script consolidation and parser hardening</h3>
+<p>Reduce long-term maintenance risk by consolidating duplicated logic and reducing regex/awk fragility:</p>
+<ul>
+<li>Consolidate shared logic between:
+<ul>
+<li><code>sync-from-org.sh</code> and <code>sync-from-team.sh</code> (95% identical, 260+ combined lines)</li>
+<li><code>contribute-to-org.sh</code> and <code>contribute-to-team.sh</code> (90% identical, 360+ combined lines)</li>
+</ul>
+</li>
+<li>Extract shared helpers (or a small Python core) for common operations:
+<ul>
+<li>parent clone/setup</li>
+<li>path validation and symlink sanitization</li>
+<li>conflict summary output</li>
+<li>contribution metadata generation</li>
+<li>ledger operations (read, write, lock, verify)</li>
+</ul>
+</li>
+<li>Replace brittle parsing for critical config/frontmatter operations with parser-backed utilities where practical</li>
+<li>Replace <code>grep -oP</code> (Perl regex) in <code>validate-consistency.sh</code> with portable <code>grep -E</code> patterns</li>
+</ul>
+<h3 id="8-ci-and-static-analysis">8. CI and static analysis</h3>
+<ul>
+<li>Add shellcheck to CI pipeline for all shell scripts</li>
+<li>Add Python linting (ruff) for Python scripts</li>
+<li>Evaluate pre-commit hooks for local development</li>
+<li>Add YAML validation for <code>.lore-config</code> schema (currently regex-parsed)</li>
+</ul>
+<h3 id="9-skill-versioning-and-maturity-evaluation">9. Skill versioning and maturity evaluation</h3>
+<ul>
+<li>Evaluate adding version metadata to skill frontmatter (<code>version: 1.0</code>)</li>
+<li>Evaluate <code>requires_skills:</code> field for cross-tier dependency declarations</li>
+<li>Evaluate compatibility validation during reconciliation (warn on version skew)</li>
+<li><strong>Evaluate adding <code>maturity: experimental | stable | proven</code> to skill frontmatter</strong> alongside version metadata. Gives receiving maintainers a machine-readable signal when reviewing contributions. Document in <code>docs/operations/skill-frontmatter.md</code> and include in registry generation output</li>
+<li>Decision: implement if pilot reveals version skew issues, defer if not</li>
+</ul>
+<h3 id="10-conflict-policy-framework-evaluation">10. Conflict policy framework evaluation</h3>
+<ul>
+<li>Evaluate automated merge strategies for known-safe file types (markdown docs, YAML configs)</li>
+<li>Evaluate escalation policies (certain files auto-merge, others require human review)</li>
+<li>Evaluate <code>.lore-sync-ignore</code> for permanent per-file sync exclusion</li>
+<li>Evaluate fleet-wide observability: optional reporting of sync outcomes, conflict counts, stale instances</li>
+<li>Decision: scope based on pilot conflict frequency data</li>
+</ul>
+<h3 id="11-skill-promotion-tooling">11. Skill promotion tooling</h3>
+<p><strong>Problem:</strong> No lightweight way to promote a skill up the hierarchy (e.g., <code>instance-foo</code> → <code>team-foo</code>). Currently requires manual rename of: directory, frontmatter <code>name</code> field, all registry entries, agent skill lists, and cross-references. This will be a real friction point once contributions flow regularly.</p>
+<p><strong>Evaluation scope:</strong></p>
+<ul>
+<li>Build a promotion script (<code>promote-skill</code> skill or <code>scripts/promote-skill.sh</code>) that handles the rename cascade:
+<ul>
+<li>Rename skill directory (<code>instance-foo/</code> → <code>team-foo/</code>)</li>
+<li>Update frontmatter <code>name</code> field</li>
+<li>Update all registry entries (<code>skill-registry.md</code>, <code>agent-registry.md</code>)</li>
+<li>Update agent skill lists in any agents that reference the skill</li>
+<li>Update cross-references in docs and other skills</li>
+<li>Validate post-rename consistency (<code>validate-consistency.sh</code>)</li>
+</ul>
+</li>
+<li>Evaluate whether this should be a Lore skill (invoked conversationally) or a standalone script (invoked from CLI)</li>
+<li>Consider: should promotion also handle agent promotion (<code>instance-foo-agent</code> → <code>team-foo-agent</code>)?</li>
+</ul>
+<p><strong>Decision:</strong> Scope and build based on contribution volume observed during pilot and live test.</p>
+<h2 id="implementation-order">Implementation Order</h2>
+<ol>
+<li>Archive thinning (post-live, preserve detail in git history)</li>
+<li>Review oversized skills (document decisions, split only when justified)</li>
+<li>Platform support documentation (support tiers and testing depth)</li>
+<li>generate-mkdocs-nav.sh evaluation (rewrite or defer with rationale)</li>
+<li>Script consolidation and parser hardening decision + rollout plan</li>
+<li>CI/static analysis expansion (shellcheck, Python linting, parser-backed validation)</li>
+</ol>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <code>sync-framework.sh</code> glob bug fixed</li>
+<li class="task-list-item"><input type="checkbox" disabled> Standalone registry mapping no longer produces false missing framework entries</li>
+<li class="task-list-item"><input type="checkbox" disabled> Each oversized skill has documented rationale for length (or is split)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Archive thinning applied (22 archive folders reduced to summary pages)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Platform support tiers documented</li>
+<li class="task-list-item"><input type="checkbox" disabled> <code>generate-mkdocs-nav.sh</code> rewrite decision made (do it or defer with rationale)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Shared implementation paths reduce duplicate sync/contribution logic</li>
+<li class="task-list-item"><input type="checkbox" disabled> Critical parsing paths no longer depend on brittle regex/awk-only behavior</li>
+</ul>
+<h2 id="risks">Risks</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Risk</th><th>Mitigation</th></tr></thead><tbody><tr><td>Archive thinning loses context needed during pilot</td><td>Defer thinning until after pilot completes</td></tr><tr><td>Skill splitting creates too many small skills</td><td>Use decision framework; only split when operations are truly distinct</td></tr><tr><td>OpenCode deprecation signal harms adoption</td><td>Frame as “support tier” not deprecation</td></tr></tbody></table>
+<h2 id="test-plan">Test Plan</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># After glob fix</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/sync-framework.sh</span><span style="color:#79B8FF"> --dry-run</span><span style="color:#6A737D">   # Verify no errors</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># After archive thinning</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-consistency.sh</span><span style="color:#6A737D">        # No broken references</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-doc-claims.sh</span><span style="color:#6A737D">         # Claims still valid</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># After any changes</span></span>
+<span class="line"><span style="color:#B392F0">mkdocs</span><span style="color:#9ECBFF"> build</span><span style="color:#79B8FF"> --strict</span><span style="color:#F97583"> 2>&#x26;1</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -i</span><span style="color:#9ECBFF"> warn</span><span style="color:#6A737D">   # No MkDocs warnings</span></span></code></pre>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

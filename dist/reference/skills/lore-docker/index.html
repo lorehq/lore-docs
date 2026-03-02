@@ -1,0 +1,112 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Docs UI | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Docs UI ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <hr>
+<h2 id="name-lore-dockerdescription-start-stop-or-inspect-the-local-docs-ui-prefers-docker-and-falls-back-to-local-mkdocstype-commanduser-invocable-trueallowed-tools-bash">name: lore-docker
+description: Start, stop, or inspect the local docs UI. Prefers Docker and falls back to local mkdocs.
+type: command
+user-invocable: true
+allowed-tools: Bash</h2>
+<h1 id="docs-ui">Docs UI</h1>
+<p>Manage the local docs UI lifecycle from one command.</p>
+<p>Current runtime model: one Docker container (<code>lorehq/lore-docker</code>) provides docs UI, semantic search, and file-watch maintenance.</p>
+<h2 id="platform-detection">Platform detection</h2>
+<p>Before running any commands, detect the OS once:</p>
+<ul>
+<li><code>uname -s</code> → <code>Linux</code> or <code>Darwin</code> = Unix, <code>MINGW*</code> or <code>MSYS*</code> or <code>CYGWIN*</code> = Windows (Git Bash)</li>
+<li>On Windows/Git Bash: <code>pgrep</code> is unavailable, <code>cksum</code> may be missing, and bash runs under Git Bash — use <code>powershell -NoProfile -Command "..."</code> for process queries and port hashing</li>
+</ul>
+<h2 id="process">Process</h2>
+<p>Interpret intent from user input:</p>
+<ul>
+<li>default or <code>start</code> -> start docs UI</li>
+<li><code>stop</code> -> stop docs UI</li>
+<li><code>status</code> -> report current state</li>
+</ul>
+<h3 id="start">Start</h3>
+<ol>
+<li>Compute ports, project name, and semantic settings:
+<ul>
+<li>Read config: <code>cfg=$(node -e "const{getConfig}=require('./.lore/harness/lib/config');console.log(JSON.stringify(getConfig('.').docker||{}))")</code></li>
+<li>If <code>cfg.site.port</code> is explicitly set in config → use it: <code>LORE_DOCS_PORT=$(node -e "const{getConfig}=require('./.lore/harness/lib/config');console.log(getConfig('.').docker.site.port)")</code></li>
+<li>Else compute hash-based port:
+<ul>
+<li>Unix: <code>LORE_DOCS_PORT=$(( ($(printf '%s' "$(basename "$PWD")" | cksum | cut -d' ' -f1) % 999) + 9001 ))</code></li>
+<li>Windows: use <code>node -e</code> to compute the hash instead (cksum unavailable): <code>LORE_DOCS_PORT=$(node -e "const s=require('path').basename(process.cwd());let h=0;for(const c of s)h=((h&#x3C;&#x3C;5)-h+c.charCodeAt(0))|0;console.log((Math.abs(h)%999)+9001)")</code></li>
+</ul>
+</li>
+<li>If <code>cfg.search.port</code> is explicitly set → use it, else: <code>LORE_SEMANTIC_PORT=$(( LORE_DOCS_PORT + 1000 ))</code></li>
+<li><code>COMPOSE_PROJECT_NAME="$(basename "$PWD")"</code></li>
+<li>Read <code>docker.semantic</code> from config.json, export <code>SEMANTIC_*</code> env vars (fall back to built-in defaults if key absent):
+`eval ”$(node -e “const{getConfig}=require(’./.lore/harness/lib/config’);const c=getConfig(’.’);const s=(c.docker||{}).semantic||{};const D={defaultK:8,maxK:20,maxChunkChars:1000,snippetChars:200,resultMode:‘paths_min’,model:‘BAAI/bge-small-en-v1.5’};Object.entries({SEMANTIC_DEFAULT_K:s.defaultK??D.defaultK,SEMANTIC_MAX_K:s.maxK??D.maxK,SEMANTIC_MAX_CHUNK_CHARS:s.maxChunkChars??D.maxChunkChars,SEMANTIC_SNIPPET_CHARS:s.snippetChars??D.snippetChars,SEMANTIC_RESULT_MODE:s.resultMode??D.resultMode,SEMANTIC_EMBED_MODEL:s.model??D.model}).forEach(([k,v])=>console.log(‘export ‘+k+’=‘+v));”)”</li>
+</ul>
+</li>
+<li>Prefer Docker when available:
+<ul>
+<li>Check Docker is running: <code>docker info > /dev/null 2>&#x26;1</code></li>
+<li>Pull image if needed: <code>docker pull lorehq/lore-docker:latest</code></li>
+<li>Export ports and start: <code>export LORE_DOCS_PORT LORE_SEMANTIC_PORT COMPOSE_PROJECT_NAME &#x26;&#x26; docker compose -f .lore/docker-compose.yml up -d</code></li>
+<li>Wait up to 15 seconds for docs port to respond (semantic search takes longer to load models)</li>
+<li>Verify docs: <code>curl -s -o /dev/null -w '%{http_code}' http://localhost:$LORE_DOCS_PORT</code></li>
+<li>If HTTP 200, write config and report:
+<ul>
+<li>Write docker config to <code>.lore/config.json</code> (preserves <code>docker.semantic</code>): <code>node -e "const{getConfig}=require('./.lore/harness/lib/config');const fs=require('fs');const c=getConfig('.');const sem=c.docker?.semantic;c.docker={site:{address:'localhost',port:+process.env.LORE_DOCS_PORT},search:{address:'localhost',port:+process.env.LORE_SEMANTIC_PORT}};if(sem)c.docker.semantic=sem;fs.writeFileSync('.lore/config.json',JSON.stringify(c,null,2)+'\n')"</code></li>
+<li>Report docs URL and mode: Docker</li>
+</ul>
+</li>
+<li>Check semantic health (non-blocking — may still be loading): <code>curl -s http://localhost:$LORE_SEMANTIC_PORT/health</code></li>
+</ul>
+</li>
+<li>Fall back to local mkdocs when Docker is unavailable or verification fails:
+<ul>
+<li>Check Python: <code>python3 --version || python --version</code></li>
+<li>Check mkdocs: <code>command -v mkdocs</code></li>
+<li>If missing, install deps: <code>pip install mkdocs-material mkdocs-panzoom-plugin</code></li>
+<li>Handle stale local process — detect and kill by platform:
+<ul>
+<li>Unix: <code>pgrep -f 'mkdocs serve'</code> — if PID exists but <code>curl http://localhost:8000</code> is not 200, <code>kill</code> the PID</li>
+<li>Windows: <code>powershell -NoProfile -Command "(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*mkdocs serve*' }).ProcessId"</code> — if PID exists but curl fails, <code>powershell -NoProfile -Command "Stop-Process -Id &#x3C;PID> -Force"</code></li>
+</ul>
+</li>
+<li>Start local server: <code>nohup mkdocs serve --livereload > /dev/null 2>&#x26;1 &#x26;</code></li>
+<li>Verify with curl on <code>http://localhost:8000</code></li>
+<li>Note: local fallback provides docs UI only — no semantic search or file watching</li>
+</ul>
+</li>
+<li>Report active mode, URLs, and whether semantic search is available.</li>
+</ol>
+<h3 id="stop">Stop</h3>
+<ol>
+<li>Try Docker first:
+<ul>
+<li>Set project name: <code>export COMPOSE_PROJECT_NAME="$(basename "$PWD")"</code></li>
+<li>If container is running: <code>docker compose -f .lore/docker-compose.yml down</code></li>
+</ul>
+</li>
+<li>Then stop local mkdocs if running:
+<ul>
+<li>Unix: <code>pgrep -f 'mkdocs serve'</code> — if running: <code>kill $(pgrep -f 'mkdocs serve')</code></li>
+<li>Windows: <code>powershell -NoProfile -Command "Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -like '*mkdocs serve*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force }"</code></li>
+</ul>
+</li>
+<li>Clear config (preserves <code>docker.semantic</code>): <code>node -e "const{getConfig}=require('./.lore/harness/lib/config');const fs=require('fs');const c=getConfig('.');const sem=c.docker?.semantic;delete c.docker;if(sem)c.docker={semantic:sem};fs.writeFileSync('.lore/config.json',JSON.stringify(c,null,2)+'\n')"</code></li>
+<li>Report what was stopped, or “No docs UI is running”.</li>
+</ol>
+<h3 id="status">Status</h3>
+<ol>
+<li>Check Docker container state and verify HTTP response at computed <code>LORE_DOCS_PORT</code>.
+<ul>
+<li>If running, also check semantic health at <code>LORE_SEMANTIC_PORT</code>.</li>
+</ul>
+</li>
+<li>Check local mkdocs process and verify HTTP response at <code>localhost:8000</code>.</li>
+<li>Report one of: Docker active (with semantic search status), local active (docs only), neither active.</li>
+</ol>
+<h2 id="snags">Snags</h2>
+<ul>
+<li><code>docker compose</code> project name defaults to the directory containing the compose file (<code>.lore</code> → <code>lore</code>), not the project root. Always export <code>COMPOSE_PROJECT_NAME="$(basename "$PWD")"</code> before any <code>docker compose</code> call so containers are named after the instance (e.g. <code>my-project-lore-runtime-1</code>).</li>
+<li>Always pass <code>--livereload</code> for local mkdocs.</li>
+<li>Process detection: <code>pgrep</code> on Unix, <code>Get-CimInstance Win32_Process</code> on Windows. Always verify with curl regardless.</li>
+<li>Docker may be installed but daemon not running; treat that as fallback-to-local, not a hard error.</li>
+<li>If both Docker and local are running, prefer reporting Docker URL first and note both are active.</li>
+<li>Semantic search model loading can take 30-60 seconds on first start. Report the health endpoint URL so the user can check back.</li>
+<li>After image pull + container recreation, the search endpoint returns connection refused (HTTP 000) for 60-120 seconds while uvicorn starts and the embedding model loads. This is normal startup behavior — poll <code>/health</code> until <code>ok: true</code> rather than treating the first failure as an error. Distinct from the volume conflict snag (<code>lore-docker-update-volume-conflict</code>).</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

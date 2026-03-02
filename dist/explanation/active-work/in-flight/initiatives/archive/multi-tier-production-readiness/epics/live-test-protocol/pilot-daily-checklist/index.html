@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Pilot Daily Checklist (Day 1-5) | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Pilot Daily Checklist (Day 1-5) ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="pilot-daily-checklist-day-1-5">Pilot Daily Checklist (Day 1-5)</h1>
+<p>Use this for each pilot day. Duplicate the day block if you run longer than 5 days.</p>
+<h2 id="day-1">Day 1</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Log <code>deploy_minutes</code> after initial setup</li>
+<li class="task-list-item"><input type="checkbox" disabled> Run <code>/sync-from-team</code> and confirm no data loss</li>
+<li class="task-list-item"><input type="checkbox" disabled> Perform normal project work for at least one meaningful task</li>
+<li class="task-list-item"><input type="checkbox" disabled> Run <code>/reconcile</code> at end of day</li>
+<li class="task-list-item"><input type="checkbox" disabled> Log <code>daily_routine_minutes</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> Generate report: <code>python3 scripts/pilot-generate-report.py</code></li>
+</ul>
+<h2 id="day-2">Day 2</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Start with <code>/sync-from-team</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> Log any <code>sync_conflict</code> events (if present)</li>
+<li class="task-list-item"><input type="checkbox" disabled> If conflicts occur, log <code>conflict_resolution_minutes</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> Create at least one new skill if a new gotcha appears</li>
+<li class="task-list-item"><input type="checkbox" disabled> Run <code>/reconcile</code> and log <code>daily_routine_minutes</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> Generate report and attach to daily notes</li>
+</ul>
+<h2 id="day-3">Day 3</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Start with <code>/sync-from-team</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> Contribute at least one useful item upward (<code>/contribute-to-team</code>)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Log <code>skill_contributed</code> and any <code>script_failure</code> (if present)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Confirm teammate/second instance can sync contributed knowledge</li>
+<li class="task-list-item"><input type="checkbox" disabled> Run <code>/reconcile</code> and log <code>daily_routine_minutes</code></li>
+<li class="task-list-item"><input type="checkbox" disabled> Generate report and capture blockers/friction points</li>
+</ul>
+<h2 id="day-4">Day 4</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Repeat daily sync/work/reconcile cycle</li>
+<li class="task-list-item"><input type="checkbox" disabled> Capture <code>propagation_hours</code> for at least one contribution path</li>
+<li class="task-list-item"><input type="checkbox" disabled> Validate no silent overwrite behavior during sync operations</li>
+<li class="task-list-item"><input type="checkbox" disabled> Log all friction points using the findings template</li>
+<li class="task-list-item"><input type="checkbox" disabled> Generate report and compare trends vs prior days</li>
+</ul>
+<h2 id="day-5">Day 5</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Complete final sync/work/reconcile cycle</li>
+<li class="task-list-item"><input type="checkbox" disabled> Ensure at least one PR-based contribution was completed end-to-end</li>
+<li class="task-list-item"><input type="checkbox" disabled> Confirm all logged critical issues are fixed or explicitly deferred</li>
+<li class="task-list-item"><input type="checkbox" disabled> Generate final pilot report</li>
+<li class="task-list-item"><input type="checkbox" disabled> Produce go/no-go recommendation for Phase 3 full live test</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

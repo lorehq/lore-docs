@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-tui-bg: #000000;
+  --color-tui-fg: #cccccc;
+  --color-tui-border-inactive: #008080;
+  --color-tui-border-active: #00ff00;
+  --color-tui-selection-bg: #0000aa;
+  --color-tui-selection-fg: #ffffff;
+  --color-tui-accent: #00ffff;
+  
+  --font-mono: "JetBrains Mono", "Roboto Mono", "Courier New", monospace;
+}
+
+body {
+  @apply bg-tui-bg text-tui-fg font-mono overflow-hidden;
+  font-size: 13px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { @apply bg-tui-bg; }
+::-webkit-scrollbar-thumb { @apply bg-tui-border-inactive; }
+::-webkit-scrollbar-thumb:hover { @apply bg-tui-border-active; }
+
+.prose {
+  @apply text-tui-fg;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply text-tui-accent font-normal mt-4 mb-2 pb-1 border-b border-dashed border-tui-border-inactive uppercase text-sm tracking-widest;
+}
+.prose h1 {
+  @apply hidden; /* Panel title handles this */
+}
+
+.prose code {
+  @apply text-tui-border-active bg-[#111] px-1 py-0.5 font-bold;
+}
+.prose pre {
+  @apply bg-[#050505] border border-tui-border-inactive p-3 my-3;
+}
+.prose a {
+  @apply text-tui-accent no-underline hover:bg-tui-selection-bg hover:text-white;
+}
+.prose ul {
+  @apply list-none pl-0 my-2;
+}
+.prose ul > li::before {
+  content: "> ";
+  @apply text-tui-border-inactive opacity-50;
+}
+.prose table {
+  @apply w-full border-collapse border border-tui-border-inactive my-3;
+}
+.prose th, .prose td {
+  @apply border border-tui-border-inactive p-1 px-2 text-xs;
+}
+.prose th {
+  @apply text-tui-accent bg-[#111] text-left uppercase;
+}

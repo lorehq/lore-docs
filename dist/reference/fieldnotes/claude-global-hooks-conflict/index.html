@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Claude Global Hooks Conflict | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Claude Global Hooks Conflict ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <hr>
+<h2 id="name-claude-global-hooks-conflictdescription-diagnose-and-fix-duplicate-hook-messages-from-global-claude-code-settingsuser-invocable-falseallowed-tools-bash-read">name: claude-global-hooks-conflict
+description: Diagnose and fix duplicate hook messages from global Claude Code settings
+user-invocable: false
+allowed-tools: Bash, Read</h2>
+<h1 id="claude-global-hooks-conflict">Claude Global Hooks Conflict</h1>
+<h2 id="context">Context</h2>
+<p>Claude Code loads hooks from TWO locations: (1) Project-local: <code>.claude/settings.json</code> and (2) Global: <code>~/.claude/settings.json</code>. When both exist, hooks from BOTH locations fire, causing duplicate messages and unexpected behavior.</p>
+<h2 id="snags">Snags</h2>
+<ul>
+<li>Multiple “UserPromptSubmit hook success” messages (more than one per prompt)</li>
+<li>Hook output appearing multiple times</li>
+<li>Hooks referencing missing files or old paths</li>
+</ul>
+<h2 id="diagnosis">Diagnosis</h2>
+<p>Check if global hooks exist:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Unix/Mac</span></span>
+<span class="line"><span style="color:#B392F0">cat</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$HOME</span><span style="color:#9ECBFF">/.claude/settings.json"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Windows</span></span>
+<span class="line"><span style="color:#B392F0">cat</span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$USERPROFILE</span><span style="color:#9ECBFF">/.claude/settings.json"</span></span></code></pre>
+<p>If the file exists and contains hooks, they will fire in addition to project-local hooks.</p>
+<h2 id="workaround">Workaround</h2>
+<p>Clear global hooks to allow only project-local hooks:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Unix/Mac</span></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> '{}'</span><span style="color:#F97583"> ></span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$HOME</span><span style="color:#9ECBFF">/.claude/settings.json"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Windows</span></span>
+<span class="line"><span style="color:#79B8FF">echo</span><span style="color:#9ECBFF"> '{}'</span><span style="color:#F97583"> ></span><span style="color:#9ECBFF"> "</span><span style="color:#E1E4E8">$USERPROFILE</span><span style="color:#9ECBFF">/.claude/settings.json"</span></span></code></pre>
+<p>This preserves the file (some tools expect it) but removes all hook configuration.</p>
+<h2 id="prevention">Prevention</h2>
+<ul>
+<li>Keep hook configuration in project <code>.claude/settings.json</code> only.</li>
+<li>Avoid configuring global hooks unless you want them to fire for ALL projects.</li>
+<li>For Lore/CHAPPiE instances: always use project-local hooks.</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

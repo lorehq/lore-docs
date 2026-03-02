@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>First Session Setup: Homelab | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ First Session Setup: Homelab ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="first-session-setup-homelab">First Session Setup: Homelab</h1>
+<p>Grounds the agent in operator identity, network topology, infrastructure, and services before any project work begins. Run once per instance. Follow phases in order — each phase depends on the previous.</p>
+<p><strong>Profile:</strong> Operators managing personal infrastructure — Proxmox clusters, self-hosted services, home automation, NAS, media servers — with no enterprise org context.</p>
+<p><strong>How to invoke:</strong> Ask the agent: <em>“Walk me through first-session setup.”</em></p>
+<p>!!! tip “Recommended: start the docs sidecar first”
+Run <code>/lore-docker</code> before Phase 1. The Docker sidecar provides semantic search and a live docs UI — every skill, environment doc, and runbook created in later phases becomes instantly searchable. Skip if Docker isn’t available; everything works without it.</p>
+<hr>
+<h2 id="phase-1-identity">Phase 1: Identity</h2>
+<p><strong>Goal:</strong> Tell the agent who it is, who it serves, and what it must never do without asking.</p>
+<h3 id="operator-profile">Operator Profile</h3>
+<p>Create <code>docs/knowledge/local/operator-profile.md</code> (gitignored).</p>
+<p>Minimum fields:</p>
+<ul>
+<li>Name, homelab purpose (learning, media, home automation, development)</li>
+<li>Infrastructure management style: Ansible, Terraform, click-ops, manual SSH — no judgment, adapt to the operator’s workflow</li>
+<li>Accounts: GitHub (personal), self-hosted Gitea/Forgejo if applicable</li>
+<li>Tool and CLI preferences</li>
+</ul>
+<p>Without it, the agent has no operator context — it knows the KB but not who it’s working for.</p>
+<h3 id="agent-rules">Agent Rules</h3>
+<p>Edit <code>docs/context/agent-rules.md</code>.</p>
+<p>Minimum fields:</p>
+<ul>
+<li>Deployment assignment: instance name, operator</li>
+<li>Scope: what domains this instance covers (infrastructure management, service deployment, etc.)</li>
+<li><strong>Critical rule:</strong> Never auto-apply destructive changes — reboots, VM destruction, firewall modifications, storage pool changes, VLAN reassignments — without explicit operator confirmation. The agent has SSH and API access to production infrastructure.</li>
+</ul>
+<p>This file is injected as PROJECT context every session.</p>
+<h3 id="machine-inventory">Machine Inventory</h3>
+<p>Create <code>docs/knowledge/local/machine.md</code> (gitignored).</p>
+<p>Capture: hostname, OS, installed runtimes, CLI tools (Ansible, Terraform, kubectl, docker, ssh), shell environment. This is the management workstation — not the homelab nodes (those come in Phase 4).</p>
+<hr>
+<h2 id="phase-2-model-configuration">Phase 2: Model Configuration</h2>
+<p><strong>Goal:</strong> Wire the three-tier worker system before any delegation happens.</p>
+<p>Set model aliases in <code>~/.claude/settings.json</code> under <code>env</code>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#9ECBFF">"ANTHROPIC_DEFAULT_HAIKU_MODEL"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"&#x3C;fast-model>"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">"ANTHROPIC_DEFAULT_SONNET_MODEL"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"&#x3C;default-model>"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">"ANTHROPIC_DEFAULT_OPUS_MODEL"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"&#x3C;powerful-model>"</span></span></code></pre>
+<p>After setting aliases, regenerate agent frontmatter:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">node</span><span style="color:#9ECBFF"> .lore/lib/generate-agents.js</span></span></code></pre>
+<p><strong>Do not skip.</strong> Claude Code silently ignores full model IDs in agent frontmatter — all workers run at the orchestrator’s tier with no error.</p>
+<p>Verify by asking the agent to run a worker test: each tier (fast/default/powerful) should report the model it’s running on.</p>
+<hr>
+<h2 id="phase-3-keystore">Phase 3: Keystore</h2>
+<p><strong>Goal:</strong> Establish a secret store before ingesting any credentials.</p>
+<p><strong>Rule:</strong> Secrets never go in the KB. The KB documents item names and what they’re for — never values.</p>
+<p>Options:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Option</th><th>Best for</th></tr></thead><tbody><tr><td>Vaultwarden (self-hosted)</td><td>Already running in the homelab; full control</td></tr><tr><td><code>pass</code> (GPG-based)</td><td>Lightweight, git-friendly, no server needed</td></tr><tr><td>1Password / Bitwarden (cloud)</td><td>Cross-machine sync without self-hosting</td></tr></tbody></table>
+<p>Authenticate the CLI, verify access, and document the tool and item naming rule in <code>docs/knowledge/environment/</code>.</p>
+<p>Typical homelab items to catalog (names and purposes only, never values):</p>
+<ul>
+<li>Proxmox API tokens</li>
+<li>SSH keys (per host or shared)</li>
+<li>Router/firewall admin credentials</li>
+<li>Service API keys (DNS provider, backup target, etc.)</li>
+<li>Container registry credentials</li>
+</ul>
+<hr>
+<h2 id="phase-4-network-mapping">Phase 4: Network Mapping</h2>
+<p><strong>Goal:</strong> Map the network before anything else. Every subsequent phase references network context — which VLAN, which subnet, which interface. Without this, the agent asks the operator to clarify repeatedly.</p>
+<p><strong>This phase is the key differentiator from Knowledge Worker.</strong> Enterprise environments start with cloud CLIs. Homelab starts with the network.</p>
+<h3 id="discovery">Discovery</h3>
+<p>Ask the operator what runs routing/firewall — OPNsense, pfSense, OpenWrt, Unifi, MikroTik, or other. Access methods:</p>
+<ul>
+<li><strong>Config export</strong> — OPNsense XML backup, pfSense config, OpenWrt UCI export</li>
+<li><strong>API</strong> — OPNsense/pfSense REST API, Unifi controller API</li>
+<li><strong>SSH</strong> — direct CLI access to parse running config</li>
+</ul>
+<h3 id="document">Document</h3>
+<p>Extract and write to <code>docs/knowledge/environment/network-topology.md</code>:</p>
+<ul>
+<li><strong>VLANs</strong> — ID, name, purpose, subnet, gateway, DHCP range</li>
+<li><strong>Firewall rules</strong> — inter-VLAN policy, port forwards, NAT</li>
+<li><strong>Switch topology</strong> — which ports on which switches, trunk vs access, VLAN assignments</li>
+<li><strong>Wireless</strong> — SSIDs, VLAN bindings, AP model/location</li>
+<li><strong>DNS</strong> — upstream resolvers, local overrides, split-horizon if applicable</li>
+</ul>
+<p>If the network is simple (flat, one subnet, consumer router), this phase is quick — document what’s there and move on.</p>
+<hr>
+<h2 id="phase-5-infrastructure-inventory">Phase 5: Infrastructure Inventory</h2>
+<p><strong>Goal:</strong> Map physical and virtual compute, storage, and HA configuration.</p>
+<h3 id="hypervisors">Hypervisors</h3>
+<p>Connect to the hypervisor management interface. For Proxmox (most common):</p>
+<ul>
+<li><strong>Proxmox API</strong> — URL + API token from keystore (Phase 3)</li>
+<li><strong>SSH</strong> — enumerate via <code>pvesh</code> or <code>/etc/pve</code></li>
+</ul>
+<p>Document in <code>docs/knowledge/environment/hypervisors.md</code>:</p>
+<ul>
+<li>Nodes, CPU/RAM specs, cluster membership</li>
+<li>HA configuration and resource groups</li>
+</ul>
+<h3 id="storage">Storage</h3>
+<p>Document in <code>docs/knowledge/environment/storage.md</code>:</p>
+<ul>
+<li><strong>Ceph</strong> — monitors, OSDs, pools, cluster networks, replication factor</li>
+<li><strong>ZFS</strong> — pools, datasets, compression settings, snapshot policies</li>
+<li><strong>NFS/SMB exports</strong> — what’s shared, from where, to which networks</li>
+<li><strong>Proxmox storage config</strong> — which backends, where VMs and backups land</li>
+</ul>
+<h3 id="compute">Compute</h3>
+<p>Enumerate all VMs and containers across nodes. Document in <code>docs/knowledge/environment/compute-inventory.md</code>:</p>
+<ul>
+<li>VMID, name, hosting node, allocated resources (CPU, RAM, disk)</li>
+<li>Network interfaces and IPs — cross-reference with VLAN map from Phase 4</li>
+<li>Purpose — ask operator to annotate anything not inferrable from hostname</li>
+</ul>
+<hr>
+<h2 id="phase-6-service-mapping">Phase 6: Service Mapping</h2>
+<p><strong>Goal:</strong> Enumerate running services — containers, orchestration, DNS, reverse proxy, backups, media.</p>
+<p>This phase typically requires SSH-ing into multiple hosts or querying APIs. Ask the operator which hosts run Docker/Podman and how to reach them.</p>
+<h3 id="containers">Containers</h3>
+<p>Run <code>docker ps</code> (or equivalent) on each host. Catalog: container name, image, ports, volumes, restart policy, compose stack.</p>
+<h3 id="orchestration-if-applicable">Orchestration (if applicable)</h3>
+<p>k3s, k8s, Docker Swarm — map nodes, namespaces, deployments, services, ingress rules.</p>
+<h3 id="reverse-proxy">Reverse Proxy</h3>
+<p>Nginx Proxy Manager, Traefik, or Caddy — enumerate proxy hosts, backends, SSL certificate status.</p>
+<h3 id="dns">DNS</h3>
+<p>AdGuard Home, Pi-hole, or CoreDNS — upstream config, local DNS entries, conditional forwarding, DHCP leases.</p>
+<h3 id="backups">Backups</h3>
+<p>Proxmox Backup Server, Borg, Restic, rsync — schedules, targets, retention policies, last successful run.</p>
+<h3 id="media--other-stacks">Media &#x26; Other Stacks</h3>
+<p>Arr stack, Jellyfin/Plex, Immich, Home Assistant — document each service’s role, host, storage, and network connections.</p>
+<p>Write service docs to <code>docs/knowledge/environment/</code> — one per logical group (containers, dns, backups, media) or one per host, based on operator preference. Propose the structure and wait for approval before writing.</p>
+<p><strong>Snags, gotchas, quirks become fieldnotes.</strong> During service mapping, edge cases will surface — a container needing a specific network mode, a backup that fails silently, a DNS rebinding issue. Each is a fieldnote candidate. Propose; create after operator approval.</p>
+<hr>
+<h2 id="phase-7-iac-bootstrap-optional">Phase 7: IaC Bootstrap (Optional)</h2>
+<p><strong>Goal:</strong> Connect existing infrastructure-as-code repos or establish a starting point.</p>
+<p><strong>If IaC already exists</strong> (Terraform for Proxmox VMs, Ansible for host config, Pulumi, NixOS): discover repos, map what’s managed vs manual, document the boundary. Link work repos:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">/lore-link</span></span></code></pre>
+<p><strong>If no IaC yet:</strong> propose a starting point based on Phases 4–6 discovery:</p>
+<ul>
+<li>Ansible inventory from discovered hosts and roles</li>
+<li>Terraform resources for Proxmox VM/container definitions</li>
+<li>Shell-based approach if that fits the operator’s workflow</li>
+</ul>
+<p>This phase is optional. Many productive homelabs run on manual configuration — the agent’s value is in documenting what exists, not forcing a workflow change.</p>
+<hr>
+<h2 id="phase-8-semantic-search--knowledge-defrag">Phase 8: Semantic Search &#x26; Knowledge Defrag</h2>
+<h3 id="semantic-search">Semantic Search</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">/lore-docker</span></span></code></pre>
+<p>Ports are auto-computed per project (hash-based). After starting:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">/lore-docker</span><span style="color:#9ECBFF"> status</span></span></code></pre>
+<h3 id="knowledge-defrag">Knowledge Defrag</h3>
+<p><strong>Run after the environment is substantially documented — not before.</strong></p>
+<p>Once Phases 1–6 are complete and the KB has accumulated, run the knowledge defrag runbook to restructure <code>docs/knowledge/</code> by content rather than creation order.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> checkout</span><span style="color:#79B8FF"> -b</span><span style="color:#9ECBFF"> knowledge-defrag-</span><span style="color:#E1E4E8">$(</span><span style="color:#B392F0">date</span><span style="color:#9ECBFF"> +%Y%m%d</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D"># Then: "Run the knowledge defrag runbook"</span></span></code></pre>
+<h3 id="first-work-item">First Work Item</h3>
+<p>If the operator has a current project (migrating a service, expanding storage, new backup target), create a plan or roadmap now — the agent has full context to scope it.</p>
+<hr>
+<h2 id="verification-checklist">Verification Checklist</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Operator profile and agent rules reflect current deployment</li>
+<li class="task-list-item"><input type="checkbox" disabled> Destructive-operation confirmation rule is in agent-rules.md</li>
+<li class="task-list-item"><input type="checkbox" disabled> Worker tiers (fast/default/powerful) route to the expected models</li>
+<li class="task-list-item"><input type="checkbox" disabled> Keystore accessible — agent can retrieve a test item</li>
+<li class="task-list-item"><input type="checkbox" disabled> Network topology documented (VLANs, subnets, firewall rules)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Hypervisors and compute inventory current</li>
+<li class="task-list-item"><input type="checkbox" disabled> Services cataloged with ports, hosts, and purposes</li>
+<li class="task-list-item"><input type="checkbox" disabled> Semantic search returning results for infrastructure terms</li>
+<li class="task-list-item"><input type="checkbox" disabled> Active work items created for current projects (if any)</li>
+</ul>
+<hr>
+<h2 id="snags">Snags</h2>
+<ul>
+<li><strong>Network before compute</strong> — map VLANs and subnets before inventorying hosts. Every VM and container references network context; without the map, docs are incomplete.</li>
+<li><strong>Keystore before credentials</strong> — configure Phase 3 before authenticating CLIs. Credentials ingested first have nowhere secure to go.</li>
+<li><strong>Worker tier routing</strong> — Claude Code silently ignores full model IDs in agent frontmatter. Use short aliases and run <code>generate-agents.js</code> after any alias change.</li>
+<li><strong>Management workstation ≠ homelab nodes</strong> — Phase 1 machine inventory covers the machine running the agent. Homelab nodes are discovered in Phase 5 via SSH/API.</li>
+<li><strong>TLS required for localhost secret stores</strong> — <code>bw</code> CLI 2026.x raises <code>InsecureUrlNotAllowedError</code> for localhost HTTP. Self-hosted Vaultwarden must serve TLS; a self-signed cert is sufficient.</li>
+<li><strong>Proxmox API tokens need explicit permissions</strong> — a token inherits no permissions by default. The operator must assign PVEAuditor (read-only) or PVEAdmin to the token’s user/role.</li>
+<li><strong><code>docker ps -a</code> beats memory</strong> — stopped containers surface services faster than trying to recall what was running across multiple hosts.</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

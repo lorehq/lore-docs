@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Cold/Warm A/B Test — Delegation + Knowledge Reuse | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Cold/Warm A/B Test — Delegation + Knowledge Reuse ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="coldwarm-ab-test">Cold/Warm A/B Test</h1>
+<p>Measuring the cost of getting the answer vs capturing knowledge, and how captured knowledge pays for itself on subsequent runs. 50 Claude Code sessions across 5 conditions, same task, same day.</p>
+<h2 id="headline-results">Headline Results</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Condition</th><th>Answer Cost</th><th>Answer Time</th><th>Capture Time</th><th>vs Raw Cold</th></tr></thead><tbody><tr><td>Raw Cold (baseline)</td><td>$0.45</td><td>1m 12s</td><td>—</td><td>—</td></tr><tr><td>Lore Cold</td><td><span style="color: #66bb6a">$0.32</span></td><td><span style="color: #ff9100">1m 22s</span></td><td><span style="color: #ef5350">0m 35s</span></td><td><span style="color: #66bb6a">cost -29%</span></td></tr><tr><td>Lore Warm</td><td><span style="color: #66bb6a">$0.24</span></td><td><span style="color: #66bb6a">1m 4s</span></td><td>—</td><td><span style="color: #66bb6a">cost -46%, time -11%</span></td></tr><tr><td>Lore Hot</td><td><span style="color: #66bb6a">$0.24</span></td><td><span style="color: #66bb6a">0m 57s</span></td><td><span style="color: #ef5350">0m 37s *</span></td><td><span style="color: #66bb6a">cost -46%, time -21%</span></td></tr><tr><td>Lore Runbook</td><td><span style="color: #66bb6a">$0.19</span></td><td><span style="color: #66bb6a">0m 40s</span></td><td>—</td><td><span style="color: #66bb6a">cost -59%, time -44%</span></td></tr></tbody></table>
+<p>!!! danger ""
+<strong><span style="color: #ef5350">*</span></strong> Lore Hot capture time is <strong>operator-initiated runbook creation</strong> — the operator explicitly asked the agent to write a runbook after getting the answer. This is not automatic framework behavior.</p>
+<p>Total capture investment: <strong>$0.17</strong> — pays back in less than 1 runbook run.</p>
+<h2 id="documents">Documents</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>File</th><th>Contents</th></tr></thead><tbody><tr><td><a href="analysis.md">analysis.md</a></td><td>Findings, cost progression, capture ROI, variance analysis, cumulative economics, mechanisms</td></tr><tr><td><a href="methodology.md">methodology.md</a></td><td>Test design, conditions, pricing model, timing rules, cost-split method, token deduplication</td></tr><tr><td><a href="operator-inputs.md">operator-inputs.md</a></td><td>Exact operator messages per condition, extracted from session transcripts</td></tr><tr><td><a href="all-sessions-raw-data.md">all-sessions-raw-data.md</a></td><td>Full per-session token, cache, model, orchestrator/agent, and cost breakdown for all 50 sessions</td></tr></tbody></table>
+<h2 id="setup">Setup</h2>
+<ul>
+<li><strong>Platform:</strong> Claude Code (CLI)</li>
+<li><strong>Task:</strong> “See if we have enough inventory to fill all orders from last week.”</li>
+<li><strong>Services:</strong> <a href="https://github.com/lorehq/lore-gotcha-demo">lore-gotcha-demo</a> mock APIs (orders + inventory with deliberate API gotchas)</li>
+<li><strong>Date:</strong> 2026-02-22</li>
+<li><strong>Models:</strong> Opus 4.6 orchestrator, Haiku 4.5 workers (Raw Cold uses Opus inline for everything)</li>
+</ul>
+<h3 id="conditions">Conditions</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Condition</th><th>N</th><th>Workspace</th><th>Framework</th><th>Prior Knowledge</th></tr></thead><tbody><tr><td>Raw Cold</td><td>10</td><td>test/control-01</td><td>None</td><td>None</td></tr><tr><td>Lore Cold</td><td>10</td><td>test/lore-01..10</td><td>Lore v0.11.0</td><td>None</td></tr><tr><td>Lore Warm</td><td>10</td><td>test/lore-01..10</td><td>Lore v0.11.0</td><td>Skills + env docs from cold</td></tr><tr><td>Lore Hot</td><td>10</td><td>test/lore-01..10</td><td>Lore v0.11.0</td><td>Skills + env docs, writes runbook</td></tr><tr><td>Lore Runbook</td><td>10</td><td>test/lore-01..10</td><td>Lore v0.11.0</td><td>Full knowledge + runbook</td></tr></tbody></table>
+<h3 id="limitations">Limitations</h3>
+<ul>
+<li><strong>One task type.</strong> API exploration with mock services. Results may differ for code generation, refactoring, or debugging.</li>
+<li><strong>One model family.</strong> Claude (Opus 4.6 orchestrator, Haiku 4.5 workers). Other models may differ.</li>
+<li><strong>Subscription pricing.</strong> Tests ran on Claude Max. Cost figures are API-equivalent estimates.</li>
+<li><strong>No cross-tool validation.</strong> Knowledge captured on Claude Code should benefit Cursor and OpenCode — not yet tested.</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

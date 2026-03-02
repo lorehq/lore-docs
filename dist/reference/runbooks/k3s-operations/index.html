@@ -1,0 +1,117 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>K3s Operations | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ K3s Operations ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="k3s-operations">K3s Operations</h1>
+<h2 id="purpose">Purpose</h2>
+<p>Operate and troubleshoot the homelab K3s cluster.</p>
+<h2 id="cluster-overview">Cluster Overview</h2>
+<ul>
+<li><strong>Nodes</strong>: 3 (HA with embedded etcd)</li>
+<li><strong>CNI</strong>: Flannel (VXLAN)</li>
+<li><strong>LB</strong>: MetalLB [IP-Range]</li>
+</ul>
+<h3 id="node-inventory">Node Inventory</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Node</th><th>Host</th><th>Roles</th><th>IPs</th></tr></thead><tbody><tr><td>[node-1]</td><td>[host-1]</td><td>control-plane,etcd</td><td>[ips]</td></tr><tr><td>[node-2]</td><td>[host-2]</td><td>control-plane,etcd</td><td>[ips]</td></tr><tr><td>[node-3]</td><td>[host-3]</td><td>control-plane,etcd</td><td>[ips]</td></tr></tbody></table>
+<h2 id="access">Access</h2>
+<ul>
+<li><strong>Kubeconfig</strong>: Path to cluster config (e.g., <code>~/.kube/config</code>).</li>
+<li><strong>SSH</strong>: <code>ssh -i &#x3C;identity_file> &#x3C;user>@&#x3C;node-ip></code>.</li>
+</ul>
+<h2 id="storage-classes">Storage Classes</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Name</th><th>Type</th><th>Access Mode</th><th>Backend</th></tr></thead><tbody><tr><td>ceph-rbd</td><td>Block (RBD)</td><td>RWO</td><td>Ceph RBD pool</td></tr><tr><td>nfs</td><td>NFS</td><td>RWX</td><td>NFS Export</td></tr><tr><td>local-path</td><td>Local</td><td>RWO</td><td>Node filesystem (Default)</td></tr></tbody></table>
+<h2 id="common-operations">Common Operations</h2>
+<h3 id="health-check">Health Check</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">kubectl</span><span style="color:#9ECBFF"> get</span><span style="color:#9ECBFF"> nodes</span><span style="color:#79B8FF"> -o</span><span style="color:#9ECBFF"> wide</span></span>
+<span class="line"><span style="color:#B392F0">kubectl</span><span style="color:#9ECBFF"> get</span><span style="color:#9ECBFF"> pods</span><span style="color:#79B8FF"> -A</span></span>
+<span class="line"><span style="color:#B392F0">kubectl</span><span style="color:#9ECBFF"> top</span><span style="color:#9ECBFF"> nodes</span></span></code></pre>
+<h3 id="drain-node-for-maintenance">Drain Node for Maintenance</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">kubectl</span><span style="color:#9ECBFF"> drain</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">node-nam</span><span style="color:#E1E4E8">e</span><span style="color:#F97583">></span><span style="color:#79B8FF"> --ignore-daemonsets</span><span style="color:#79B8FF"> --delete-emptydir-data</span></span>
+<span class="line"><span style="color:#6A737D"># Do maintenance...</span></span>
+<span class="line"><span style="color:#B392F0">kubectl</span><span style="color:#9ECBFF"> uncordon</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">node-nam</span><span style="color:#E1E4E8">e</span><span style="color:#F97583">></span></span></code></pre>
+<h3 id="rolling-upgrade">Rolling Upgrade</h3>
+<ol>
+<li>Drain node.</li>
+<li><code>ssh</code> to node and run: <code>curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL=stable sh -</code></li>
+<li>Verify and uncordon.</li>
+</ol>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="pod-stuck-in-pending">Pod Stuck in Pending</h3>
+<ul>
+<li>Check <code>kubectl describe pod &#x3C;name></code>.</li>
+<li>Check <code>kubectl top nodes</code> for resource constraints.</li>
+<li>Verify PVC status: <code>kubectl get pvc</code>.</li>
+</ul>
+<h3 id="storage-failures">Storage Failures</h3>
+<ul>
+<li><strong>RBD</strong>: Check <code>kubectl logs -n ceph-csi-rbd -l app=ceph-csi-rbd</code>.</li>
+<li><strong>NFS</strong>: Verify <code>nfs-common</code> is installed on nodes. Check <code>kubectl logs -n kube-system -l app.kubernetes.io/name=csi-driver-nfs</code>.</li>
+</ul>
+<h2 id="secrets-management">Secrets Management</h2>
+<p><strong>NEVER put real secret values in manifests committed to git.</strong></p>
+<ol>
+<li>Manifest uses <code>PLACEHOLDER</code> values.</li>
+<li>Use a <code>patch-secrets.sh</code> script to fetch from Vaultwarden (Bitwarden CLI) and apply via <code>kubectl create secret ... --dry-run=client -o yaml | kubectl apply -f -</code>.</li>
+<li>Restart deployments: <code>kubectl rollout restart deployment &#x3C;name></code>.</li>
+</ol>
+<h2 id="safety-rules">Safety Rules</h2>
+<ul>
+<li>Always drain nodes before maintenance.</li>
+<li>Upgrade one node at a time for HA stability.</li>
+<li>Monitor etcd health before and after changes.</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

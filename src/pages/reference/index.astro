@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/TuiLayout.astro';
+
+const types = [
+  { id: 'rules', title: 'Rules', desc: 'Behavioral constraints and standards.' },
+  { id: 'skills', title: 'Skills', desc: 'Project-local procedural capabilities.' },
+  { id: 'agents', title: 'Agents', desc: 'Specialized personas and delegation roles.' },
+  { id: 'fieldnotes', title: 'Fieldnotes', desc: 'Machine-global environmental memory.' },
+  { id: 'runbooks', title: 'Runbooks', desc: 'Adaptive multi-step procedures.' },
+];
+---
+
+<Layout title="Primitives & Reference">
+  <h1>Primitives & Reference</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+    {types.map(type => (
+      <a href={`/reference/${type.id}`} class="border border-tui-border-inactive p-4 hover:border-tui-border-active group">
+        <div class="text-tui-accent group-hover:text-tui-border-active font-bold">
+          {type.title}
+        </div>
+        <p class="text-xs mt-2 opacity-60">{type.desc}</p>
+      </a>
+    ))}
+  </div>
+</Layout>

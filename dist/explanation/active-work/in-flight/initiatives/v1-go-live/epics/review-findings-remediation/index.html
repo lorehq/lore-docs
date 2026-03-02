@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Review Findings Remediation | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Review Findings Remediation ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="review-findings-remediation">Review Findings Remediation</h1>
+<p>Six independent external reviews assessed all three repos (lore, create-lore, lore-docs) plus the live docs site. All reviews were positive on architecture and code quality. The actionable findings are release/ops maturity gaps, code hardening opportunities, and documentation depth — not design flaws.</p>
+<p>This plan covers items that are <strong>net-new</strong> from the reviews. Items already tracked in the <a href="../launch-content-and-distribution/index.md">Launch Content and Distribution</a> plan (README overhaul, screenshots, demo video) are not duplicated here.</p>
+<h2 id="goal">Goal</h2>
+<p>Close the release hygiene, governance, documentation, CI, and code hardening gaps identified by reviewers before public launch.</p>
+<h2 id="scope">Scope</h2>
+<h3 id="0-showstopper-version-tag-alignment--complete">0. Showstopper: Version Tag Alignment — COMPLETE</h3>
+<p><code>create-lore</code> does <code>git clone --branch v${pkg.version}</code> (v0.8.1), but the lore repo only has a <code>v0.3.0</code> tag. <code>npx create-lore</code> is broken for end users.</p>
+<p>Root cause: fully manual release with no guardrails. Version bumps in <code>package.json</code> and <code>npm publish</code> happen independently of git tags. Tags get forgotten.</p>
+<p><strong>Permanent fix: tag-driven releases via GitHub Actions.</strong></p>
+<p><strong>Permanent fix deployed (2026-02-19):</strong></p>
+<ul>
+<li><code>lore/.github/workflows/release.yml</code> — triggered on <code>v*</code> tag push, runs full test suite, verifies tag matches <code>package.json</code>, creates GitHub Release</li>
+<li><code>create-lore/.github/workflows/release.yml</code> — triggered on <code>v*</code> tag push, runs tests, <strong>verifies matching lore tag exists</strong> before npm publish, creates GitHub Release</li>
+<li><code>lore/scripts/release.sh</code> — coordinating script: validates both repos, tags lore first, then create-lore. Both workflows fire automatically.</li>
+<li><code>lore/scripts/bump-version.sh</code> — single command to update all version references across both repos</li>
+<li><code>lore/scripts/check-version-sync.sh</code> — expanded to catch package-lock.json and SECURITY.md drift</li>
+</ul>
+<p>Key guardrails:</p>
+<ul>
+<li>No tag → no publish (tag is the trigger, not a manual step)</li>
+<li>create-lore release workflow checks <code>git ls-remote</code> for matching lore tag before publishing</li>
+<li>Release script enforces: clean working tree, on main, up to date with remote, versions match across repos</li>
+<li><code>NPM_TOKEN</code> granular access token configured in create-lore repo settings</li>
+</ul>
+<p><strong>Repo: create-lore + lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add CI check that validates tag existence before npm publish (prevent recurrence)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Tag lore repo at current HEAD with version matching create-lore’s <code>package.json</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Configure <code>NPM_TOKEN</code> secret in create-lore GitHub repo settings</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Commit and push release workflows to both repos</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Both repos tagged v0.8.1, GitHub Releases created, lore release workflow green</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> Verify <code>npx create-lore test-project</code> succeeds end-to-end on a machine with github.com access (DNS blocked in current env)</li>
+</ul>
+<h3 id="1-release-hygiene--complete">1. Release Hygiene — COMPLETE</h3>
+<p><strong>Repo: lore + create-lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Fix <code>package-lock.json</code> version drift (0.7.0 → 0.8.1)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Update <code>SECURITY.md</code> supported versions table (0.7.x → 0.8.x)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Align create-lore GitHub tags/releases with npm publish cadence (tag-driven release workflow)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>bump-version.sh</code> and <code>check-version-sync.sh</code> now cover <code>create-lore/SECURITY.md</code> (prevented recurring drift)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>CONTRIBUTING.md: removed hardcoded test count to prevent drift</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> Document release workflow in runbook (cross-ref with launch plan Section 0) — <code>scripts/release.sh</code> is the operator entry point</li>
+</ul>
+<h3 id="2-governance-files-in-satellite-repos--complete">2. Governance Files in Satellite Repos — COMPLETE</h3>
+<p>Both reviewers noted that lore-docs and create-lore lack standard open-source process files. The core lore repo already has these.</p>
+<p><strong>Repo: lore-docs + create-lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>CONTRIBUTING.md</code> to lore-docs</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>CONTRIBUTING.md</code> to create-lore</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>SECURITY.md</code> to lore-docs</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>SECURITY.md</code> to create-lore</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add issue templates (bug report, feature request) to lore-docs</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add issue templates (bug report, feature request) to create-lore</del></li>
+</ul>
+<h3 id="3-documentation-gaps--complete">3. Documentation Gaps — COMPLETE</h3>
+<p>Items not covered by the existing README overhaul in the launch plan.</p>
+<p><strong>Repo: lore-docs</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add troubleshooting/FAQ page to docs site</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add changelog page to docs site (v0.1.0 through v0.8.1)</del></li>
+</ul>
+<p><strong>Repo: create-lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Rewrite create-lore README to explain what Lore is for newcomers</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add explicit failure messaging when git clone fails (tag missing, network error)</del></li>
+</ul>
+<h3 id="4-docs-ci-hardening--complete">4. Docs CI Hardening — COMPLETE</h3>
+<p>lore-docs has deploy-only automation. No validation runs before publish, so regressions can slip through.</p>
+<p><strong>Repo: lore-docs</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>mkdocs build --strict</code> to CI (catches broken links, missing pages)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add markdown lint check to CI (markdownlint-cli2 with <code>.markdownlint.json</code> config)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Run validation before deploy step (validate job gates deploy job)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>pull_request</code> trigger so validation runs on PRs, not just push to main</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Supply chain hardening: all GitHub Actions pinned by commit SHA across all 3 repos</del></li>
+</ul>
+<h3 id="5-hook-token-cost-measurement-priority">5. Hook Token Cost Measurement (PRIORITY)</h3>
+<p>Both reviewers flagged that the cumulative context window cost of hooks in long sessions is unmeasured. The hook-logger infrastructure exists but no analysis has been published.</p>
+<p>Reprioritized for launch readiness — this now feeds the Phase 4 evidence-first sequence directly (proof assets, FAQ, and competitive positioning).</p>
+<p><strong>Repo: lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Measure token cost of all hook injections across a representative session (10+ prompts)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Document findings — total tokens injected, percentage of typical context window consumed</li>
+<li class="task-list-item"><input type="checkbox" disabled> Publish summary in docs (architecture or FAQ section) for transparency</li>
+<li class="task-list-item"><input type="checkbox" disabled> If cost exceeds 5% of context window, evaluate optimization options</li>
+</ul>
+<h3 id="6-code-hardening--mostly-complete">6. Code Hardening — MOSTLY COMPLETE</h3>
+<p>From reviews 3 and 4. Improve robustness of parsing, scripts, and scaffolder input handling.</p>
+<p><strong>Repo: lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Extract shared <code>lib/frontmatter.js</code> module — zero-dependency parser with CRLF, quoted values, inline comments, edge cases (13 tests)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Refactor <code>lib/banner.js</code> to use shared frontmatter module (removed all inline regex parsing)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add c8 code coverage reporting — <code>npm run test:coverage</code> (97.5% statements, 100% functions)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Banner.js unit tests — 41 tests covering all 6 exported functions (coverage 61% → 99%)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Fix “under 100 lines” and “~1,200 lines” claims in production-readiness.md</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> Break <code>lore-link.sh</code> into smaller composable scripts (flagged as monolithic, maintenance risk)</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Handle malformed <code>.lore-config</code> gracefully in scaffolder (try/catch on JSON.parse)</del></li>
+</ul>
+<p><strong>Repo: create-lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Validate project names for shell-hostile characters — validates resolved basename, catches <code>;|$&#x26;</code> etc.</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Clarify dual <code>actions/checkout</code> in workflows (comments explain: first = this repo, second = lore template)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>create-lore: added ESLint + Prettier with CI gate for parity with lore repo</del></li>
+</ul>
+<h3 id="7-ci-expansion--complete">7. CI Expansion — COMPLETE</h3>
+<p><strong>Repo: create-lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add E2E CI job: scaffold project → run <code>validate-consistency.sh</code> on result (runs on all 3 OSes)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>windows-latest</code> to test and release CI matrices (validates rsync→cp migration)</del></li>
+</ul>
+<p><strong>Repo: lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>windows-latest</code> to test and release CI matrices (ShellCheck and nav check gated to non-Windows)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>npm audit --omit=dev</code> to CI</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Windows CI stabilization: <code>.gitattributes eol=lf</code>, <code>node --test</code> auto-discovery, <code>process.argv</code> for paths in bash→Node, lore-link test skips, CRLF normalization</del></li>
+</ul>
+<h3 id="8-documentation--launch-content--complete">8. Documentation — Launch Content — COMPLETE</h3>
+<p>Items that feed directly into launch positioning. Cross-referenced with launch plan but owned here because they came from reviews. Reviews 5 and 6 reinforced the need for production readiness docs and added new items.</p>
+<p><strong>Repo: lore-docs</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add “Production Readiness” page — stability policy, security/trust model, supply chain, known limitations, non-goals, CI coverage, upgrade policy</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add “When to Use Lore” decision guide (good/poor fit, team workflows, comparison with alternatives, migration paths)</del></li>
+</ul>
+<p><strong>Assessed and deferred (not needed for launch):</strong></p>
+<ul>
+<li>API reference for <code>lib/</code> modules — internal implementation details; modules are small, well-commented, self-documenting. Per docs conventions rule 4.</li>
+<li>Migration guide — only one published version; nothing to migrate from yet. Create when v0.9.0 ships.</li>
+<li>Agent authoring walkthrough — <code>/lore-create-skill</code> and <code>/lore-create-agent</code> already guide users through creation. Audited: non-<code>lore-*</code> skills/agents flow correctly through registries, platform sync, banner, validation, and framework sync (never touched). A walkthrough would restate what the tooling handles.</li>
+<li>Versioned docs — infrastructure work, deferred to post-launch.</li>
+</ul>
+<h3 id="9-safe-mode--restricted-execution-deferred--feature-request">9. Safe Mode / Restricted Execution (deferred — feature request)</h3>
+<p>Review 5 suggested a “safe mode” for regulated environments where hook execution could be restricted or sandboxed. This is a feature request, not a documentation or hygiene gap. Deferred to post-launch backlog.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Evaluate restricted execution profile (disable specific hooks, read-only mode, audit logging)</li>
+<li class="task-list-item"><input type="checkbox" disabled> If pursued, document in Production Readiness page</li>
+</ul>
+<h3 id="10-review-reconciliation-reviews-78">10. Review Reconciliation (Reviews 7–8)</h3>
+<p>Three items from reconciling the two most recent external reviews.</p>
+<p><strong>Repo: lore-docs</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> First session walkthrough — guided end-to-end tutorial from <code>npx create-lore</code> through first capture (Review 7’s strongest docs gap)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Platform compatibility matrix — what’s stable vs experimental per platform and version (Review 8)</li>
+</ul>
+<p><strong>Repo: lore + lore-docs</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Docs sync policy — document or automate the boundary between <code>lore/docs/</code> (instance template) and <code>lore-docs/docs/</code> (public site) to prevent drift (Review 8)</li>
+</ul>
+<h3 id="11-supply-chain--ci-hardening-reviews-910--complete">11. Supply Chain &#x26; CI Hardening (Reviews 9–10) — COMPLETE</h3>
+<p><strong>All repos</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Pin all GitHub Actions by commit SHA (23 action refs across 3 repos)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Switch CI from <code>npm install</code> to <code>npm ci</code> for deterministic builds</del></li>
+</ul>
+<p><strong>Repo: create-lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add ESLint + Prettier CI gate for lint/format parity with lore</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Enable <code>npm publish --provenance</code> with <code>id-token: write</code> permission</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Pin ESLint to v9 for Node 18 compatibility</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>.prettierignore</code> and ESLint <code>ignores</code> for lore checkout directory</del></li>
+</ul>
+<h3 id="12-marketing-language--governance-reviews-910--complete">12. Marketing Language &#x26; Governance (Reviews 9–10) — COMPLETE</h3>
+<p><strong>Repo: lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>README: “gets smarter” → “starts with full context”</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Added CODEOWNERS file</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Framework instructions: added lore-link/IDE workflow to repo boundary section</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Delegation instructions: agent rules, conventions, skills now REQUIRED</del></li>
+</ul>
+<p><strong>Repo: create-lore</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Added CODEOWNERS file</del></li>
+</ul>
+<p><strong>Repo: lore-docs</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>“Self-Learning” → “Knowledge Capture” on index page</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>“learns their patterns” → “captures their patterns” in when-to-use guide</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>“pick up where they left off” → “have persistent context from day one”</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>“The One Rule” reframed as “Two Workflows” — CLI and IDE are equal</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Cross-repo diagram: neutral hub label, link to both workflows</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Added CODEOWNERS file</del></li>
+</ul>
+<p><strong>Repo: lore (source template)</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>docs/guides/working-across-repos.md</code>: “The One Rule” → “Two Workflows”, expanded lore-link section</del></li>
+</ul>
+<p><strong>Repo: lorehq (instance)</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>README: “Self-Learning” → “Persistent Context”</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>docs/guides/working-across-repos.md</code>: “The One Rule” → “Two Workflows”, full IDE workflow section</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>docs/guides/commands.md</code>: added <code>/lore-link</code> to slash commands table</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>docs/guides/platform-support.md</code>: updated feature matrix, hook directories, linked repos references guide</del></li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Working <code>npx create-lore</code> (version tags aligned across repos)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>SECURITY.md</code> current in all repos</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>CONTRIBUTING.md</code> and issue templates in lore-docs and create-lore</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Troubleshooting/FAQ page on docs site</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Changelog page on docs site</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Rewritten create-lore README</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Docs CI pipeline with build + lint validation</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> Published hook token cost analysis</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Hardened frontmatter parsing and scaffolder input validation</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>E2E CI job for create-lore</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Production readiness page (with security/trust model and stability policy)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Decision guide (When to Use Lore page)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>GitHub Actions pinned by SHA, npm provenance enabled</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Marketing language audit — all overpromising claims fixed</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>CODEOWNERS in all repos</del></li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>All three repos have CONTRIBUTING.md, SECURITY.md, and issue templates</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>mkdocs build --strict</code> passes in lore-docs CI</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>No version mismatches across package.json, package-lock.json, SECURITY.md, and git tags</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> <code>npx create-lore test-project</code> succeeds on clean Ubuntu and macOS</li>
+<li class="task-list-item"><input type="checkbox" disabled> Hook token cost is documented with real measurements</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>lib/banner.js</code> frontmatter parsing handles malformed input without crash</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>create-lore rejects invalid project names</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>E2E scaffolder CI job passes</del></li>
+</ul>
+<h2 id="sequencing">Sequencing</h2>
+<p><strong>Done:</strong></p>
+<ul>
+<li>Sections 0-4 — completed 2026-02-19, enhanced 2026-02-20 (version sync prevention, PR-trigger CI)</li>
+<li>Section 6 — code hardening mostly complete (frontmatter module, scaffolder validation, workflow comments, c8 coverage, banner tests, docs accuracy). Remaining: <code>lore-link.sh</code> decomposition.</li>
+<li>Section 7 — CI expansion complete (E2E job, Windows matrix, npm audit)</li>
+<li>Section 8 — launch content docs complete (Production Readiness, When to Use Lore). Remaining items assessed and deferred.</li>
+<li>Section 11 — supply chain and CI hardening complete (2026-02-20)</li>
+<li>Section 12 — marketing language, governance, and guide fixes complete (2026-02-20)</li>
+</ul>
+<p><strong>Remaining before launch (priority order):</strong></p>
+<ul>
+<li>P0: Section 5 — token cost measurement and published transparency report</li>
+<li>P1: Section 10 — review reconciliation: first session walkthrough, compatibility matrix, docs sync policy</li>
+<li>P2: Section 6 — <code>lore-link.sh</code> decomposition (maintenance quality)</li>
+</ul>
+<p><strong>Deferred to post-launch:</strong></p>
+<ul>
+<li>Section 9 — safe mode / restricted execution (feature request)</li>
+<li>Versioned docs, migration guide (premature with one published version)</li>
+</ul>
+<p><strong>Cross-references:</strong></p>
+<ul>
+<li>Launch plan Section 0 (pre-launch gates) — release cadence runbook overlaps with Section 1 here</li>
+<li>Launch plan Section 1 (proof assets) — token cost data is a proof asset</li>
+<li>Launch plan Section 2 (README overhaul) — create-lore README rewrite here is complementary, not duplicate</li>
+<li>Launch plan Section 5 (competitive differentiation) — “complexity vs value” concern maps to messaging</li>
+<li>Review 5 — security/trust model and stability policy folded into Section 8 Production Readiness page</li>
+<li>Review 6 — API reference, migration guide, agent authoring walkthrough added to Section 8</li>
+</ul>
+<h2 id="test-plan">Test Plan</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># In lore repo</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-consistency.sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># In lore-docs repo</span></span>
+<span class="line"><span style="color:#B392F0">mkdocs</span><span style="color:#9ECBFF"> build</span><span style="color:#79B8FF"> --strict</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># End-to-end scaffolder test</span></span>
+<span class="line"><span style="color:#B392F0">npx</span><span style="color:#9ECBFF"> create-lore</span><span style="color:#9ECBFF"> /tmp/test-project</span><span style="color:#E1E4E8"> &#x26;&#x26; </span><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> /tmp/test-project</span><span style="color:#E1E4E8"> &#x26;&#x26; </span><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-consistency.sh</span></span></code></pre>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

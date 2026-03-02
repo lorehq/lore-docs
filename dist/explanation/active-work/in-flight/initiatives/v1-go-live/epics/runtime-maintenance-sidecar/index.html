@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Runtime Maintenance Sidecar | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Runtime Maintenance Sidecar ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="runtime-maintenance-sidecar">Runtime Maintenance Sidecar</h1>
+<h2 id="goal">Goal</h2>
+<p>Move nav generation, docs build/serve, and semantic indexing out of the interactive Lore execution loop into a single containerized runtime service, while preserving behavior and adding a safe fallback path.</p>
+<h2 id="scope">Scope</h2>
+<h3 id="1-baseline-and-inventory">1. Baseline and Inventory</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Map every place maintenance work runs today (hooks, scripts, command flows)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Record which tasks are synchronous vs asynchronous</li>
+<li class="task-list-item"><input type="checkbox" disabled> Capture baseline timing and token/cost impact from representative sessions</li>
+</ul>
+<h3 id="2-sidecar-runtime-architecture">2. Sidecar Runtime Architecture</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Define single-image architecture for nav generation, mkdocs, and semantic indexing</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Define runtime interfaces (file watch, queue/command trigger, health endpoints)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Define debouncing and retry strategy for frequent file edits</del></li>
+</ul>
+<h3 id="3-migration-implementation">3. Migration Implementation</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Build container image and compose wiring for local development</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Move maintenance orchestration into sidecar entrypoint/services</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> Keep in-process maintenance logic behind a fallback flag during migration</li>
+</ul>
+<h3 id="4-validation-and-cutover">4. Validation and Cutover</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Validate nav output parity against current behavior</li>
+<li class="task-list-item"><input type="checkbox" disabled> Validate semantic index freshness and query correctness</li>
+<li class="task-list-item"><input type="checkbox" disabled> Validate docs build/serve behavior and failure handling</li>
+<li class="task-list-item"><input type="checkbox" disabled> Switch default to sidecar-backed maintenance after parity is verified</li>
+</ul>
+<h3 id="5-documentation-and-operations">5. Documentation and Operations</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Add runbook for startup, health checks, and troubleshooting</li>
+<li class="task-list-item"><input type="checkbox" disabled> Document config flags for sidecar vs legacy fallback behavior</li>
+<li class="task-list-item"><input type="checkbox" disabled> Document recovery steps when sidecar is unavailable</li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Sidecar image and runtime wiring for nav/mkdocs/semantic maintenance</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> Configurable fallback flag for temporary in-process maintenance</li>
+<li class="task-list-item"><input type="checkbox" disabled> Parity report (before/after behavior and overhead)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Operator runbook for runtime management</li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Interactive agent flow no longer performs maintenance tasks synchronously by default</li>
+<li class="task-list-item"><input type="checkbox" disabled> Output parity is maintained for generated nav/docs/index state</li>
+<li class="task-list-item"><input type="checkbox" disabled> End-to-end validations pass (<code>ensure-structure</code>, <code>validate-consistency</code>, docs build checks)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Measurable improvement in interactive run latency and/or token overhead</li>
+</ul>
+<h2 id="sequencing">Sequencing</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Phase A: baseline inventory and measurements</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Phase B: sidecar architecture and implementation with fallback enabled</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> Phase C: parity validation and default cutover to sidecar</li>
+<li class="task-list-item"><input type="checkbox" disabled> Phase D: stabilization, docs, and deprecation plan for legacy path</li>
+</ul>
+<h2 id="progress-notes">Progress Notes</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Implemented unified runtime container in <code>lore</code> source repo</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Added runtime entrypoint that starts semantic API, MkDocs watch server, and filesystem watcher</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Added file watcher flow: per-file semantic reindex + nav regeneration on structural docs changes</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Added skills indexing: semantic search scans <code>.lore/skills/*.md</code> with <code>skills/</code> path prefix</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Removed full repo mount (<code>/repo</code>) — container mounts only <code>docs/</code> and <code>skills/</code> (read-only)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Removed <code>RepoWatcher</code>, <code>VALIDATE_SCRIPT</code>, and <code>ensure-structure.sh</code> subprocess from runtime</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Added <code>SkillsWatcher</code> for live reindex on skill file changes</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Added container naming via <code>COMPOSE_PROJECT_NAME</code> from config.json <code>name</code> field</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Added port config: skill reads <code>docker.site.port</code>/<code>docker.search.port</code> from config, computed fallback</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Fixed Dockerfile: <code>lore</code> user home dir and <code>/runtime-cache</code> ownership for model downloads</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Created GitHub repo <code>lorehq/lore-docker</code> (private) and pushed</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> Validate parity and performance against current interactive flow</li>
+</ul>
+<h2 id="test-plan">Test Plan</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/ensure-structure.sh</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-consistency.sh</span></span></code></pre>
+<p>Operational validation:</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Run representative complex task in current mode and sidecar mode</li>
+<li class="task-list-item"><input type="checkbox" disabled> Compare timing, request count, and token/cost metrics</li>
+<li class="task-list-item"><input type="checkbox" disabled> Confirm no regressions in generated nav/docs output</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Cursor Integration Overhaul | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Cursor Integration Overhaul ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="cursor-integration-overhaul">Cursor Integration Overhaul</h1>
+<h2 id="problem">Problem</h2>
+<p>Cursor’s <code>sessionStart</code> hook skips the auto-opened first session. Agents miss the Lore banner (delegation, active work, knowledge map, conventions) on their most common session type. Additionally, <code>.cursorrules</code> dumps everything into one always-on file while hooks inject a full banner too — redundant when hooks do fire.</p>
+<h2 id="solution">Solution</h2>
+<p>Move essential context into tiered <code>.cursor/rules/*.mdc</code> files (loaded reliably on every session including first). Slim the sessionStart hook to only emit truly dynamic data.</p>
+<h2 id="tiered-mdc-rules-2-4-2-pattern">Tiered .mdc Rules (2-4-2 pattern)</h2>
+<h3 id="always-on-2-files-alwaysapply-true">Always-on (2 files, <code>alwaysApply: true</code>)</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <strong><code>lore-core.mdc</code></strong> — Framework instructions from <code>.lore/instructions.md</code>. Replaces <code>.cursorrules</code>.</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong><code>lore-project.mdc</code></strong> — Project identity (<code>docs/context/agent-rules.md</code>) + conventions (<code>docs/context/conventions/*.md</code>). Static snapshot.</li>
+</ul>
+<h3 id="glob-based-4-files">Glob-based (4 files)</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <strong><code>lore-work-tracking.mdc</code></strong> (<code>globs: ["docs/workflow/**"]</code>) — Work management rules. Replaces current <code>work-tracking.mdc</code>.</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong><code>lore-knowledge-routing.mdc</code></strong> (<code>globs: ["docs/knowledge/**", "docs/context/**"]</code>) — Knowledge routing table.</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong><code>lore-skill-creation.mdc</code></strong> (<code>globs: [".lore/skills/**"]</code>) — Skill naming, size limits, domain=agent rules.</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong><code>lore-docs-formatting.mdc</code></strong> (<code>globs: ["docs/**/*.md", "*.md"]</code>) — Checkbox, strikethrough, no-emoji conventions.</li>
+</ul>
+<h3 id="agent-requested-2-files-alwaysapply-false">Agent-requested (2 files, <code>alwaysApply: false</code>)</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <strong><code>lore-delegation.mdc</code></strong> — Agent registry table, delegation procedure, parallel execution patterns.</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong><code>lore-knowledge-map.mdc</code></strong> — Directory tree of docs/, skills/, agents/ for navigation.</li>
+</ul>
+<h3 id="revised-sessionstart-hook--dynamic-only">Revised sessionStart hook — dynamic only</h3>
+<p>Hook becomes a slim supplement emitting only:</p>
+<ul>
+<li>Version header (<code>=== LORE v0.8.1 ===</code>)</li>
+<li>Active roadmaps/plans (changes frequently)</li>
+<li>Local memory (<code>MEMORY.local.md</code>, gitignored)</li>
+</ul>
+<p>When hook fires (+ sessions): fresh dynamic data on top of static rules.
+When hook doesn’t fire (first session): everything from .mdc rules except active work status.</p>
+<h2 id="implementation-steps">Implementation Steps</h2>
+<p>All changes in <code>/home/andrew/Github/lore</code>.</p>
+<h3 id="step-1-create-scriptsgenerate-cursor-rulessh">Step 1: Create <code>scripts/generate-cursor-rules.sh</code></h3>
+<p>Generates all 8 <code>.cursor/rules/lore-*.mdc</code> files from canonical sources.</p>
+<p>Uses Node helper for parts needing <code>buildTree()</code> and file reading. Accepts <code>--hub &#x3C;path></code> for linked repo generation.</p>
+<p>Each .mdc file generation:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>File</th><th>Frontmatter</th><th>Body source</th></tr></thead><tbody><tr><td><code>lore-core.mdc</code></td><td><code>alwaysApply: true</code></td><td><code>.lore/instructions.md</code></td></tr><tr><td><code>lore-project.mdc</code></td><td><code>alwaysApply: true</code></td><td><code>docs/context/agent-rules.md</code> + <code>docs/context/conventions/*.md</code></td></tr><tr><td><code>lore-work-tracking.mdc</code></td><td><code>globs: ["docs/workflow/**"]</code></td><td>Work management rules from instructions.md (Work Management section)</td></tr><tr><td><code>lore-knowledge-routing.mdc</code></td><td><code>globs: ["docs/knowledge/**", "docs/context/**"]</code></td><td>Knowledge routing table from instructions.md</td></tr><tr><td><code>lore-skill-creation.mdc</code></td><td><code>globs: [".lore/skills/**"]</code></td><td>Skill creation + agent creation rules from instructions.md</td></tr><tr><td><code>lore-docs-formatting.mdc</code></td><td><code>globs: ["docs/**/*.md", "*.md"]</code></td><td><code>docs/context/conventions/docs.md</code></td></tr><tr><td><code>lore-delegation.mdc</code></td><td><code>alwaysApply: false</code> + description</td><td><code>agent-registry.md</code> table + delegation rules</td></tr><tr><td><code>lore-knowledge-map.mdc</code></td><td><code>alwaysApply: false</code> + description</td><td><code>buildTree()</code> output for docs/, .lore/skills/, .lore/agents/</td></tr></tbody></table>
+<h3 id="step-2-add-buildcursorbanner-to-libbannerjs">Step 2: Add <code>buildCursorBanner()</code> to <code>lib/banner.js</code></h3>
+<p>Dynamic-only banner for Cursor sessions. Includes:</p>
+<ul>
+<li>Version header</li>
+<li>Active roadmaps/plans (from <code>scanWork()</code>)</li>
+<li>Local memory (<code>MEMORY.local.md</code>)</li>
+</ul>
+<p>Does NOT include (now in .mdc rules):</p>
+<ul>
+<li>PROJECT (agent-rules.md)</li>
+<li>CONVENTIONS</li>
+<li>KNOWLEDGE MAP</li>
+<li>DELEGATION / SKILL CREATION / CAPTURE lines</li>
+</ul>
+<p>Export alongside existing <code>buildBanner()</code>.</p>
+<h3 id="step-3-update-cursorhookssession-initjs">Step 3: Update <code>.cursor/hooks/session-init.js</code></h3>
+<p>Switch from <code>buildBanner(hub)</code> to <code>buildCursorBanner(hub)</code>.</p>
+<h3 id="step-4-update-scriptssync-platform-skillssh">Step 4: Update <code>scripts/sync-platform-skills.sh</code></h3>
+<ul>
+<li>Call <code>generate-cursor-rules.sh</code> after existing sync</li>
+<li>Stop generating <code>.cursorrules</code> (remove <code>cp</code> line)</li>
+</ul>
+<h3 id="step-5-update-scriptslore-linksh">Step 5: Update <code>scripts/lore-link.sh</code></h3>
+<ul>
+<li>Copy all <code>lore-*.mdc</code> from hub <code>.cursor/rules/</code> to linked repo <code>.cursor/rules/</code></li>
+<li>Update <code>GENERATED_FILES</code> array: remove <code>.cursorrules</code> and <code>.cursor/rules/lore.mdc</code>, add all 8 <code>lore-*.mdc</code> paths</li>
+<li>Remove old <code>cp ... .cursorrules</code> line</li>
+</ul>
+<h3 id="step-6-update-scriptssync-frameworksh">Step 6: Update <code>scripts/sync-framework.sh</code></h3>
+<p>Current: <code>rsync -a "$SOURCE/.cursor/" "$TARGET/.cursor/"</code> (overwrites instance-specific .mdc files)</p>
+<p>Change to:</p>
+<ol>
+<li>Sync hook scripts: <code>rsync -a "$SOURCE/.cursor/hooks/" "$TARGET/.cursor/hooks/"</code></li>
+<li>Copy <code>hooks.json</code></li>
+<li>Copy only framework-owned rules (lore-core, lore-work-tracking, lore-knowledge-routing, lore-skill-creation, lore-docs-formatting)</li>
+<li>Regenerate instance-specific rules (lore-project, lore-delegation, lore-knowledge-map) via <code>generate-cursor-rules.sh</code></li>
+</ol>
+<h3 id="step-7-update-scriptsvalidate-consistencysh">Step 7: Update <code>scripts/validate-consistency.sh</code></h3>
+<ul>
+<li>Replace <code>.cursorrules</code> check in check 9 with <code>lore-core.mdc</code> content check</li>
+<li>Add check that <code>lore-core.mdc</code> body matches <code>.lore/instructions.md</code></li>
+</ul>
+<h3 id="step-8-remove-obsolete-files">Step 8: Remove obsolete files</h3>
+<ul>
+<li><code>.cursorrules</code> — replaced by <code>lore-core.mdc</code></li>
+<li><code>.cursor/rules/work-tracking.mdc</code> — replaced by <code>lore-work-tracking.mdc</code> (does not currently exist in source)</li>
+</ul>
+<h2 id="key-source-files-current-state-captured">Key Source Files (current state captured)</h2>
+<h3 id="libbannerjs-lines-64-138"><code>lib/banner.js</code> (lines 64-138)</h3>
+<p><code>buildBanner()</code> currently emits: version, delegation, skill creation, capture, active roadmaps/plans, PROJECT (agent-rules), CONVENTIONS, KNOWLEDGE MAP, LOCAL MEMORY.</p>
+<p>New <code>buildCursorBanner()</code> needs only: version, active roadmaps/plans, LOCAL MEMORY.</p>
+<p>Reuses existing: <code>getConfig()</code>, <code>scanWork()</code>.</p>
+<h3 id="cursorhookssession-initjs-12-lines"><code>.cursor/hooks/session-init.js</code> (12 lines)</h3>
+<p>Currently: <code>buildBanner(hub)</code> → <code>additional_context</code>. Change to <code>buildCursorBanner(hub)</code>.</p>
+<h3 id="scriptssync-platform-skillssh-lines-70-73"><code>scripts/sync-platform-skills.sh</code> (lines 70-73)</h3>
+<p>Currently copies instructions.md to both <code>CLAUDE.md</code> and <code>.cursorrules</code>. Remove <code>.cursorrules</code> copy, add <code>generate-cursor-rules.sh</code> call.</p>
+<h3 id="scriptslore-linksh"><code>scripts/lore-link.sh</code></h3>
+<p><code>GENERATED_FILES</code> array (line 29-45) tracks what gets cleaned on unlink. <code>do_link()</code> copies configs. Need to update both.</p>
+<h3 id="scriptssync-frameworksh-line-36"><code>scripts/sync-framework.sh</code> (line 36)</h3>
+<p><code>rsync -a "$SOURCE/.cursor/" "$TARGET/.cursor/"</code> — too broad. Split into selective sync.</p>
+<h3 id="scriptsvalidate-consistencysh-lines-152-163"><code>scripts/validate-consistency.sh</code> (lines 152-163)</h3>
+<p>Check 9 iterates over <code>"CLAUDE.md" ".cursorrules"</code>. Replace <code>.cursorrules</code> with <code>.cursor/rules/lore-core.mdc</code> (body-only comparison, skip frontmatter).</p>
+<h2 id="verification">Verification</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <code>npm test</code> — all existing tests pass</li>
+<li class="task-list-item"><input type="checkbox" disabled> Add test for <code>buildCursorBanner()</code> — verify includes version/active work, NOT project/conventions/tree</li>
+<li class="task-list-item"><input type="checkbox" disabled> Run <code>generate-cursor-rules.sh</code> — 8 .mdc files with correct frontmatter</li>
+<li class="task-list-item"><input type="checkbox" disabled> Run <code>validate-consistency.sh</code> — all checks pass</li>
+<li class="task-list-item"><input type="checkbox" disabled> <code>lore-link.sh</code> to linked repo — .mdc files copied</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

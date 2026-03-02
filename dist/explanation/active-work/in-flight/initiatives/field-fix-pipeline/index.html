@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Field Fix Contribution Pipeline | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Field Fix Contribution Pipeline ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="field-fix-contribution-pipeline">Field Fix Contribution Pipeline</h1>
+<h2 id="vision">Vision</h2>
+<p>Lore instances discover and fix bugs during normal operation via field-repair. Today those fixes stay local. This roadmap builds a pipeline where deployed instances contribute fixes back to the source framework, with AI-assisted triage and quality gates on the receiving end.</p>
+<p>This is a novel capability: deployed software that contributes fixes back to its own source, with AI-powered selection when multiple instances fix the same bug differently.</p>
+<h2 id="architecture">Architecture</h2>
+<p>Three-layer design:</p>
+<ol>
+<li><strong>Instance packaging</strong> — Instances structure field fixes with metadata (context, diff, test evidence, security self-check) and submit via <code>gh</code> CLI</li>
+<li><strong>Source triage</strong> — GitHub Actions intake pipeline classifies, labels, detects duplicates, and runs convention-aware AI review</li>
+<li><strong>Feedback loop</strong> — When multiple fixes target the same root cause, AI compares implementations and recommends the best one</li>
+</ol>
+<h2 id="design-decisions">Design Decisions</h2>
+<ul>
+<li><strong>Operator-approved submissions</strong> — No automatic submission. The instance operator reviews and approves every fix before it leaves the instance.</li>
+<li><strong>Claude Code Action for triage</strong> — <code>anthropics/claude-code-action@v1</code> powers the GitHub Actions intake and review pipelines.</li>
+<li><strong>Full AI-powered fix selection</strong> — When duplicate fixes exist, AI compares and recommends the best implementation. Human maintainer makes the final merge decision.</li>
+</ul>
+<h2 id="phases">Phases</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Phase</th><th>Title</th><th>Description</th><th>Depends on</th></tr></thead><tbody><tr><td>1</td><td><a href="plans/field-fix-metadata-format/index.md">Field Fix Metadata Format</a></td><td>Structured metadata schema — the contract between instances and source</td><td>—</td></tr><tr><td>2</td><td><a href="plans/field-fix-submit-skill/index.md">Field Fix Submit Skill</a></td><td>Instance-side <code>/field-fix-submit</code> skill for packaging and submitting fixes</td><td>Phase 1</td></tr><tr><td>3</td><td><a href="plans/intake-triage-workflow/index.md">Intake &#x26; Triage Workflow</a></td><td>GitHub Actions pipeline for classification, labeling, and duplicate detection</td><td>Phase 1</td></tr><tr><td>4</td><td><a href="plans/ai-review-gate/index.md">AI Review Gate</a></td><td>Convention-aware AI architecture review on field-fix PRs</td><td>Phase 3</td></tr><tr><td>5</td><td><a href="plans/fix-grouping-selection/index.md">Fix Grouping &#x26; AI Selection</a></td><td>Duplicate detection and AI-powered implementation comparison</td><td>Phase 3, 4</td></tr></tbody></table>
+<h2 id="key-constraints">Key Constraints</h2>
+<ul>
+<li><strong>Cross-platform</strong> — Must work on Linux, macOS, and Windows (WSL)</li>
+<li><strong>Cross-tool</strong> — Submit skill must work from Claude Code, Cursor, and OpenCode instances</li>
+<li><strong>Security</strong> — No instance-specific data (operator identity, local paths, env vars, secrets) may leak into submissions</li>
+<li><strong>Convention enforcement</strong> — All submitted fixes must pass coding and security convention checks</li>
+<li><strong>Ownership boundaries</strong> — Only harness-owned files (hooks, scripts, lib, skills) are valid submission targets</li>
+</ul>
+<h2 id="prior-art">Prior Art</h2>
+<p>The <a href="../../brainstorms/archive/contribution-governance-and-workflow/index.md">Contribution Governance and Workflow</a> brainstorm explored three contribution models and recommended Model B (fork source, fix in source) for external contributors. This roadmap builds on that foundation with the instance-to-source direction and adds the AI triage/selection layers that weren’t previously scoped.</p>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Field fixes flow from instances to source repo as structured PRs</li>
+<li class="task-list-item"><input type="checkbox" disabled> AI triage classifies and labels incoming fixes without human intervention</li>
+<li class="task-list-item"><input type="checkbox" disabled> Duplicate fixes are detected and grouped automatically</li>
+<li class="task-list-item"><input type="checkbox" disabled> AI review enforces coding and security conventions before human review</li>
+<li class="task-list-item"><input type="checkbox" disabled> When multiple fixes exist for the same bug, AI recommends the best implementation</li>
+<li class="task-list-item"><input type="checkbox" disabled> No instance-specific data appears in any submission</li>
+</ul>
+<h2 id="open-questions">Open Questions</h2>
+<ol>
+<li><strong>CLA/DCO</strong> — Do field-fix submissions need a Contributor License Agreement or Developer Certificate of Origin? Deferred from the original brainstorm.</li>
+<li><strong>Cross-instance testing</strong> — How to verify a fix from one instance doesn’t break others? CI matrix per Phase 3.</li>
+<li><strong>Embedding infrastructure</strong> — Phase 5 needs semantic similarity. Evaluate: Anthropic API embeddings, local FastEmbed, or heuristic grouping as MVP.</li>
+<li><strong>Rate limiting</strong> — If many instances submit fixes simultaneously, does the triage pipeline need throttling?</li>
+</ol>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

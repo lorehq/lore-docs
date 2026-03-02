@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Fix Grouping and AI Selection | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Fix Grouping and AI Selection ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="fix-grouping-and-ai-selection">Fix Grouping and AI Selection</h1>
+<p>The most novel component of the pipeline. When multiple field fixes target the same root cause, AI compares implementations and recommends the best one. Human maintainer makes the final merge decision.</p>
+<h2 id="goal">Goal</h2>
+<p>When N instances independently fix the same bug, automatically group the fixes, compare them across quality dimensions, and surface a recommendation — turning a pile of duplicate PRs into a curated selection with rationale.</p>
+<h2 id="approach">Approach</h2>
+<h3 id="grouping">Grouping</h3>
+<p>Build on Phase 3’s duplicate detection with deeper similarity analysis:</p>
+<ol>
+<li><strong>Semantic similarity</strong> — Compare PR diffs and issue descriptions using embeddings</li>
+<li><strong>Component clustering</strong> — Fixes touching the same files with overlapping root cause descriptions</li>
+<li><strong>Parent issue</strong> — Group related fixes under a single tracking issue (created automatically or linked manually)</li>
+</ol>
+<h3 id="ai-comparison">AI Comparison</h3>
+<p>When a group has 2+ fixes, trigger a comparison workflow:</p>
+<p><strong>Scoring dimensions:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Dimension</th><th>Weight</th><th>Description</th></tr></thead><tbody><tr><td>Minimality</td><td>High</td><td>Fewer lines changed, less surface area for regressions</td></tr><tr><td>Cross-platform coverage</td><td>High</td><td>Works on Linux + macOS + Windows vs. single platform</td></tr><tr><td>Test evidence</td><td>Medium</td><td>Includes before/after verification, covers edge cases</td></tr><tr><td>Convention adherence</td><td>Medium</td><td>Passes all required review criteria from Phase 4</td></tr><tr><td>Code quality</td><td>Medium</td><td>Readability, idiomatic patterns, error handling</td></tr><tr><td>Root cause depth</td><td>Low</td><td>Addresses the underlying cause vs. symptom</td></tr></tbody></table>
+<p><strong>Output:</strong> Summary comment on the parent issue:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#79B8FF;font-weight:bold">## Fix Comparison: [Bug Description]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8;font-weight:bold">**3 field fixes submitted.**</span><span style="color:#E1E4E8"> Recommended: PR #42.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">| PR | Author | Minimality | Cross-platform | Tests | Conventions | Quality | Score |</span></span>
+<span class="line"><span style="color:#E1E4E8">|----|--------|-----------|----------------|-------|-------------|---------|-------|</span></span>
+<span class="line"><span style="color:#E1E4E8">| #42 | instance-a | 5/5 | 5/5 | 4/5 | 5/5 | 4/5 | 23/25 |</span></span>
+<span class="line"><span style="color:#E1E4E8">| #38 | instance-b | 3/5 | 5/5 | 3/5 | 4/5 | 3/5 | 18/25 |</span></span>
+<span class="line"><span style="color:#E1E4E8">| #45 | instance-c | 4/5 | 2/5 | 5/5 | 5/5 | 4/5 | 20/25 |</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF;font-weight:bold">### Rationale</span></span>
+<span class="line"><span style="color:#E1E4E8">PR #42 is the most minimal fix (3 lines changed vs 8 and 12) while maintaining</span></span>
+<span class="line"><span style="color:#E1E4E8">full cross-platform compatibility. PR #45 has stronger test evidence but uses a</span></span>
+<span class="line"><span style="color:#E1E4E8">macOS-only sed pattern that would need adaptation.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF;font-weight:bold">### Synthesis opportunity</span></span>
+<span class="line"><span style="color:#E1E4E8">PR #42's implementation with PR #45's test coverage would be the ideal merge.</span></span>
+<span class="line"><span style="color:#E1E4E8">Consider cherry-picking test additions from #45 after merging #42.</span></span></code></pre>
+<h2 id="embedding-infrastructure">Embedding Infrastructure</h2>
+<p>Evaluate in priority order (cheapest viable option first):</p>
+<ol>
+<li><strong>Heuristic grouping (MVP)</strong> — Token overlap on root cause + file path matching. No external dependencies. Ship this first.</li>
+<li><strong>Local FastEmbed</strong> — Already used by lore-docker for semantic search. Could reuse the same model for PR similarity. See <code>fastembed-local-files-only</code> skill for configuration.</li>
+<li><strong>Anthropic API embeddings</strong> — Higher quality, but adds API cost per comparison. Reserve for production scale.</li>
+<li><strong>Qdrant-based similarity</strong> — Full vector DB. Overkill unless fix volume is high (50+ fixes/month).</li>
+</ol>
+<h2 id="scope">Scope</h2>
+<p><strong>Target repo:</strong> <code>/home/andrew/Github/lore</code> (source framework)</p>
+<p><strong>Files to create:</strong></p>
+<ul>
+<li><code>.github/workflows/field-fix-compare.yml</code> — comparison workflow, triggered when a group reaches 2+ fixes</li>
+<li><code>.github/prompts/field-fix-compare.md</code> — prompt template for the comparison</li>
+<li><code>.github/scripts/group-field-fixes.js</code> — grouping logic (heuristic MVP)</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>Phase 3 (intake triage) — provides the initial duplicate detection signals</li>
+<li>Phase 4 (AI review gate) — convention adherence scores feed into the comparison</li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Grouping logic detects and clusters related field fixes</li>
+<li class="task-list-item"><input type="checkbox" disabled> Parent issue is created or updated when a group forms</li>
+<li class="task-list-item"><input type="checkbox" disabled> AI comparison runs when a group reaches 2+ fixes</li>
+<li class="task-list-item"><input type="checkbox" disabled> Structured comparison comment is posted on the parent issue</li>
+<li class="task-list-item"><input type="checkbox" disabled> Synthesis opportunities are identified when fixes have complementary strengths</li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Two PRs fixing the same bug are automatically grouped</li>
+<li class="task-list-item"><input type="checkbox" disabled> Comparison table scores are consistent with human judgment (validate on 5+ examples)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Recommended fix is the one a human maintainer would also choose (>80% agreement)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Synthesis suggestions are actionable (point to specific commits/lines to cherry-pick)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Grouping doesn’t produce false positives (unrelated fixes grouped together)</li>
+</ul>
+<h2 id="open-questions">Open Questions</h2>
+<ol>
+<li><strong>Group threshold</strong> — Should comparison trigger at 2 fixes or wait for 3+? Start at 2 for faster feedback.</li>
+<li><strong>Score calibration</strong> — Weights are initial guesses. Calibrate after the first 10 real comparisons.</li>
+<li><strong>Partial merges</strong> — Can the pipeline suggest merging parts of different PRs? The “synthesis opportunity” field is a start, but automated cherry-pick is risky.</li>
+<li><strong>Stale fixes</strong> — How long should a group stay open? Auto-close after 30 days of inactivity?</li>
+</ol>
+<h2 id="test-plan">Test Plan</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Create two PRs that fix the same bug differently</span></span>
+<span class="line"><span style="color:#6A737D"># Verify grouping detects them as related</span></span>
+<span class="line"><span style="color:#6A737D"># Verify comparison comment appears on parent issue</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Create a third PR with a clearly inferior fix</span></span>
+<span class="line"><span style="color:#6A737D"># Verify it scores lower in the comparison</span></span></code></pre>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

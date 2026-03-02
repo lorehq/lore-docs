@@ -1,0 +1,122 @@
+---
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+const tutorials = await getCollection('tutorials');
+const howTo = await getCollection('how-to');
+const explanation = await getCollection('explanation');
+const reference = await getCollection('reference');
+const changelog = await getCollection('changelog');
+
+// Sort and filter for clean nav
+const topHowTo = howTo.filter(e => !e.id.includes('/'));
+const topReference = reference.filter(e => !e.id.includes('/'));
+const platformRef = reference.filter(e => e.id.startsWith('platforms/'));
+---
+
+<!doctype html>
+<html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | Lore</title>
+  </head>
+  <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none font-mono">
+    <div class="flex flex-1 gap-2 overflow-hidden">
+      <!-- Left Stack (Panels) -->
+      <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden">
+        
+        <!-- [1] TUTORIALS -->
+        <section class="relative border border-tui-border-inactive rounded-sm flex flex-col h-1/4 min-h-[120px] overflow-hidden">
+          <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Get-Started──</span>
+          <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide text-xs">
+            {tutorials.filter(e => !e.id.includes('/')).map(entry => (
+              <a href={`/tutorials/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
+            ))}
+          </nav>
+        </section>
+
+        <!-- [2] HOW-TO -->
+        <section class="relative border border-tui-border-inactive rounded-sm flex flex-col h-1/4 min-h-[120px] overflow-hidden">
+          <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-How-to-Guides──</span>
+          <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide text-xs">
+            {topHowTo.map(entry => (
+              <a href={`/how-to/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
+            ))}
+          </nav>
+        </section>
+
+        <!-- [3] REFERENCE -->
+        <section class="relative border border-tui-border-inactive rounded-sm flex flex-col h-1/4 min-h-[120px] overflow-hidden">
+          <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Reference──</span>
+          <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide text-xs">
+            {topReference.map(entry => (
+              <a href={`/reference/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
+            ))}
+            <div class="mt-2 opacity-40 text-[9px] px-2 uppercase">Platforms</div>
+            {platformRef.map(entry => (
+              <a href={`/reference/${entry.id}`} class="py-0.5 px-4 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
+            ))}
+          </nav>
+        </section>
+
+        <!-- [4] EXPLANATION -->
+        <section class="relative border border-tui-border-inactive rounded-sm flex flex-col flex-1 min-h-[120px] overflow-hidden">
+          <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Explanation──</span>
+          <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide text-xs">
+            {explanation.filter(e => !e.id.includes('/')).map(entry => (
+              <a href={`/explanation/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
+            ))}
+            <div class="mt-2 opacity-40 text-[9px] px-2 uppercase">Changelog</div>
+            {changelog.map(entry => (
+              <a href={`/changelog/${entry.id}`} class="py-0.5 px-4 hover:bg-tui-selected-bg hover:text-white transition-none">{entry.data.title}</a>
+            ))}
+          </nav>
+        </section>
+      </aside>
+
+      <!-- Main Content (Active) -->
+      <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden">
+        <!-- Dynamic Title -->
+        <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ {title} ]─</span>
+        <!-- Corner Bracket -->
+        <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span>
+
+        <article class="flex-1 overflow-y-auto p-8 pt-10 prose prose-invert max-w-none scrollbar-hide">
+          <slot />
+        </article>
+      </main>
+    </div>
+
+    <!-- Bottom Status Bar -->
+    <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-tui-border-inactive border-t border-[#1a1a1a] justify-between">
+      <div class="flex gap-4">
+        <span>PgUp/PgDn: scroll</span>
+        <span>b: bulk commands</span>
+        <span>q: quit</span>
+        <span>x: menu</span>
+        <span>&larr; &rarr; &uarr; &darr;: navigate</span>
+      </div>
+      <div class="text-[#888]">
+        Donate <span class="text-[#ff5fff]">0.24.4</span>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>

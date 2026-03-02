@@ -1,0 +1,200 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Evidence and Validation | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Evidence and Validation ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="evidence-and-validation">Evidence and Validation</h1>
+<h2 id="goal">Goal</h2>
+<p>Replace “claimed, not measured” with concrete evidence. The session acceleration value proposition and the sync engine design choice both need explicit justification backed by data or documented reasoning.</p>
+<h2 id="context">Context</h2>
+<p>The 2026-02-11 assessments found:</p>
+<ol>
+<li>
+<p><strong>Session acceleration is unvalidated:</strong> <code>docs/architecture/session-acceleration.md</code> presents a concrete example table showing discovery cost decreasing across sessions. The multi-tier roadmap admits “Session acceleration: claimed, not measured.” The success criteria require “at least 1 meaningful example of cross-member session acceleration” — meaning this hasn’t been demonstrated yet.</p>
+</li>
+<li>
+<p><strong>Sync engine rationale is implicit:</strong> <code>sync-repos.py</code> implements custom file synchronization with hash-based conflict detection and a JSON ledger — functionality that git already provides. The design rationale docs don’t explicitly justify why a custom sync engine exists instead of using git merge with path filters.</p>
+</li>
+<li>
+<p><strong>POC graduation undefined (fourth assessment):</strong> The README says “POC” but no explicit criteria define when the project graduates. Without this, Phases 9-13 are open-ended. Need: standalone graduation criteria (acceleration demonstrated), 2-tier graduation (pilot completed without data loss), 3-tier graduation (live test completed with cross-tier contributions).</p>
+</li>
+<li>
+<p><strong>Docs-to-code ratio signals over-governance (fourth assessment):</strong> 7,155 lines of docs governing 8,700 lines of code. An investor or senior engineer evaluating the project sees this ratio and questions whether effort is going to the right place. Evidence packet must address this directly.</p>
+</li>
+<li>
+<p><strong>13-phase roadmap appears enterprise-scale for a POC (fourth assessment):</strong> Evaluators compare to typical OSS frameworks at this maturity (3-5 phases, GitHub Projects board). The detailed planning is a strength if adoption materializes, overhead if it doesn’t. Evidence packet should frame this as preparation-for-scale, not current complexity.</p>
+</li>
+</ol>
+<h2 id="approach">Approach</h2>
+<h3 id="0-evidence-precondition-gates">0. Evidence precondition gates</h3>
+<p>Before pilot evidence collection starts, core truth gates must be green:</p>
+<ul>
+<li><code>bash scripts/validate-doc-claims.sh</code></li>
+<li><code>bash tests/test-scripts-smoke.sh</code></li>
+<li><code>bash tests/test-hooks-unit.sh</code></li>
+<li><code>bash tests/test-multi-tier-e2e.sh</code></li>
+</ul>
+<p>If these fail, pilot evidence is treated as invalid because baseline behavior is not stable.</p>
+<h3 id="1-session-acceleration-metrics">1. Session acceleration metrics</h3>
+<p><strong>What to measure:</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Metric</th><th>How to Capture</th><th>When</th></tr></thead><tbody><tr><td><strong>Task completion time</strong></td><td>Timestamp start/end of comparable tasks across sessions</td><td>During pilot</td></tr><tr><td><strong>Rediscovery events</strong></td><td>Count times agent re-asks for information that exists in skills/docs</td><td>During pilot</td></tr><tr><td><strong>Delegation rate</strong></td><td>Fraction of tasks handled by domain agents vs orchestrator</td><td>During pilot</td></tr><tr><td><strong>Skill invocation count</strong></td><td>How often existing skills are triggered per session</td><td>Post-session log review</td></tr><tr><td><strong>New skill creation rate</strong></td><td>Skills created per session (should decrease over time)</td><td>Git history analysis</td></tr></tbody></table>
+<p><strong>Capture methodology:</strong></p>
+<ul>
+<li>Use the pilot instrumentation framework (<code>pilot-log-event.py</code>) from the <a href="https://github.com/lorehq/lorehq-legacy/blob/main/docs/work/roadmaps/multi-tier-production-readiness/plans/archive/pilot-instrumentation/index.md">archived Pilot Instrumentation plan</a> (archived in lorehq-legacy)</li>
+<li>Capture lightweight annotations during pilot sessions (not full time tracking)</li>
+<li>Post-pilot analysis of git history for skill/doc growth curves</li>
+<li>Compare session 1 vs session 5 for same-category tasks</li>
+</ul>
+<p><strong>Minimum viable evidence:</strong></p>
+<ul>
+<li>At least 1 concrete example: “Task X took Y minutes in session 1. After skills A, B, C were captured, the same class of task took Z minutes in session 5.”</li>
+<li>At least 1 cross-member example (multi-tier): “Member A captured skill S. Member B synced it. Member B’s next session avoided rediscovery.”</li>
+</ul>
+<h3 id="2-sync-engine-design-justification">2. Sync engine design justification</h3>
+<p><strong>Document explicitly in <code>docs/architecture/design-rationale.md</code>:</strong></p>
+<p>Why <code>sync-repos.py</code> with a JSON ledger instead of git merge:</p>
+<ul>
+<li><strong>Content type:</strong> Lore syncs knowledge artifacts (markdown, YAML, shell scripts), not application code. Git merge semantics (line-level conflict resolution) are noisy for these file types.</li>
+<li><strong>Selective sync:</strong> The allowlist pattern (only sync specific directories/files) is simpler to express and audit than gitignore-based exclusions during merge.</li>
+<li><strong>Explicit conflict UX:</strong> When a locally-modified file conflicts with a parent version, the ledger approach surfaces the parent version in <code>.lore-sync-conflicts/</code> for side-by-side review. Git merge would inline conflict markers, which are confusing in documentation files.</li>
+<li><strong>No shared history required:</strong> Parent and child repos don’t share git history. They’re independent repositories. Git merge requires shared ancestry.</li>
+<li><strong>Ledger provides audit trail:</strong> The <code>.lore-sync-state.json</code> records what was synced, when, and from what version. This is explicit and inspectable.</li>
+</ul>
+<p>If these reasons are insufficient upon reflection, the alternative path is to simplify: replace the custom engine with <code>git fetch</code> + selective <code>git checkout</code> from the parent repo’s tree, using <code>.lore-config</code> to drive the allowlist.</p>
+<h3 id="3-update-architecture-docs-with-findings">3. Update architecture docs with findings</h3>
+<p>After the pilot, update:</p>
+<ul>
+<li><code>docs/architecture/session-acceleration.md</code> — Replace or supplement the example table with real data</li>
+<li><code>docs/architecture/design-rationale.md</code> — Add explicit sync engine justification section</li>
+<li><code>README.md</code> — Update “Session 1 is expensive. Session 50 can be dramatically faster” with a concrete qualifier if data supports it</li>
+</ul>
+<h3 id="4-ci-enforcement-for-truth-claims">4. CI enforcement for truth claims</h3>
+<ul>
+<li>Make multi-tier E2E a required CI gate for script/docs changes</li>
+<li>Ensure claim validation distinguishes wording-flexible checks from behavior-strict checks</li>
+<li>Fail CI on generated-repo parity regressions that would undermine pilot evidence quality</li>
+<li>Expand behavior-critical claim checks to include:
+<ul>
+<li>config semantics that affect operator trust</li>
+<li>contribution policy guarantees (PR-first vs direct-mode gate behavior)</li>
+<li>level terminology and naming conventions used by generators and docs</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-investor-grade-evidence-packet">5. Investor-grade evidence packet</h3>
+<p>Produce a compact evidence packet after pilot and post-pilot remediation:</p>
+<ul>
+<li>Baseline metrics snapshot (pre-pilot)</li>
+<li>Pilot metrics snapshot (midpoint and exit)</li>
+<li>Delta narrative (what improved, what did not)</li>
+<li>Confidence notes (sample size, known limitations, unresolved risks)</li>
+<li>Go/hold recommendation for broader rollout</li>
+</ul>
+<p><strong>Address evaluator concerns directly:</strong></p>
+<ul>
+<li><strong>Docs-to-code ratio:</strong> Show that the ratio is intentional (knowledge-persistent system = docs-heavy by design) and that working docs (roadmaps/plans) are development artifacts, not shipped product. Show the ratio excluding work items.</li>
+<li><strong>13-phase roadmap:</strong> Frame as “8 completed phases of iterative hardening + 5 phases of validation.” Completed phases demonstrate velocity, not overhead.</li>
+<li><strong>Over-engineering perception:</strong> Present the governance infrastructure as reusable across all future instances. The cost is front-loaded; each new deployment inherits it for free.</li>
+<li><strong>Single-user validation:</strong> Acknowledge honestly. Frame pilot as the transition from single-user to multi-user evidence.</li>
+</ul>
+<h3 id="6-poc-graduation-tracking">6. POC graduation tracking</h3>
+<p>Define and track explicit graduation criteria per deployment tier:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tier</th><th>Graduation Gate</th><th>Evidence Required</th></tr></thead><tbody><tr><td><strong>Standalone</strong></td><td>Session acceleration demonstrated</td><td>1+ concrete before/after example with time data</td></tr><tr><td><strong>2-Tier</strong></td><td>Pilot cycle completed</td><td>Deploy → sync → contribute → merge → sync back, zero data loss</td></tr><tr><td><strong>3-Tier</strong></td><td>Live test completed</td><td>1 week, 3+ skills contributed across tiers, zero silent overwrites</td></tr></tbody></table>
+<p>Track graduation status in the roadmap and update README when each tier graduates.</p>
+<h3 id="7-agent-generation-determinism">7. Agent generation determinism</h3>
+<p><strong>Problem:</strong> Agents are regenerated locally from skills via <code>generate-agents.sh</code>. The assumption that two repos with identical skill sets produce identical agent files is untested. If generation is non-deterministic (timestamp injection, ordering variance, platform-dependent behavior), silent agent divergence across tiers is possible.</p>
+<p><strong>Validation approach:</strong></p>
+<ul>
+<li>During pilot, verify that running <code>generate-agents.sh</code> on two repos with identical skill sets produces byte-identical agent files</li>
+<li>Test across platforms if feasible (Linux vs macOS)</li>
+<li>Identify any sources of non-determinism (file ordering, timestamps, locale)</li>
+</ul>
+<p><strong>Tooling:</strong></p>
+<ul>
+<li>Add optional <code>--validate-agents</code> flag to sync scripts that compares locally-generated agents against what the parent repo would generate</li>
+<li>If divergence is detected, warn the operator and log the diff</li>
+</ul>
+<p><strong>Success gate:</strong> Agent files generated from identical skill inputs are identical across repos, or non-deterministic sources are identified and mitigated.</p>
+<h2 id="related-plans">Related Plans</h2>
+<ul>
+<li><a href="https://github.com/lorehq/lorehq-legacy/blob/main/docs/work/roadmaps/multi-tier-production-readiness/plans/archive/ci-truth-gates/index.md">CI Truth Gates</a> (archived in lorehq-legacy)</li>
+<li><a href="https://github.com/lorehq/lorehq-legacy/blob/main/docs/work/roadmaps/multi-tier-production-readiness/plans/archive/generated-repo-parity-hardening/index.md">Generated Repo Parity Hardening</a> (archived in lorehq-legacy)</li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> At least 1 concrete single-user acceleration example with before/after data</li>
+<li class="task-list-item"><input type="checkbox" disabled> At least 1 cross-member acceleration example (if multi-tier pilot runs)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Sync engine rationale documented in design-rationale.md with explicit comparison to git-based alternatives</li>
+<li class="task-list-item"><input type="checkbox" disabled> Session acceleration doc updated with real data (not just theoretical progression)</li>
+<li class="task-list-item"><input type="checkbox" disabled> README value proposition qualified with evidence</li>
+<li class="task-list-item"><input type="checkbox" disabled> Baseline truth-gate checks remain green for the duration of pilot evidence capture</li>
+<li class="task-list-item"><input type="checkbox" disabled> Evidence packet is published and linked from roadmap notes</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>Pilot-readiness truth/safety gates are now green on main (doc-claims, consistency, smoke/hooks, multi-tier E2E) and this plan now runs concurrently with pilot and live testing (Roadmap Phases 1 and 3 of Multi-Tier Production Readiness)</li>
+<li>Requires pilot participants to capture lightweight metrics</li>
+<li>Sync engine justification can be written independently (no pilot dependency)</li>
+</ul>
+<h2 id="test-plan">Test Plan</h2>
+<ul>
+<li>Review captured metrics for statistical validity (are improvements real or noise?)</li>
+<li>Have someone unfamiliar with the project read the sync engine rationale and confirm it answers “why not just use git?”</li>
+<li>Verify updated architecture docs build and render correctly</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

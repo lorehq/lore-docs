@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Discovery Rule Optimization — LLM Prompt Engineering Findings | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Discovery Rule Optimization — LLM Prompt Engineering Findings ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="discovery-rule-optimization">Discovery Rule Optimization</h1>
+<p>Findings from a brainstorm on how LLMs process Lore’s layered context injections, and how to optimize for environment discovery behavior.</p>
+<h2 id="the-problem">The Problem</h2>
+<p>Skills get created. Environment docs don’t. The <code>docs/knowledge/environment/</code> section has good structure (inventory, decisions, reference, diagrams) but significant gaps — no URL inventory, empty diagrams folder, incomplete accounts/services, no CI/CD documentation. The rules mention environment mapping but don’t drive the behavior.</p>
+<h2 id="attention-hierarchy">Attention Hierarchy</h2>
+<p>How an LLM actually prioritizes the injected context, ranked by behavioral influence:</p>
+<ol>
+<li><strong>Post-tool-use nudges</strong> (tracker.js / capture-nudge.js) — Highest impact. Fire after every command. Even in long sessions where the banner has scrolled out of the attention window, these keep reinforcing. Contextually relevant — the agent just did something, now sees a prompt. Operant conditioning.</li>
+<li><strong>Per-prompt reinforcement</strong> (prompt-preamble.js / system transform) — Fires every user message. Currently only reinforces delegation. Underutilized.</li>
+<li><strong>Session banner</strong> (session-init) — Sets the frame at session start. Effective for the first few exchanges, then fades. In long sessions, the agent runs on nudges, not the banner.</li>
+<li><strong>Instructions.md sections</strong> — Reference material. Read once. Tells the agent how to do things but doesn’t push it to do them.</li>
+</ol>
+<h2 id="affordance-asymmetry">Affordance Asymmetry</h2>
+<p>Why skills get created but environment docs don’t:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>Skills</th><th>Environment Docs</th></tr></thead><tbody><tr><td>Trigger</td><td>”Every gotcha — no exceptions” (absolute, clear)</td><td>“New environment knowledge?” (vague, skippable)</td></tr><tr><td>Path</td><td><code>lore-create-skill</code> (one command, clear format)</td><td>“write to docs/knowledge/environment/” (what file? what format?)</td></tr><tr><td>Nudge text</td><td>”Gotcha? → skill” (specific)</td><td>“New knowledge? → docs” (generic)</td></tr><tr><td>Reinforcement</td><td>Dedicated banner line + escalating nudges</td><td>Buried as item #1 in a 5-item capture checklist</td></tr></tbody></table>
+<p>Skills have a clear trigger (“gotcha”), a clear action (“create skill”), and a clear format (30-80 lines, SKILL.md). Environment docs have none of that.</p>
+<h2 id="context-accumulation">Context Accumulation</h2>
+<p>Per-tool and per-prompt injections persist in conversation history. They accumulate linearly:</p>
+<ul>
+<li>Post-tool nudge: ~15-20 tokens per tool use. 30 tool calls = ~500 tokens.</li>
+<li>Per-prompt: ~15 tokens per user message. 20 messages = ~300 tokens.</li>
+<li>Banner: one-time, ~500-2000 tokens depending on knowledge map size.</li>
+</ul>
+<p>Injecting a nav tree per-prompt (~50-100 tokens) would cost 1000-2000 extra tokens per session. Too expensive.</p>
+<h2 id="key-principles">Key Principles</h2>
+<h3 id="pointer-not-payload">Pointer Not Payload</h3>
+<p>Nudges should reference paths, not inject content. The knowledge map (loaded once in the banner) provides structure. The nudge just says <code>docs/knowledge/</code> — the agent already has the tree loaded and can recall what’s in there.</p>
+<h3 id="path-based-triggers-are-universal">Path-Based Triggers Are Universal</h3>
+<p>Hardcoding “URL/service/account” as trigger words is operator-specific. One operator maps cloud infrastructure; another maps Rails endpoints. But <code>docs/knowledge/</code> as a path works for every operator — the directory structure inside is their customization surface.</p>
+<h3 id="three-lines-is-optimal-banner-density">Three Lines Is Optimal Banner Density</h3>
+<p>Three short punchy lines with distinct verbs — processed well. Four is still fine, but each additional line dilutes attention. Five+ becomes a text block the model pattern-matches rather than parsing individually.</p>
+<h2 id="proposed-changes">Proposed Changes</h2>
+<h3 id="banner-delegation--knowledge--capture">Banner: DELEGATION / KNOWLEDGE / CAPTURE</h3>
+<p>Fold skill creation and environment discovery into a single KNOWLEDGE line with matching trigger-action pairs:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>DELEGATION: Delegate by domain. Available agents: ...</span></span>
+<span class="line"><span>KNOWLEDGE: Gotcha → skill | New context → docs/knowledge/</span></span>
+<span class="line"><span>CAPTURE: After substantive work → validate consistency, update active plans.</span></span></code></pre>
+<h3 id="post-tool-nudge-more-specific-path">Post-Tool Nudge: More Specific Path</h3>
+<p>Change from <code>Gotcha? → skill | New knowledge? → docs</code> to <code>Gotcha? → skill | New context? → docs/knowledge/</code>. Three extra tokens. Makes the environment path explicit.</p>
+<h3 id="per-prompt-add-work-tracking">Per-Prompt: Add Work Tracking</h3>
+<p>Currently underutilized (delegation only). Add <code>Active work? → update progress</code> to prompt-preamble and OpenCode system transform. ~10 extra tokens per user message.</p>
+<h3 id="work-tracking-gap">Work Tracking Gap</h3>
+<p>Active roadmaps/plans appear in the session banner but nothing nudges the agent to update progress during work. Plans complete without their checkboxes being marked. Per-prompt is the right frequency — you don’t update a plan after every <code>ls</code>, but you might after a user conversation turn.</p>
+<h2 id="platform-differences">Platform Differences</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Capability</th><th>Claude Code</th><th>Cursor</th><th>OpenCode</th></tr></thead><tbody><tr><td>Session banner</td><td><code>buildBanner()</code> full</td><td><code>buildCursorBanner()</code> minimal + static <code>.mdc</code> rules</td><td><code>buildBanner()</code> full</td></tr><tr><td>Per-prompt</td><td><code>prompt-preamble.js</code> (UserPromptSubmit)</td><td>None — no equivalent hook</td><td><code>experimental.chat.system.transform</code></td></tr><tr><td>Post-tool</td><td><code>knowledge-tracker.js</code> (PostToolUse)</td><td><code>capture-nudge.js</code> (beforeShellExecution)</td><td><code>knowledge-tracker.js</code> (tool.execute.after)</td></tr><tr><td>Context injection</td><td><code>additionalContext</code> in JSON</td><td><code>agent_message</code> in JSON</td><td><code>client.app.log()</code></td></tr></tbody></table>
+<p>Cursor cannot do per-prompt reinforcement without a new hook type. Work tracking nudges are limited to Claude Code and OpenCode.</p>
+<h2 id="open-questions">Open Questions</h2>
+<ul>
+<li>Should the escalating nudge thresholds (nudge=3, warn=5 consecutive commands) be adjusted?</li>
+<li>Should <code>lore-create-skill</code> have a sibling <code>lore-create-doc</code> command for environment docs?</li>
+<li>How do we validate that the changes actually improve environment mapping behavior? → Hook observability logging.</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

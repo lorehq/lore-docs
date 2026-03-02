@@ -1,0 +1,134 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Taxonomy Alignment — Rules, Skills, Fieldnotes | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Taxonomy Alignment — Rules, Skills, Fieldnotes ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="taxonomy-alignment--rules-skills-fieldnotes">Taxonomy Alignment — Rules, Skills, Fieldnotes</h1>
+<h2 id="decision">Decision</h2>
+<p>Rename and restructure Lore’s core terminology to align with the desktop AI coding tool industry (Claude Code, Cursor, Windsurf, OpenCode, Gemini CLI, Aider, Cline, Copilot, Kiro) before first users arrive.</p>
+<h2 id="current-state--target-state">Current State → Target State</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Current</th><th>Target</th><th>Rationale</th></tr></thead><tbody><tr><td><strong>Conventions</strong> (<code>docs/context/conventions/</code>)</td><td><strong>Rules</strong> (<code>docs/context/rules/</code>)</td><td>Every desktop tool calls these “rules” — Cursor rules, Claude Code rules, .cursorrules, .windsurfrules, .clinerules, Continue rules. “Conventions” is a Lore-ism that creates friction.</td></tr><tr><td><strong>Skills</strong> (gotcha files like <code>bash-macos-compat</code>)</td><td><strong>Fieldnotes</strong> (<code>.lore/fieldnotes/</code> + <code>SKILL.md</code>)</td><td>The Agent Skills standard (Anthropic, Dec 2025) defines skills as reusable procedural instruction packages. Lore’s gotcha files are environmental knowledge captured during real work. “Toolkit” was considered but collides with LangChain’s Toolkit concept (bundles of executable tools). “Fieldnotes” has zero industry collision, captures the discovery-oriented origin, and is distinct from rules (constraints), skills (capabilities), and tools (executables). File stays <code>SKILL.md</code> for platform compatibility — Claude Code, Cursor, and OpenCode all discover by <code>SKILL.md</code>. Directory separation only.</td></tr><tr><td><strong>Skills</strong> (procedural <code>lore-*</code> files like <code>lore-delegate</code>)</td><td><strong>Skills</strong> (stays <code>.lore/skills/</code> + <code>SKILL.md</code>)</td><td>These ARE skills by the Agent Skills standard definition — procedural capabilities loaded on demand. No change needed.</td></tr><tr><td><strong>Agents</strong> (ephemeral tiered + operator-owned)</td><td><strong>Agents</strong> (no change)</td><td>Already aligned. Cursor and Claude Code both use “agents” for subagents.</td></tr></tbody></table>
+<h2 id="industry-context-feb-2026">Industry Context (Feb 2026)</h2>
+<h3 id="rules">Rules</h3>
+<ul>
+<li>“Rules” is the dominant term by wide margin: Cursor Rules, Claude Code <code>.claude/rules/</code>, Windsurf <code>.windsurfrules</code>, Aider <code>CONVENTIONS.md</code> (outlier), Continue <code>.continue/rules/</code>, Cline <code>.clinerules</code>, Copilot <code>.github/copilot-instructions.md</code></li>
+<li>Multi-file rules are now common (Claude Code <code>.claude/rules/*.md</code>, Cursor <code>.cursor/rules/*.mdc</code>, Continue <code>.continue/rules/</code>)</li>
+<li>Cross-tool standard: <code>AGENTS.md</code> (AAIF, adopted by 60K+ projects)</li>
+</ul>
+<h3 id="skills">Skills</h3>
+<ul>
+<li>Agent Skills open standard (Anthropic, Dec 2025, agentskills.io): <code>SKILL.md</code> format, adopted by Microsoft, OpenAI, Cursor, Copilot, GitHub within 48 hours</li>
+<li>OpenAI Codex: Skills = versioned bundles with <code>SKILL.md</code>, <code>.agents/skills/</code> directories</li>
+<li>Cursor (v2.5, Feb 2026): Full Agent Skills support, skills bundled in plugins alongside subagents, MCP servers, hooks, rules</li>
+</ul>
+<h3 id="fieldnotes-new--no-industry-equivalent">Fieldnotes (new — no industry equivalent)</h3>
+<ul>
+<li>Lore’s auto-captured gotcha files are collections of related workarounds: <code>bash-macos-compat</code> has multiple macOS bash workarounds, <code>node-macos-stdin-fd</code> has stdin + tmp dir pitfalls, <code>ci-lint-scans-checkout-dirs</code> has multiple bypass techniques</li>
+<li>Closest industry equivalent: Devin “Knowledge” (persistent facts auto-recalled by relevance)</li>
+<li>No other tool does systematic auto-capture from failures</li>
+</ul>
+<h3 id="three-components-reframe">Three Components Reframe</h3>
+<p>The docs site “Three Components” section (how-it-works.md) currently positions conventions, skills, and agents as Lore-specific separations. The industry has now converged on these same primitives. The reframe should:</p>
+<ul>
+<li>Acknowledge the industry has converged on rules, skills, agents</li>
+<li>Position Lore’s differentiation as: (1) auto-capture loop for fieldnotes, (2) separation of operator-authored rules from system-captured fieldnotes, (3) tiered cost-optimized delegation, (4) cross-session compound learning, (5) pre-write enforcement hooks</li>
+</ul>
+<h2 id="scope-from-exploration">Scope (from exploration)</h2>
+<h3 id="conventions--rules-rename">Conventions → Rules rename</h3>
+<ul>
+<li><strong>719 occurrences</strong> across 179 files in 5 repos</li>
+<li><strong>7 directories</strong> to rename</li>
+<li><strong>5 files</strong> to rename</li>
+<li>Critical code: <code>convention-guard.js</code> (hook), <code>banner.js</code> (library), <code>lore-server.js</code> (MCP), tests, scripts</li>
+<li>Order: lore source first → lorehq via /lore-update → lore-docs → lore-docker → create-lore</li>
+</ul>
+<h3 id="gotcha-skills--fieldnotes-rename">Gotcha skills → Fieldnotes rename</h3>
+<ul>
+<li>Move non-<code>lore-*</code> skills from <code>.lore/skills/</code> to <code>.lore/fieldnotes/</code></li>
+<li>Keep <code>SKILL.md</code> filename (platform compatibility) — directory separation only</li>
+<li>Update semantic search indexing (lore-docker: <code>semantic_server.py</code>, <code>watcher.py</code>, <code>entrypoint.py</code>)</li>
+<li>Update generate-nav.sh and nav_generator.py (just added Skills section — needs Fieldnotes section too)</li>
+<li>Update capture loop: <code>lore-create-skill</code> needs a <code>lore-create-fieldnote</code> counterpart (or rename)</li>
+<li>Update CLAUDE.md generation, session banner, hooks</li>
+<li>Update all references in docs, skills, runbooks</li>
+</ul>
+<h3 id="docs-site-content-updates-lore-docs">Docs site content updates (lore-docs)</h3>
+<ul>
+<li>how-it-works.md: Rewrite Three Components section</li>
+<li>when-to-use-lore.md: Update comparison table</li>
+<li>security.md: Update convention guard references</li>
+<li>delegation.md: Minor terminology updates</li>
+<li>guides/conventions.md → guides/rules.md: Full rewrite</li>
+<li>Various reference pages</li>
+</ul>
+<h2 id="gotcha-skills-to-reclassify-as-fieldnotes">Gotcha Skills to Reclassify as Fieldnotes</h2>
+<p>These currently live in <code>.lore/skills/</code> with <code>SKILL.md</code> but are gotcha collections, not procedural skills:</p>
+<ul>
+<li>bash-heredoc-json-injection</li>
+<li>bash-macos-compat</li>
+<li>bash-set-e-return-guard</li>
+<li>bw-create-item</li>
+<li>c8-subprocess-coverage-blind-spot</li>
+<li>ci-lint-scans-checkout-dirs</li>
+<li>claude-code-pretooluse-output-format</li>
+<li>cursor-hook-output-limits</li>
+<li>eslint-10-node-18-crash</li>
+<li>fastembed-local-files-only</li>
+<li>git-mv-gitignored-files</li>
+<li>gitignored-nav-drift</li>
+<li>mcp-stdio-content-length-framing</li>
+<li>mkdocs-panzoom-serve-assets</li>
+<li>node-macos-stdin-fd</li>
+<li>opencode-session-created-not-a-hook</li>
+<li>platform-command-collisions</li>
+<li>pymdownx-extension-order</li>
+<li>unicode-escape-edit-mismatch</li>
+</ul>
+<p>These stay as skills (procedural capabilities):</p>
+<ul>
+<li>lore-capture</li>
+<li>lore-consolidate</li>
+<li>lore-create-agent</li>
+<li>lore-create-brainstorm</li>
+<li>lore-create-note</li>
+<li>lore-create-plan</li>
+<li>lore-create-roadmap</li>
+<li>lore-create-skill (needs lore-create-fieldnote counterpart)</li>
+<li>lore-create-todo-with-capture</li>
+<li>lore-delegate</li>
+<li>lore-docker</li>
+<li>lore-docker-update-volume-conflict</li>
+<li>lore-field-repair</li>
+<li>lore-link</li>
+<li>lore-semantic-search</li>
+<li>lore-status</li>
+<li>lore-update</li>
+</ul>
+<h2 id="next-step">Next Step</h2>
+<p>Create a runbook for executing the full taxonomy alignment. Execute with parallel workers using semantic search for comprehensive coverage. Version bump + release after completion.</p>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

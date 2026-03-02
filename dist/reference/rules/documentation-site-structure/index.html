@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Documentation Site Structure | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Documentation Site Structure ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="documentation-site-structure">Documentation Site Structure</h1>
+<p>How to organize navigation and content for the public documentation site (MkDocs Material).</p>
+<h2 id="1-use-diátaxis-as-a-writing-discipline">1. Use Diátaxis as a Writing Discipline</h2>
+<p><strong>Every page serves one purpose: tutorial, how-to, reference, or explanation. Don’t mix them.</strong></p>
+<ul>
+<li><strong>Tutorials</strong> teach. The author leads, the reader follows. “Build your first X” — learning-oriented, step-by-step, always involves doing something concrete.</li>
+<li><strong>How-to guides</strong> solve. The reader has a goal, the guide assists. “How to deploy to production” — assumes competence, task-oriented, no hand-holding.</li>
+<li><strong>Reference</strong> describes. Exhaustive, factual, austere. Parameters, return types, defaults, examples. Consulted, not read.</li>
+<li><strong>Explanation</strong> clarifies. Background, architecture, design decisions, “why.” Deepens understanding without prescribing action.</li>
+</ul>
+<p>When a page feels bloated, you’re mixing types. A how-to guide that stops to explain architecture should link to an explanation page instead. A tutorial that lists every config option should link to the reference.</p>
+<h2 id="2-organize-navigation-for-the-reader-not-the-codebase">2. Organize Navigation for the Reader, Not the Codebase</h2>
+<p><strong>Users navigate by task and intent, not by your internal file structure.</strong></p>
+<ul>
+<li>Top-level sections map to user intent: “I’m new” (Getting Started), “I need to do X” (Guides), “I need the spec” (Reference), “I want to understand why” (Concepts).</li>
+<li>Don’t mirror your source tree, team structure, or module hierarchy in navigation. These force users to learn your internals before finding content.</li>
+<li>Group by what users are trying to accomplish, not by what component implements it.</li>
+</ul>
+<p>Standard top-level sections, in order:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Section</th><th>Diátaxis Type</th><th>Content</th></tr></thead><tbody><tr><td>Getting Started</td><td>Tutorial</td><td>Installation, first working example, core workflow. Under 5 minutes to “aha.”</td></tr><tr><td>Guides</td><td>How-to</td><td>Task-oriented walkthroughs. One guide per goal. Assumes the reader finished Getting Started.</td></tr><tr><td>Concepts</td><td>Explanation</td><td>Architecture, design decisions, mental models. No steps — just understanding.</td></tr><tr><td>Reference</td><td>Reference</td><td>CLI commands, configuration options, API surface. Mirrors the structure of the thing it describes.</td></tr></tbody></table>
+<p>Add sections only when the content doesn’t fit the four above. Changelog, migration guides, and troubleshooting are common additions. Don’t invent sections preemptively.</p>
+<h2 id="3-keep-the-sidebar-shallow">3. Keep the Sidebar Shallow</h2>
+<p><strong>Two sidebar levels. Three at most. Beyond that, users lose orientation.</strong></p>
+<ul>
+<li>Use MkDocs Material’s <code>navigation.tabs</code> to render top-level sections as horizontal tabs. This adds one navigation level without deepening the sidebar.</li>
+<li>Within each tab, the sidebar should be scannable at a glance — no scrolling to see the full list. If it scrolls, the section is too large; split it.</li>
+<li>Group sidebar items into 5–8 item clusters using section headers. A wall of 30+ ungrouped links overwhelms.</li>
+<li>Never nest deeper than 3 levels total (tab → section → page). Use section index pages to add breadth instead of depth.</li>
+</ul>
+<h2 id="4-give-every-section-a-landing-page">4. Give Every Section a Landing Page</h2>
+<p><strong>Clicking a section should orient, not dump the reader on the first child page.</strong></p>
+<ul>
+<li>Every <code>nav</code> section gets an <code>index.md</code> that explains what’s in the section and links to key pages.</li>
+<li>Landing pages surface the 20% of pages that serve 80% of visits. Put the most-used links at the top.</li>
+<li>Use MkDocs Material’s <code>navigation.indexes</code> feature to attach index pages to sections.</li>
+</ul>
+<h2 id="5-size-pages-for-comprehension">5. Size Pages for Comprehension</h2>
+<p><strong>One topic per page. 800–3,000 words. Enough to be useful, short enough to finish.</strong></p>
+<ul>
+<li>If a page covers two unrelated things, split it. If two pages cover the same thing, merge and redirect.</li>
+<li>Under 800 words usually means the page is a fragment that should be folded into a parent page.</li>
+<li>Over 3,000 words usually means the page mixes Diátaxis types or covers multiple topics.</li>
+<li>Link aggressively. Every mention of a concept, command, or component that has its own page should be a link.</li>
+<li>End pages with “Next steps” or related links. Users should always know where to go from here.</li>
+</ul>
+<h2 id="6-make-getting-started-ruthlessly-short">6. Make Getting Started Ruthlessly Short</h2>
+<p><strong>One “aha moment.” Under 5 minutes. Nothing else.</strong></p>
+<ul>
+<li>Installation, one working example, done. The quickstart is not a feature tour.</li>
+<li>Cut prerequisites to the minimum. If the reader needs three tools installed before starting, provide a single copy-paste block.</li>
+<li>Defer everything that isn’t required for the first success: configuration options, advanced features, architecture explanations. Link to them.</li>
+<li>Test the quickstart on a clean machine. If any step fails or confuses, fix it before publishing anything else.</li>
+</ul>
+<h2 id="7-structure-reference-to-mirror-the-system">7. Structure Reference to Mirror the System</h2>
+<p><strong>Reference architecture follows the thing it describes, not the reader’s workflow.</strong></p>
+<ul>
+<li>CLI reference mirrors the command tree. Config reference mirrors the config file structure. API reference mirrors the endpoint hierarchy.</li>
+<li>Every entry: name, description, parameters/options, defaults, types, one example. Consistent format across all entries.</li>
+<li>Don’t narrate. Reference is looked up, not read. Save the storytelling for explanation pages.</li>
+<li>Keep reference auto-generated where possible. Hand-written reference drifts from the source.</li>
+</ul>
+<h2 id="8-configure-mkdocs-material-for-this">8. Configure MkDocs Material for This</h2>
+<p><strong>Use the theme features that support this structure. Skip the ones that fight it.</strong></p>
+<p>Enable:</p>
+<ul>
+<li><code>navigation.tabs</code> + <code>navigation.tabs.sticky</code> — top-level sections as persistent horizontal tabs.</li>
+<li><code>navigation.sections</code> — visual grouping in the sidebar.</li>
+<li><code>navigation.indexes</code> — section landing pages.</li>
+<li><code>navigation.path</code> — breadcrumbs for orientation in deep structures.</li>
+<li><code>navigation.instant</code> — SPA-like page transitions (requires <code>site_url</code>).</li>
+<li><code>navigation.prune</code> — only render visible nav items. Essential past 100 pages.</li>
+<li><code>toc.follow</code> — auto-scroll the table of contents to the active heading.</li>
+</ul>
+<p>Avoid:</p>
+<ul>
+<li><code>navigation.expand</code> — auto-expands all sidebar sections. Defeats scanability on sites with more than a handful of pages.</li>
+<li><code>toc.integrate</code> — moves the table of contents into the sidebar. Incompatible with section indexes and clutters the nav.</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

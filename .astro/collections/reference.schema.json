@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/reference",
+  "definitions": {
+    "reference": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "rule",
+            "skill",
+            "agent",
+            "fieldnote",
+            "runbook"
+          ]
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Delegation Recipe | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Delegation Recipe ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <hr>
+<h2 id="name-lore-delegatedescription-delegation-recipe--how-to-construct-worker-prompts-with-required-context-scope-and-return-contractbanner-loaded-trueuser-invocable-false">name: lore-delegate
+description: Delegation recipe — how to construct worker prompts with required context, scope, and return contract.
+banner-loaded: true
+user-invocable: false</h2>
+<h1 id="delegation-recipe">Delegation Recipe</h1>
+<h2 id="worker-prompt-rules">Worker Prompt Rules</h2>
+<p>Name what to load — workers read the files themselves.</p>
+<p>Include in every worker prompt:</p>
+<ol>
+<li><strong>Knowledge-base-first</strong> — “Search the knowledge base before acting (semantic search if available, otherwise Glob/Grep).” This prevents redundant discovery and surfaces existing skills/knowledge early. See <strong>Search Discipline</strong> below for how workers should use results.</li>
+<li><strong>Task description</strong> — what needs doing and why</li>
+<li><strong>Resolve before delegating</strong> — Workers execute, they don’t interpret. Resolve ambiguous or relative inputs to concrete values before they reach the worker. If it requires reasoning or judgment, the orchestrator decides; the worker receives the decision.
+<ul>
+<li>Bad: “find large files” → worker decides what “large” means</li>
+<li>Good: “find files over 10MB” → worker executes a clear threshold</li>
+<li>Bad: “get recent orders” → worker interprets “recent”</li>
+<li>Good: “get orders with status pending” → worker filters on a concrete field</li>
+</ul>
+</li>
+<li><strong>Rules to load</strong> — name any from <code>docs/context/</code> the worker needs (e.g. <code>coding</code>, <code>security</code>); worker reads the files</li>
+<li><strong>Scope</strong> — target repo path, which files may be modified. Be explicit — workers treat this as a boundary and will return if a task requires writing outside it.</li>
+<li><strong>Bail-out rule</strong> — “If stuck after 10 tool calls, stop and return what you have — the orchestrator can redirect.”</li>
+<li><strong>Return contract</strong> — “End with a Captures section: (A) Snags (gotchas, quirks), (B) Environment facts, (C) Procedures — or ‘none’ for each.”</li>
+</ol>
+<p>You may also name specific skills to load — workers discover the rest via semantic search.</p>
+<p>Workers report findings — the orchestrator decides what to persist.</p>
+<h2 id="search-discipline">Search Discipline</h2>
+<p>Semantic search indexes the knowledge base (<code>docs/</code>, <code>.lore/skills/</code>, <code>docs/context/</code>). Workers who understand this avoid wasted tool calls.</p>
+<p><strong>Act on what you find.</strong> When a semantic snippet contains the answer (a URL, parameter, command), use it and move on. Don’t gather more data once you have enough to act. If the snippet is partial and you need more from that file, Read it by path. Grep and Glob add nothing when the file is already identified.</p>
+<p><strong>Trust negative results.</strong> Semantic search covers the knowledge base thoroughly. When a query returns nothing relevant, the KB doesn’t have it — escalate to the orchestrator rather than re-searching the same directories with Grep/Glob. Filesystem search finds what semantic search misses only outside indexed paths (external repos, application code, generated files).</p>
+<p><strong>Match the tool to the territory:</strong></p>
+<ul>
+<li>KB paths (<code>docs/</code>, <code>.lore/</code>, <code>docs/context/</code>) → semantic search, then Read by path</li>
+<li>External repos and application code → Grep/Glob (not indexed)</li>
+<li>Already-identified file → Read directly (skip search entirely)</li>
+</ul>
+<p><strong>Bail on dry holes.</strong> If you haven’t found what you need after a few searches, stop digging. Return to the orchestrator with what you tried and what you found — they have context you don’t and can redirect. Spending 15 tool calls searching is always worse than returning early and getting pointed in the right direction.</p>
+<h2 id="parallel-workers">Parallel Workers</h2>
+<p><strong>Parallelize by default.</strong> Before spawning any worker, ask: can this task be split into independent chunks? If yes, spawn them concurrently — don’t serialize what can run in parallel.</p>
+<p>Decomposition patterns:</p>
+<ul>
+<li><strong>By target</strong> — one worker per repo, service, file, or endpoint</li>
+<li><strong>By concern</strong> — separate research from implementation, validation from execution</li>
+<li><strong>By independence</strong> — any subtasks with no data dependency between them run concurrently</li>
+</ul>
+<p>Only serialize when one worker’s output is another’s input. When in doubt, parallelize — merging results is cheaper than waiting in sequence.</p>
+<p><strong>Block or don’t block.</strong> Blocking workers (foreground) tie up the orchestrator until they finish — fine for short, predictable tasks you trust to converge. Non-blocking workers (background) return control immediately so the orchestrator can monitor, intervene, or do other work. Use non-blocking for open-ended exploration (unknown APIs, undocumented services, broad searches) where divergence is plausible.</p>
+<p><strong>Poll, don’t fire-and-forget.</strong> When workers run non-blocking, check on them periodically. Don’t launch background workers then immediately block waiting for the first one — that defeats the purpose. Poll to detect stuck workers early, then act on it.</p>
+<p><strong>Race stuck workers.</strong> Racing requires non-blocking workers — you can only intervene on what you can observe. If a worker is burning tool calls without converging, spawn a replacement with narrower scope or clearer instructions. Use whichever returns useful results first. A stuck worker usually means the prompt was too broad — the fix is a better-scoped replacement, not more patience.</p>
+<h2 id="after-worker-returns">After Worker Returns</h2>
+<ol>
+<li>Snags reported? → create fieldnote</li>
+<li>Environment facts? → write to <code>docs/knowledge/environment/</code></li>
+<li>Procedures? → write to <code>.lore/runbooks/</code></li>
+<li>Nothing? → move on</li>
+</ol>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

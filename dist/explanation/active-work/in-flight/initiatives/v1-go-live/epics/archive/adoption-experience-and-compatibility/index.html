@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Adoption Experience and Compatibility | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Adoption Experience and Compatibility ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="adoption-experience-and-compatibility">Adoption Experience and Compatibility</h1>
+<h2 id="goal">Goal</h2>
+<p>Make early adoption faster and clearer for new operators through quick verification, practical examples, and explicit compatibility coverage.</p>
+<h2 id="scope">Scope</h2>
+<h3 id="1-first-run-verification">1. First-run verification</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add a 60-second quick verification block</del> — Done (2026-02-11)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Include expected outputs for <code>validate-consistency</code>, docs build/serve</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>All 3 bootstrap paths (Windows PowerShell, curl/WSL, wget/WSL) validated under 60 seconds</del> — see <a href="https://github.com/lorehq/lorehq-legacy/blob/main/docs/runbooks/bootstrap-testing.md">Bootstrap Testing runbook</a> (archived in lorehq-legacy)</li>
+</ul>
+<h3 id="2-compatibility-matrix">2. Compatibility matrix</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Publish a single compatibility table covering OS, runtime, agent clients</del> — Done (2026-02-17), published as <a href="https://lorehq.github.io/lore-docs/guides/platform-support/">Platform Support</a> in lore-docs</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Link matrix from quickstart and getting started guides</del> — Done (2026-02-17), linked from getting-started.md nav</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Document known caveats by platform</del> — Done (2026-02-17), included in platform-support.md (known gaps per platform)</li>
+</ul>
+<h3 id="3-first-impression-docs-tightening">3. First-impression docs tightening</h3>
+<p>Consolidated into <a href="../launch-content-and-distribution/index.md">Launch Content and Distribution</a> Section 2 (README Overhaul) — same scope, single owner.</p>
+<h3 id="4-real-world-examples">4. Real-world examples</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Publish 2-3 concrete workflow references aligned to launch personas
+<ul>
+<li>systems engineer</li>
+<li>AI engineer</li>
+<li>homelab operator</li>
+</ul>
+</li>
+<li class="task-list-item"><input type="checkbox" disabled> Keep examples outcome-focused (inputs, actions, observed value, gotchas)</li>
+</ul>
+<h3 id="5-adoption-metrics-loop">5. Adoption metrics loop</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Define lightweight launch-week and monthly adoption snapshot (new users, top failures, docs gaps)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Feed recurring failure themes into roadmap prioritization</li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Quickstart contains fast verification block (2026-02-11)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Compatibility matrix published and linked (2026-02-12)</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> <del>New visitor can understand “what is this?” from docs homepage in under 30 seconds</del> — owned by <a href="../launch-content-and-distribution/index.md">Launch Content and Distribution</a></li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>Depends on community/release governance for public-facing messaging consistency</li>
+<li>Benefits from launch proof outputs to keep examples evidence-backed</li>
+</ul>
+<h2 id="test-plan">Test Plan</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-consistency.sh</span></span></code></pre>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

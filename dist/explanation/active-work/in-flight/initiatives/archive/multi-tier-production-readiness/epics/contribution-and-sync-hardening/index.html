@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Contribution and Sync Hardening | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Contribution and Sync Hardening ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="contribution-and-sync-hardening">Contribution and Sync Hardening</h1>
+<h2 id="goal">Goal</h2>
+<p>Support high-trust experimental direct-to-main workflows while preserving a production path that is PR-first, conflict-safe, and resilient to operator error.</p>
+<p>This plan owns the pilot-readiness safety tranche before multi-tier pilot execution begins.</p>
+<h2 id="context">Context</h2>
+<p>Pilot testing needs speed, and direct mode is useful in controlled environments. At the same time, parent-level contribution workflows and sync behavior must be hardened before broader organizational rollout.</p>
+<h3 id="fourth-assessment-findings-2026-02-11">Fourth Assessment Findings (2026-02-11)</h3>
+<p>The deep-dive sync system analysis identified concrete safety gaps:</p>
+<ol>
+<li>✅ <strong>Direct-mode rebase/fetch failures were not enforced:</strong> fixed with explicit fetch/rebase exit checking and failure handling before push.</li>
+<li>✅ <strong>No symlink sanitization:</strong> fixed by rejecting symlinks in contribution paths.</li>
+<li>✅ <strong>Empty ledger causes mass overwrite risk:</strong> fixed with explicit empty-ledger warning before high-risk sync.</li>
+<li>✅ <strong>No concurrent sync protection:</strong> fixed with ledger lockfile enforcement and fail-fast behavior.</li>
+<li><strong>No “keep mine forever” exclusion:</strong> If a local file is intentionally different from parent, every sync triggers a conflict. No way to say “stop syncing this file.”</li>
+<li><strong>Conflict resolution has no merge option:</strong> Only keep-local or take-parent. At scale (50+ instances with local modifications), manual resolution becomes a bottleneck.</li>
+<li><strong>Batch resolution has no rollback:</strong> <code>--accept-local-all</code> on a corrupted ledger keeps hundreds of stale files with no undo.</li>
+</ol>
+<h2 id="scope">Scope</h2>
+<h3 id="1-direct-mode-safety-experimental">1. Direct mode safety (experimental)</h3>
+<ul>
+<li>Keep <code>--direct</code> explicitly gated behind <code>LORE_ALLOW_DIRECT_PUSH=1</code></li>
+<li>Add explicit preflight checks for direct mode:
+<ul>
+<li>clean or intentionally staged working tree</li>
+<li>parent reachability</li>
+<li>branch divergence handling policy</li>
+</ul>
+</li>
+<li>Add clear rollback instructions in command output and docs</li>
+<li>Require structured pilot notes for each direct-mode use (why direct, what changed, outcome)</li>
+</ul>
+<h3 id="2-pr-first-hardening-default-path">2. PR-first hardening (default path)</h3>
+<ul>
+<li>Strengthen contribution metadata for maintainer decisions</li>
+<li>Improve failure messages and recovery guidance for failed push/PR creation</li>
+<li>Ensure branch naming, commit metadata, and merge guidance are consistent across team/org contribution scripts</li>
+<li>Validate that agent artifacts remain non-contributable and are regenerated locally</li>
+<li><strong>Create contribution PR decision template</strong> (<code>.github/PULL_REQUEST_TEMPLATE/contribution.md</code> or similar) that guides the receiving maintainer: Accept as-is? Promote (rename prefix)? Request changes? Reject? Include naming rationale field so promotion decisions are documented in the PR itself</li>
+</ul>
+<h3 id="3-path-and-content-safety">3. Path and content safety</h3>
+<ul>
+<li>Harden contribution path normalization and validation</li>
+<li><strong>Add symlink sanitization:</strong> Reject symlinks in contributed paths (<code>[[ -L "$path" ]]</code> check before copy)</li>
+<li>Block ambiguous broad paths by default (for example, root-level blanket contributions)</li>
+<li>Expand secret scanning coverage and test vectors while keeping false-positive rates manageable</li>
+<li>Add test cases for traversal-like or malformed path inputs</li>
+<li>Add E2E test for adversarial contribution (symlink, path traversal, broad directory)</li>
+</ul>
+<h3 id="4-sync-conflict-ergonomics">4. Sync conflict ergonomics</h3>
+<ul>
+<li>Add risk-tiered guidance for <code>--into-branch</code> (recommend by default for high-change syncs)</li>
+<li>Improve conflict listing and batch-resolution messaging</li>
+<li>Add stronger resolution playbooks for mixed local/parent edits</li>
+<li>Ensure local changes are never silently overwritten outside explicit force semantics</li>
+<li><strong>Add empty ledger detection:</strong> Warn if ledger exists but tracks zero files when repo has 10+ expected sync targets</li>
+<li><strong>Add ledger file locking:</strong> Create <code>.lore-sync-state.lock</code> during sync operations, fail fast on concurrent access</li>
+<li><strong>Evaluate per-file sync exclusion:</strong> Allow operators to mark files as “keep local, stop syncing” (<code>.lore-sync-ignore</code> or similar)</li>
+<li><strong>Add batch resolution rollback:</strong> Snapshot pre-resolution state before <code>--accept-local-all</code> / <code>--accept-parent-all</code></li>
+<li><strong>Add structured sync change preview:</strong> Before syncing, output a semantic summary grouped by category (new skills, modified docs, removed files, env knowledge changes) — not just raw file-level <code>--dry-run</code> output. Helps operators understand what’s incoming before committing to a sync</li>
+</ul>
+<h3 id="5-adversarial-testing-pilot-readiness">5. Adversarial testing (pilot readiness)</h3>
+<ul>
+<li>Add E2E test: two instances create conflicting content, both contribute, verify detection and resolution</li>
+<li>Add E2E test: sync with empty ledger, verify warning before mass overwrite</li>
+<li>Add E2E test: partial sync failure (simulate disk full or network drop), verify recovery path</li>
+<li>Add E2E test: concurrent sync to same repo, verify ledger integrity</li>
+</ul>
+<h3 id="6-version-pinning-strategy-multi-tier">6. Version pinning strategy (multi-tier)</h3>
+<p><code>parent.pin</code> only pins the immediate parent. In a 3-tier setup (org → team → instance), inconsistent pinning across tiers causes version mismatches: Org changes, Team pins old Org, Instance syncs Team — gets stale Org content.</p>
+<ul>
+<li>Document recommended pinning practices for 2-tier and 3-tier setups in <code>docs/guides/sync-troubleshooting.md</code></li>
+<li>Evaluate whether sync scripts should warn when a child pins a parent that itself has a stale pin (parent’s pin is behind its own parent’s HEAD)</li>
+<li>Evaluate transitive pin awareness: should <code>sync-from-team</code> report that Team’s org pin is N commits behind Org HEAD?</li>
+<li>Define guidance: when should operators pin (stability) vs float (freshness)?</li>
+<li>Add troubleshooting section for version mismatch symptoms and recovery</li>
+</ul>
+<h2 id="implementation-order">Implementation Order</h2>
+<h3 id="phase-0-pilot-readiness-mandatory">Phase 0 Pilot-Readiness Mandatory</h3>
+<ol>
+<li>✅ Path validation hardening + tests (including symlink sanitization and traversal/root rejection)</li>
+<li>✅ Direct mode rebase/fetch enforcement and audit logging</li>
+<li>✅ Empty-ledger detection warning and structured sync preview summary</li>
+<li>✅ Adversarial E2E additions (malformed/empty ledger, lock contention, path abuse)</li>
+</ol>
+<h3 id="post-pilot-follow-on">Post-Pilot Follow-on</h3>
+<ol start="5">
+<li>PR metadata and maintainer decision template consistency pass</li>
+<li>Conflict ergonomics updates and docs alignment</li>
+<li>Evaluate per-file sync exclusion and batch-resolution rollback model</li>
+</ol>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Direct mode remains opt-in and auditable in pilot logs</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> PR-first path is consistently reliable for instance-to-team and team-to-org contributions</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Contribution scripts reject malformed and traversal/symlink paths with clear errors</del></li>
+<li class="task-list-item"><input type="checkbox" disabled> Conflict workflows remain data-safe and easier to resolve under pilot pressure</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Test suite includes new safety edge cases and passes in CI</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Phase 0 pilot-readiness mandatory tranche is complete before pilot kickoff</del></li>
+</ul>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="../live-test-protocol/index.md">Live Test Protocol</a></li>
+<li><a href="../evidence-and-validation/index.md">Evidence and Validation</a></li>
+<li><a href="https://github.com/lorehq/lorehq-legacy/blob/main/docs/guides/sync-troubleshooting.md">Sync Troubleshooting</a> (archived in lorehq-legacy)</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

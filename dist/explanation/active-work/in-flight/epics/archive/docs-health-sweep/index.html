@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Docs Health Sweep | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Docs Health Sweep ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="docs-health-sweep">Docs Health Sweep</h1>
+<p>Three-pass algorithm for documentation purification. Optimized for maximum efficiency by reducing content volume before verification, then polishing what remains.</p>
+<h2 id="algorithm-reduce-correct-polish">Algorithm: Reduce, Correct, Polish</h2>
+<h3 id="pass-1-structural-consolidation-reduce">Pass 1: Structural Consolidation (Reduce)</h3>
+<p>Scan all pages for duplicate facts, verbose sections, and thin content. Consolidate before fact-checking so we only verify canonical versions, not duplicates.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Identify duplicate facts across pages</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Cut filler and verbose explanations</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Merge thin sections into parent pages where appropriate</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Ensure one source of truth per fact — everything else links</del></li>
+</ul>
+<h3 id="pass-2-fact-verification-correct">Pass 2: Fact Verification (Correct)</h3>
+<p>Extract every verifiable claim from consolidated docs and verify against source code. Split into groups for parallel verification.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Group A: <code>index.md</code>, <code>getting-started.md</code> — install commands, project structure</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Group B: <code>how-it-works.md</code> — hook behavior, ownership, capture flow, context</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Group C: Guides (7 files) — commands, config, conventions, cross-repo, interaction, platform support, roadmaps</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Group D: Examples (4 files) — templates, frontmatter, naming conventions</del></li>
+</ul>
+<p>Per group: extract claims → verify against lore source + create-lore → fix discrepancies.</p>
+<h3 id="pass-3-convention-compliance-polish">Pass 3: Convention Compliance (Polish)</h3>
+<p>Final quality sweep against docs convention. Every page held to standard.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>No filler phrases</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Exact names (file paths, function names, CLI commands)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Consistent terminology across all pages</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Pages under 150 lines</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>One topic per page</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>No stale TODOs or placeholders</del></li>
+</ul>
+<h2 id="results">Results</h2>
+<p><strong>Line count:</strong> 1,614 → 1,381 (-14.4%)</p>
+<p><strong>Pages:</strong> 14 → 15 (extracted <code>hook-architecture.md</code> from <code>how-it-works.md</code>)</p>
+<p><strong>All pages under 150 lines</strong> except <code>how-it-works.md</code> (207) — justified by 5 mermaid architecture diagrams that are the core reference.</p>
+<h3 id="pass-1-findings-structural">Pass 1 Findings (Structural)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Category</th><th>Count</th></tr></thead><tbody><tr><td>Duplicate facts consolidated</td><td>20</td></tr><tr><td>Verbose sections cut</td><td>10</td></tr><tr><td>Thin content merged</td><td>3</td></tr><tr><td>Pages over 150 lines</td><td>1 (how-it-works.md at 377 → split)</td></tr><tr><td>Terminology inconsistencies fixed</td><td>9</td></tr></tbody></table>
+<p>Key actions: extracted Hook Architecture to its own page, moved tuning/observability content to configuration.md, collapsed redundant sections across roadmaps-and-plans/plan/roadmap pages, cut sales copy from cross-repo-workflow.md.</p>
+<h3 id="pass-2-findings-fact-verification">Pass 2 Findings (Fact Verification)</h3>
+<p>426 claims extracted across 4 groups. Key errors found and fixed:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Error</th><th>Fix</th></tr></thead><tbody><tr><td>Hook counts wrong (Claude 5→6, OpenCode 4→5)</td><td>Convention-guard was undocumented</td></tr><tr><td>MCP tool <code>lore_write_guard</code> missing from docs</td><td>Added to feature matrix and Cursor section</td></tr><tr><td><code>.cursorrules</code> listed but doesn’t exist</td><td>Removed; framework uses <code>.cursor/rules/lore-*.mdc</code></td></tr><tr><td>Module layout diagram had wrong dependency arrows</td><td>Fixed capture-nudge→config, context-path-guide→banner</td></tr><tr><td>”Four lifecycle points” should be five</td><td>PostToolUseFailure is separate</td></tr><tr><td>Convention guard fires on Write|Edit, not just Write</td><td>Fixed in conventions.md</td></tr><tr><td>Sync description too narrow</td><td>Added hooks/, lib/, scripts/, .opencode/, .cursor/hooks/</td></tr><tr><td>.mdc generation source incomplete</td><td>Changed to “multiple sources”</td></tr></tbody></table>
+<h3 id="pass-3-findings-convention-compliance">Pass 3 Findings (Convention Compliance)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Category</th><th>Fixes</th></tr></thead><tbody><tr><td>Filler phrases removed</td><td>12</td></tr><tr><td>Vague references made precise</td><td>8</td></tr><tr><td>Duplicate prose replaced with links</td><td>9</td></tr><tr><td>Inconsistent arrows (<code>-></code> → <code>→</code>)</td><td>5</td></tr><tr><td>Default conventions converted to table</td><td>1 (saved ~20 lines)</td></tr><tr><td>Marketing/editorial sentences deleted</td><td>3</td></tr></tbody></table>
+<h2 id="runbook-assessment">Runbook Assessment</h2>
+<p>This three-pass algorithm works well as a repeatable process:</p>
+<ol>
+<li><strong>Reduce first</strong> — cutting duplicates before fact-checking avoids verifying content that gets deleted. This saved significant effort in Pass 2.</li>
+<li><strong>Parallel extraction + verification</strong> — splitting docs into 4 groups with haiku extraction → sonnet verification scaled well. Each pipeline was independent.</li>
+<li><strong>Polish last</strong> — convention sweep catches issues introduced during edits and provides a final consistency pass.</li>
+</ol>
+<p><strong>Model allocation worked:</strong> haiku for structured extraction (fast, cheap), sonnet for code verification and editorial judgment.</p>
+<p><strong>Recommended cadence:</strong> run after any major feature release that touches hooks, config, or platform behavior. The fact-check pass is the highest-value step — convention drift accumulates slowly but factual errors appear immediately after code changes.</p>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

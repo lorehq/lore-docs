@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Create Epic | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Create Epic ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <hr>
+<h2 id="name-lore-create-epicdescription-create-an-epic-folder-with-frontmatter-and-validationtype-commanduser-invocable-falseallowed-tools-write-read-bash-glob">name: lore-create-epic
+description: Create an epic folder with frontmatter and validation
+type: command
+user-invocable: false
+allowed-tools: Write, Read, Bash, Glob</h2>
+<h1 id="create-epic">Create Epic</h1>
+<p>Epics are <strong>operator-initiated</strong>. Never create one unprompted.</p>
+<h2 id="process">Process</h2>
+<ol>
+<li>
+<p><strong>Read rules</strong>: Check <code>.lore/rules.md</code> or <code>.lore/rules/index.md</code> for docs formatting rules. Apply these when writing content.</p>
+</li>
+<li>
+<p><strong>Determine location</strong>:</p>
+<ul>
+<li>Standalone: <code>docs/workflow/in-flight/epics/&#x3C;slug>/</code></li>
+<li>Under initiative: <code>docs/workflow/in-flight/initiatives/&#x3C;initiative>/epics/&#x3C;slug>/</code></li>
+</ul>
+<p>If the operator is working within an existing initiative, nest the epic there. Otherwise standalone.</p>
+</li>
+<li>
+<p><strong>Create folder</strong>: <code>&#x3C;location>/&#x3C;slug>/</code></p>
+<p>Also create an <code>items/</code> subfolder with a placeholder:
+<code>&#x3C;location>/&#x3C;slug>/items/README.md</code></p>
+</li>
+<li>
+<p><strong>Create index.md</strong> with frontmatter:</p>
+</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#B392F0">---</span></span>
+<span class="line"><span style="color:#85E89D">title</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">Operator's epic name</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#85E89D">status</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">active</span></span>
+<span class="line"><span style="color:#85E89D">created</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">today's date</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#85E89D">updated</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">today's date</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#85E89D">initiative</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#x3C;initiative-slug></span><span style="color:#6A737D">  # optional — standalone epics only</span></span>
+<span class="line"><span style="color:#85E89D">summary</span><span style="color:#E1E4E8">: [</span><span style="color:#9ECBFF">one-liner</span><span style="color:#E1E4E8">]           </span><span style="color:#6A737D"># optional — shown in session banner</span></span>
+<span class="line"><span style="color:#B392F0">---</span></span></code></pre>
+<ol start="5">
+<li><strong>Create tasks.md</strong> — agent execution checklist:</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#79B8FF;font-weight:bold"># Tasks</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFAB70">-</span><span style="color:#E1E4E8"> [ ] [First task placeholder]</span></span></code></pre>
+<ol start="6">
+<li><strong>Validate</strong>:</li>
+</ol>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> .lore/harness/scripts/ensure-structure.sh</span><span style="color:#E1E4E8"> &#x26;&#x26; </span><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> .lore/harness/scripts/validate-consistency.sh</span></span></code></pre>
+<h2 id="snags">Snags</h2>
+<ul>
+<li>Initiative epics are nested under the initiative folder — don’t set an <code>initiative:</code> field for those</li>
+<li><code>initiative</code> field = folder name (e.g., <code>cloud-migration</code>), not a path; only for standalone epics</li>
+<li><code>summary</code> is shown in the session banner — keep it under 60 chars</li>
+<li><code>index.md</code> syncs to external PM tools — <code>tasks.md</code> is agent-only and never syncs</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

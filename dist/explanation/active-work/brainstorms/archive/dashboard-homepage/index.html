@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Dashboard Homepage for Deployed Lore Instances | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Dashboard Homepage for Deployed Lore Instances ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="dashboard-homepage-for-deployed-lore-instances">Dashboard Homepage for Deployed Lore Instances</h1>
+<h2 id="context">Context</h2>
+<p>The current homepage (<code>docs/index.md</code>) is framework documentation — useful for the source repo and first-time setup, but once a Lore is deployed and operational, it’s not what an operator needs day-to-day. Operators should land on something actionable.</p>
+<h2 id="core-idea">Core Idea</h2>
+<p>Replace the deployed instance homepage with a dashboard-style overview that surfaces the operator’s active work at a glance.</p>
+<h2 id="what-it-could-show">What It Could Show</h2>
+<ul>
+<li><strong>Active roadmaps</strong> with progress (e.g., 3/7 plans completed)</li>
+<li><strong>In-flight plans</strong> with status</li>
+<li><strong>Recent brainstorms</strong> for quick reference</li>
+<li><strong>Skill/agent counts</strong> — how much the instance has learned</li>
+<li><strong>Environment summary</strong> — key inventory items, recent runbook activity</li>
+</ul>
+<h2 id="where-the-data-already-lives">Where the Data Already Lives</h2>
+<ul>
+<li>Roadmap/plan frontmatter has <code>status: active|completed|cancelled</code></li>
+<li>Skills and agents are registered in <code>skills-registry.md</code> and <code>agent-registry.md</code></li>
+<li>Context docs are in <code>docs/context/</code></li>
+<li>All of this is already parsed by MkDocs at build time</li>
+</ul>
+<h2 id="implementation-options">Implementation Options</h2>
+<ol>
+<li><strong>MkDocs hook + Jinja template</strong>: A build-time hook scans frontmatter across docs, injects summary data into <code>extra</code>, and a custom homepage template renders it. No JS needed.</li>
+<li><strong>MkDocs macros plugin</strong>: Use <code>mkdocs-macros-material</code> to call Python functions directly in markdown. More flexible but adds a plugin dependency.</li>
+<li><strong>Static generation</strong>: A script (like <code>generate-mkdocs-nav.sh</code>) pre-generates the dashboard markdown before build. Simple but requires running the script.</li>
+</ol>
+<h2 id="procedure-overlay-integration">Procedure Overlay Integration</h2>
+<p>If <a href="../operator-procedure-overlays-and-dynamic-rule-loading/index.md">Operator Procedure Overlays</a> is implemented, the dashboard could also surface:</p>
+<ul>
+<li><strong>Always-on profile</strong> (small, visible, editable)</li>
+<li><strong>Available procedure packs</strong> (registry view)</li>
+<li><strong>Recently activated dynamic rules</strong></li>
+<li><strong>Rule conflicts and resolution prompts</strong></li>
+</ul>
+<p>This would make the dashboard both a work-tracking surface and a procedure management center.</p>
+<h2 id="open-questions">Open Questions</h2>
+<ul>
+<li>Should the framework homepage stay as-is in the source repo and only deployed instances get the dashboard?</li>
+<li>Should the dashboard be the literal <code>index.md</code> or a separate page that becomes the default landing via nav config?</li>
+<li>How much detail per item? Just titles + status, or mini progress bars / metrics?</li>
+<li>Should the Work tab still exist separately, or does the dashboard absorb it?</li>
+<li>If procedure overlays are implemented, should the dashboard be the primary management surface for them?</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

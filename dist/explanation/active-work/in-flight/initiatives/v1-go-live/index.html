@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Lore V1 Go-Live | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Lore V1 Go-Live ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="lore-v1-go-live">Lore V1 Go-Live</h1>
+<h2 id="goal">Goal</h2>
+<p>Ship Lore v1 with three-platform support (Claude Code, Cursor, OpenCode), then launch with honest positioning and real evidence.</p>
+<h2 id="phases">Phases</h2>
+<h3 id="phase-0-identity-and-trust-baseline">Phase 0: Identity and Trust Baseline</h3>
+<p><strong>Status:</strong> Complete</p>
+<p>GitHub org, domains, licensing, governance, security baseline, v0.1.0 tagged and released via <code>create-lore@0.1.3</code>.</p>
+<h3 id="phase-1-framework-hardening">Phase 1: Framework Hardening</h3>
+<p><strong>Status:</strong> Complete (v0.2.0)</p>
+<p>Address reliability and trust gaps before public launch.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Dynamic nav generation with auto-scaffolding, curated section ordering</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Work-as-home nav — work subsections under Home tab, no standalone Work tab</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Agent rules extraction — <code>docs/context/agent-rules.md</code> as sticky PROJECT context</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Guides rework — commands reference, customization guide, hub-spoke architecture</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Fix <code>protect-memory.js</code> — narrowed to only block project-root <code>MEMORY.md</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Narrow Docker volume mount — <code>docs/</code> and <code>mkdocs.yml</code> only</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Community health files — CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Knowledge map in session banner — directory-only tree</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Tests for hooks and scripts — 24 tests across generate-nav and session-init</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Versioning and upgrade path — <code>.lore-config</code>, <code>sync-framework.sh</code>, <code>/lore-update</code>, <code>/lore-status</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Rename <code>personal/</code> → <code>local/</code> for clarity</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Conventions as directory with per-domain pages, injected via session hook</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Docs sweep — lore-docs terminology (environment→context), strikethrough standardization</del></li>
+</ul>
+<p><strong>Plans:</strong></p>
+<ul>
+<li><a href="plans/archive/adoption-experience-and-compatibility/index.md">Adoption Experience and Compatibility</a> (archived)</li>
+<li><a href="plans/archive/community-and-release-governance/index.md">Community and Release Governance</a> (archived)</li>
+</ul>
+<h3 id="phase-2-opencode-support--cleanup">Phase 2: OpenCode Support + Cleanup</h3>
+<p><strong>Status:</strong> Complete (v0.3.0)</p>
+<p>Added OpenCode as a second supported platform via shared lib architecture. Core logic lives in <code>lib/</code> (CJS), with thin adapters for each platform.</p>
+<p><strong>Design decisions:</strong></p>
+<ul>
+<li><strong>CLAUDE.md, not AGENTS.md</strong> — OpenCode’s <code>opencode.json</code> points to <code>["CLAUDE.md", "MEMORY.local.md"]</code>. One canonical instructions file serves both platforms.</li>
+<li><strong>Shared lib architecture</strong> — <code>lib/banner.js</code>, <code>lib/tracker.js</code>, <code>lib/memory-guard.js</code> contain core logic. <code>createRequire(import.meta.url)</code> bridges ESM plugins to CJS lib.</li>
+<li><strong>Aligned filenames</strong> — both platforms use <code>session-init</code>, <code>knowledge-tracker</code>, <code>protect-memory</code>.</li>
+<li><strong>No delegation-enforcer</strong> — requires project-specific hardcoded mappings. Knowledge-tracker provides soft reminders instead.</li>
+<li><strong>Template ships both platforms</strong> — every Lore project gets <code>hooks/</code> and <code>.opencode/</code>. No installer flags.</li>
+</ul>
+<p><strong>Deliverables:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Shared lib: <code>lib/banner.js</code>, <code>lib/tracker.js</code>, <code>lib/memory-guard.js</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>OpenCode plugins: three ESM adapters in <code>.opencode/plugins/</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>opencode.json</code> config in template</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Claude Code hooks refactored to thin CJS adapters</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Aligned filenames across both platforms (<code>knowledge-tracker</code> not <code>post-edit-reminder</code>)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Configurable escalation thresholds via <code>.lore-config</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>README honesty pass — two-platform quick-start, before/after, supported platforms table</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>69 lore tests + 8 create-lore tests passing</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Published: lore v0.3.0, create-lore@0.3.0 on npm</del></li>
+</ul>
+<p><strong>Plan:</strong> <a href="plans/archive/opencode-support/index.md">OpenCode Support</a> (archived)</p>
+<h3 id="phase-3-cursor--platform-maturity">Phase 3: Cursor + Platform Maturity</h3>
+<p><strong>Status:</strong> Complete (v0.4.0 → v0.5.0)</p>
+<p>Added Cursor as a third platform, introduced cross-repo linking, restructured knowledge architecture, and closed feature parity gaps. Two releases in this phase.</p>
+<p><strong>v0.4.0 — Cursor Support + Cross-Repo Linking:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Cursor hooks: <code>sessionStart</code>, <code>beforeSubmitPrompt</code>, <code>beforeReadFile</code>, <code>afterFileEdit</code>, <code>afterShellExecution</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>.cursor/hooks.json</code> config, <code>.cursor/hooks/</code> adapters, <code>.cursor/rules/</code> rules</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Vendor-agnostic instructions — <code>.lore/instructions.md</code> as canonical source</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Platform-neutral skills and agents — <code>.lore/</code> as canonical, platform copies generated</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>lore-link</code> — hub-spoke cross-repo hook generation for all three platforms</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>sync-framework.sh</code> integrates lore-link refresh</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>CI workflow and release config</del></li>
+</ul>
+<p><strong>v0.5.0 — Standardization + Knowledge Architecture:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>lore-</code> prefix on all user-invocable skills</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>LORE_DEBUG</code> mode for hook diagnostics</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Configurable <code>treeDepth</code> via <code>.lore-config</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Split <code>docs/context/</code> into <code>docs/context/</code> (rules) + <code>docs/knowledge/</code> (reference)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Broader environment subdirs: <code>inventory/</code>, <code>decisions/</code>, <code>reference/</code>, <code>diagrams/</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Nav reorder: Work → Knowledge → Context → Guides</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>OpenCode context-path-guide plugin (feature parity with Claude Code)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Cursor condensed banner on every prompt (compaction resilience)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Cursor <code>.plans/</code> routing rule</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Archives visible in nav, archive cleanup in <code>/lore-consolidate</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>156 lore tests passing (up from 69)</del></li>
+</ul>
+<p><strong>Three-platform hook coverage (as shipped):</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Behavior</th><th>Claude Code</th><th>Cursor</th><th>OpenCode</th></tr></thead><tbody><tr><td>Session banner</td><td><code>session-init.js</code></td><td><code>session-init.js</code></td><td><code>session-init.js</code></td></tr><tr><td>Per-prompt reminder</td><td><code>prompt-preamble.js</code></td><td><code>prompt-preamble.js</code></td><td><code>session-init.js</code> (<code>experimental.chat.system.transform</code>)</td></tr><tr><td>MEMORY.md guard</td><td><code>protect-memory.js</code></td><td><code>protect-memory.js</code> (reads only)</td><td><code>protect-memory.js</code></td></tr><tr><td>Knowledge capture</td><td><code>knowledge-tracker.js</code></td><td><code>knowledge-tracker.js</code></td><td><code>knowledge-tracker.js</code></td></tr><tr><td>Context path guide</td><td><code>context-path-guide.js</code></td><td>—</td><td><code>context-path-guide.js</code></td></tr></tbody></table>
+<h3 id="phase-4-launch-content-and-distribution">Phase 4: Launch Content and Distribution</h3>
+<p><strong>Status:</strong> Active</p>
+<p>Close pre-launch gates, build proof assets, and execute staged distribution. Single consolidated plan — absorbs remaining items from archived Adoption Experience and Community Governance plans.</p>
+<p>Priority refactor: Phase 4 is now evidence-first. We do not optimize channel content before proving reliability and value with measurable outcomes.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>P0: Proof assets — before/after examples, workflow references, evidence snapshot</del> <em>(2026-02-23: Full A/B test complete. N=10 all conditions (50 sessions). Runbook steady state 59% cheaper than raw Claude ($0.19 vs $0.45 median). Published: <a href="https://lorehq.github.io/lore-docs/cost-evidence/">cost-evidence</a> on lore-docs, <a href="https://github.com/lorehq/lore-gotcha-demo">lore-gotcha-demo</a> public test repo. Brainstorm: <code>docs/workflow/brainstorms/cold-warm-ab-test/</code>)</em></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>P0: Reliability and context-cost evidence — hook token cost analysis and platform behavior verification</del> <em>(Context injection audit complete — 7,800 tokens at session start, 96 tokens/turn preamble. Ambiguity scan added to reduce peripheral reasoning degradation.)</em></li>
+<li class="task-list-item"><input type="checkbox" disabled> P1: Cross-platform install validation — clean Mac test, Windows WSL documented, preflight check in <code>create-lore</code> (OS, bash version, Node version), graceful degradation without Docker</li>
+<li class="task-list-item"><input type="checkbox" disabled> P1: Pre-launch gates (release cadence, re-open checklist, merge expectations)</li>
+<li class="task-list-item"><input type="checkbox" disabled> P1: Demo video (3 min) — bootstrap → snag → fieldnote capture → reuse</li>
+<li class="task-list-item"><input type="checkbox" disabled> P1: Blog post — lead with cost evidence (“$0.45 → $0.19, proved across 50 sessions”), not architecture</li>
+<li class="task-list-item"><input type="checkbox" disabled> P2: Early seeding — low-stakes venues (Claude Code Discord, Reddit comments, not posts), target 10-20 real external users, fix what breaks</li>
+<li class="task-list-item"><input type="checkbox" disabled> P2: Channel distribution — r/ClaudeAI → HN Show HN → Twitter/X thread + dev.to same week</li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Foundational positioning assets (README overhaul + messaging kit)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>v0.10.0 shipped (2026-02-21) — hook profiles, operator.gitignore persistence, framework consolidation into <code>.lore/</code>, lore-docker/lore-delegate skills, threshold-only bash tracking. All 4 repos published (lore, create-lore@npm, lore-docs, lore-docker@DockerHub).</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>v0.11.0 synced (2026-02-22) — new skills (mcp-stdio-content-length-framing, node-macos-stdin-fd), docker search startup delay snag, lore-gotcha-demo public repo</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>v0.12.9 shipped (2026-02-24) — harness rename (framework→harness), first-session setup guides as seeds, all skills synced to <code>.claude/skills/</code>, <code>user-invocable</code> frontmatter required, config-driven model stamping, Docker runtime fixes (panzoom assets, site_url), release.sh tags all 3 repos</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>v0.13.0 shipped (2026-02-24) — platform docs restructure (4-page section with maturity levels), cost evidence transparency (full caveats, contribute section, lore-gotcha-demo expanded), first-session Phase 0 (version control setup), Docker nav link fix (SITE_URL separation), seed runbook example flagging</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Published raw A/B test data (50 sessions) to lore-gotcha-demo/results/ and lore-docs cost-evidence section (5 pages). Expanded harness engineering narrative with industry references (OpenAI, martinfowler.com, Anthropic, Karpathy).</del></li>
+</ul>
+<p><strong>Plans:</strong></p>
+<ul>
+<li><a href="plans/launch-content-and-distribution/index.md">Launch Content and Distribution</a></li>
+<li><a href="plans/review-findings-remediation/index.md">Review Findings Remediation</a></li>
+<li><a href="plans/archive/skill-agent-ownership/index.md">Skill and Agent Ownership</a> (archived)</li>
+</ul>
+<h3 id="phase-5-public-launch-and-iteration">Phase 5: Public Launch and Iteration</h3>
+<p><strong>Status:</strong> Planned</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Show HN — lead with cost evidence, Tuesday-Thursday 9-11am ET. Title: cost reduction + “open source”, not feature list</li>
+<li class="task-list-item"><input type="checkbox" disabled> Same week: Twitter/X thread (problem → insight → proof → <code>npx create-lore</code>) + dev.to post</li>
+<li class="task-list-item"><input type="checkbox" disabled> Triage issues quickly (&#x3C; 4h setup failures, &#x3C; 24h feature requests)</li>
+<li class="task-list-item"><input type="checkbox" disabled> Convert recurring friction into docs/automation</li>
+<li class="task-list-item"><input type="checkbox" disabled> Cut v1.0.0 based on launch feedback</li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<p><strong>Phase 1:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Hook test coverage exists</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>protect-memory.js doesn’t break Claude Code’s built-in memory</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Docker volume mount narrowed</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>v0.2.0 tagged and published</del></li>
+</ul>
+<p><strong>Phase 2:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>OpenCode plugins work end-to-end (session injection, capture, memory protection)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>create-lore</code> scaffolds both Claude Code and OpenCode files</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Same knowledge base works from both Claude Code and OpenCode in one repo</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>README reflects real two-platform evidence</del></li>
+</ul>
+<p><strong>Phase 3:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>All three platforms have hook adapters and fire correctly</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Cross-repo linking works for all platforms</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Knowledge architecture split is clean (context/ vs knowledge/)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>156+ tests passing across hooks, scripts, and plugins</del></li>
+</ul>
+<p><strong>Phase 4:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> README converts a 10-second scan into understanding</li>
+<li class="task-list-item"><input type="checkbox" disabled> Demo video exists and shows real workflow</li>
+<li class="task-list-item"><input type="checkbox" disabled> Blog post is complete and evidence-backed</li>
+</ul>
+<p><strong>Phase 5:</strong></p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Soft-launch feedback incorporated</li>
+<li class="task-list-item"><input type="checkbox" disabled> v1.0.0 released</li>
+</ul>
+<h2 id="open-questions">Open Questions</h2>
+<ol>
+<li><strong>Portable skill format</strong> — current skill markdown references Claude Code concepts (Task tool, model routing). Skills are surfaced via the session banner’s knowledge map on both platforms, so the content works cross-platform even if some references are Claude-specific. Monitor whether this causes confusion.</li>
+<li><strong>Existing project migration</strong> — <code>npx create-lore</code> scaffolds fresh repos. <code>lore init</code> for established projects is a future opportunity. Deferred — not needed for v1 launch.</li>
+<li><del><strong>AGENTS.md vs CLAUDE.md</strong></del> — Resolved: OpenCode’s <code>opencode.json</code> points to <code>CLAUDE.md</code> directly. One canonical file, no duplication.</li>
+</ol>
+<h2 id="privacy-constraint">Privacy Constraint</h2>
+<p>Do not store personal identifiers, personal handles, personal emails, or private legal/account details in tracked files. Repository remains private until launch-readiness gate passes.</p>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

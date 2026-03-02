@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Platform Integration Reliability vs Cost Audit | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Platform Integration Reliability vs Cost Audit ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="platform-integration-reliability-vs-cost-audit">Platform Integration Reliability vs Cost Audit</h1>
+<h2 id="why-this-brainstorm-exists">Why this brainstorm exists</h2>
+<p>We needed a blunt review of Lore integration quality across Claude Code, OpenCode, and Cursor, with focus on context payload size, injection frequency, and whether prompt engineering at each hook surface is cost-effective.</p>
+<h2 id="high-level-verdict">High-level verdict</h2>
+<ul>
+<li>Claude Code currently has the best reliability vs cost balance.</li>
+<li>OpenCode has the largest cost issue due to full banner injection on every system transform call.</li>
+<li>Cursor is workable but constrained by platform limits and has implementation contradictions that reduce reliability.</li>
+</ul>
+<h2 id="evidence-reviewed">Evidence reviewed</h2>
+<ul>
+<li>Hook and plugin wiring files for all three platforms.</li>
+<li>Banner and rules generation code and static rule payloads.</li>
+<li>Hook logging pipeline and analyzer.</li>
+<li>Live hook event log data from this repo (<code>.git/lore-hook-events.jsonl</code>).</li>
+</ul>
+<h2 id="measured-payload-findings">Measured payload findings</h2>
+<ul>
+<li><code>buildBanner()</code> payload is about 14,067 characters.</li>
+<li>OpenCode currently injects that full payload in <code>experimental.chat.system.transform</code> every call.</li>
+<li>Sample log analysis: 34 <code>chat.system.transform</code> fires produced about 491,580 injected characters from that hook alone.</li>
+<li>Cursor always-on rules total about 20,075 characters (<code>lore-core</code>, <code>lore-project</code>, <code>lore-delegation</code>, <code>work-tracking</code>).</li>
+<li>Cursor dynamic banner path exists (<code>buildCursorBanner()</code>), but current session hook uses full <code>buildBanner()</code>.</li>
+</ul>
+<h2 id="platform-specific-assessment">Platform-specific assessment</h2>
+<h3 id="claude-code">Claude Code</h3>
+<ul>
+<li>Strong injection surfaces: session start, per-prompt, pre-tool, post-tool.</li>
+<li>Pattern is mostly sane: one heavy startup payload plus smaller recurring nudges.</li>
+<li>Best current tradeoff for reliability vs token cost.</li>
+</ul>
+<h3 id="opencode">OpenCode</h3>
+<ul>
+<li>Reliability is high because system transform runs every call.</li>
+<li>Cost profile is currently poor because full banner is re-injected per call.</li>
+<li>“No accumulation” in history does not mean no token cost at inference time.</li>
+</ul>
+<h3 id="cursor">Cursor</h3>
+<ul>
+<li>Platform limitations are real: weak context injection outside <code>sessionStart</code>.</li>
+<li>Lore mitigation is clever (rules + hooks + MCP), but several pieces are misaligned.</li>
+<li>There is contradiction between known platform limits and current assumptions in hook comments/flow.</li>
+</ul>
+<h2 id="notable-implementation-issues">Notable implementation issues</h2>
+<ul>
+<li>OpenCode: full <code>buildBanner()</code> in per-call system transform is the biggest cost mistake.</li>
+<li>Cursor: <code>session-init</code> uses full banner instead of minimal cursor banner.</li>
+<li>Cursor: MCP server references <code>getAgentDomains</code> from <code>lib/banner.js</code>, but that export is missing.</li>
+<li>Cursor: duplicate/overlapping rule content increases baseline instruction load.</li>
+<li>Docs and runbooks contain behavior statements that do not match current runtime behavior in key places.</li>
+</ul>
+<h2 id="easy-wins">Easy wins</h2>
+<ul>
+<li>OpenCode: keep full banner for startup/compaction, switch per-call transform to a compact reminder.</li>
+<li>Cursor: use <code>buildCursorBanner()</code> for <code>sessionStart</code> dynamic payload.</li>
+<li>Cursor: remove or merge redundant always-on rule files.</li>
+<li>Cursor MCP: fix missing export mismatch so <code>lore_context</code> remains reliable.</li>
+<li>Documentation: align platform guide and testing runbook with actual code behavior.</li>
+</ul>
+<h2 id="current-ranking">Current ranking</h2>
+<ol>
+<li>Claude Code (best reliability vs cost)</li>
+<li>Cursor (medium reliability, moderate to high baseline cost)</li>
+<li>OpenCode (high reliability, highest ongoing cost)</li>
+</ol>
+<h2 id="open-questions">Open questions</h2>
+<ul>
+<li>What should be the target character/token budget per injection point by platform?</li>
+<li>Which context sections should be static, dynamic, or on-demand only?</li>
+<li>Should profile-based tuning (<code>minimal</code>/<code>balanced</code>/<code>strict</code>) be added after baseline reductions are complete?</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

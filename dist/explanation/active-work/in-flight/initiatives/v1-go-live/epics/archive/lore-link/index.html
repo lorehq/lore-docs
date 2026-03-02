@@ -1,0 +1,122 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Lore Link | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Lore Link ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="lore-link">Lore Link</h1>
+<h2 id="goal">Goal</h2>
+<p>Let developers open work repos directly in their IDE while Lore hooks fire from the central hub. The hub-spoke model works naturally in CLI tools (Claude Code, OpenCode) where the working directory is just a string. In IDEs (Cursor), opening the Lore project means losing the IDE experience for your actual code. <code>lore link</code> resolves this by dropping lightweight per-repo configs that point hooks back to the hub.</p>
+<h2 id="problem">Problem</h2>
+<p>The current “one rule” — always launch from the Lore directory — creates a real conflict for IDE users:</p>
+<ul>
+<li>Open the Lore project in Cursor: file tree shows skills and docs, not your application code. Git, search, and terminal all scope to the wrong repo.</li>
+<li>Open your app repo in Cursor: no hooks load, no session banner, no capture loop. Back to cold-start sessions.</li>
+</ul>
+<p>CLI users don’t feel this tension because absolute paths are natural in a terminal. IDE users need the hooks to follow them into their work repos.</p>
+<h2 id="design">Design</h2>
+<h3 id="how-it-works">How it works</h3>
+<p>From the hub:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">lore</span><span style="color:#9ECBFF"> link</span><span style="color:#9ECBFF"> ~/projects/my-app</span></span></code></pre>
+<p>This creates a small set of platform-specific configs in the work repo that point hooks back to the hub via absolute paths. The hub’s <code>lib/</code> modules are already parameterized — <code>buildBanner(directory)</code>, <code>checkMemoryAccess(tool, path, rootDir)</code> — so they work unchanged when called from a linked repo.</p>
+<h3 id="one-line-hook-change-lore_hub">One-line hook change: LORE_HUB</h3>
+<p>Each hook entry point gets one change:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="color:#6A737D">// Before</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> hubDir</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> path.</span><span style="color:#B392F0">join</span><span style="color:#E1E4E8">(__dirname, </span><span style="color:#9ECBFF">'..'</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// After</span></span>
+<span class="line"><span style="color:#F97583">const</span><span style="color:#79B8FF"> hubDir</span><span style="color:#F97583"> =</span><span style="color:#E1E4E8"> process.env.</span><span style="color:#79B8FF">LORE_HUB</span><span style="color:#F97583"> ||</span><span style="color:#E1E4E8"> path.</span><span style="color:#B392F0">join</span><span style="color:#E1E4E8">(__dirname, </span><span style="color:#9ECBFF">'..'</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<p>When running from the hub directly (current behavior), <code>LORE_HUB</code> isn’t set and <code>__dirname</code> resolves correctly. When running from a linked repo, the generated config sets <code>LORE_HUB</code> to the hub path.</p>
+<h3 id="what-gets-created-in-the-work-repo">What gets created in the work repo</h3>
+<p><strong>Always created:</strong></p>
+<ul>
+<li><code>.lore</code> — hub pointer (JSON, gitignored by the work repo)</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "hub"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"/home/user/my-lore-project"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">  "linked"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"2026-02-17"</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>Per-platform (Tier 1 only — tools with lifecycle hooks):</strong></p>
+<ul>
+<li><strong>Claude Code:</strong> <code>.claude/settings.json</code> — hooks pointing to hub scripts via <code>LORE_HUB</code> env + absolute paths</li>
+<li><strong>Cursor:</strong> <code>.cursor/hooks.json</code> — same pattern, Cursor wire format</li>
+<li><strong>OpenCode:</strong> <code>.opencode/plugins/</code> — ESM plugin wrappers that <code>require()</code> hub’s <code>lib/</code> modules with <code>LORE_HUB</code> set</li>
+</ul>
+<h3 id="hub-tracks-links">Hub tracks links</h3>
+<p><code>~/.lore-links</code> in the hub root (gitignored):</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">  "links"</span><span style="color:#E1E4E8">: [</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#79B8FF">"path"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"/home/user/projects/my-app"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"linked"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"2026-02-17"</span><span style="color:#E1E4E8">},</span></span>
+<span class="line"><span style="color:#E1E4E8">    {</span><span style="color:#79B8FF">"path"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"/home/user/projects/my-api"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">"linked"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"2026-02-17"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">  ]</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h3 id="tier-1-only">Tier 1 only</h3>
+<p>Tier 1 (full hooks): Claude Code, Cursor, OpenCode. These have subprocess lifecycle hooks that can run code on session start, tool use, and file edits — the full Lore experience.</p>
+<p>Tier 2 (instructions only): Windsurf, Copilot, Zed, Aider. These have instruction files but no lifecycle hooks. Without hooks, there’s no capture loop, no session banner, no memory guards. Shipping a degraded experience reflects poorly on the project. Architecture supports Tier 2 later if needed — not in scope now.</p>
+<h2 id="scope">Scope</h2>
+<h3 id="1-lore_hub-env-var-support-in-hooks">1. LORE_HUB env var support in hooks</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Add <code>process.env.LORE_HUB || process.cwd()</code> fallback to each hook entry point</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Claude Code hooks: <code>protect-memory.js</code>, <code>context-path-guide.js</code>, <code>knowledge-tracker.js</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Cursor hooks: <code>session-init.js</code>, <code>protect-memory.js</code>, <code>knowledge-tracker.js</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>OpenCode plugins: <code>session-init.js</code>, <code>protect-memory.js</code>, <code>knowledge-tracker.js</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Verify <code>lib/</code> modules work unchanged when <code>hubDir</code> differs from <code>process.cwd()</code></del></li>
+</ul>
+<h3 id="2-link-script">2. Link script</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Create <code>scripts/lore-link.sh</code> — link/unlink/list/refresh</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>lore-link.sh &#x3C;path></code> — generate configs for all 3 platforms, register in <code>.lore-links</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>lore-link.sh --unlink &#x3C;path></code> — remove generated configs, deregister</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>lore-link.sh --list</code> — show linked repos with stale detection</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>lore-link.sh --refresh</code> — regenerate configs in all linked repos</del></li>
+</ul>
+<h3 id="3-generated-configs-per-platform">3. Generated configs per platform</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Claude Code: <code>.claude/settings.json</code> with <code>LORE_HUB=&#x3C;hub> node &#x3C;hub>/hooks/*.js</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Cursor: <code>.cursor/hooks.json</code> with same pattern</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Cursor: <code>.cursor/rules/lore-*.mdc</code> (8 tiered files, path-rewritten) + <code>CLAUDE.md</code> (path-rewritten)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>OpenCode: <code>.opencode/plugins/</code> ESM wrappers that set <code>LORE_HUB</code> and re-export</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>.lore</code> hub pointer and <code>opencode.json</code> always generated</del></li>
+</ul>
+<h3 id="4-edge-cases">4. Edge cases</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Existing configs — backup to <code>.bak</code>, warn, overwrite</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Refuse to link a Lore instance (<code>.lore-config</code> exists)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Stale links — <code>--list</code> shows <code>[STALE]</code>, <code>--refresh</code> skips with warning</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Generated files added to target <code>.gitignore</code></del></li>
+</ul>
+<h3 id="5-integration-with-existing-scripts">5. Integration with existing scripts</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>validate-consistency.sh</code> — check 11: <code>.lore-links</code> stale entry detection</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>.gitignore</code> — <code>.lore-links</code> ignored in hub</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>sync-framework.sh</code> — prompt to run <code>--refresh</code> after sync</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>/lore-update</code> skill — mention <code>--refresh</code> in post-update output</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>/lore-status</code> skill — show linked repos count</del></li>
+</ul>
+<h3 id="6-tests">6. Tests</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>LORE_HUB override: hooks resolve hub from env var, not cwd</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Link script: creates correct configs per platform</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Unlink script: removes generated configs cleanly</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Refresh: regenerates configs after hub changes</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Backup behavior: existing configs backed up</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Stale link detection: warns on invalid paths</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Lore instance guard: refuses to link</del></li>
+</ul>
+<h3 id="7-documentation">7. Documentation</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Update <code>docs/guides/cross-repo-workflow.md</code> (lore-docs) — add <code>lore link</code> as the IDE workflow</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Update <code>docs/guides/platform-support.md</code> (lore-docs) — document linked-repo support per platform</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Update README.md (lore) — mention <code>lore link</code> in cross-repo section</del></li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li>Cursor hooks implementation (completed in v0.4.0)</li>
+<li>Platform support decision (completed — Tier 1 only)</li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Developer can <code>lore link ~/projects/my-app</code>, open <code>my-app</code> in Cursor, and get full Lore experience (banner, capture nudges, memory protection)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Same works for Claude Code and OpenCode from linked repos</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>Hub-spoke CLI workflow is unaffected (no <code>LORE_HUB</code> set = current behavior)</del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del><code>lore link --refresh</code> updates all linked repos after a <code>/lore-update</code></del></li>
+<li class="task-list-item"><input type="checkbox" checked disabled> <del>All existing tests continue to pass (100/100)</del></li>
+</ul>
+<h2 id="test-plan">Test Plan</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">node</span><span style="color:#79B8FF"> --test</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-consistency.sh</span></span></code></pre>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Field Fix Metadata Format | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Field Fix Metadata Format ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="field-fix-metadata-format">Field Fix Metadata Format</h1>
+<p>Define the structured metadata schema that serves as the contract between instances and the source triage pipeline. Every field fix submission carries this metadata — the intake workflow parses it, the AI review gate evaluates against it, and the grouping layer uses it for similarity matching.</p>
+<h2 id="goal">Goal</h2>
+<p>A single, parseable metadata format that captures everything the source repo needs to evaluate a field fix without access to the originating instance.</p>
+<h2 id="schema-fields">Schema Fields</h2>
+<h3 id="required">Required</h3>
+<ul>
+<li><strong>Bug description</strong> — What broke, with reproduction steps</li>
+<li><strong>Root cause</strong> — Why it broke (the insight that led to the fix)</li>
+<li><strong>Diff</strong> — The actual fix, keyed to the Lore version it applies against</li>
+<li><strong>Lore version</strong> — Exact version tag (e.g. <code>v0.13.0</code>)</li>
+<li><strong>Affected component</strong> — Category: <code>hooks</code>, <code>scripts</code>, <code>lib</code>, <code>skills</code>, <code>config</code>, <code>docs</code></li>
+<li><strong>Platform</strong> — OS and tool where the bug was discovered (e.g. <code>linux/claude-code</code>, <code>macos/cursor</code>)</li>
+<li><strong>Scope declaration</strong> — List of files modified, confirming all are harness-owned</li>
+<li><strong>Security self-check</strong> — Explicit attestation: no instance-specific data, no secrets, no local paths</li>
+</ul>
+<h3 id="recommended">Recommended</h3>
+<ul>
+<li><strong>Test evidence</strong> — How the fix was verified (test output, before/after behavior)</li>
+<li><strong>Cross-platform assessment</strong> — Does this fix affect other platforms? Has it been tested on them?</li>
+<li><strong>Convention compliance</strong> — Did <code>validate-consistency.sh</code> pass after the fix?</li>
+<li><strong>Node version</strong> — Runtime version where the fix was developed/tested</li>
+<li><strong>Related issues</strong> — Links to existing GitHub issues if known</li>
+</ul>
+<h3 id="optional">Optional</h3>
+<ul>
+<li><strong>Alternative approaches considered</strong> — What else was tried and why this approach won</li>
+<li><strong>Regression risk</strong> — What could break if this fix is applied broadly</li>
+</ul>
+<h2 id="deliverables">Deliverables</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Issue template (<code>.github/ISSUE_TEMPLATE/field-fix.yml</code>) in lore source repo — structured form with required/optional fields mapping to the schema above</li>
+<li class="task-list-item"><input type="checkbox" disabled> PR template section or dedicated PR template for field-fix PRs — parseable by GitHub Actions</li>
+<li class="task-list-item"><input type="checkbox" disabled> Schema reference doc — canonical spec referenced by the submit skill and triage workflow</li>
+</ul>
+<h2 id="format-decisions">Format Decisions</h2>
+<ul>
+<li><strong>YAML frontmatter in PR body</strong> — Machine-parseable section at the top of the PR description, followed by human-readable narrative. GitHub Actions can extract the YAML block reliably.</li>
+<li><strong>Issue template uses YAML form</strong> — GitHub’s issue form syntax (<code>.yml</code>) provides structured fields with validation, dropdowns for component/platform, and required field enforcement.</li>
+</ul>
+<h2 id="scope">Scope</h2>
+<p><strong>Target repo:</strong> <code>/home/andrew/Github/lore</code> (source framework)</p>
+<p><strong>Files to create/modify:</strong></p>
+<ul>
+<li><code>.github/ISSUE_TEMPLATE/field-fix.yml</code> — new</li>
+<li><code>.github/PULL_REQUEST_TEMPLATE/field-fix.md</code> — new (or section in existing template)</li>
+<li><code>docs/knowledge/reference/field-fix-schema.md</code> — new (canonical schema doc, travels with instances via sync)</li>
+</ul>
+<h2 id="success-criteria">Success Criteria</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> Issue template renders correctly on GitHub and enforces required fields</li>
+<li class="task-list-item"><input type="checkbox" disabled> PR template YAML block is parseable by a simple Node.js script</li>
+<li class="task-list-item"><input type="checkbox" disabled> Schema doc is clear enough for an AI agent to generate compliant metadata without examples</li>
+<li class="task-list-item"><input type="checkbox" disabled> Security self-check field cannot be left empty or skipped</li>
+<li class="task-list-item"><input type="checkbox" disabled> <code>validate-consistency.sh</code> passes in lore source after adding templates</li>
+</ul>
+<h2 id="test-plan">Test Plan</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># In lore source repo</span></span>
+<span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> scripts/validate-consistency.sh</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Validate issue template YAML is valid</span></span>
+<span class="line"><span style="color:#B392F0">node</span><span style="color:#79B8FF"> -e</span><span style="color:#9ECBFF"> "const yaml = require('yaml'); const fs = require('fs'); yaml.parse(fs.readFileSync('.github/ISSUE_TEMPLATE/field-fix.yml', 'utf8')); console.log('valid')"</span></span></code></pre>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

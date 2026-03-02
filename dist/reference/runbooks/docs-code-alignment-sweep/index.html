@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Docs-Code Alignment Sweep | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Docs-Code Alignment Sweep ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="docs-code-alignment-sweep">Docs-Code Alignment Sweep</h1>
+<p>Bidirectional accuracy sweep — reduce doc volume, verify doc claims against source, discover undocumented functionality, then polish for rule compliance. Produces two outputs: doc fixes and a code violations report for follow-up with code-tidy-sweep. Uses parallel workers with dedicated semantic search containers.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Docs repo checked out locally (<code>lore-docs/docs/</code>)</li>
+<li>Source repos checked out locally: <code>lore/</code>, <code>lore-docker/</code>, <code>create-lore/</code></li>
+<li>Docs rule: <code>docs/context/rules/docs.md</code></li>
+<li>Docker available for search containers</li>
+<li>See <code>docs/knowledge/environment/repo-relationships.md</code> for repo paths</li>
+</ul>
+<h2 id="protected-pages">Protected Pages</h2>
+<p>Some doc pages contain empirical research data (test results, cost analysis, performance measurements). These are primary sources of truth — not derived from code and not candidates for reduction or fact-checking against source.</p>
+<p><strong>Rule:</strong> Workers in Phase 1 and Phase 2 must skip protected pages entirely. Do not reduce, extract claims from, or verify these pages against source code. They are only subject to Phase 4 polish (formatting, rule compliance).</p>
+<p>Protected page criteria:</p>
+<ul>
+<li>Contains original test data, measurements, or statistical results</li>
+<li>Presents methodology + findings from controlled experiments</li>
+<li>Explicitly cites sample sizes and conditions</li>
+</ul>
+<p>Current protected pages:</p>
+<ul>
+<li><code>cost-evidence.md</code> — A/B test results: Lore vs raw Claude Code cost and performance</li>
+</ul>
+<h2 id="phase-0-search-setup-sequential">Phase 0: Search Setup (sequential)</h2>
+<p>Start two dedicated search containers before any workers launch. Both must be healthy before proceeding.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Docs search — used by Phase 1, Phase 3b</span></span>
+<span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> lore-sweep-docs</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -p</span><span style="color:#9ECBFF"> 9190:8080</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -e</span><span style="color:#9ECBFF"> MAX_K=</span><span style="color:#79B8FF">10</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -e</span><span style="color:#9ECBFF"> SEMANTIC_INDEX_SECTIONS=guides,examples</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -v</span><span style="color:#9ECBFF"> /path/to/lore-docs/docs:/data/docs</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#9ECBFF">  lorehq/lore-docker:latest</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Source search — used by Phase 2b, Phase 3a</span></span>
+<span class="line"><span style="color:#6A737D"># Mount all 3 source repos as sections under /data/docs</span></span>
+<span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> lore-sweep-source</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -p</span><span style="color:#9ECBFF"> 9191:8080</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -e</span><span style="color:#9ECBFF"> MAX_K=</span><span style="color:#79B8FF">10</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -e</span><span style="color:#9ECBFF"> SEMANTIC_INDEX_SECTIONS=lore,lore-docker,create-lore</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -v</span><span style="color:#9ECBFF"> /path/to/lore:/data/docs/lore</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -v</span><span style="color:#9ECBFF"> /path/to/lore-docker:/data/docs/lore-docker</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#79B8FF">  -v</span><span style="color:#9ECBFF"> /path/to/create-lore:/data/docs/create-lore</span><span style="color:#79B8FF"> \</span></span>
+<span class="line"><span style="color:#9ECBFF">  lorehq/lore-docker:latest</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Wait for both — model loading takes 30–60s on first start</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> http://localhost:9190/health</span><span style="color:#E1E4E8"> &#x26;&#x26; </span><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -s</span><span style="color:#9ECBFF"> http://localhost:9191/health</span></span></code></pre>
+<p><code>MAX_K=10</code> is required. The default is 2, which is too few results for sweep queries.</p>
+<p>Do not mount as <code>:ro</code> — the container scaffold needs write access to create its directory structure inside <code>/data/docs</code> on first start. Set <code>SEMANTIC_INDEX_SECTIONS</code> to match the mounted subdirectory names. The source container mounts all three repos as sections (<code>lore</code>, <code>lore-docker</code>, <code>create-lore</code>) so semantic search covers all source repos.</p>
+<p>Do not proceed until both return healthy.</p>
+<h2 id="phase-1-reduce-parallel--sonnet-workers">Phase 1: Reduce (parallel — sonnet workers)</h2>
+<p>Cut doc volume before bidirectional passes so both phases work on canonical content only. <strong>Skip protected pages</strong> (see <a href="#protected-pages">Protected Pages</a>).</p>
+<p>Launch 2–3 sonnet workers. Each worker loads:</p>
+<ul>
+<li><code>docs/context/rules/docs.md</code> <strong>only</strong></li>
+</ul>
+<p>Workers query <strong>docs search (port 9190)</strong> to find topically overlapping pages, then read actual files to decide cuts.</p>
+<p>Each worker scans for:</p>
+<ul>
+<li>Duplicate facts across pages (same info restated in multiple places)</li>
+<li>Verbose sections: filler, over-explanation, marketing copy</li>
+<li>Thin content that should merge into a parent page</li>
+<li>Pages over 150 lines that should split by topic</li>
+<li>Terminology inconsistencies (same concept, different names)</li>
+</ul>
+<p>Worker return format:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>| File | Lines | Issue | Action |</span></span></code></pre>
+<p>Orchestrator reviews the consolidation report and executes edits before proceeding. Reducing before verifying avoids fact-checking content that will be deleted.</p>
+<p><strong>After edits complete:</strong> trigger a full reindex on the docs container, then wait for it to confirm completion before launching Phase 2a workers:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Force full reindex after bulk edits</span></span>
+<span class="line"><span style="color:#B392F0">curl</span><span style="color:#79B8FF"> -s</span><span style="color:#79B8FF"> -X</span><span style="color:#9ECBFF"> POST</span><span style="color:#9ECBFF"> http://localhost:9190/reindex</span></span>
+<span class="line"><span style="color:#6A737D"># Returns: {"ok": true, "file_count": N, "chunk_count": N}</span></span></code></pre>
+<p>Use <code>POST /reindex</code> rather than relying on the filesystem watcher — bulk deletes and merges can race the 1s debounce. Source search (9191) is read-only throughout the sweep and does not need reindexing.</p>
+<h2 id="phase-2-docs--source--truth-sweep-two-stages">Phase 2: Docs → Source — Truth Sweep (two stages)</h2>
+<p>Read doc claims, verify against source, fix or remove what is false or stale.</p>
+<h3 id="stage-a--extract-haiku-x4-parallel">Stage A — Extract (haiku x4, parallel)</h3>
+<p>Split doc pages into ~4 groups by topic. <strong>Skip protected pages</strong> (see <a href="#protected-pages">Protected Pages</a>). Each worker loads:</p>
+<ul>
+<li><code>docs/context/rules/docs.md</code> <strong>only</strong></li>
+</ul>
+<p>Each haiku worker extracts every verifiable claim from its group:</p>
+<ul>
+<li>File paths and directory structures</li>
+<li>CLI commands and described behavior</li>
+<li>Config keys and default values</li>
+<li>Hook names, event types, counts</li>
+<li>Behavioral claims (“X happens when Y”)</li>
+<li>Code examples and expected output</li>
+</ul>
+<p>Worker return format: structured claims list with <code>file:line</code> source for each claim.</p>
+<h3 id="stage-b--verify-sonnet-x4-parallel">Stage B — Verify (sonnet x4, parallel)</h3>
+<p>Each worker receives a claims batch from Stage A. Workers load:</p>
+<ul>
+<li><strong>No rule</strong> — source reading requires no doc rules</li>
+</ul>
+<p>For each claim: query <strong>source search (port 9191)</strong> → read returned files → classify:</p>
+<ul>
+<li><strong>CORRECT</strong> — matches source</li>
+<li><strong>WRONG</strong> — with actual current behavior noted</li>
+<li><strong>OUTDATED</strong> — partially correct, needs update</li>
+<li><strong>MISSING</strong> — should be in docs, is not</li>
+</ul>
+<p>Worker return format:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>| Claim | File:Line | Classification | Evidence |</span></span></code></pre>
+<p>Stage A and Stage B are sequential within Phase 2. Stage B runs in parallel with Phase 3 Stage A (see diagram).</p>
+<h2 id="phase-3-source--docs--coverage-sweep-two-stages">Phase 3: Source → Docs — Coverage Sweep (two stages)</h2>
+<p>Read source across all three repos (<code>lore/</code>, <code>lore-docker/</code>, <code>create-lore/</code>), check whether user-facing functionality is documented. Stage A runs in parallel with Phase 2 Stage B.</p>
+<h3 id="commit-scoped-scanning">Commit-Scoped Scanning</h3>
+<p>Phase 3 focuses on changes since the last docs sweep commit. Before launching workers, the orchestrator identifies the cutoff:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Last docs sweep commit in lore-docs (update hash each run)</span></span>
+<span class="line"><span style="color:#E1E4E8">SWEEP_CUTOFF_HASH</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"febf397"</span></span>
+<span class="line"><span style="color:#E1E4E8">SWEEP_CUTOFF_DATE</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">$(</span><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> /path/to/lore-docs</span><span style="color:#E1E4E8"> &#x26;&#x26; </span><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> log</span><span style="color:#79B8FF"> --format=</span><span style="color:#9ECBFF">"%aI"</span><span style="color:#E1E4E8"> $SWEEP_CUTOFF_HASH </span><span style="color:#79B8FF">-1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Get changed files + commit summaries in each source repo since cutoff</span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> repo </span><span style="color:#F97583">in</span><span style="color:#9ECBFF"> lore</span><span style="color:#9ECBFF"> lore-docker</span><span style="color:#9ECBFF"> create-lore</span><span style="color:#E1E4E8">; </span><span style="color:#F97583">do</span></span>
+<span class="line"><span style="color:#79B8FF">  echo</span><span style="color:#9ECBFF"> "=== </span><span style="color:#E1E4E8">$repo</span><span style="color:#9ECBFF"> ==="</span></span>
+<span class="line"><span style="color:#79B8FF">  cd</span><span style="color:#9ECBFF"> /path/to/</span><span style="color:#E1E4E8">$repo</span></span>
+<span class="line"><span style="color:#B392F0">  git</span><span style="color:#9ECBFF"> log</span><span style="color:#79B8FF"> --oneline</span><span style="color:#79B8FF"> --after=</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">$SWEEP_CUTOFF_DATE</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#B392F0">  git</span><span style="color:#9ECBFF"> log</span><span style="color:#79B8FF"> --after=</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">$SWEEP_CUTOFF_DATE</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF"> --diff-filter=ACMR</span><span style="color:#79B8FF"> --name-only</span><span style="color:#79B8FF"> --pretty=format:</span><span style="color:#9ECBFF">""</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> sort</span><span style="color:#79B8FF"> -u</span></span>
+<span class="line"><span style="color:#F97583">done</span></span></code></pre>
+<p>Workers receive the changed-file lists and commit summaries as input. They scan the changed files for undocumented user-facing functionality — not the entire repo. Unchanged code is assumed to have been covered by prior sweeps.</p>
+<h3 id="stage-a--source-scan-sonnet-x3-parallel">Stage A — Source Scan (sonnet x3, parallel)</h3>
+<p>One worker per source repo. Each worker loads:</p>
+<ul>
+<li><code>docs/context/rules/coding.md</code> <strong>only</strong></li>
+<li>Changed-file list and commit log for its assigned repo</li>
+</ul>
+<p>Loading the coding rule serves two purposes: workers better understand code written to those rules, and they can flag violations as a secondary output.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Worker</th><th>Repo</th><th>Focus Areas</th></tr></thead><tbody><tr><td>src-lore</td><td><code>lore/</code></td><td><code>hooks/</code>, <code>lib/</code>, <code>scripts/</code>, config files, templates, MCP server</td></tr><tr><td>src-docker</td><td><code>lore-docker/</code></td><td>Dockerfile, search server, watchers, compose config</td></tr><tr><td>src-create</td><td><code>create-lore/</code></td><td>Installer CLI, scaffolding templates, e2e tests</td></tr></tbody></table>
+<p>For each changed module, config key, hook, or script entry point:</p>
+<ul>
+<li>Is this user-facing? (affects behavior, config, or output the operator sees)</li>
+<li>Is it a non-obvious behavior worth documenting?</li>
+<li>Was it introduced or changed after the last sweep? (check commit date)</li>
+<li>Does it violate any coding rule? (flag with file:line, rule, severity)</li>
+</ul>
+<p>Worker return format — two sections:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Coverage items:</span></span>
+<span class="line"><span>{ repo, file, functionality, user-facing: yes/no, reason, commit }</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Violations:</span></span>
+<span class="line"><span>| Repo | File | Line | Rule | Severity | Description |</span></span></code></pre>
+<p>Severity levels match code-tidy-sweep: <strong>security</strong>, <strong>violation</strong>, <strong>judgment</strong>.</p>
+<h3 id="stage-b--doc-coverage-check-sonnet-x3-parallel">Stage B — Doc Coverage Check (sonnet x3, parallel)</h3>
+<p>Each worker receives a user-facing item batch from Stage A. Workers load:</p>
+<ul>
+<li><code>docs/context/rules/docs.md</code> <strong>only</strong></li>
+</ul>
+<p>For each item: query <strong>docs search (port 9190)</strong> → check returned pages → classify:</p>
+<ul>
+<li><strong>DOCUMENTED</strong> — covered accurately</li>
+<li><strong>MISSING</strong> — not in docs at all</li>
+<li><strong>WRONG</strong> — doc exists but conflicts with Phase 2 findings</li>
+</ul>
+<h2 id="fix-sequence-sequential--orchestrator">Fix Sequence (sequential — orchestrator)</h2>
+<p>Apply fixes in order. Phase 2 fixes first establishes an accurate baseline; Phase 3 additions build on top of it.</p>
+<ol>
+<li><strong>Apply Phase 2 fixes</strong> — gets docs to accurate baseline
+<ul>
+<li>Fix WRONG and OUTDATED items</li>
+<li>Remove confirmed stale content</li>
+</ul>
+</li>
+<li><strong>Apply Phase 3 additions</strong> — build on accurate baseline
+<ul>
+<li>Draft and insert MISSING docs for user-facing functionality</li>
+<li>Cross-check WRONG items against Phase 2 results to avoid duplicate edits</li>
+</ul>
+</li>
+<li><strong>Present judgment calls to operator</strong>
+<ul>
+<li>OUTDATED items with ambiguous source (behavior unclear from code alone)</li>
+<li>MISSING items with low confidence (may be intentionally undocumented)</li>
+</ul>
+</li>
+</ol>
+<p>Do not apply judgment calls without operator decision.</p>
+<p><strong>Code violations output:</strong> After operator triage, present the Phase 3a violations report as a separate deliverable. Do not auto-fix — hand off to code-tidy-sweep or address in a dedicated session.</p>
+<h2 id="phase-4-polish-parallel--sonnet-workers">Phase 4: Polish (parallel — sonnet workers)</h2>
+<p>Rule compliance sweep on the updated corpus. Launch 2–3 sonnet workers. Each worker loads:</p>
+<ul>
+<li><code>docs/context/rules/docs.md</code> <strong>only</strong></li>
+</ul>
+<p>Each worker scans its assigned pages for:</p>
+<ul>
+<li>Filler phrases (“it should be noted”, “in order to”, “basically”)</li>
+<li>Vague pronouns (“it”, “this”, “that” when the referent is not the immediately preceding noun)</li>
+<li>Pages over 150 lines</li>
+<li>Mixed topics on one page</li>
+<li>Remaining cross-page duplication</li>
+<li>Inconsistent terminology</li>
+<li>Stale TODOs or placeholders</li>
+<li>Prose that should be a table or link</li>
+</ul>
+<p>Worker return format: punch list with exact current text and replacement text. Orchestrator executes edits.</p>
+<h2 id="phase-5-teardown-sequential">Phase 5: Teardown (sequential)</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> stop</span><span style="color:#9ECBFF"> lore-sweep-docs</span><span style="color:#9ECBFF"> lore-sweep-source</span></span>
+<span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> rm</span><span style="color:#9ECBFF"> lore-sweep-docs</span><span style="color:#9ECBFF"> lore-sweep-source</span></span></code></pre>
+<h2 id="model-allocation">Model Allocation</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Phase</th><th>Model</th><th>Workers</th><th>Rule Loaded</th><th>Rationale</th></tr></thead><tbody><tr><td>Phase 1 Reduce</td><td>Sonnet</td><td>2–3</td><td>docs.md</td><td>Judgment on what is duplicate or verbose</td></tr><tr><td>Phase 2a Extract</td><td>Haiku</td><td>4</td><td>docs.md</td><td>Structured extraction; fast and cheap</td></tr><tr><td>Phase 2b Verify</td><td>Sonnet</td><td>4</td><td>none</td><td>Code comprehension; no doc rules needed</td></tr><tr><td>Phase 3a Source Scan</td><td>Sonnet</td><td>3 (1/repo)</td><td>coding.md</td><td>One worker per repo (lore, lore-docker, create-lore); commit-scoped</td></tr><tr><td>Phase 3b Doc Coverage</td><td>Sonnet</td><td>3</td><td>docs.md</td><td>Understands what a good doc entry covers</td></tr><tr><td>Fix Sequence</td><td>Orchestrator</td><td>1</td><td>—</td><td>Human-in-the-loop triage</td></tr><tr><td>Phase 4 Polish</td><td>Sonnet</td><td>2–3</td><td>docs.md</td><td>Rule judgment; Haiku misses nuance</td></tr></tbody></table>
+<p>Rule isolation rule: workers get <code>docs.md</code>, <code>coding.md</code>, or nothing — never both. Doc workers get <code>docs.md</code>. Source-reading workers get <code>coding.md</code> (Phase 3a) or nothing (Phase 2b). No worker mixes rules.</p>
+<h2 id="parallelization-diagram">Parallelization Diagram</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Phase 0 (setup):     [docs-search :9190]   [source-search :9191]</span></span>
+<span class="line"><span>                     ──────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Phase 1 (reduce):    [docs-A]  [docs-B]  [docs-C]</span></span>
+<span class="line"><span>                     ──────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Phase 2a (extract):  [haiku-1] [haiku-2] [haiku-3] [haiku-4]</span></span>
+<span class="line"><span>                     ──────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Phase 2b+3a (scan):  [verify-1][verify-2][verify-3][verify-4]  ← Phase 2b</span></span>
+<span class="line"><span>                     [src-lore][src-docker][src-create]         ← Phase 3a (1/repo)</span></span>
+<span class="line"><span>                     ──────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Phase 3b (coverage): [cov-1]   [cov-2]   [cov-3]</span></span>
+<span class="line"><span>                     ──────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Fix sequence:        [Phase 2 fixes] → [Phase 3 additions] → [operator triage]</span></span>
+<span class="line"><span>                     ──────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Phase 4 (polish):    [docs-A]  [docs-B]  [docs-C]</span></span>
+<span class="line"><span>                     ──────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Phase 5 (teardown):  [stop + rm lore-sweep-docs lore-sweep-source]</span></span></code></pre>
+<h2 id="verification">Verification</h2>
+<p>After all phases:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">wc</span><span style="color:#79B8FF"> -l</span><span style="color:#9ECBFF"> docs/</span><span style="color:#79B8FF">**</span><span style="color:#9ECBFF">/</span><span style="color:#79B8FF">*</span><span style="color:#9ECBFF">.md</span><span style="color:#6A737D">   # All pages under 150 lines; exceptions need justification</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> diff</span><span style="color:#79B8FF"> --stat</span><span style="color:#6A737D">       # Review total change magnitude before committing</span></span></code></pre>
+<h2 id="cadence">Cadence</h2>
+<ul>
+<li><strong>After major releases</strong> — hook, config, or platform behavior changes cause factual drift immediately</li>
+<li><strong>After doc-heavy sprints</strong> — new pages accumulate duplication and loose claims</li>
+<li><strong>Quarterly</strong> — general hygiene alongside code-tidy-sweep</li>
+<li><strong>Docs only (phases 1, 2, 4)</strong> — when source is stable but docs changed</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

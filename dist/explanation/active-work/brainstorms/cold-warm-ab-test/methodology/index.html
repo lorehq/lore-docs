@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Methodology | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Methodology ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="methodology">Methodology</h1>
+<h2 id="objective">Objective</h2>
+<p>Measure the API-equivalent cost and execution time of completing a task in Claude Code under five conditions — one baseline (raw Claude Code) and four progressive Lore knowledge states — to quantify the value of delegation, knowledge capture, and runbook-driven execution.</p>
+<h2 id="task">Task</h2>
+<p>Determine whether current inventory can fill all orders from last week. Two mock API services with deliberate gotchas:</p>
+<ul>
+<li><strong>Orders service</strong> (<code>localhost:8787</code>): <code>/api/orders</code> returns a hint pointing to the versioned path <code>/api/v1/orders</code>. Both <code>from</code> and <code>to</code> date params are required.</li>
+<li><strong>Inventory service</strong> (<code>localhost:8791</code>): <code>/api/inventory/stock</code> returns a 404 with a hint to use <code>/api/v2/inventory/availability</code>. Requires <code>X-Warehouse: primary</code> header and <code>sku</code> query param.</li>
+</ul>
+<p>Services are open source: <a href="https://github.com/lorehq/lore-gotcha-demo">lore-gotcha-demo</a>.</p>
+<h2 id="conditions">Conditions</h2>
+<p>Five conditions, same task, same day (2026-02-22), 10 sessions each:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Condition</th><th>N</th><th>Workspace</th><th>Framework</th><th>Orchestrator</th><th>Workers</th><th>Prior Knowledge</th></tr></thead><tbody><tr><td>Raw Cold</td><td>10</td><td>test/control-01</td><td>None</td><td>Opus 4.6</td><td>— (inline)</td><td>None</td></tr><tr><td>Lore Cold</td><td>10</td><td>test/lore-01..10</td><td>Lore v0.11.0</td><td>Opus 4.6</td><td>Haiku 4.5</td><td>None</td></tr><tr><td>Lore Warm</td><td>10</td><td>test/lore-01..10</td><td>Lore v0.11.0</td><td>Opus 4.6</td><td>Haiku 4.5</td><td>Skills + env docs from cold</td></tr><tr><td>Lore Hot</td><td>10</td><td>test/lore-01..10</td><td>Lore v0.11.0</td><td>Opus 4.6</td><td>varies</td><td>Skills + env docs, writes runbook</td></tr><tr><td>Lore Runbook</td><td>10</td><td>test/lore-01..10</td><td>Lore v0.11.0</td><td>Opus 4.6</td><td>Haiku 4.5</td><td>Full knowledge + runbook</td></tr></tbody></table>
+<h3 id="condition-details">Condition Details</h3>
+<p><strong>Raw Cold</strong> — 10 fresh sessions in a single control workspace. Static CLAUDE.md containing a TypeScript API project description (serves as a cache-breaker — ensures the model’s prompt cache doesn’t carry over task-relevant context). No framework, no hooks, no knowledge base. All compute runs on Opus 4.6 inline.</p>
+<p><strong>Lore Cold</strong> — One fresh session per instance (lore-01 through lore-10). Clean knowledge base with only the Lore framework hooks and scripts active. The orchestrator runs on Opus 4.6 and delegates API exploration to Haiku 4.5 workers. Knowledge capture (skills, environment docs) happens at the end of each session when the operator approves.</p>
+<p><strong>Lore Warm</strong> — One session per instance. The knowledge captured during the cold session persists — skills documenting API gotchas and environment docs mapping endpoints, params, and headers. No additional capture in most sessions.</p>
+<p><strong>Lore Hot</strong> — One session per instance. Knowledge from both cold and warm persists. After answering the task, the session creates a runbook — a step-by-step procedure for the full operation. This is the capture investment phase.</p>
+<p><strong>Lore Runbook</strong> — One session per instance. Full knowledge stack: skills, environment docs, and the runbook from the hot session. No capture — pure execution. This represents the steady-state cost of a recurring task.</p>
+<h2 id="pricing-model">Pricing Model</h2>
+<p>Cache-aware API rates (as of Feb 2026). Tests ran on Claude Max (flat-rate subscription) — cost figures represent API-equivalent spend, not actual charges.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Model</th><th>Input</th><th>Output</th><th>Cache Read</th><th>Cache Create</th></tr></thead><tbody><tr><td>Opus 4.6</td><td>$5.00/MTok</td><td>$25.00/MTok</td><td>$0.50/MTok</td><td>$6.25/MTok</td></tr><tr><td>Sonnet 4.6</td><td>$1.50/MTok</td><td>$7.50/MTok</td><td>$0.15/MTok</td><td>$1.875/MTok</td></tr><tr><td>Haiku 4.5</td><td>$1.00/MTok</td><td>$5.00/MTok</td><td>$0.10/MTok</td><td>$1.25/MTok</td></tr></tbody></table>
+<p>Source: <a href="https://docs.anthropic.com/en/docs/about-claude/pricing">Anthropic API Pricing</a></p>
+<h2 id="execution-time">Execution Time</h2>
+<p>Execution time uses <code>durationMs</code> from <code>system</code> events in the orchestrator JSONL — Claude Code’s per-turn active processing timer. This directly measures agent execution time without idle-subtraction heuristics.</p>
+<p>Time is split into answer and capture phases using the same boundary as cost (earliest Write/Edit to capture paths). <code>durationMs</code> events before the boundary = answer time; after = capture time.</p>
+<p><strong>Fallback:</strong> Some capture turns lack a <code>durationMs</code> event (5/50 sessions). In those cases, capture time uses wall-clock timestamps: start = first user event at/after the capture boundary, end = last event before an idle gap (>120s, or >3s before a user event).</p>
+<p><strong>Missing data:</strong> 1/50 sessions (rb-04) has no <code>durationMs</code> events at all. This session is excluded from timing statistics.</p>
+<h2 id="cost-split">Cost Split</h2>
+<p>Each session’s cost is split into “answer” (getting the result) and “capture” (writing knowledge for future reuse).</p>
+<p>The split boundary is the timestamp of the <strong>earliest</strong> Write or Edit operation targeting <code>/skills/</code>, <code>/knowledge/environment/</code>, or <code>/knowledge/runbooks/</code> — scanned across both the orchestrator JSONL and all subagent JSONL files. Everything before that timestamp is answer cost; everything after is capture cost.</p>
+<p>Sessions with no qualifying writes have zero capture cost.</p>
+<h2 id="session-matching">Session Matching</h2>
+<p>Sessions are identified by the <code>customTitle</code> field in the JSONL log. When a session has multiple <code>custom-title</code> entries (from renames), the <strong>last</strong> entry is used. This handles sessions that were renamed after creation.</p>
+<h2 id="token-deduplication">Token Deduplication</h2>
+<p>Claude Code emits duplicate usage entries during streaming (one per content block in multi-block responses). Usage entries are deduplicated by a composite key: <code>requestId + message.id + input_tokens + output_tokens + cache_read_input_tokens + cache_creation_input_tokens</code>.</p>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li><strong>One task type.</strong> API exploration with mock services. Results may differ for code generation, refactoring, debugging, or other task patterns.</li>
+<li><strong>One model family.</strong> Tested on Claude (Opus 4.6 orchestrator, Haiku 4.5 workers). Other model combinations may produce different results.</li>
+<li><strong>Subscription pricing.</strong> Tests ran on Claude Max (flat-rate). Cost figures are API-equivalent estimates.</li>
+<li><strong>No cross-tool validation.</strong> Knowledge captured on Claude Code should benefit Cursor and OpenCode sessions — not yet tested.</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Create Agent | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Create Agent ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <hr>
+<h2 id="name-lore-create-agentdescription-create-an-operator-agent-for-recurring-delegation-patternstype-commanduser-invocable-falseallowed-tools-write-edit-read-glob">name: lore-create-agent
+description: Create an operator agent for recurring delegation patterns
+type: command
+user-invocable: false
+allowed-tools: Write, Edit, Read, Glob</h2>
+<h1 id="create-agent">Create Agent</h1>
+<p>Operator agents are optional static delegation patterns. The harness provides <code>lore-worker</code> for general delegation — this skill is for creating additional operator-owned agents when a recurring task pattern benefits from a pre-packaged agent.</p>
+<h2 id="when-to-create">When to Create</h2>
+<ul>
+<li>You have a recurring delegation pattern that benefits from pre-packaged context</li>
+<li>The same set of skills, rules, and scope boundaries apply every time</li>
+<li>A static agent definition is more efficient than the orchestrator assembling context each time</li>
+</ul>
+<h2 id="process">Process</h2>
+<h3 id="step-1-check-existing-agents">Step 1: Check Existing Agents</h3>
+<p>Scan <code>.lore/agents/</code>. If an agent exists for the purpose, update it. Otherwise create new.</p>
+<h3 id="step-2-create-agent-file">Step 2: Create Agent File</h3>
+<p><strong>Location</strong>: <code>.lore/agents/&#x3C;purpose>-agent.md</code></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="color:#E1E4E8">---</span></span>
+<span class="line"><span style="color:#85E89D">name</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#x3C;purpose>-agent</span></span>
+<span class="line"><span style="color:#85E89D">description</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#x3C;Purpose> operations specialist.</span></span>
+<span class="line"><span style="color:#85E89D">tier</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">default</span></span>
+<span class="line"><span style="color:#85E89D">skills</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">&#x3C;skill-name></span></span>
+<span class="line"><span style="color:#E1E4E8">---</span></span>
+<span class="line"><span style="color:#79B8FF;font-weight:bold"># &#x3C;Purpose> Agent</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">Handles &#x3C;purpose> operations.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF;font-weight:bold">## Subagent Operating Rules</span></span>
+<span class="line"><span style="color:#FFAB70">-</span><span style="color:#E1E4E8"> You are a delegated subagent, not the orchestrator. Stay within delegated scope and return concise results.</span></span>
+<span class="line"><span style="color:#FFAB70">-</span><span style="color:#E1E4E8"> Before implementation, always load project guidance from </span><span style="color:#79B8FF">`docs/context/agent-rules.md`</span><span style="color:#E1E4E8"> and relevant files under </span><span style="color:#79B8FF">`.lore/rules/`</span><span style="color:#E1E4E8">.</span></span>
+<span class="line"><span style="color:#FFAB70">-</span><span style="color:#E1E4E8"> Follow repo boundaries from agent rules (Lore hub for knowledge; application code in external repos).</span></span>
+<span class="line"><span style="color:#FFAB70">-</span><span style="color:#E1E4E8"> If scope has independent branches, run them in parallel subagents; keep dependency-gated steps sequential.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF;font-weight:bold">## Self-Learning</span></span>
+<span class="line"><span style="color:#FFAB70">-</span><span style="color:#E1E4E8"> Non-obvious snag (gotcha, quirk) during execution -> create or update a fieldnote under </span><span style="color:#79B8FF">`.lore/fieldnotes/`</span><span style="color:#E1E4E8">.</span></span>
+<span class="line"><span style="color:#FFAB70">-</span><span style="color:#E1E4E8"> New environment facts -> update </span><span style="color:#79B8FF">`docs/knowledge/environment/`</span><span style="color:#E1E4E8">.</span></span>
+<span class="line"><span style="color:#FFAB70">-</span><span style="color:#E1E4E8"> Multi-step procedures discovered -> add/update </span><span style="color:#79B8FF">`.lore/runbooks/`</span><span style="color:#E1E4E8">.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#79B8FF;font-weight:bold">## Available Skills</span></span>
+<span class="line"><span style="color:#FFAB70">-</span><span style="color:#79B8FF"> `&#x3C;skill-name>`</span></span></code></pre>
+<p>The <code>tier</code> field (<code>fast</code>, <code>default</code>, or <code>powerful</code>) is resolved to a platform-specific model at generation time using <code>subagentDefaults</code> in <code>.lore/config.json</code>. Omit <code>tier</code> to default to <code>default</code>.</p>
+<h3 id="step-3-sync-platform-copies">Step 3: Sync Platform Copies</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">bash</span><span style="color:#9ECBFF"> .lore/harness/scripts/sync-platform-skills.sh</span></span></code></pre>
+<h2 id="naming">Naming</h2>
+<p>Pattern: <code>&#x3C;purpose>-agent</code> (e.g., <code>deploy-agent</code>, <code>infra-agent</code>, <code>docs-agent</code>). Lowercase, kebab-case.</p>
+<p><strong>Do not use the <code>lore-</code> prefix</strong> — that’s reserved for harness agents (<code>lore-worker</code>). Operator agents use descriptive names without the prefix.</p>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

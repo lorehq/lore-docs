@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Code Tidy Sweep | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Code Tidy Sweep ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="code-tidy-sweep">Code Tidy Sweep</h1>
+<p>Scan source repos against coding rules, flag violations, triage, fix. Uses parallel workers per repo.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Source repos checked out locally (see <code>docs/knowledge/environment/repo-relationships.md</code>)</li>
+<li>Coding rules: <code>docs/context/rules/coding.md</code></li>
+<li>Security rules: <code>docs/context/rules/security.md</code></li>
+</ul>
+<h2 id="scope">Scope</h2>
+<p>Active source repos only: <code>lore</code>, <code>create-lore</code>, <code>lore-docs</code>, <code>lore-docker</code>. Skip vendored deps, <code>node_modules</code>, generated files, test fixtures, and lock files.</p>
+<h2 id="phase-1-inventory-sequential">Phase 1: Inventory (sequential)</h2>
+<p>Catalog what each repo contains so workers get balanced file sets.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>For each repo:</span></span>
+<span class="line"><span>  1. List source files (js, ts, sh, json, yml) with line counts</span></span>
+<span class="line"><span>  2. Group by directory or concern</span></span>
+<span class="line"><span>  3. If a repo has &#x3C; 500 lines total, assign one worker</span></span>
+<span class="line"><span>  4. If > 500 lines, split into 2 groups by directory</span></span></code></pre>
+<p>Output: a file-group assignment table for Phase 2.</p>
+<h2 id="phase-2-scan-parallel--sonnet-workers">Phase 2: Scan (parallel — sonnet workers)</h2>
+<p>Launch one sonnet worker per file group. Each worker loads:</p>
+<ul>
+<li><code>docs/context/rules/coding.md</code></li>
+<li><code>docs/context/rules/security.md</code></li>
+<li>Its assigned file list</li>
+</ul>
+<p>Each worker scans for:</p>
+<h3 id="rule-2--write-less-code">Rule 2 — Write Less Code</h3>
+<ul>
+<li>Abstractions used only once (premature helpers, unnecessary wrappers)</li>
+<li>Configurability or extensibility nobody uses</li>
+<li>Error handling for impossible scenarios</li>
+<li>Code that could be significantly shorter</li>
+</ul>
+<h3 id="rule-3--change-only-what-you-must">Rule 3 — Change Only What You Must</h3>
+<ul>
+<li>Dead imports, unused variables, unreachable functions</li>
+<li>Commented-out code left behind</li>
+<li>Formatting-only changes mixed with logic changes (in recent commits)</li>
+</ul>
+<h3 id="rule-4--prove-it-works">Rule 4 — Prove It Works</h3>
+<ul>
+<li>Untested public functions or exported modules</li>
+<li>Hardcoded secrets, API keys, tokens, connection strings</li>
+<li>Unvalidated external input in queries or commands</li>
+<li>Exposed internals (private state accessible from outside)</li>
+</ul>
+<h3 id="security-rules">Security rules</h3>
+<ul>
+<li>Secrets in committed files (<code>.env</code> values, inline tokens, key material)</li>
+<li>Auth tokens in URL query strings</li>
+<li>String-concatenated queries with user input</li>
+<li>Missing output escaping (HTML, shell, SQL contexts)</li>
+</ul>
+<h3 id="worker-return-format">Worker return format</h3>
+<p>Each worker returns a violations list:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>| File | Line | Rule | Severity | Description |</span></span></code></pre>
+<p>Severity levels:</p>
+<ul>
+<li><strong>security</strong> — secrets, injection vectors. Fix immediately.</li>
+<li><strong>violation</strong> — clear rule breach. Fix in Phase 4.</li>
+<li><strong>judgment</strong> — arguable. Operator decides.</li>
+</ul>
+<h2 id="phase-3-triage-sequential--orchestrator">Phase 3: Triage (sequential — orchestrator)</h2>
+<p>Orchestrator merges all worker reports and splits into three buckets:</p>
+<ol>
+<li><strong>Security</strong> — fix now, no discussion</li>
+<li><strong>Auto-fix</strong> — clear violations where the fix is obvious (dead code removal, unused imports)</li>
+<li><strong>Review</strong> — judgment calls presented to operator with context</li>
+</ol>
+<p>Present the review bucket to the operator. Mark approved items for Phase 4, defer the rest.</p>
+<h2 id="phase-4-fix-parallel--sonnet-workers">Phase 4: Fix (parallel — sonnet workers)</h2>
+<p>Launch workers to apply approved fixes. Split by repo (same grouping as Phase 2).</p>
+<p>Each worker loads:</p>
+<ul>
+<li><code>docs/context/rules/coding.md</code></li>
+<li><code>docs/context/rules/security.md</code></li>
+<li>The approved violations list for its file group</li>
+<li>Relevant skills from <code>.lore/skills/</code> (e.g., <code>bash-macos-compat</code> for shell scripts)</li>
+</ul>
+<p>Rules:</p>
+<ul>
+<li>One fix per violation. Don’t expand scope.</li>
+<li>Run existing tests after each file change. If tests break, revert and flag.</li>
+<li>Don’t add tests for pre-existing untested code — only flag it in the report.</li>
+<li>Security fixes take priority and must not be deferred.</li>
+</ul>
+<h2 id="phase-5-verify-sequential">Phase 5: Verify (sequential)</h2>
+<p>After all workers complete:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#6A737D"># Run full test suites per repo</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> /path/to/lore</span><span style="color:#E1E4E8"> &#x26;&#x26; </span><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> test</span></span>
+<span class="line"><span style="color:#79B8FF">cd</span><span style="color:#9ECBFF"> /path/to/create-lore</span><span style="color:#E1E4E8"> &#x26;&#x26; </span><span style="color:#B392F0">npm</span><span style="color:#9ECBFF"> test</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Check for regressions</span></span>
+<span class="line"><span style="color:#B392F0">git</span><span style="color:#9ECBFF"> diff</span><span style="color:#79B8FF"> --stat</span><span style="color:#6A737D">   # Review change magnitude per repo</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Confirm no secrets leaked</span></span>
+<span class="line"><span style="color:#B392F0">grep</span><span style="color:#79B8FF"> -rn</span><span style="color:#9ECBFF"> 'password\|secret\|token\|api_key'</span><span style="color:#79B8FF"> --include=</span><span style="color:#9ECBFF">'*.{js,ts,sh,json}'</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> -v</span><span style="color:#9ECBFF"> node_modules</span></span></code></pre>
+<p>Review the combined diff before committing.</p>
+<h2 id="model-allocation">Model Allocation</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Phase</th><th>Model</th><th>Workers</th><th>Rationale</th></tr></thead><tbody><tr><td>Scan</td><td>Sonnet</td><td>2–4</td><td>Rule judgment needs semantic understanding; Haiku misses nuance</td></tr><tr><td>Fix</td><td>Sonnet</td><td>2–4</td><td>Targeted edits within scoped file sets</td></tr><tr><td>Security scan</td><td>Sonnet</td><td>(included in scan)</td><td>Data flow tracing requires code comprehension</td></tr><tr><td>Triage</td><td>Orchestrator</td><td>1</td><td>Human-in-the-loop; no delegation</td></tr></tbody></table>
+<p>Haiku is insufficient — detecting “over-engineering” or “speculative features” is a judgment call, not pattern matching. Opus adds cost without meaningful accuracy gain; the rules are concrete enough for Sonnet.</p>
+<h2 id="parallelization-summary">Parallelization Summary</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Phase 2 (scan):     [repo-1 group-A] [repo-1 group-B] [repo-2] [repo-3]</span></span>
+<span class="line"><span>                     ─────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Phase 3 (triage):   [orchestrator merges + operator review]</span></span>
+<span class="line"><span>                     ─────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Phase 4 (fix):      [repo-1 group-A] [repo-1 group-B] [repo-2] [repo-3]</span></span>
+<span class="line"><span>                     ─────────────────────────────────────────────────────</span></span>
+<span class="line"><span>Phase 5 (verify):   [sequential test runs + diff review]</span></span></code></pre>
+<h2 id="cadence">Cadence</h2>
+<ul>
+<li><strong>After major feature branches merge</strong> — code rules drift during long-lived branches</li>
+<li><strong>Before releases</strong> — catch violations before they ship</li>
+<li><strong>Quarterly</strong> — general hygiene alongside docs-health-sweep</li>
+<li><strong>Code-only:</strong> Skip docs-health-sweep Passes 1, 2a, 3 when docs are stable</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Ceph Operations | Lore</title><link rel="stylesheet" href="/_astro/_slug_.qAkzQK7K.css"></head> <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none"> <div class="flex flex-1 gap-2 overflow-hidden"> <!-- Left Stack (Panels) --> <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden"> <!-- [1] Project Panel --> <section class="relative border border-tui-border-inactive rounded-sm p-3 pt-4 min-h-[60px]"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Project──</span> <div class="text-tui-border-active font-bold text-xs truncate">lorehq</div> </section> <!-- [2] Primitives Panel (Flex-1) --> <section class="relative border border-tui-border-inactive rounded-sm flex-1 flex flex-col min-h-0 overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-Primitives──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/reference/rules" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Rules</a> <a href="/reference/skills" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Skills</a> <a href="/reference/agents" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Agents</a> <a href="/reference/fieldnotes" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate text-tui-border-active">Fieldnotes</a> <a href="/reference/runbooks" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Runbooks</a> </nav> </section> <!-- [3] Guides Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Guides──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/how-to/commands" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Commands</a><a href="/how-to/customization" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Customization</a><a href="/how-to/index" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Guides</a><a href="/how-to/platform-support" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Platform Support</a><a href="/how-to/working-across-repos" class="text-[11px] py-0.5 px-2 hover:bg-[#111] truncate">Working Across Repos</a> </nav> </section> <!-- [4] Workflow Panel --> <section class="relative border border-tui-border-inactive rounded-sm h-48 flex flex-col overflow-hidden"> <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Workflow──</span> <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide"> <a href="/explanation/active-work" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Active Work</a> <a href="/explanation/architecture" class="text-[11px] py-0.5 px-2 hover:bg-[#111]">Architecture</a> </nav> </section> </aside> <!-- Main Content (Active) --> <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden"> <!-- Dynamic Title --> <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ Ceph Operations ]─</span> <!-- Corner Bracket --> <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span> <article class="flex-1 overflow-y-auto p-6 pt-8 prose prose-invert max-w-none scrollbar-hide">  <h1 id="ceph-operations">Ceph Operations</h1>
+<h2 id="purpose">Purpose</h2>
+<p>Manage and troubleshoot Ceph storage cluster in Proxmox environment.</p>
+<h2 id="when-to-use">When to Use</h2>
+<ul>
+<li>Diagnosing Ceph health warnings or errors.</li>
+<li>Managing pools, OSDs, or MDS daemons.</li>
+<li>Planning storage capacity or performance changes.</li>
+</ul>
+<h2 id="cluster-architecture">Cluster Architecture</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Component</th><th>Nodes</th><th>Notes</th></tr></thead><tbody><tr><td>MON</td><td>[node-list]</td><td>Quorum requires 2/3</td></tr><tr><td>MGR</td><td>[node-list]</td><td>Active + standby</td></tr><tr><td>OSD</td><td>[osd-list]</td><td>Storage devices</td></tr><tr><td>MDS</td><td>[node-list]</td><td>CephFS metadata</td></tr></tbody></table>
+<h2 id="network-layout">Network Layout</h2>
+<p>Refer to <code>docs/knowledge/environment/</code> for subnet and VLAN assignments.</p>
+<ul>
+<li><strong>Ceph Public</strong>: Client + inter-daemon traffic.</li>
+<li><strong>Ceph Cluster</strong>: OSD replication traffic.</li>
+</ul>
+<h2 id="health-monitoring">Health Monitoring</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">ceph</span><span style="color:#79B8FF"> -s</span><span style="color:#6A737D">                    # Overall cluster health</span></span>
+<span class="line"><span style="color:#B392F0">ceph</span><span style="color:#9ECBFF"> health</span><span style="color:#9ECBFF"> detail</span><span style="color:#6A737D">         # Detailed health messages</span></span>
+<span class="line"><span style="color:#B392F0">ceph</span><span style="color:#9ECBFF"> osd</span><span style="color:#9ECBFF"> tree</span><span style="color:#6A737D">              # OSD topology and status</span></span>
+<span class="line"><span style="color:#B392F0">ceph</span><span style="color:#9ECBFF"> df</span><span style="color:#6A737D">                    # Pool usage statistics</span></span></code></pre>
+<h2 id="common-operations">Common Operations</h2>
+<h3 id="pool-management">Pool Management</h3>
+<ul>
+<li><strong>List Pools</strong>: <code>ceph osd pool ls detail</code></li>
+<li><strong>Create Pool</strong>: <code>ceph osd pool create &#x3C;name> &#x3C;pg_num></code></li>
+<li><strong>Enable App</strong>: <code>ceph osd pool application enable &#x3C;pool> &#x3C;rbd|cephfs></code></li>
+</ul>
+<h3 id="osd-management">OSD Management</h3>
+<ul>
+<li><strong>Mark OSD Out</strong>: <code>ceph osd out &#x3C;id></code> (Graceful removal)</li>
+<li><strong>Mark OSD In</strong>: <code>ceph osd in &#x3C;id></code> (Rejoin cluster)</li>
+<li><strong>Remove OSD</strong>: <code>ceph osd crush remove osd.&#x3C;id></code> -> <code>ceph auth del osd.&#x3C;id></code> -> <code>ceph osd rm &#x3C;id></code></li>
+</ul>
+<h3 id="mds-management">MDS Management</h3>
+<ul>
+<li><strong>Add MDS to Node</strong>: <code>pveceph mds create</code></li>
+<li><strong>Failover Test</strong>: <code>systemctl stop ceph-mds@&#x3C;name></code> on active node.</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="cluster-wont-start">Cluster Won’t Start</h3>
+<ol>
+<li>Check MON quorum: <code>ceph mon stat</code>.</li>
+<li>Verify MON connectivity on cluster network.</li>
+<li>Verify time sync (NTP) — Ceph is time-sensitive.</li>
+</ol>
+<h3 id="slow-performance">Slow Performance</h3>
+<ol>
+<li>Check OSD latency: <code>ceph osd perf</code>.</li>
+<li>Check for recovery in progress: <code>ceph -s</code>.</li>
+<li>Check for full OSDs: <code>ceph osd df</code>.</li>
+</ol>
+<h2 id="safety-rules">Safety Rules</h2>
+<ul>
+<li>Never remove the last replica of data.</li>
+<li>Always wait for recovery to complete before removing OSDs.</li>
+<li>Keep at least 20% free space in cluster.</li>
+</ul>  </article> </main> </div> <!-- Bottom Status Bar --> <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-[#008080] border-t border-[#1a1a1a] justify-between"> <div class="flex gap-4"> <span>PgUp/PgDn: scroll</span> <span>b: bulk commands</span> <span>q: quit</span> <span>x: menu</span> <span>&larr; &rarr; &uarr; &darr;: navigate</span> </div> <div class="text-[#888]">
+Donate <span class="text-[#ff5fff]">0.24.4</span> </div> </footer> </body></html>
