@@ -4,15 +4,50 @@ title: "Architecture"
 
 # Architecture
 
-![Lore v2 Architecture](/lore-v2-architecture.png)
+```text
+                                 [ LORE SIDE-CAR ]
+                                 ( LAM RUNTIME )
+                                 ║
+                                 ╠═[ Short-Term Memory ] (Redis)
+                                 ║   Fast session context
+                                 ║
+                                 ╠═[ Activity Scoring ]  (SQLite)
+                                 ║   Heat & Decay Engine
+                                 ║
+                                 ╚═[ Semantic Search ]
+                                     Local knowledge API
 
-Lore is a decentralized intelligence layer for AI coding agents.
 
-## 1. The Secure Enclave
-At the bottom of the stack is your private machine-global enclave. This is where your personal identity, machine facts, and every snag you've ever hit live securely in an air-gapped environment.
+ [ PROJECT INSTANCES ]
+ ( Multi-Platform Projections )
+ ║
+ ╠══[ Cloud-Infra ] (Terraform)
+ ║   ./codebase/src/*.tf
+ ║   ./.lore/ (Project Rules)
+ ║
+ ╚══[ Legacy-API ]  (ASP.NET)
+     ./codebase/src/*.cs
+     ./.lore/ (Project Skills)
+
+
+ [ THE LOCAL ENCLAVE ]
+ ( ~/.lore/ - Private Git Repo )
+ ║
+ ╠═[ Canonical Primitives ]
+ ║   Rules, Skills, Agents,
+ ║   Primers, Runbooks, Fieldnotes
+ ║
+ ╚═[ Personal Identity ]
+     User, Operator, Machine
+```
+
+Lore is a decentralized intelligence layer for AI coding agents. It uses **Project Decoupling** to keep your private machine-global knowledge separate from your project codebases.
+
+## 1. The Local Enclave (~/.lore/)
+At the base of the stack is the **Local Intelligence Enclave**. This is a private, logically isolated Git repository on your machine. It houses your canonical identity, global behavioral rules, and the "Fieldnotes" (snags and gotchas) you've collected across all projects.
 
 ## 2. Project Shells
-Lore snaps onto any codebase (from ASP.NET to Terraform) via a minimal `.lore/` directory. It aggregates your global intelligence with project-specific documentation.
+Individual repositories only carry what is specific to that codebase. Lore "snaps" onto these repos, aggregating your global enclave knowledge with local documentation at runtime.
 
 ## 3. The Sidecar
-Spanning the entire lifecycle is the Lore Sidecar, providing high-speed Redis-backed memory and semantic search to ensure your agent stays grounded and fast.
+Spanning the entire ecosystem is the Lore Sidecar. It provides the high-speed volatile memory (Redis) and activity tracking (SQLite) that allows Lore to promote "Hot" context automatically while letting irrelevant facts fade.

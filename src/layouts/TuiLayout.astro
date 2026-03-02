@@ -14,89 +14,81 @@ const explanation = await getCollection('explanation');
 const reference = await getCollection('reference');
 const changelog = await getCollection('changelog');
 
-// Sort and filter for clean nav
+// Filter for clean nav
 const topHowTo = howTo.filter(e => !e.id.includes('/'));
 const topReference = reference.filter(e => !e.id.includes('/'));
 const platformRef = reference.filter(e => e.id.startsWith('platforms/'));
 ---
 
 <!doctype html>
-<html lang="en" class="bg-tui-bg text-tui-fg antialiased h-full w-full">
+<html lang="en" class="h-full w-full">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | Lore</title>
   </head>
-  <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-black select-none font-mono">
+  <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-tui-bg text-tui-fg select-none font-mono">
     <div class="flex flex-1 gap-2 overflow-hidden">
-      <!-- Left Stack (Panels) -->
-      <aside class="w-80 flex flex-col gap-3 h-full overflow-hidden">
-        
-        <!-- [1] TUTORIALS -->
-        <section class="relative border border-tui-border-inactive rounded-sm flex flex-col h-1/4 min-h-[120px] overflow-hidden">
-          <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[1]-Get-Started──</span>
-          <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide text-xs">
+      <!-- Single Navigation Panel -->
+      <aside class="relative border border-tui-border-inactive w-80 flex flex-col h-full mt-3">
+        <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[10px] text-tui-border-inactive font-mono">─[1]─Navigation─</span>
+
+        <nav class="flex-1 overflow-y-auto p-2 pt-4 flex flex-col gap-4 scrollbar-hide text-xs">
+          <!-- Start Section -->
+          <div>
+            <div class="opacity-40 text-[9px] px-2 uppercase mb-1">Getting Started</div>
+            <a href="/" class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block transition-none">Home</a>
             {tutorials.filter(e => !e.id.includes('/')).map(entry => (
-              <a href={`/tutorials/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
+              <a href={`/tutorials/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
             ))}
-          </nav>
-        </section>
+          </div>
 
-        <!-- [2] HOW-TO -->
-        <section class="relative border border-tui-border-inactive rounded-sm flex flex-col h-1/4 min-h-[120px] overflow-hidden">
-          <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[2]-How-to-Guides──</span>
-          <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide text-xs">
+          <!-- Guides Section -->
+          <div>
+            <div class="opacity-40 text-[9px] px-2 uppercase mb-1">Operational</div>
             {topHowTo.map(entry => (
-              <a href={`/how-to/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
+              <a href={`/how-to/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
             ))}
-          </nav>
-        </section>
+          </div>
 
-        <!-- [3] REFERENCE -->
-        <section class="relative border border-tui-border-inactive rounded-sm flex flex-col h-1/4 min-h-[120px] overflow-hidden">
-          <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[3]-Reference──</span>
-          <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide text-xs">
+          <!-- Reference Section -->
+          <div>
+            <div class="opacity-40 text-[9px] px-2 uppercase mb-1">Reference</div>
             {topReference.map(entry => (
-              <a href={`/reference/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
+              <a href={`/reference/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
             ))}
-            <div class="mt-2 opacity-40 text-[9px] px-2 uppercase">Platforms</div>
+            <div class="mt-2 opacity-20 text-[8px] px-2 uppercase underline">Platforms</div>
             {platformRef.map(entry => (
-              <a href={`/reference/${entry.id}`} class="py-0.5 px-4 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
+              <a href={`/reference/${entry.id}`} class="py-0.5 px-4 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
             ))}
-          </nav>
-        </section>
+          </div>
 
-        <!-- [4] EXPLANATION -->
-        <section class="relative border border-tui-border-inactive rounded-sm flex flex-col flex-1 min-h-[120px] overflow-hidden">
-          <span class="absolute -top-2.5 left-2 bg-black px-1 text-[10px] text-tui-border-inactive font-mono">─[4]-Explanation──</span>
-          <nav class="flex-1 overflow-y-auto p-2 pt-3 flex flex-col gap-0.5 scrollbar-hide text-xs">
-            {explanation.filter(e => !e.id.includes('/')).map(entry => (
-              <a href={`/explanation/${entry.id}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white truncate transition-none">{entry.data.title}</a>
-            ))}
-            <div class="mt-2 opacity-40 text-[9px] px-2 uppercase">Changelog</div>
-            {changelog.map(entry => (
-              <a href={`/changelog/${entry.id}`} class="py-0.5 px-4 hover:bg-tui-selected-bg hover:text-white transition-none">{entry.data.title}</a>
-            ))}
-          </nav>
-        </section>
+          <!-- Explanation Section -->
+          <div class="mb-4">
+            <div class="opacity-40 text-[9px] px-2 uppercase mb-1">Conceptual</div>
+            <a href="/explanation/architecture" class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block transition-none">Architecture</a>
+            <a href="/explanation/memory" class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block transition-none">Memory Tiering</a>
+            <div class="mt-2 opacity-20 text-[8px] px-2 uppercase underline">Changelog</div>
+            {changelog.map(entry => ( entry.id !== 'index' && (
+              <a href={`/changelog/${entry.id}`} class="py-0.5 px-4 hover:bg-tui-selected-bg hover:text-white block transition-none">{entry.data.title}</a>
+            )))}
+          </div>
+        </nav>
       </aside>
 
       <!-- Main Content (Active) -->
-      <main class="relative border border-tui-border-active rounded-sm flex-1 flex flex-col h-full overflow-hidden">
-        <!-- Dynamic Title -->
-        <span class="absolute -top-2.5 left-4 bg-black px-1 text-[10px] text-tui-border-active font-mono uppercase">─[ {title} ]─</span>
-        <!-- Corner Bracket -->
-        <span class="absolute -top-[1px] -right-[1px] text-tui-border-active text-[10px] p-[1px] bg-black leading-none pointer-events-none">&#x2510;</span>
+      <main class="relative border border-tui-border-active flex-1 flex flex-col h-full mt-3">
+        <span class="absolute -top-2.5 left-4 bg-tui-bg px-1 text-[10px] text-tui-border-active font-mono">─{title}─</span>
 
-        <article class="flex-1 overflow-y-auto p-8 pt-10 prose prose-invert max-w-none scrollbar-hide">
+        <article class="flex-1 overflow-y-auto p-8 pt-10 prose text-tui-fg max-w-none scrollbar-hide">
           <slot />
         </article>
       </main>
     </div>
 
     <!-- Bottom Status Bar -->
-    <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-tui-border-inactive border-t border-[#1a1a1a] justify-between">
+    <footer class="h-6 flex items-center px-2 text-[10px] font-mono text-tui-border-inactive border-t border-tui-bg-hl justify-between">
       <div class="flex gap-4">
         <span>PgUp/PgDn: scroll</span>
         <span>b: bulk commands</span>
@@ -104,11 +96,36 @@ const platformRef = reference.filter(e => e.id.startsWith('platforms/'));
         <span>x: menu</span>
         <span>&larr; &rarr; &uarr; &darr;: navigate</span>
       </div>
-      <div class="text-[#888]">
-        Donate <span class="text-[#ff5fff]">0.24.4</span>
+      <div class="text-tui-border-inactive">
+        Donate <span class="text-tui-accent">0.24.4</span>
       </div>
     </footer>
   </body>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        background:       '#002b36',
+        mainBkg:          '#073642',
+        nodeBorder:       '#586e75',
+        lineColor:        '#839496',
+        textColor:        '#839496',
+        labelTextColor:   '#93a1a1',
+        edgeLabelBackground: '#002b36',
+        clusterBkg:       '#073642',
+        titleColor:       '#268bd2',
+        primaryColor:     '#073642',
+        primaryBorderColor: '#2aa198',
+        primaryTextColor: '#93a1a1',
+        secondaryColor:   '#002b36',
+        tertiaryColor:    '#073642',
+        fontFamily:       'JetBrains Mono, monospace',
+        fontSize:         '13px',
+      },
+    });
+  </script>
 </html>
 
 <style is:global>

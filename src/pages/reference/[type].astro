@@ -22,7 +22,7 @@ const typeTitle = type.charAt(0).toUpperCase() + type.slice(1);
 <Layout title={typeTitle}>
   <div class="flex flex-col gap-0.5">
     {entries.map(entry => (
-      <a href={`/reference/${entry.id}`} class="group flex items-center gap-3 px-2 py-1 hover:bg-[#0000aa] hover:text-white transition-none">
+      <a href={`/reference/${entry.id}`} class="group flex items-center gap-3 px-2 py-1 hover:bg-tui-selected-bg hover:text-white transition-none">
         <span class="text-tui-border-inactive group-hover:text-white font-mono opacity-50">#</span>
         <div class="flex-1 min-w-0">
           <span class="text-tui-accent group-hover:text-white font-bold text-xs uppercase tracking-wider">{entry.data.title || entry.id.split('/').pop()}</span>

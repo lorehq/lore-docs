@@ -1,14 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-tui-bg: #000000;
-  --color-tui-fg: #cccccc;
-  --color-tui-border-inactive: #008080;
-  --color-tui-border-active: #00ff00;
-  --color-tui-selection-bg: #0000aa;
-  --color-tui-selection-fg: #ffffff;
-  --color-tui-accent: #00ffff;
-  
+  /* Solarized Dark */
+  --color-tui-bg: #002b36;        /* base03 */
+  --color-tui-bg-hl: #073642;     /* base02 */
+  --color-tui-fg: #839496;        /* base0  */
+  --color-tui-fg-em: #93a1a1;     /* base1  */
+  --color-tui-border-inactive: #586e75; /* base01 */
+  --color-tui-border-active: #2aa198;   /* cyan   */
+  --color-tui-selected-bg: #073642;     /* base02 */
+  --color-tui-selected-fg: #93a1a1;     /* base1  */
+  --color-tui-accent: #268bd2;          /* blue   */
+  --color-tui-yellow: #b58900;          /* yellow */
+  --color-tui-cyan: #2aa198;            /* cyan   */
+  --color-tui-green: #859900;           /* green  */
+  --color-tui-magenta: #d33682;         /* magenta */
+
   --font-mono: "JetBrains Mono", "Roboto Mono", "Courier New", monospace;
 }
 
@@ -34,13 +41,13 @@ body {
 }
 
 .prose code {
-  @apply text-tui-border-active bg-[#111] px-1 py-0.5 font-bold;
+  @apply text-tui-border-active bg-tui-bg-hl px-1 py-0.5 font-bold;
 }
 .prose pre {
-  @apply bg-[#050505] border border-tui-border-inactive p-3 my-3;
+  @apply bg-tui-bg border border-tui-border-inactive p-3 my-3;
 }
 .prose a {
-  @apply text-tui-accent no-underline hover:bg-tui-selection-bg hover:text-white;
+  @apply text-tui-accent no-underline hover:bg-tui-selected-bg hover:text-white;
 }
 .prose ul {
   @apply list-none pl-0 my-2;
@@ -56,5 +63,5 @@ body {
   @apply border border-tui-border-inactive p-1 px-2 text-xs;
 }
 .prose th {
-  @apply text-tui-accent bg-[#111] text-left uppercase;
+  @apply text-tui-accent bg-tui-bg-hl text-left uppercase;
 }
