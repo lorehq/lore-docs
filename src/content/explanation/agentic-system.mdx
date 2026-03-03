@@ -1,0 +1,198 @@
+---
+title: "Agentic System"
+---
+
+# Agentic System
+
+Lore centrally manages the three standard components of an agentic framework — **rules**, **skills**, and **agents** — plus a persistent knowledge base. These are the building blocks that enable AI agents to operate autonomously. Lore manages them once in `.lore/` and projects them into each platform's native format automatically.
+
+## Rules
+
+Policies, guardrails, and constraints that govern agent behavior.
+
+| Property | Value |
+|----------|-------|
+| Location | `.lore/rules/*.md` |
+| Loaded | At session start — included in the static banner and projected into mandate files |
+| Scope | Global (`~/.lore/`) or project-local |
+
+Rules are the "must" and "must not" layer. All rules are included in the static banner at session start (and therefore in every mandate file). Rules with a `domain` frontmatter field are additionally injected into matching skills via [domain-based aggregation](#domain-based-rule-aggregation).
+
+## Skills
+
+Modular, reusable instructions that equip agents with specific capabilities. Skills range from procedural commands (invoked via `/skill-name`) to domain expertise (loaded automatically when relevant).
+
+| Property | Value |
+|----------|-------|
+| Harness skills | `.lore/harness/skills/<name>/SKILL.md` |
+| Operator skills | `.lore/skills/<name>/SKILL.md` |
+| Loaded | On invocation, at session start, or when the agent determines relevance |
+| Scope | Global (`~/.lore/`), project-local, or harness-bundled |
+
+**Frontmatter:**
+```yaml
+---
+name: coding-principles
+description: Coding principles — surface confusion early, write less code, prove it works
+user-invocable: false
+---
+```
+
+Key fields:
+- `user-invocable` — appears in the slash command list when `true`
+- `banner-loaded` — injected into the session banner when `true`
+- `allowed-tools` — constrains which tools the skill can use
+
+Harness skills (`lore-status`, `lore-docker`, `lore-memprint`, etc.) ship in `.lore/harness/skills/` and are managed by the framework. Operator skills live in `.lore/skills/` and are user-managed. Both are projected into platform-native formats. Operator skills override harness skills with the same name.
+
+## Agents
+
+Autonomous, goal-driven personas configured for specific types of work. Each agent specifies which skills it loads and how it should approach tasks.
+
+| Property | Value |
+|----------|-------|
+| Location | `.lore/agents/<name>.md` |
+| Loaded | When the platform delegates a task to the agent |
+| Scope | Global (`~/.lore/`) or project-local |
+
+**Frontmatter:**
+```yaml
+---
+name: software-engineer
+description: Software engineering specialist. Use for implementation, bug fixes, refactoring, and code review.
+skills:
+  - coding-principles
+---
+```
+
+Lore ships example agents (`software-engineer`, `technical-writer`, `prompt-engineer`) that demonstrate how to pair agents with skills. Operators create their own agents for domain-specific delegation patterns.
+
+## Knowledge Base
+
+The persistent knowledge base at `~/.lore/knowledge-base/` stores fieldnotes (captured snags), runbooks (multi-step procedures), environment facts, and work items. Agents discover these via the session banner and semantic search. See [Knowledge Base](/reference/knowledge-base) for the full reference.
+
+## Projection
+
+The projector transforms rules, skills, and agents into platform-native formats. Write once in `.lore/`, and the projector generates `CLAUDE.md`, `.cursor/rules/*.mdc`, `GEMINI.md`, `.windsurfrules`, `.clinerules`, and OpenCode configs automatically.
+
+The projector (`projector.js`) runs via `sync-platform-skills.sh`. It reads from three sources in priority order:
+
+1. **Harness skills** (`.lore/harness/skills/`) — framework-bundled, lowest priority
+2. **Global directory** (`~/.lore/`) — machine-global rules, skills, and agents
+3. **Project** (`.lore/`) — project-local overrides, highest priority
+
+Projections are **generated output** — never edit them directly. Changes to `.claude/skills/`, `CLAUDE.md`, `.cursor/rules/`, etc. will be overwritten on the next sync. Always edit the canonical source in `.lore/`.
+
+The projector also **prunes stale entries** from platform directories. Skills or agents that no longer exist in any canonical source (harness, global, or project) are deleted from `.claude/skills/` and `.claude/agents/` during sync.
+
+### How Rules Merge
+
+Platforms without native rules files get rules merged into mandate files. The projector concatenates `instructions.md` + the static banner (which includes rules) into each platform's mandate file:
+
+- `CLAUDE.md` = instructions + banner (includes rules)
+- `GEMINI.md` = instructions + banner (includes rules)
+- `.windsurfrules` = instructions + banner (includes rules)
+- `.cursor/rules/lore-core.mdc` = instructions + banner (includes rules), wrapped in MDC frontmatter
+
+This is how constraints reach the agent on every platform.
+
+### Domain-Based Rule Aggregation
+
+Rules have a `domain` frontmatter field. The projector groups them by domain and injects the matching set into each skill:
+
+```
+skill domain: "docs" -> gets documentation.md rules
+skill domain: "code" -> gets coding.md rules
+skill domain: "general" (default) -> gets no domain-specific injection
+```
+
+All rules (including security) are always present in the static banner and mandate files, regardless of domain. Domain-based injection is an additional layer for per-skill reinforcement.
+
+### Capability Matrix
+
+| Platform | Mandates | Hooks | MDC Rules | Skills | Agents | MCP | Maturity |
+|----------|----------|-------|-----------|--------|--------|-----|----------|
+| Claude Code | yes | yes | — | yes | yes | yes | Primary |
+| Gemini CLI | yes | yes | — | — | — | yes | Active |
+| Cursor | — | — | yes | — | — | yes | Active |
+| Windsurf | yes | — | — | — | — | — | Basic |
+| Roo Code | yes | — | — | — | — | yes | Basic |
+| OpenCode | — | yes | — | — | — | — | Basic |
+
+import Tabs from '../../components/Tabs.astro';
+import Tab from '../../components/Tab.astro';
+
+### Platform Details
+
+<Tabs>
+  <Tab label="Claude Code">
+    | Capability | Output path |
+    |------------|-------------|
+    | Mandate file | `CLAUDE.md` |
+    | Hook config | `.claude/settings.json` |
+    | Skills | `.claude/skills/<name>/SKILL.md` |
+    | Agents | `.claude/agents/<name>.md` |
+    | MCP config | Embedded in `.claude/settings.json` |
+
+    Instructions and the static banner are concatenated into `CLAUDE.md`. Hook configuration is projected from `.lore/harness/templates/.claude/settings.json`. The `LORE_TOKEN_PLACEHOLDER` string in the template is replaced with the project's lore token at projection time.
+  </Tab>
+  <Tab label="Gemini CLI">
+    | Capability | Output path |
+    |------------|-------------|
+    | Mandate file | `GEMINI.md` |
+    | Hook config | `.gemini/settings.json` |
+    | MCP config | Embedded in `.gemini/settings.json` |
+
+    Hook configuration is projected from `.lore/harness/templates/.gemini/settings.json`.
+  </Tab>
+  <Tab label="Cursor">
+    | Capability | Output path |
+    |------------|-------------|
+    | MDC rules | `.cursor/rules/lore-core.mdc` |
+
+    MDC rules are generated with `alwaysApply: true` frontmatter. Instructions and the static banner are combined into a single `lore-core.mdc` file.
+  </Tab>
+  <Tab label="Windsurf / Roo Code">
+    | Platform | Output path |
+    |----------|-------------|
+    | Windsurf | `.windsurfrules` |
+    | Roo Code | `.clinerules` |
+
+    Mandate-only platforms. Instructions and the static banner are written to the respective file.
+  </Tab>
+  <Tab label="OpenCode">
+    | Capability | Output path |
+    |------------|-------------|
+    | Hook config | Platform-native plugin system |
+
+    Hooks are implemented as ESM plugins that import shared libraries from `.lore/harness/lib/`.
+  </Tab>
+</Tabs>
+
+### Manifest Overrides
+
+The `manifest` field in `config.json` is deep-merged over the base manifest. This allows adding capabilities or changing output paths per project:
+
+```json
+{
+  "manifest": {
+    "platforms": {
+      "cursor": {
+        "capabilities": ["mdc", "mcp", "skills"]
+      }
+    }
+  }
+}
+```
+
+### Running the Projector
+
+```bash
+# Full projection (instructions + skills + hooks)
+bash .lore/harness/scripts/sync-platform-skills.sh
+
+# Validate projections match source
+bash .lore/harness/scripts/validate-consistency.sh
+```
+
+Run both after any structural change to `.lore/`.

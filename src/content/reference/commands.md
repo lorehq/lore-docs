@@ -27,4 +27,4 @@ The following skills are not directly invocable but are triggered by the harness
 | `lore-create-fieldnote` | Create a fieldnote when an operation hit a non-obvious snag. |
 | `lore-delegate` | Delegation protocol enforcing the Subagent Envelope Contract. |
 | `lore-semantic-search` | Query semantic search endpoints when Fetch/WebFetch blocks localhost. |
-| `lore-prompt-engineering` | Hardened prompt engineering principles for writing agent prompts. |
+| `prompt-engineering-principles` | Hardened prompt engineering principles for writing agent prompts. |

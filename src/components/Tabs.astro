@@ -1,0 +1,94 @@
+---
+// Tabs container — wraps <Tab> children with a tab bar.
+// Usage in MDX:
+//   import { Tabs, Tab } from '../../components/Tabs.astro'
+//   <Tabs>
+//     <Tab label="Claude Code">content</Tab>
+//     <Tab label="Gemini CLI">content</Tab>
+//   </Tabs>
+---
+
+<div class="tui-tabs" data-tabs>
+  <div class="tab-bar" role="tablist"></div>
+  <div class="tab-panels">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .tui-tabs {
+    border: 1px solid var(--tui-border-inactive);
+    margin: 0.75rem 0;
+  }
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--tui-border-inactive);
+    background: var(--tui-bg-hl);
+    overflow-x: auto;
+  }
+  .tab-bar :global(button) {
+    padding: 0.25rem 0.75rem;
+    font-size: 10px;
+    font-family: var(--tui-font);
+    background: transparent;
+    color: var(--tui-fg);
+    border: none;
+    border-right: 1px solid var(--tui-border-inactive);
+    cursor: pointer;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.15s, background-color 0.15s;
+  }
+  .tab-bar :global(button:hover) {
+    color: var(--tui-border-active);
+    background: var(--tui-bg);
+  }
+  .tab-bar :global(button[aria-selected="true"]) {
+    color: var(--tui-border-active);
+    background: var(--tui-bg);
+    border-bottom: 1px solid var(--tui-bg);
+    margin-bottom: -1px;
+  }
+  .tab-panels {
+    padding: 0.75rem;
+  }
+  .tab-panels :global([role="tabpanel"]) {
+    display: none;
+  }
+  .tab-panels :global([role="tabpanel"].active) {
+    display: block;
+  }
+  /* Reset prose margins inside tab panels */
+  .tab-panels :global(table) {
+    margin-top: 0;
+  }
+  .tab-panels :global(p:first-child) {
+    margin-top: 0;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-tabs]').forEach(tabs => {
+    const panels = tabs.querySelectorAll('[role="tabpanel"]');
+    const bar = tabs.querySelector('.tab-bar');
+    if (!bar || panels.length === 0) return;
+
+    panels.forEach((panel, i) => {
+      const label = panel.getAttribute('data-label') || `Tab ${i + 1}`;
+      const btn = document.createElement('button');
+      btn.role = 'tab';
+      btn.textContent = label;
+      btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      btn.addEventListener('click', () => {
+        bar.querySelectorAll('button').forEach(b => b.setAttribute('aria-selected', 'false'));
+        panels.forEach(p => p.classList.remove('active'));
+        btn.setAttribute('aria-selected', 'true');
+        panel.classList.add('active');
+      });
+      bar.appendChild(btn);
+      if (i === 0) panel.classList.add('active');
+    });
+  });
+</script>

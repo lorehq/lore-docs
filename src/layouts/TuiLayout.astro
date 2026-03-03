@@ -8,10 +8,22 @@ interface Props {
 
 const { title } = Astro.props;
 
-const explanation = await getCollection('explanation');
-const reference = await getCollection('reference');
+const explanationRaw = await getCollection('explanation');
+const referenceRaw = await getCollection('reference');
 
-const topReference = reference.filter(e => !e.id.includes('/'));
+const explanationOrder = ['architecture', 'global-directory', 'agentic-system', 'memory', 'hooks', 'security', 'topology'];
+const referenceOrder = ['knowledge-base', 'configuration', 'hooks', 'commands'];
+
+const sortByOrder = (entries: typeof explanationRaw, order: string[]) => {
+  return [...entries].sort((a, b) => {
+    const ai = order.indexOf(a.id);
+    const bi = order.indexOf(b.id);
+    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+  });
+};
+
+const explanation = sortByOrder(explanationRaw.filter(e => !e.id.includes('/')), explanationOrder);
+const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), referenceOrder);
 ---
 
 <!doctype html>
@@ -215,6 +227,7 @@ const topReference = reference.filter(e => !e.id.includes('/'));
             b.classList.remove('active');
           }
         });
+        if (window.mermaidInitialized) reRenderMermaid();
       }
 
       function setFont(font) {
@@ -227,6 +240,7 @@ const topReference = reference.filter(e => !e.id.includes('/'));
             b.classList.remove('active');
           }
         });
+        if (window.mermaidInitialized) reRenderMermaid();
       }
 
       // More robust conversion for syntax-highlighted blocks
@@ -240,7 +254,9 @@ const topReference = reference.filter(e => !e.id.includes('/'));
             const div = document.createElement('div');
             div.className = 'mermaid';
             // Unescape \n to actual newlines for Mermaid labels
-            div.textContent = text.replace(/\\n/g, '\n');
+            const code = text.replace(/\\n/g, '\n');
+            div.textContent = code;
+            div.setAttribute('data-code', code);
             pre.replaceWith(div);
             found = true;
           }
@@ -265,17 +281,17 @@ const topReference = reference.filter(e => !e.id.includes('/'));
           },
           themeVariables: {
             background:       getVar('--tui-bg'),
-            mainBkg:          getVar('--tui-bg-hl'),
-            nodeBorder:       getVar('--tui-border-inactive'),
+            mainBkg:          getVar('--mermaid-node-bg'),
+            nodeBorder:       getVar('--mermaid-node-border'),
             lineColor:        getVar('--tui-fg'),
             textColor:        getVar('--tui-fg'),
             labelTextColor:   getVar('--tui-fg-em'),
-            edgeLabelBackground: getVar('--tui-bg'),
+            edgeLabelBackground: getVar('--mermaid-label-bg'),
             clusterBkg:       getVar('--tui-bg-hl'),
             clusterBorder:    getVar('--tui-border-inactive'),
             titleColor:       getVar('--tui-accent'),
-            primaryColor:     getVar('--tui-bg-hl'),
-            primaryBorderColor: getVar('--tui-border-active'),
+            primaryColor:     getVar('--mermaid-node-bg'),
+            primaryBorderColor: getVar('--mermaid-node-border'),
             primaryTextColor: getVar('--tui-fg-em'),
             secondaryColor:   getVar('--tui-bg'),
             tertiaryColor:    getVar('--tui-bg-hl'),
@@ -285,28 +301,46 @@ const topReference = reference.filter(e => !e.id.includes('/'));
         });
       };
 
-      if (convertMermaidBlocks()) {
+      function applyPanZoom() {
+        document.querySelectorAll('.mermaid svg').forEach(svg => {
+          svg.style.width = '100%';
+          svg.style.height = '100%';
+          svg.style.maxWidth = 'none';
+
+          svgPanZoom(svg, {
+            zoomEnabled: true,
+            controlIconsEnabled: true,
+            fit: true,
+            center: true,
+            minZoom: 0.1,
+            maxZoom: 10,
+            mouseWheelZoomEnabled: false,
+          });
+        });
+      }
+
+      async function reRenderMermaid() {
+        const diagrams = document.querySelectorAll('.mermaid');
+        if (diagrams.length === 0) return;
+
+        diagrams.forEach(el => {
+          const code = el.getAttribute('data-code');
+          if (code) {
+            el.innerHTML = code;
+            el.removeAttribute('data-processed');
+          }
+        });
+
         initMermaid();
         await mermaid.run();
+        setTimeout(applyPanZoom, 100);
+      }
 
-        // Give the browser a moment to settle the SVG layout
-        setTimeout(() => {
-          document.querySelectorAll('.mermaid svg').forEach(svg => {
-            svg.style.width = '100%';
-            svg.style.height = '100%';
-            svg.style.maxWidth = 'none';
-
-            svgPanZoom(svg, {
-              zoomEnabled: true,
-              controlIconsEnabled: true,
-              fit: true,
-              center: true,
-              minZoom: 0.1,
-              maxZoom: 10,
-              mouseWheelZoomEnabled: false,
-            });
-          });
-        }, 100);
+      if (convertMermaidBlocks()) {
+        initMermaid();
+        window.mermaidInitialized = true;
+        await mermaid.run();
+        setTimeout(applyPanZoom, 100);
       }
     </script>
   </body>

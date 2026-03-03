@@ -37,7 +37,7 @@ Contents:
 - **`drafts/`** — brainstorms and notes for operator-agent collaboration, quick captures to revisit later
 - **`environment/`** — host machine info, service endpoints, file locations, network diagrams, SCM URLs, app inventory
 
-The Knowledge Base loads every session. It contains fieldnotes, runbooks, environment facts, and work items. Rules, skills, and agents also live in the global directory but outside the KB — see [What Lore Manages](../reference/managed-content.md).
+The Knowledge Base loads every session. It contains fieldnotes, runbooks, environment facts, and work items. Rules, skills, and agents also live in the global directory but outside the KB — see [Agentic System](agentic-system.md).
 
 ## Tier 3: Session Scratchpad (memory.local.md)
 

@@ -30,6 +30,7 @@
 [data-font="krypton"] { --tui-font: 'Monaspace Krypton', monospace; }
 
 :root, [data-theme="solarized"] {
+  --tui-mode: dark;
   --tui-bg: #002b36;
   --tui-bg-hl: #073642;
   --tui-fg: #839496;
@@ -43,9 +44,15 @@
   --tui-cyan: #2aa198;
   --tui-green: #859900;
   --tui-magenta: #d33682;
+  
+  /* Mermaid Specifics - Glassy Dark */
+  --mermaid-node-bg: #001e26;
+  --mermaid-node-border: #2aa198;
+  --mermaid-label-bg: #002b36;
 }
 
 [data-theme="solarized-light"] {
+  --tui-mode: light;
   --tui-bg: #fdf6e3;
   --tui-bg-hl: #eee8d5;
   --tui-fg: #657b83;
@@ -59,9 +66,15 @@
   --tui-cyan: #2aa198;
   --tui-green: #859900;
   --tui-magenta: #d33682;
+
+  /* Mermaid Specifics - Card Light */
+  --mermaid-node-bg: #eee8d5;
+  --mermaid-node-border: #268bd2;
+  --mermaid-label-bg: #fdf6e3;
 }
 
 [data-theme="mocha"] {
+  --tui-mode: dark;
   --tui-bg: #1e1e2e;
   --tui-bg-hl: #313244;
   --tui-fg: #cdd6f4;
@@ -75,9 +88,15 @@
   --tui-cyan: #89dceb;
   --tui-green: #a6e3a1;
   --tui-magenta: #f5c2e7;
+
+  /* Mermaid Specifics - Glassy Dark */
+  --mermaid-node-bg: #181825;
+  --mermaid-node-border: #b4befe;
+  --mermaid-label-bg: #1e1e2e;
 }
 
 [data-theme="macchiato"] {
+  --tui-mode: dark;
   --tui-bg: #24273a;
   --tui-bg-hl: #363a4f;
   --tui-fg: #cad3f5;
@@ -91,9 +110,15 @@
   --tui-cyan: #91d7e3;
   --tui-green: #a6da95;
   --tui-magenta: #f5bde6;
+
+  /* Mermaid Specifics - Glassy Dark */
+  --mermaid-node-bg: #1e2030;
+  --mermaid-node-border: #b7bdf8;
+  --mermaid-label-bg: #24273a;
 }
 
 [data-theme="frappe"] {
+  --tui-mode: dark;
   --tui-bg: #303446;
   --tui-bg-hl: #414559;
   --tui-fg: #c6d0f5;
@@ -107,9 +132,15 @@
   --tui-cyan: #99d1db;
   --tui-green: #a6d189;
   --tui-magenta: #f4b8e4;
+
+  /* Mermaid Specifics - Glassy Dark */
+  --mermaid-node-bg: #292c3c;
+  --mermaid-node-border: #babbf1;
+  --mermaid-label-bg: #303446;
 }
 
 [data-theme="latte"] {
+  --tui-mode: light;
   --tui-bg: #eff1f5;
   --tui-bg-hl: #e6e9ef;
   --tui-fg: #4c4f69;
@@ -123,6 +154,11 @@
   --tui-cyan: #04a5e5;
   --tui-green: #40a02b;
   --tui-magenta: #ea76cb;
+
+  /* Mermaid Specifics - Card Light */
+  --mermaid-node-bg: #e6e9ef;
+  --mermaid-node-border: #1e66f5;
+  --mermaid-label-bg: #eff1f5;
 }
 
 body {

@@ -23,7 +23,7 @@ The merge is performed by `getConfig()` in `.lore/harness/lib/config.js`.
 | `profile` | string | `"standard"` | Hook verbosity profile. One of `"minimal"`, `"standard"`, `"discovery"`. |
 | `nudgeThreshold` | number | `15` (discovery: `5`) | Consecutive bash commands before the first capture checkpoint. |
 | `warnThreshold` | number | `30` (discovery: `10`) | Consecutive bash commands before the escalated capture warning. Repeats every `warnThreshold` commands thereafter. |
-| `treeDepth` | number | `5` | Maximum directory depth for ASCII trees in banners and the context-path-guide hook. |
+| `treeDepth` | number | `5` | Maximum directory depth for ASCII trees in banners. |
 | `docker.search.address` | string | — | Hostname of the Docker sidecar (e.g. `"localhost"`). |
 | `docker.search.port` | number | — | Port of the Docker sidecar (e.g. `9185`). |
 | `docker.semantic.defaultK` | number | `8` | Default number of results returned by semantic search. |
@@ -41,8 +41,6 @@ The merge is performed by `getConfig()` in `.lore/harness/lib/config.js`.
 | Safety hooks (harness-guard, protect-memory) | active | active | active |
 | prompt-preamble | off | active | active |
 | search-guard | off | active | active |
-| rule-guard | off | active | active |
-| context-path-guide | off | active | active |
 | knowledge-tracker | off | active | active |
 | Nudge threshold | — | 15 | 5 |
 | Warn threshold | — | 30 | 10 |

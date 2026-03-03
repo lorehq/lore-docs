@@ -10,7 +10,7 @@ Hooks are Node.js scripts in `.lore/harness/hooks/` that fire at platform lifecy
 |-------|---------------|-------|
 | `SessionStart` | Session begins | session-init |
 | `UserPromptSubmit` | Before each user message is processed | prompt-preamble |
-| `PreToolUse` | Before a tool executes (can allow/deny) | harness-guard, protect-memory, search-guard, rule-guard, context-path-guide |
+| `PreToolUse` | Before a tool executes (can allow/deny) | harness-guard, protect-memory, search-guard |
 | `PostToolUse` | After a tool executes successfully | knowledge-tracker |
 | `PostToolUseFailure` | After a tool execution fails | knowledge-tracker |
 
@@ -25,7 +25,7 @@ Hooks are Node.js scripts in `.lore/harness/hooks/` that fire at platform lifecy
 | **Matcher** | (all) |
 | **Profile gating** | None. Runs in all profiles. |
 
-Ensures sticky files exist (e.g. `memory.local.md`), then builds and prints the dynamic session banner (operator profile, user context, session memory). Output is plain text to stdout.
+Ensures sticky files exist (e.g. `memory.local.md`), seeds runbook templates, then builds and prints the dynamic session banner (operator profile, session memory). Output is plain text to stdout.
 
 ### prompt-preamble
 
@@ -69,29 +69,7 @@ Blocks all access to `MEMORY.md` at the project root and redirects to `.lore/mem
 | **Matcher** | `Read\|Glob` |
 | **Profile gating** | Skipped in `minimal`. |
 
-Nudges the agent to use semantic search before filesystem search when targeting indexed paths (`docs/`, `.lore/skills/`, `.lore/rules/`). Non-blocking — always allows the tool to proceed (`permissionDecision: "allow"` with `additionalContext`). Reads stdin JSON with `toolName` and `arguments.path`. Messages are prefixed with cyan `[■ LORE-SEARCH]`.
-
-### rule-guard
-
-| | |
-|---|---|
-| **File** | `hooks/rule-guard.js` |
-| **Event** | `PreToolUse` |
-| **Matcher** | `Write\|Edit` |
-| **Profile gating** | Skipped in `minimal`. |
-
-Injects rule reminders at the point of write. Extracts bold principle lines from rule files in `.lore/rules/` and injects them as context. Security rules fire on every in-repo write (red `[■ LORE-SECURITY]`). Documentation, work-item, knowledge-capture, and remaining rules fire on their respective paths (cyan `[■ LORE-DOCS]`, `[■ LORE-WORK]`, `[■ LORE-KNOWLEDGE]`, `[■ LORE-RULES]`). Self-heals the security rule from seed if deleted.
-
-### context-path-guide
-
-| | |
-|---|---|
-| **File** | `hooks/context-path-guide.js` |
-| **Event** | `PreToolUse` |
-| **Matcher** | `Write` |
-| **Profile gating** | Skipped in `minimal`. |
-
-Fires on writes to `docs/context/`. Builds an ASCII directory tree (depth controlled by `treeDepth` config) and suggests subdirectory organization. Non-blocking. Messages are prefixed with cyan `[■ LORE-PATH]`.
+Nudges the agent to use semantic search before filesystem search when targeting indexed paths (`docs/`, `.lore/harness/skills/`, `.lore/skills/`, `.lore/rules/`). Non-blocking — always allows the tool to proceed (`permissionDecision: "allow"` with `additionalContext`). Reads stdin JSON with `toolName` and `arguments.path`. Messages are prefixed with cyan `[■ LORE-SEARCH]`.
 
 ### knowledge-tracker
 
@@ -119,7 +97,7 @@ Also pings the Docker sidecar `/activity` endpoint for knowledge-path file acces
 Enabled by `LORE_HOOK_LOG=1`. Writes JSONL to `.git/lore-hook-events.jsonl` (falls back to OS temp dir if `.git/` does not exist). Each line:
 
 ```json
-{ "ts": 1709312400000, "platform": "claude", "hook": "rule-guard", "event": "PreToolUse", "output_size": 342, "state": { "path": "docs/context/agent-rules.md" } }
+{ "ts": 1709312400000, "platform": "claude", "hook": "harness-guard", "event": "PreToolUse", "output_size": 142, "state": { "path": ".lore/harness/lib/banner.js" } }
 ```
 
 Analyze with `bash scripts/analyze-hook-logs.sh`. Reset with `rm .git/lore-hook-events.jsonl`.
@@ -130,6 +108,6 @@ Hook output uses three ANSI colors to signal severity. Each message is prefixed 
 
 | Color | ANSI code | Tags | Hooks |
 |-------|-----------|------|-------|
-| Red | `\x1b[91m` | `LORE-SECURITY`, `LORE-FAILURE` | rule-guard, knowledge-tracker |
+| Red | `\x1b[91m` | `LORE-FAILURE` | knowledge-tracker |
 | Yellow | `\x1b[93m` | `LORE-PROTOCOL`, `LORE-CAPTURE`, `LORE-CHECKPOINT`, `LORE-MEMORY` | prompt-preamble, knowledge-tracker |
-| Cyan | `\x1b[96m` | `LORE-DOCS`, `LORE-WORK`, `LORE-KNOWLEDGE`, `LORE-RULES`, `LORE-SEARCH`, `LORE-PATH` | rule-guard, search-guard, context-path-guide |
+| Cyan | `\x1b[96m` | `LORE-SEARCH` | search-guard |

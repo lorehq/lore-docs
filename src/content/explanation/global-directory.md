@@ -32,7 +32,7 @@ The global directory is operator-managed. You maintain it with Git like any othe
 
 The global directory has three conceptual layers:
 
-**Rules, Skills, and Agents** — The three standard components of the agentic framework. Rules govern behavior, skills provide capabilities, and agents define specialized personas. These are version-controlled, operator-managed, and projected into platform-native formats. See [What Lore Manages](../reference/managed-content.md) for details.
+**Rules, Skills, and Agents** — The three standard components of the agentic framework. Rules govern behavior, skills provide capabilities, and agents define specialized personas. These are version-controlled, operator-managed, and projected into platform-native formats. See [Agentic System](agentic-system.md) for details.
 
 **The Knowledge Base** — Structured markdown files with write-guard protection. Contains: `fieldnotes/` (captured snags and gotchas), `runbooks/` (multi-step procedures), `operator-profile.md` (injected at session start), `work-items/` (Jira-aligned tracking), `drafts/` (brainstorms and notes), and `environment/` (host machine info, service endpoints, network topology). Agents propose changes via memprint; the operator approves.
 
@@ -51,8 +51,6 @@ my-project/
 │   ├── skills/          # Project-specific skills
 │   ├── rules/           # Project-specific rules
 │   └── memory.local.md  # Session scratchpad (gitignored)
-├── docs/
-│   └── context/         # Project identity and context
 ├── src/                     # Project codebase
 └── CLAUDE.md            # Generated platform projection
 ```
@@ -88,7 +86,7 @@ The merge happens in `banner.js` (for session banners) and `projector.js` (for p
 The global directory is not created automatically by `create-lore`. To set one up:
 
 ```bash
-mkdir -p ~/.lore/{skills,rules,knowledge-base/{fieldnotes,runbooks,environment}}
+mkdir -p ~/.lore/{skills,rules,agents,knowledge-base/{fieldnotes,runbooks,environment}}
 cd ~/.lore && git init
 ```
 

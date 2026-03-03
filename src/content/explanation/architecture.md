@@ -8,40 +8,29 @@ Lore is a harness for agentic coding tools. It centrally manages the three stand
 
 ```mermaid
 graph TD
-    subgraph "Agent Platform (e.g., Claude Code, Gemini CLI, Cursor)"
-        Agent[AI Agent]
-        PlatformFiles["Platform Files\n(CLAUDE.md, GEMINI.md, etc.)"]
-    end
-
     subgraph "Project Repo (Instance)"
         ProjectLore[".lore/\n(Config, Rules, Skills, Agents)"]
         Harness[".lore/harness/\n(Hooks, Scripts, Lib)"]
     end
 
     subgraph "Global Directory (~/.lore/)"
-        GlobalLore["Global Config, Rules,\nSkills, KB"]
+        GlobalLore["Rules, Skills, Agents"]
         GlobalKB["knowledge-base/"]
         RedisData["redis-data/"]
     end
 
     subgraph "Docker Sidecar (Optional)"
-        SearchService["Lore Runtime\n(Semantic Search API)"]
-        RedisService[("Redis\n(Hot Memory Cache)")]
+        SearchService["Semantic Search API"]
+        RedisService[("Redis\n(Hot Memory)")]
     end
 
-    Agent -.-> |"Reads context from"| PlatformFiles
-    Agent --> |"Invokes Tools via"| Harness
-    
-    Harness --> |"Merges context from"| ProjectLore
-    Harness --> |"Merges context from"| GlobalLore
+    Harness --> |"Merges"| ProjectLore
+    Harness --> |"Merges"| GlobalLore
     Harness --> |"Queries"| SearchService
     Harness --> |"Reads/Writes"| RedisService
 
     SearchService --> |"Indexes"| GlobalKB
     RedisService --> |"Data Mount"| RedisData
-
-    ProjectLore -.-> |"Projected into"| PlatformFiles
-    GlobalLore -.-> |"Projected into"| PlatformFiles
 ```
 
 ## The Global Directory (~/.lore/)
@@ -52,13 +41,13 @@ The global directory (`~/.lore/`) is a Git repository in your home folder. It st
 - **Skills** — modular instructions that equip agents with capabilities (e.g., coding principles, deployment procedures)
 - **Agents** — autonomous personas configured for specific types of work (e.g., software engineer, technical writer)
 
-The [Knowledge Base](../reference/knowledge-base.md) stores **fieldnotes** (captured snags) and **runbooks** (multi-step procedures) — persistent knowledge that agents discover via the banner and semantic search. See [What Lore Manages](../reference/managed-content.md) for details. See [Global and Project Directories](global-directory.md) for how global and project-local content merge.
+The [Knowledge Base](../reference/knowledge-base.md) stores **fieldnotes** (captured snags) and **runbooks** (multi-step procedures) — persistent knowledge that agents discover via the banner and semantic search. See [Agentic System](agentic-system.md) for details. See [Global and Project Directories](global-directory.md) for how global and project-local content merge.
 
 ## Project Instances
 
 Individual repositories carry only project-specific context. When a session starts, the harness merges global knowledge with local project docs at runtime. Projects never contain your private identity or cross-project fieldnotes.
 
-Project-scoped content lives in `docs/` (context, work items) and `.lore/` (project-level overrides). See [Global and Project Directories](global-directory.md) for the full merge model.
+Project-scoped content lives in `.lore/` (config, rules, skills, agents, project-level overrides). See [Global and Project Directories](global-directory.md) for the full merge model.
 
 ## The Projection Pipeline
 
@@ -73,7 +62,7 @@ Each platform (Claude Code, Gemini CLI, Cursor, Windsurf, Roo Code, OpenCode) ha
 | Roo Code | `.clinerules` |
 | OpenCode | `opencode.json`, `.opencode/plugins/` |
 
-One knowledge base, every platform. Write a fieldnote once — it's available everywhere. See [Platform Projections](projections.md) for how the projector works.
+One knowledge base, every platform. Write a fieldnote once — it's available everywhere. See [Agentic System](agentic-system.md) for how the projector works.
 
 ## The Sidecar
 
@@ -88,10 +77,11 @@ Without Docker, agents fall back to `memory.local.md` for session notes and Glob
 
 Hooks are plain JavaScript files that fire at specific points in the agent lifecycle:
 
-- **Session init** — loads the context banner (rules, skills, fieldnotes, runbooks)
+- **Session init** — creates sticky files and emits the dynamic banner (operator profile, session memory)
 - **Prompt preamble** — injects search-first and capture reminders before each message
 - **Knowledge tracker** — monitors tool use and nudges capture at thresholds
-- **Write guards** — enforces rules (security, coding, docs) before file writes
-- **Harness guard** — protects harness files from unintended modification
+- **Harness guard** — blocks agent writes to the global directory (`~/.lore/`)
+- **Protect memory** — redirects `MEMORY.md` access to the gitignored session scratchpad
+- **Search guard** — nudges agents toward semantic search on indexed paths
 
-All hooks are transparent, readable, and make no network requests. See [Hooks](hooks.md) for the full reference.
+All hooks are transparent and readable. Hooks that interact with the Docker sidecar (session-init, knowledge-tracker) make localhost HTTP requests only — no external network calls. See [Hooks](hooks.md) for the full reference.
