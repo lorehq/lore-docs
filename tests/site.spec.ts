@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 const ROUTES = [
   { path: '/',                          title: 'About',           content: 'lore' },
-  { path: '/explanation/architecture',  title: 'Architecture',    content: 'Enclave' },
+  { path: '/explanation/architecture',  title: 'Architecture',    content: 'Global Directory' },
   { path: '/explanation/memory',        title: 'Heat-Based',      content: 'Hot Tier' },
   { path: '/how-to',                    title: 'How-to',          content: null },
   { path: '/reference',                 title: 'Reference',       content: null },
@@ -39,7 +39,7 @@ for (const { path, title, content } of ROUTES) {
 test('architecture page renders actual content not empty', async ({ page }) => {
   await page.goto('/explanation/architecture');
   const article = page.locator('article');
-  await expect(article).toContainText('Secure Enclave');
+  await expect(article).toContainText('Global Directory');
   await expect(article).toContainText('Sidecar');
   await expect(article).toContainText('LORE SIDE-CAR');
 });

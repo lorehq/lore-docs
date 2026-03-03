@@ -1,27 +1,146 @@
 @import "tailwindcss";
 
 @theme {
-  /* Solarized Dark */
-  --color-tui-bg: #002b36;        /* base03 */
-  --color-tui-bg-hl: #073642;     /* base02 */
-  --color-tui-fg: #839496;        /* base0  */
-  --color-tui-fg-em: #93a1a1;     /* base1  */
-  --color-tui-border-inactive: #586e75; /* base01 */
-  --color-tui-border-active: #2aa198;   /* cyan   */
-  --color-tui-selected-bg: #073642;     /* base02 */
-  --color-tui-selected-fg: #93a1a1;     /* base1  */
-  --color-tui-accent: #268bd2;          /* blue   */
-  --color-tui-yellow: #b58900;          /* yellow */
-  --color-tui-cyan: #2aa198;            /* cyan   */
-  --color-tui-green: #859900;           /* green  */
-  --color-tui-magenta: #d33682;         /* magenta */
+  /* Dynamic TUI Theme variables */
+  --color-tui-bg: var(--tui-bg);
+  --color-tui-bg-hl: var(--tui-bg-hl);
+  --color-tui-fg: var(--tui-fg);
+  --color-tui-fg-em: var(--tui-fg-em);
+  --color-tui-border-inactive: var(--tui-border-inactive);
+  --color-tui-border-active: var(--tui-border-active);
+  --color-tui-selected-bg: var(--tui-selected-bg);
+  --color-tui-selected-fg: var(--tui-selected-fg);
+  --color-tui-accent: var(--tui-accent);
+  --color-tui-yellow: var(--tui-yellow);
+  --color-tui-cyan: var(--tui-cyan);
+  --color-tui-green: var(--tui-green);
+  --color-tui-magenta: var(--tui-magenta);
 
-  --font-mono: "JetBrains Mono", "Roboto Mono", "Courier New", monospace;
+  --font-family-mono: var(--tui-font);
+}
+
+:root {
+  --tui-font: 'Monaspace Neon', monospace;
+}
+
+[data-font="neon"] { --tui-font: 'Monaspace Neon', monospace; }
+[data-font="argon"] { --tui-font: 'Monaspace Argon', monospace; }
+[data-font="xenon"] { --tui-font: 'Monaspace Xenon', monospace; }
+[data-font="radon"] { --tui-font: 'Monaspace Radon', monospace; }
+[data-font="krypton"] { --tui-font: 'Monaspace Krypton', monospace; }
+
+:root, [data-theme="solarized"] {
+  --tui-bg: #002b36;
+  --tui-bg-hl: #073642;
+  --tui-fg: #839496;
+  --tui-fg-em: #93a1a1;
+  --tui-border-inactive: #586e75;
+  --tui-border-active: #2aa198;
+  --tui-selected-bg: #073642;
+  --tui-selected-fg: #93a1a1;
+  --tui-accent: #268bd2;
+  --tui-yellow: #b58900;
+  --tui-cyan: #2aa198;
+  --tui-green: #859900;
+  --tui-magenta: #d33682;
+}
+
+[data-theme="solarized-light"] {
+  --tui-bg: #fdf6e3;
+  --tui-bg-hl: #eee8d5;
+  --tui-fg: #657b83;
+  --tui-fg-em: #586e75;
+  --tui-border-inactive: #93a1a1;
+  --tui-border-active: #2aa198;
+  --tui-selected-bg: #eee8d5;
+  --tui-selected-fg: #586e75;
+  --tui-accent: #268bd2;
+  --tui-yellow: #b58900;
+  --tui-cyan: #2aa198;
+  --tui-green: #859900;
+  --tui-magenta: #d33682;
+}
+
+[data-theme="mocha"] {
+  --tui-bg: #1e1e2e;
+  --tui-bg-hl: #313244;
+  --tui-fg: #cdd6f4;
+  --tui-fg-em: #f5e0dc;
+  --tui-border-inactive: #585b70;
+  --tui-border-active: #b4befe;
+  --tui-selected-bg: #45475a;
+  --tui-selected-fg: #f5e0dc;
+  --tui-accent: #89b4fa;
+  --tui-yellow: #f9e2af;
+  --tui-cyan: #89dceb;
+  --tui-green: #a6e3a1;
+  --tui-magenta: #f5c2e7;
+}
+
+[data-theme="macchiato"] {
+  --tui-bg: #24273a;
+  --tui-bg-hl: #363a4f;
+  --tui-fg: #cad3f5;
+  --tui-fg-em: #f4dbd6;
+  --tui-border-inactive: #5b6078;
+  --tui-border-active: #b7bdf8;
+  --tui-selected-bg: #494d64;
+  --tui-selected-fg: #f4dbd6;
+  --tui-accent: #8aadf4;
+  --tui-yellow: #eed49f;
+  --tui-cyan: #91d7e3;
+  --tui-green: #a6da95;
+  --tui-magenta: #f5bde6;
+}
+
+[data-theme="frappe"] {
+  --tui-bg: #303446;
+  --tui-bg-hl: #414559;
+  --tui-fg: #c6d0f5;
+  --tui-fg-em: #f2d5cf;
+  --tui-border-inactive: #626880;
+  --tui-border-active: #babbf1;
+  --tui-selected-bg: #51576d;
+  --tui-selected-fg: #f2d5cf;
+  --tui-accent: #8caaee;
+  --tui-yellow: #e5c890;
+  --tui-cyan: #99d1db;
+  --tui-green: #a6d189;
+  --tui-magenta: #f4b8e4;
+}
+
+[data-theme="latte"] {
+  --tui-bg: #eff1f5;
+  --tui-bg-hl: #e6e9ef;
+  --tui-fg: #4c4f69;
+  --tui-fg-em: #dc8a78;
+  --tui-border-inactive: #9ca0b0;
+  --tui-border-active: #7287fd;
+  --tui-selected-bg: #ccd0da;
+  --tui-selected-fg: #dc8a78;
+  --tui-accent: #1e66f5;
+  --tui-yellow: #df8e1d;
+  --tui-cyan: #04a5e5;
+  --tui-green: #40a02b;
+  --tui-magenta: #ea76cb;
 }
 
 body {
-  @apply bg-tui-bg text-tui-fg font-mono overflow-hidden;
+  background-color: var(--tui-bg);
+  color: var(--tui-fg);
+  font-family: var(--tui-font);
+  overflow: hidden;
   font-size: 13px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Force font on all text elements to ensure Monaspace is used everywhere */
+* {
+  font-family: inherit;
+}
+
+code, pre, kbd, samp {
+  font-family: var(--tui-font) !important;
 }
 
 /* Scrollbar */
@@ -44,8 +163,38 @@ body {
   @apply text-tui-border-active bg-tui-bg-hl px-1 py-0.5 font-bold;
 }
 .prose pre {
-  @apply bg-tui-bg border border-tui-border-inactive p-3 my-3;
+  @apply border border-tui-border-inactive p-3 my-3;
+  background-color: var(--tui-bg) !important;
 }
+
+/* Shiki theme switching */
+[data-theme="latte"] .shiki,
+[data-theme="solarized-light"] .shiki {
+  color: var(--shiki-light) !important;
+  background-color: var(--tui-bg) !important;
+}
+
+[data-theme="latte"] .shiki span,
+[data-theme="solarized-light"] .shiki span {
+  color: var(--shiki-light) !important;
+}
+
+/* Ensure dark themes use their shiki variables */
+[data-theme="solarized"] .shiki,
+[data-theme="mocha"] .shiki,
+[data-theme="macchiato"] .shiki,
+[data-theme="frappe"] .shiki {
+  color: var(--shiki-dark) !important;
+  background-color: var(--tui-bg) !important;
+}
+
+[data-theme="solarized"] .shiki span,
+[data-theme="mocha"] .shiki span,
+[data-theme="macchiato"] .shiki span,
+[data-theme="frappe"] .shiki span {
+  color: var(--shiki-dark) !important;
+}
+
 .prose a {
   @apply text-tui-accent no-underline hover:bg-tui-selected-bg hover:text-white;
 }

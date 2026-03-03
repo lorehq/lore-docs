@@ -3,20 +3,12 @@ import { getCollection, render } from 'astro:content';
 import Layout from '../layouts/TuiLayout.astro';
 
 export async function getStaticPaths() {
-  const tutorials = await getCollection('tutorials');
-  const howTo = await getCollection('how-to');
   const reference = await getCollection('reference');
   const explanation = await getCollection('explanation');
-  const changelog = await getCollection('changelog');
-  const evidence = await getCollection('evidence');
 
   return [
-    ...tutorials.map(entry => ({ params: { slug: `tutorials/${entry.id}` }, props: { entry } })),
-    ...howTo.map(entry => ({ params: { slug: `how-to/${entry.id}` }, props: { entry } })),
     ...reference.map(entry => ({ params: { slug: `reference/${entry.id}` }, props: { entry } })),
     ...explanation.map(entry => ({ params: { slug: `explanation/${entry.id}` }, props: { entry } })),
-    ...changelog.map(entry => ({ params: { slug: `changelog/${entry.id}` }, props: { entry } })),
-    ...evidence.map(entry => ({ params: { slug: `evidence/${entry.id}` }, props: { entry } })),
   ];
 }
 

@@ -1,22 +1,21 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/TuiLayout.astro';
 
-const types = [
-  { id: 'active-work', title: 'Active Work', desc: 'Brainstorms, decisions, and in-flight epics.' },
-  { id: 'architecture', title: 'Architecture', desc: 'Design diagrams and architectural decisions.' },
-];
+const explanation = await getCollection('explanation');
+const topLevel = explanation.filter(e => !e.id.includes('/'));
 ---
 
 <Layout title="Explanation & Architecture">
   <h1>Explanation & Architecture</h1>
-  
+
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-    {types.map(type => (
-      <a href={`/explanation/${type.id}`} class="border border-tui-border-inactive p-4 hover:border-tui-border-active group">
+    {topLevel.map(entry => (
+      <a href={`/explanation/${entry.id}`} class="border border-tui-border-inactive p-4 hover:border-tui-border-active group">
         <div class="text-tui-accent group-hover:text-tui-border-active font-bold">
-          {type.title}
+          {entry.data.title}
         </div>
-        <p class="text-xs mt-2 opacity-60">{type.desc}</p>
+        {entry.data.description && <p class="text-xs mt-2 opacity-60">{entry.data.description}</p>}
       </a>
     ))}
   </div>
