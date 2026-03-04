@@ -12,7 +12,7 @@ Policies, guardrails, and constraints that govern agent behavior.
 
 | Property | Value |
 |----------|-------|
-| Location | `.lore/rules/*.md` |
+| Location | `.lore/AGENTIC/rules/*.md` |
 | Loaded | At session start — included in the static banner and projected into mandate files |
 | Scope | Global (`~/.lore/`) or project-local |
 
@@ -25,7 +25,7 @@ Modular, reusable instructions that equip agents with specific capabilities. Ski
 | Property | Value |
 |----------|-------|
 | Harness skills | `.lore/harness/skills/<name>/SKILL.md` |
-| Operator skills | `.lore/skills/<name>/SKILL.md` |
+| Operator skills | `.lore/AGENTIC/skills/<name>/SKILL.md` |
 | Loaded | On invocation, at session start, or when the agent determines relevance |
 | Scope | Global (`~/.lore/`), project-local, or harness-bundled |
 
@@ -43,7 +43,7 @@ Key fields:
 - `banner-loaded` — injected into the session banner when `true`
 - `allowed-tools` — constrains which tools the skill can use
 
-Harness skills (`lore`, `lore-create-fieldnote`, `lore-delegate`, etc.) ship in `.lore/harness/skills/` and are managed by the framework. Operator skills live in `.lore/skills/` and are user-managed. Both are projected into platform-native formats. Operator skills override harness skills with the same name.
+Harness skills (`lore`, `lore-create-fieldnote`, `lore-delegate`, etc.) ship in `.lore/harness/skills/` and are managed by the framework. Operator skills live in `.lore/AGENTIC/skills/` and are user-managed. Both are projected into platform-native formats. Operator skills override harness skills with the same name.
 
 ## Agents
 
@@ -51,7 +51,7 @@ Autonomous, goal-driven personas configured for specific types of work. Each age
 
 | Property | Value |
 |----------|-------|
-| Location | `.lore/agents/<name>.md` |
+| Location | `.lore/AGENTIC/agents/<name>.md` |
 | Loaded | When the platform delegates a task to the agent |
 | Scope | Global (`~/.lore/`) or project-local |
 

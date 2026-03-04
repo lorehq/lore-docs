@@ -2,7 +2,7 @@
 title: "Commands"
 ---
 
-Slash commands are skills with `user-invocable: true` in their SKILL.md frontmatter. They live in `.lore/skills/<name>/SKILL.md` and are projected into platform-native formats by the projector.
+Slash commands are skills with `user-invocable: true` in their SKILL.md frontmatter. They live in `.lore/AGENTIC/skills/<name>/SKILL.md` and are projected into platform-native formats by the projector.
 
 ## Available commands
 

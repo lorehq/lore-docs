@@ -77,8 +77,8 @@ The merge happens in `banner.js` (for session banners) and `projector.js` (for p
 |---------|----------|-----|
 | Snag you'll hit in any project | `~/.lore/knowledge-base/fieldnotes/` | Cross-project knowledge |
 | Deployment procedure | `~/.lore/knowledge-base/runbooks/` | Reusable across projects |
-| Your coding standards | `~/.lore/rules/coding.md` | Apply everywhere |
-| Project-specific lint config | `.lore/rules/` | Only this project's conventions |
+| Your coding standards | `~/.lore/AGENTIC/rules/coding.md` | Apply everywhere |
+| Project-specific lint config | `.lore/AGENTIC/rules/` | Only this project's conventions |
 | Sidecar config | `~/.lore/docker-compose.yml` | One sidecar per machine |
 | Operator profile | `~/.lore/knowledge-base/operator-profile.md` | Personal, cross-project |
 | Service endpoints, host info | `~/.lore/knowledge-base/environment/` | Machine-specific facts |
