@@ -81,7 +81,7 @@ Hooks are plain JavaScript files that fire at specific points in the agent lifec
 
 - **Session init** — creates sticky files and emits the dynamic banner (operator profile, session memory)
 - **Prompt preamble** — injects search-first and capture reminders before each message
-- **Knowledge tracker** — monitors tool use and nudges capture at thresholds
+- **Memory nudge** — monitors tool use and nudges capture at thresholds
 - **Harness guard** — blocks agent writes to the global directory (`~/.lore/`)
 - **Protect memory** — redirects `MEMORY.md` access to the gitignored session scratchpad
 - **Search guard** — nudges agents toward semantic search on indexed paths
