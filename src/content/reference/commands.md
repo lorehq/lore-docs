@@ -6,17 +6,21 @@ Slash commands are skills with `user-invocable: true` in their SKILL.md frontmat
 
 ## Available commands
 
+All commands are subcommands of `/lore`:
+
 | Command | Description |
 |---------|-------------|
-| `/lore-docker` | Start, stop, or inspect the local Lore sidecar (semantic search and memory). |
-| `/lore-field-repair` | Guided workflow for diagnosing and fixing harness bugs in deployed instances. |
-| `/lore-memprint` | Promote hot cache facts to the persistent knowledge base. |
-| `/lore-status` | Show Lore instance health -- version, hooks, skills, fieldnotes, active work. |
-| `/lore-update` | Update Lore harness files to the latest version. |
+| `/lore` | Show available subcommands. |
+| `/lore status` | Show instance health — version, hooks, skills, fieldnotes, active work. |
+| `/lore update` | Update harness files to the latest version. |
+| `/lore repair` | Guided workflow for diagnosing and fixing harness bugs in deployed instances. |
+| `/lore memory` | Start/stop the local Docker sidecar (semantic search + hot memory). |
+| `/lore memory burn` | Promote hot cache facts to the persistent knowledge base. |
+| `/lore memory rem` | Knowledge defrag — restructure the KB. |
 
 ## Commands requiring Docker sidecar
 
-`/lore-docker` manages the sidecar directly. `/lore-memprint` reads from the hot cache. `/lore-status` reports sidecar status when `docker.search` is configured.
+`/lore memory` manages the sidecar directly (`~/.lore/docker-compose.yml`). `/lore memory burn` reads from the hot cache. `/lore status` reports sidecar health.
 
 ## Internal skills
 

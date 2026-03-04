@@ -11,8 +11,8 @@ Hooks are Node.js scripts in `.lore/harness/hooks/` that fire at platform lifecy
 | `SessionStart` | Session begins | session-init |
 | `UserPromptSubmit` | Before each user message is processed | prompt-preamble |
 | `PreToolUse` | Before a tool executes (can allow/deny) | harness-guard, protect-memory, search-guard |
-| `PostToolUse` | After a tool executes successfully | knowledge-tracker |
-| `PostToolUseFailure` | After a tool execution fails | knowledge-tracker |
+| `PostToolUse` | After a tool executes successfully | memory-nudge |
+| `PostToolUseFailure` | After a tool execution fails | memory-nudge |
 
 ## Hook reference
 
@@ -71,26 +71,26 @@ Blocks all access to `MEMORY.md` at the project root and redirects to `.lore/mem
 
 Nudges the agent to use semantic search before filesystem search when targeting indexed paths (`docs/`, `.lore/harness/skills/`, `.lore/skills/`, `.lore/rules/`). Non-blocking — always allows the tool to proceed (`permissionDecision: "allow"` with `additionalContext`). Reads stdin JSON with `toolName` and `arguments.path`. Messages are prefixed with cyan `[■ LORE-SEARCH]`.
 
-### knowledge-tracker
+### memory-nudge
 
 | | |
 |---|---|
-| **File** | `hooks/knowledge-tracker.js` |
+| **File** | `hooks/memory-nudge.js` |
 | **Event** | `PostToolUse`, `PostToolUseFailure` |
 | **Matcher** | (all) |
 | **Profile gating** | Skipped in `minimal`. |
 
-Adaptive capture reminders after tool use. Tracks consecutive bash command count in `.git/lore-tracker-<hash>.json`. Behavior:
+Adaptive memory nudges after tool use. Tracks consecutive bash command count in `.git/lore-tracker-<hash>.json`. Behavior:
 
 - Read-only tools (`read`, `grep`, `glob`): silent.
 - Knowledge-path writes: silent (already capturing).
-- First bash in a sequence: capture reminder.
-- Bash count hits `nudgeThreshold`: checkpoint message.
-- Bash count hits `warnThreshold` (and every multiple): escalated warning.
-- Tool failures: always emits a failure review message.
+- First bash in a sequence: memory nudge.
+- Bash count hits `nudgeThreshold`: nudge to capture findings.
+- Bash count hits `warnThreshold` (and every multiple): stronger nudge to pause and capture.
+- Tool failures: always emits a capture prompt.
 - Writes to `memory.local.md`: graduation reminder.
 
-Also pings the Docker sidecar `/activity` endpoint for knowledge-path file access (via `lib/activity-ping.js`), recording heat data in the hot cache. Each access increments the fact's heat score and resets the decay timer, driving the graduation logic in `/lore-memprint`.
+All messages use green `[■ LORE-MEMORY]` tags.
 
 ## Hook logging
 
@@ -104,10 +104,10 @@ Analyze with `bash scripts/analyze-hook-logs.sh`. Reset with `rm .git/lore-hook-
 
 ## Color system
 
-Hook output uses three ANSI colors to signal severity. Each message is prefixed with a colored tag in the format `\x1b[NNm[■ LORE-TAG]\x1b[0m`:
+Hook output uses ANSI colors to signal context. Each message is prefixed with a colored tag in the format `\x1b[NNm[■ LORE-TAG]\x1b[0m`:
 
 | Color | ANSI code | Tags | Hooks |
 |-------|-----------|------|-------|
-| Red | `\x1b[91m` | `LORE-FAILURE` | knowledge-tracker |
-| Yellow | `\x1b[93m` | `LORE-PROTOCOL`, `LORE-CAPTURE`, `LORE-CHECKPOINT`, `LORE-MEMORY` | prompt-preamble, knowledge-tracker |
+| Green | `\x1b[92m` | `LORE-MEMORY` | memory-nudge |
+| Yellow | `\x1b[93m` | `LORE-PROTOCOL` | prompt-preamble |
 | Cyan | `\x1b[96m` | `LORE-SEARCH` | search-guard |

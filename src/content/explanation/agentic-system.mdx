@@ -43,7 +43,7 @@ Key fields:
 - `banner-loaded` — injected into the session banner when `true`
 - `allowed-tools` — constrains which tools the skill can use
 
-Harness skills (`lore-status`, `lore-docker`, `lore-memprint`, etc.) ship in `.lore/harness/skills/` and are managed by the framework. Operator skills live in `.lore/skills/` and are user-managed. Both are projected into platform-native formats. Operator skills override harness skills with the same name.
+Harness skills (`lore`, `lore-create-fieldnote`, `lore-delegate`, etc.) ship in `.lore/harness/skills/` and are managed by the framework. Operator skills live in `.lore/skills/` and are user-managed. Both are projected into platform-native formats. Operator skills override harness skills with the same name.
 
 ## Agents
 
@@ -74,6 +74,8 @@ The persistent knowledge base at `~/.lore/knowledge-base/` stores fieldnotes (ca
 ## Projection
 
 The projector transforms rules, skills, and agents into platform-native formats. Write once in `.lore/`, and the projector generates `CLAUDE.md`, `.cursor/rules/*.mdc`, `GEMINI.md`, `.windsurfrules`, `.clinerules`, and OpenCode configs automatically.
+
+The `platforms` array in `.lore/config.json` controls which platforms are active. The projector only generates files for active platforms and cleans up files (including empty parent directories) for disabled ones. Missing or empty = all platforms active.
 
 The projector (`projector.js`) runs via `sync-platform-skills.sh`. It reads from three sources in priority order:
 

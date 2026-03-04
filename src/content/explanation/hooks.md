@@ -13,7 +13,7 @@ Hooks are plain JavaScript files that fire at specific points in the agent lifec
 | **SessionStart** | Agent session begins | session-init |
 | **UserPromptSubmit** | Before each user message | prompt-preamble |
 | **PreToolUse** | Before a tool executes | harness-guard, protect-memory, search-guard |
-| **PostToolUse** | After a tool executes | knowledge-tracker |
+| **PostToolUse** | After a tool executes | memory-nudge |
 
 ## Hook Reference
 
@@ -29,14 +29,14 @@ Fires before every user message. Emits a one-line protocol reminder (search-firs
 
 **Profile gating:** Skipped in `minimal` profile.
 
-### knowledge-tracker
+### memory-nudge
 
-Fires after every tool use. Tracks consecutive bash commands and emits graduated capture reminders:
+Fires after every tool use. Tracks consecutive bash commands and emits graduated memory nudges:
 
-- **First bash:** Gentle capture reminder
-- **At nudge threshold** (default 15): Pause point — any discoveries?
-- **At warn threshold** (default 30): Stronger prompt to stop and capture
-- **On failure:** Immediate capture prompt (failures are high-signal)
+- **First bash:** Gentle nudge to capture snags or decisions
+- **At nudge threshold** (default 15): Any findings worth a note?
+- **At warn threshold** (default 30): Pause and capture findings before continuing
+- **On failure:** Capture prompt (failures are high-signal)
 - **On memory write:** Graduation prompt for reusable fixes
 
 Read-only tools (Read, Grep, Glob) and knowledge-path writes are silent.
@@ -57,32 +57,21 @@ Fires before reads and writes to `MEMORY.md`. Blocks access and redirects to `.l
 
 ### search-guard
 
-Fires before search tool use. Nudges agents toward semantic search (when the Docker sidecar is running) instead of raw filesystem Glob/Grep on indexed paths. Falls back silently when no sidecar is configured.
+Fires before search tool use. Nudges agents toward semantic search instead of raw filesystem Glob/Grep on indexed paths. Always allows the tool to proceed — guidance only, never blocking.
 
 **Profile gating:** Skipped in `minimal` profile.
 
 ## Color System
 
-Hook messages use a three-tier ANSI color system to signal severity at a glance. The tiers exist so agents (and operators reading logs) can distinguish "stop and think" from "keep this in mind" without parsing the message body.
+Hook messages use ANSI colors to distinguish message types at a glance.
 
-| Tier | ANSI Code | Color | Swatch | Use |
-|------|-----------|-------|--------|-----|
-| Security | `\x1b[91m` | Bright Red | <span style="background-color: #dc322f; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | Tool execution failures |
-| Protocol | `\x1b[93m` | Bright Yellow | <span style="background-color: #b58900; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | Search-first, capture reminders, checkpoints |
-| Guidance | `\x1b[96m` | Bright Cyan | <span style="background-color: #2aa198; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | Search nudges |
+| Tag | ANSI Code | Color | Swatch | Hook |
+|-----|-----------|-------|--------|------|
+| `[■ LORE-MEMORY]` | `\x1b[92m` | Bright Green | <span style="background-color: #859900; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | memory-nudge (all nudges) |
+| `[■ LORE-PROTOCOL]` | `\x1b[93m` | Bright Yellow | <span style="background-color: #b58900; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | prompt-preamble |
+| `[■ LORE-SEARCH]` | `\x1b[96m` | Bright Cyan | <span style="background-color: #2aa198; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | search-guard |
 
-Each message is prefixed with a colored tag that identifies its source:
-
-| Tag | Color | Swatch | Hook |
-|-----|-------|--------|------|
-| `[■ LORE-FAILURE]` | Red | <span style="background-color: #dc322f; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | knowledge-tracker (on failure) |
-| `[■ LORE-PROTOCOL]` | Yellow | <span style="background-color: #b58900; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | prompt-preamble |
-| `[■ LORE-CAPTURE]` | Yellow | <span style="background-color: #b58900; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | knowledge-tracker |
-| `[■ LORE-CHECKPOINT]` | Yellow | <span style="background-color: #b58900; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | knowledge-tracker (escalated) |
-| `[■ LORE-MEMORY]` | Yellow | <span style="background-color: #b58900; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | knowledge-tracker (memory write) |
-| `[■ LORE-SEARCH]` | Cyan | <span style="background-color: #2aa198; width: 12px; height: 12px; display: inline-block; border-radius: 2px; vertical-align: middle;"></span> | search-guard |
-
-Red is reserved for genuine safety concerns — currently only tool execution failures. Yellow covers protocol reminders and capture nudges. Cyan is informational guidance (search strategy).
+Green is encouragement to write notes freely — capture snags, decisions, and context. Yellow is protocol reminders (search-first, security). Cyan is informational guidance (search strategy).
 
 ## Hook Logging
 

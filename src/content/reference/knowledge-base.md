@@ -26,7 +26,7 @@ tags: [eslint, node, compatibility]
 ---
 ```
 
-High-heat facts graduate to fieldnotes via `/lore-memprint`. The operator reviews hot cache entries and promotes reusable snags to permanent fieldnotes.
+High-heat facts graduate to fieldnotes via `/lore memory burn`. The operator reviews hot cache entries and promotes reusable snags to permanent fieldnotes.
 
 ## Runbooks
 

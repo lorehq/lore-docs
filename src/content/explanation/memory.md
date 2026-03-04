@@ -28,7 +28,7 @@ Agents should default to the hot cache for any transient knowledge capture.
 
 ## Tier 2: Knowledge Base (~/.lore/)
 
-The Knowledge Base is persistent structured storage at `~/.lore/knowledge-base/`. It is write-guarded — agents propose changes, the operator approves during [memprint](#graduation-path-via-lore-memprint).
+The Knowledge Base is persistent structured storage at `~/.lore/knowledge-base/`. It is write-guarded — agents propose changes, the operator approves during [burn](#graduation-path-via-lore-burn).
 
 Contents:
 
@@ -43,24 +43,29 @@ The Knowledge Base loads every session. It contains fieldnotes, runbooks, enviro
 
 A per-repo fallback when the Docker sidecar is unavailable. The file `.lore/memory.local.md` is gitignored and local to the machine. It provides basic scratchpad functionality but is not the primary memory path — use the hot cache when available.
 
-## Graduation Path (via /lore-memprint)
+## Graduation Path (via /lore memory burn)
 
 Knowledge moves up the tiers through a deliberate process:
 
 1. **Session discovery** — the agent encounters a non-obvious fact during work
 2. **Hot capture** — the fact is written to the Hot Cache (Redis)
 3. **Heat accumulation** — repeated access across sessions increases the heat score
-4. **Memprint review** — the operator runs `/lore-memprint` to review high-heat facts
+4. **Burn review** — the operator runs `/lore memory burn` to review high-heat facts
 5. **Promotion** — approved facts become: KB environment entries, work item updates, or fieldnotes
 
 Not everything graduates. Most session context is disposable. The heat model ensures only genuinely useful knowledge persists.
 
-## Activity Tracking
+## MCP Tools
 
-The sidecar records every knowledge-path file access (fieldnotes, KB docs, skills). The `knowledge-tracker` hook pings the Docker sidecar's `/activity` endpoint on each access:
+The sidecar exposes its capabilities through MCP (Model Context Protocol) tools. When the MCP server is configured, agents interact with memory and search directly:
 
-- Each access increments the heat score and resets the decay timer
-- Frequently accessed facts surface prominently in the session banner
-- Unused facts fade and eventually expire
+| Tool | Purpose |
+|------|---------|
+| `lore_search` | Semantic search across the knowledge base |
+| `lore_read` | Read a knowledge base file by path |
+| `lore_health` | Check sidecar availability |
+| `lore_hot_write` | Write a fact to the hot cache |
+| `lore_hot_recall` | List hot memory facts with scores |
+| `lore_hot_fieldnote` | Draft a fieldnote in the hot cache for later graduation |
 
-This data drives the graduation logic. Facts that agents keep reaching for accumulate heat; facts that go untouched decay into irrelevance.
+When the sidecar is offline, agents fall back to `memory.local.md` for session notes and Glob/Grep for search.

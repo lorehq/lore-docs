@@ -17,7 +17,7 @@ graph TD
             SharedKB["Shared Knowledge Base
 (knowledge-base/)"]
             GlobalConfig["Global config.json
-(docker.search.port: 9185)"]
+docker-compose.yml"]
             RedisData["redis-data/
 (Hot Cache Persistence)"]
         end
@@ -58,7 +58,7 @@ graph TD
 
 ## Sharing Shared Services
 
-1.  **Shared Redis (Hot Cache):** Redis data is mounted from `~/.lore/redis-data/`, making the hot cache part of the global directory's persistent state. When multiple projects point to the same Redis instance (via `docker.search.port` in `~/.lore/config.json`), they share the hot cache. Facts learned in Project A gain heat and become available to the agent when working in Project B. Data survives container restarts because it lives in the global `~/.lore/` filesystem, not the container.
+1.  **Shared Redis (Hot Cache):** Redis data is mounted from `~/.lore/redis-data/`, making the hot cache part of the global directory's persistent state. All projects on the machine share the same Redis instance via the global sidecar (port 9185 by default). Facts learned in Project A gain heat and become available to the agent when working in Project B. Data survives container restarts because it lives in the global `~/.lore/` filesystem, not the container.
 2.  **Shared KB (Global Directory):** The `~/.lore/knowledge-base/` directory is the machine-wide source of truth. The Shared Sidecar indexes this global folder, allowing the `lore_search` tool to return global fieldnotes and operator preferences regardless of which project is active.
 3.  **The Harness Merge:** Even though the sidecar is shared, the **Harness** ensures that project-specific rules in `.lore/rules/` take precedence over global ones, maintaining the correct context for each repository.
 4.  **Global Directory Persistence:** Because the global directory is a Git repository in `~/`, your global knowledge (Rules, Skills, Agents, Knowledge Base) is version-controlled and persists even if you delete individual project repositories.

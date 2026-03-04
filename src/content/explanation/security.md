@@ -22,7 +22,7 @@ The prompt preamble includes a security reminder on every message: reference sec
 
 ## Sidecar Authentication
 
-The Docker sidecar uses a `LORE_TOKEN` environment variable for API authentication. The token is generated during `lore-docker` setup and stored in the local environment — never committed to version control.
+The Docker sidecar uses a `LORE_TOKEN` environment variable for API authentication. The token is auto-generated during `create-lore` or `/lore update` (stored in `~/.lore/.env`) — never committed to version control.
 
 Sidecar endpoints (semantic search, Redis) are localhost-only by default. No external network exposure.
 
