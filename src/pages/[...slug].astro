@@ -1,0 +1,21 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../layouts/TuiLayout.astro';
+
+export async function getStaticPaths() {
+  const reference = await getCollection('reference');
+  const explanation = await getCollection('explanation');
+
+  return [
+    ...reference.map(entry => ({ params: { slug: `reference/${entry.id}` }, props: { entry } })),
+    ...explanation.map(entry => ({ params: { slug: `explanation/${entry.id}` }, props: { entry } })),
+  ];
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout title={entry.data.title}>
+  <Content />
+</Layout>

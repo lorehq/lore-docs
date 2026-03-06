@@ -1,0 +1,32 @@
+import Layout from '../layouts/TuiLayout.astro';
+
+<Layout title="About">
+
+
+
+<pre class="font-mono text-tui-yellow whitespace-pre mb-8 text-[22px]" style="line-height:1">{
+String.raw`Lore - The agentic coding tool harness
+`}</pre>
+
+Central management for rules, skills, and agents across agentic coding platforms. Persistent memory, knowledge capture, and cross-platform projection.
+
+Source:     https://github.com/lorehq/lore
+
+## Architecture
+
+- [Architecture](/explanation/architecture) — global directory, projects, memory engine, hooks
+- [Global Directory](/explanation/global-directory) — global vs. project-local knowledge
+- [Agentic System](/explanation/agentic-system) — rules, skills, agents, projection
+- [Memory Model](/explanation/memory) — hot/cold knowledge tiering
+- [Hooks](/explanation/hooks) — lifecycle events and capture nudges
+- [Security](/explanation/security) — guards, colors, credential protection
+- [Topology](/explanation/topology) — multi-project shared memory engine
+
+## Reference
+
+- [Databank](/reference/databank) — fieldnotes, runbooks, environment
+- [Configuration](/reference/configuration) — config.json fields, profiles, merge behavior
+- [Hooks](/reference/hooks) — lifecycle hooks with I/O schemas
+- [Commands](/reference/commands) — slash commands and internal skills
+
+</Layout>

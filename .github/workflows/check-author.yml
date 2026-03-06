@@ -1,0 +1,16 @@
+name: Check commit author
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reject blocked domain commits
+        run: |
+          BLOCKED="@bhg-inc.com"
+          if git log --format='%ae%n%ce' --all | grep -qi "$BLOCKED"; then
+            echo "::error::Commits contain blocked email domain ($BLOCKED)"
+            exit 1
+          fi

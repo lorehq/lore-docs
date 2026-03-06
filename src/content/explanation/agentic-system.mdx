@@ -1,0 +1,191 @@
+---
+title: "Agentic System"
+---
+
+# Agentic System
+
+Lore centrally manages the three standard components of an agentic framework — **rules**, **skills**, and **agents** — plus a persistent databank. These are the building blocks that enable AI agents to operate autonomously. Lore manages them once in `.lore/` and projects them into each platform's native format automatically.
+
+## Rules
+
+Policies, guardrails, and constraints that govern agent behavior.
+
+| Property | Value |
+|----------|-------|
+| Location | `.lore/AGENTIC/rules/*.md` |
+| Loaded | At session start — included in the static banner and projected into mandate files |
+| Scope | Global (`~/.lore/`) or project-local |
+
+Rules are the "must" and "must not" layer. All rules are included in the static banner at session start (and therefore in every mandate file). Rules with a `domain` frontmatter field are additionally injected into matching skills via [domain-based aggregation](#domain-based-rule-aggregation).
+
+## Skills
+
+Modular, reusable instructions that equip agents with specific capabilities. Skills range from procedural commands (invoked via `/skill-name`) to domain expertise (loaded automatically when relevant).
+
+| Property | Value |
+|----------|-------|
+| Location | `.lore/AGENTIC/skills/<name>/SKILL.md` |
+| Loaded | On invocation, at session start, or when the agent determines relevance |
+| Scope | Global (`~/.lore/`) or project-local |
+
+**Frontmatter:**
+```yaml
+---
+name: coding-principles
+description: Coding principles — surface confusion early, write less code, prove it works
+user-invocable: false
+---
+```
+
+Key fields:
+- `user-invocable` — appears in the slash command list when `true`
+- `banner-loaded` — injected into the session banner when `true`
+- `allowed-tools` — constrains which tools the skill can use
+
+System skills (prefixed `lore-*`) ship in `~/.lore/.harness/SKILLS/` and are managed by the framework binary — overwritten on every session init. Operator skills live in `.lore/AGENTIC/SKILLS/` (project) or `~/.lore/AGENTIC/SKILLS/` (global) and are user-managed. Both are projected into platform-native formats. Project skills override global skills with the same name (except `lore-*` system files, where the harness always wins).
+
+## Agents
+
+Autonomous, goal-driven personas configured for specific types of work. Each agent specifies which skills it loads and how it should approach tasks.
+
+| Property | Value |
+|----------|-------|
+| Location | `.lore/AGENTIC/agents/<name>.md` |
+| Loaded | When the platform delegates a task to the agent |
+| Scope | Global (`~/.lore/`) or project-local |
+
+**Frontmatter:**
+```yaml
+---
+name: software-engineer
+description: Software engineering specialist. Use for implementation, bug fixes, refactoring, and code review.
+skills:
+  - coding-principles
+---
+```
+
+Lore ships example agents (`software-engineer`, `technical-writer`, `prompt-engineer`) that demonstrate how to pair agents with skills. Operators create their own agents for domain-specific delegation patterns.
+
+## Databank
+
+The persistent databank at `~/.lore/MEMORY/DATABANK/` stores fieldnotes (captured snags), runbooks (multi-step procedures), environment facts, and work items. Agents discover these via the session banner and semantic search. See [Databank](/reference/databank) for the full reference.
+
+## Projection
+
+The `lore generate` command transforms rules, skills, and agents into platform-native formats. Write once in `.lore/AGENTIC/`, and the CLI generates platform-native files (`CLAUDE.md`, `.cursor/rules/*.mdc`, `GEMINI.md`, `.windsurfrules`, etc.) for all 6 platforms automatically.
+
+The `platforms` object in `.lore/config.json` controls which platforms are active. The projector only generates files for enabled platforms (`true` values).
+
+The composition engine merges from three sources:
+
+1. **Harness** (`~/.lore/.harness/`) — system skills, rules, and agents embedded in the binary. Highest priority for `lore-*` prefixed names. Overwritten on every session init.
+2. **Global directory** (`~/.lore/AGENTIC/`) — operator's machine-global rules, skills, and agents
+3. **Project** (`.lore/AGENTIC/`) — project-local overrides (wins for non-`lore-*` names)
+
+System files (prefixed `lore-*`) always resolve from the harness layer. All other files follow project-wins-over-global precedence.
+
+Projections are **generated output** — never edit them directly. Changes to `.claude/skills/`, `CLAUDE.md`, `.cursor/rules/`, etc. will be overwritten on the next `lore generate`. Always edit the canonical source in `.lore/AGENTIC/`.
+
+### How Rules Merge
+
+Each platform projector handles rules differently based on platform capabilities:
+
+- **Claude Code** — individual rule files in `.claude/rules/<name>.md` with `paths:` frontmatter
+- **Copilot** — `.github/instructions/<name>.instructions.md` with `applyTo:` frontmatter
+- **Cursor** — `.cursor/rules/<name>.mdc` with `globs:` frontmatter
+- **Gemini** — inline sections in `GEMINI.md`
+- **Windsurf** — `.windsurf/rules/<name>.md`
+- **OpenCode** — reads `.claude/rules/` natively; also uses `AGENTS.md`
+
+### Capability Matrix
+
+| Platform | Rules | Skills | Agents | Hooks | Tier |
+|----------|-------|--------|--------|-------|------|
+| Claude Code | `.claude/rules/` | `.claude/skills/` | `.claude/agents/` | `.claude/settings.json` | 1 |
+| GitHub Copilot | `.github/instructions/` | `.github/skills/` | `.github/agents/` | `.github/hooks/` | 1 |
+| Cursor | `.cursor/rules/` | `.cursor/skills/` | `.cursor/agents/` | `.cursor/hooks.json` | 1 |
+| Gemini CLI | inline in `GEMINI.md` | `.gemini/skills/` | `.gemini/agents/` | `.gemini/settings.json` | 2 |
+| Windsurf | `.windsurf/rules/` | `.windsurf/skills/` | `AGENTS.md` (flat) | `.windsurf/hooks.json` | 2 |
+| OpenCode | `AGENTS.md` | `.opencode/skills/` + `.claude/` | `.opencode/agents/` + `.claude/` | JS plugins | 2 |
+
+import Tabs from '../../components/Tabs.astro';
+import Tab from '../../components/Tab.astro';
+
+### Platform Details
+
+<Tabs>
+  <Tab label="Claude Code">
+    | Capability | Output path |
+    |------------|-------------|
+    | Mandate file | `CLAUDE.md` |
+    | Hook config | `.claude/settings.json` |
+    | Rules | `.claude/rules/<name>.md` |
+    | Skills | `.claude/skills/<name>/SKILL.md` |
+    | Agents | `.claude/agents/<name>.md` |
+
+    Full-fidelity projection. Rules support `paths:` frontmatter for file-scoped targeting. Hooks point to `lore hook <name>` via settings.json.
+  </Tab>
+  <Tab label="GitHub Copilot">
+    | Capability | Output path |
+    |------------|-------------|
+    | Mandate file | `.github/copilot-instructions.md` |
+    | Hook config | `.github/hooks/lore.json` |
+    | Rules | `.github/instructions/<name>.instructions.md` |
+    | Skills | `.github/skills/<name>/SKILL.md` |
+    | Agents | `.github/agents/<name>.md` |
+    | Root listing | `AGENTS.md` |
+
+    Rules use `applyTo:` frontmatter (Copilot's equivalent of `paths:`). Skills use the universal SKILL.md format. Agent skills are mapped to `handoffs:` in frontmatter.
+  </Tab>
+  <Tab label="Cursor">
+    | Capability | Output path |
+    |------------|-------------|
+    | Hook config | `.cursor/hooks.json` |
+    | Rules | `.cursor/rules/<name>.mdc` |
+    | Skills | `.cursor/skills/<name>/SKILL.md` |
+    | Agents | `.cursor/agents/<name>.md` |
+    | Root listing | `AGENTS.md` |
+
+    MDC rules use `globs:` frontmatter for path scoping and `alwaysApply: true` for global rules. Skills and agents use native directory formats. Cursor also cross-reads `.claude/` directories.
+  </Tab>
+  <Tab label="Gemini CLI">
+    | Capability | Output path |
+    |------------|-------------|
+    | Mandate file | `GEMINI.md` |
+    | Hook config | `.gemini/settings.json` |
+    | Rules | inline in `GEMINI.md` |
+    | Skills | `.gemini/skills/<name>/SKILL.md` |
+    | Agents | `.gemini/agents/<name>.md` |
+
+    Rules are inlined into `GEMINI.md`. Skills use the universal SKILL.md format. Agents use .md with frontmatter.
+  </Tab>
+  <Tab label="Windsurf">
+    | Capability | Output path |
+    |------------|-------------|
+    | Mandate file | `.windsurfrules` |
+    | Hook config | `.windsurf/hooks.json` |
+    | Rules | `.windsurf/rules/<name>.md` |
+    | Skills | `.windsurf/skills/<name>/SKILL.md` |
+    | Agents | `AGENTS.md` (flat, no per-agent files) |
+
+    Rules use dedicated files. Skills use the universal SKILL.md format. Agents are limited to a flat `AGENTS.md` listing (no per-agent .md with frontmatter).
+  </Tab>
+  <Tab label="OpenCode">
+    | Capability | Output path |
+    |------------|-------------|
+    | Hook config | JS plugins (not JSON config) |
+    | Rules | `AGENTS.md` |
+    | Skills | `.opencode/skills/<name>/SKILL.md` + reads `.claude/` |
+    | Agents | `.opencode/agents/<name>.md` + reads `.claude/` |
+
+    OpenCode cross-reads `.claude/` directories natively. Skills and agents have both `.opencode/` paths and `.claude/` fallbacks. Hooks are JS plugins, not JSON configuration files.
+  </Tab>
+</Tabs>
+
+### Running the Projector
+
+```bash
+lore generate
+```
+
+Run after any change to `.lore/AGENTIC/` or `~/.lore/AGENTIC/`.
