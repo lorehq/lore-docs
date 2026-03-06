@@ -7,8 +7,8 @@ export async function getStaticPaths() {
   const explanation = await getCollection('explanation');
 
   return [
-    ...reference.map(entry => ({ params: { slug: `reference/${entry.id}` }, props: { entry } })),
-    ...explanation.map(entry => ({ params: { slug: `explanation/${entry.id}` }, props: { entry } })),
+    ...reference.map(entry => ({ params: { slug: `reference/${entry.id.replace(/\.[^/.]+$/, "")}` }, props: { entry } })),
+    ...explanation.map(entry => ({ params: { slug: `explanation/${entry.id.replace(/\.[^/.]+$/, "")}` }, props: { entry } })),
   ];
 }
 
