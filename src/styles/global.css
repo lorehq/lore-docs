@@ -31,10 +31,10 @@
   --tui-fg: #839496;
   --tui-fg-em: #93a1a1;
   --tui-border-inactive: #586e75;
-  --tui-border-active: #2aa198;
+  --tui-border-active: #268bd2;
   --tui-selected-bg: #073642;
   --tui-selected-fg: #93a1a1;
-  --tui-accent: #2aa198;
+  --tui-accent: #268bd2;
   --tui-yellow: #b58900;
   --tui-cyan: #2aa198;
   --tui-green: #859900;
@@ -48,10 +48,10 @@
   --tui-fg: #657b83;
   --tui-fg-em: #586e75;
   --tui-border-inactive: #93a1a1;
-  --tui-border-active: #2aa198;
+  --tui-border-active: #268bd2;
   --tui-selected-bg: #eee8d5;
   --tui-selected-fg: #586e75;
-  --tui-accent: #2aa198;
+  --tui-accent: #268bd2;
   --tui-yellow: #b58900;
   --tui-cyan: #2aa198;
   --tui-green: #859900;
