@@ -99,17 +99,19 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
         <nav class="flex-1 overflow-y-auto p-2 pt-4 flex flex-col gap-4 scrollbar-hide text-xs">
           
 
-          <div>
-            <div class="opacity-70 text-[11px] px-0 uppercase mb-1 font-bold text-tui-accent">Architecture</div>
+                    <!-- Architecture Section -->
+          <div class="relative border border-tui-border-inactive p-2 pt-4 mb-4 flex flex-col gap-1">
+            <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[10px] text-tui-border-inactive">Architecture</span>
             {explanation.map(entry => (
-              <a href={`/lore/explanation/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-0 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
+              <a href={`/lore/explanation/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
             ))}
           </div>
 
-          <div class="mb-4">
-            <div class="opacity-70 text-[11px] px-0 uppercase mb-1 font-bold text-tui-accent">Reference</div>
+                    <!-- Reference Section -->
+          <div class="relative border border-tui-border-inactive p-2 pt-4 mb-4 flex flex-col gap-1">
+            <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[10px] text-tui-border-inactive">Reference</span>
             {topReference.map(entry => (
-              <a href={`/lore/reference/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-0 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
+              <a href={`/lore/reference/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
             ))}
           </div>
         </nav>
