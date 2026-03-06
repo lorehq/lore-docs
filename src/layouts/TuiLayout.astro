@@ -75,7 +75,7 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
     <div class="flex flex-1 gap-2 overflow-hidden">
       <!-- Navigation Panel -->
       <aside class="relative border border-tui-border-inactive w-80 flex flex-col mt-3">
-        <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[10px] text-tui-border-inactive">[1]-Navigation</span>
+        <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[10px] text-tui-border-inactive">Navigation</span>
 
         <nav class="flex-1 overflow-y-auto p-2 pt-4 flex flex-col gap-4 scrollbar-hide text-xs">
           <div>
@@ -100,7 +100,7 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
 
       <!-- Main Content -->
       <main class="relative border border-tui-border-active flex-1 flex flex-col mt-3">
-        <span class="absolute -top-2.5 left-4 bg-tui-bg px-1 text-[10px] text-tui-border-active">[2]-{title}</span>
+        <span class="absolute -top-2.5 left-4 bg-tui-bg px-1 text-[10px] text-tui-border-active">{title}</span>
 
         <article class="flex-1 overflow-y-auto p-8 pt-10 prose text-tui-fg max-w-none scrollbar-hide">
           <slot />
