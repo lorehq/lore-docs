@@ -40,7 +40,7 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
     <script is:inline>
       // Blocking script to prevent theme flashing
       (function() {
-        const savedTheme = localStorage.getItem('tui-theme') || 'solarized';
+        const savedTheme = localStorage.getItem('tui-theme') || 'mocha';
         document.documentElement.setAttribute('data-theme', savedTheme);
       })();
     </script>
@@ -112,12 +112,12 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
         <div class="h-3 w-px bg-tui-bg-hl mx-1"></div>
         <div class="flex gap-2 items-center">
           <span class="opacity-50">THEME:</span>
-          <button class="tui-btn" data-set-theme="solarized">Solarized Dark</button>
-          <button class="tui-btn" data-set-theme="solarized-light">Solarized Light</button>
           <button class="tui-btn" data-set-theme="mocha">Mocha</button>
           <button class="tui-btn" data-set-theme="macchiato">Macchiato</button>
           <button class="tui-btn" data-set-theme="frappe">Frappe</button>
           <button class="tui-btn" data-set-theme="latte">Latte</button>
+          <button class="tui-btn" data-set-theme="solarized">Solarized Dark</button>
+          <button class="tui-btn" data-set-theme="solarized-light">Solarized Light</button>
         </div>
       </div>
       <div class="text-tui-border-inactive">
