@@ -93,28 +93,22 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
     </header>
     <div class="flex flex-1 gap-2 overflow-hidden">
       <!-- Navigation Panel -->
-      <aside class="w-80 flex flex-col mt-2">
-        
+      <aside class="w-80 flex flex-col gap-2 mt-2">
+        <!-- Architecture Section -->
+        <div class="relative border border-tui-border-inactive p-2 pt-4 flex flex-col gap-1 w-full">
+          <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[11px] font-bold text-tui-accent tracking-tighter">Architecture</span>
+          {explanation.map(entry => (
+            <a href={`/lore/explanation/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
+          ))}
+        </div>
 
-        <nav class="flex-1 overflow-y-auto p-0 flex flex-col gap-2 scrollbar-hide text-xs">
-          
-
-                    <!-- Architecture Section -->
-          <div class="relative border border-tui-border-inactive p-2 pt-4 mb-4 flex flex-col gap-1">
-            <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[11px] font-bold text-tui-accent tracking-tighter">Architecture</span>
-            {explanation.map(entry => (
-              <a href={`/lore/explanation/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
-            ))}
-          </div>
-
-                    <!-- Reference Section -->
-          <div class="relative border border-tui-border-inactive p-2 pt-4 mb-4 flex flex-col gap-1">
-            <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[11px] font-bold text-tui-accent tracking-tighter">Reference</span>
-            {topReference.map(entry => (
-              <a href={`/lore/reference/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
-            ))}
-          </div>
-        </nav>
+        <!-- Reference Section -->
+        <div class="relative border border-tui-border-inactive p-2 pt-4 flex flex-col gap-1 w-full">
+          <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[11px] font-bold text-tui-accent tracking-tighter">Reference</span>
+          {topReference.map(entry => (
+            <a href={`/lore/reference/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
+          ))}
+        </div>
       </aside>
 
       <!-- Main Content -->
