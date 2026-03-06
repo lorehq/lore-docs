@@ -20,14 +20,9 @@
 }
 
 :root {
-  --tui-font: 'Monaspace Neon', monospace;
+  --tui-font: 'DejaVu Sans Mono', monospace;
 }
 
-[data-font="neon"] { --tui-font: 'Monaspace Neon', monospace; }
-[data-font="argon"] { --tui-font: 'Monaspace Argon', monospace; }
-[data-font="xenon"] { --tui-font: 'Monaspace Xenon', monospace; }
-[data-font="radon"] { --tui-font: 'Monaspace Radon', monospace; }
-[data-font="krypton"] { --tui-font: 'Monaspace Krypton', monospace; }
 
 :root, [data-theme="solarized"] {
   --tui-mode: dark;
@@ -165,3 +160,18 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
 .prose table { @apply w-full border-collapse border border-tui-border-inactive my-3; }
 .prose th, .prose td { @apply border border-tui-border-inactive p-1 px-2 text-xs; }
 .prose th { @apply text-tui-accent bg-tui-bg-hl text-left uppercase; }
+
+.tui-figlet {
+  all: initial !important;
+  display: block !important;
+  line-height: 1.0 !important;
+  white-space: pre !important;
+  font-family: 'DejaVu Sans Mono', monospace !important;
+  letter-spacing: 0 !important;
+  word-spacing: 0 !important;
+  margin-bottom: 3rem !important;
+  user-select: none !important;
+  font-weight: 400 !important;
+  font-size: 24px !important;
+  color: var(--tui-accent) !important;
+}

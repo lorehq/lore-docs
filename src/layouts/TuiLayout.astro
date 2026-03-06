@@ -34,12 +34,8 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | Lore</title>
     
-    <!-- Monaspace Font Import via Fontsource -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/monaspace-neon/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/monaspace-argon/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/monaspace-xenon/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/monaspace-radon/index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/monaspace-krypton/index.css">
+    
+    
 
     <script is:inline>
       // Blocking script to prevent theme/font flashing
@@ -47,8 +43,8 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
         const savedTheme = localStorage.getItem('tui-theme') || 'solarized';
         document.documentElement.setAttribute('data-theme', savedTheme);
         
-        const savedFont = localStorage.getItem('tui-font') || 'neon';
-        document.documentElement.setAttribute('data-font', savedFont);
+        
+        
       })();
     </script>
     <style is:global>
@@ -118,7 +114,12 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
         background-color: var(--tui-bg-hl);
       }
     </style>
-  </head>
+      
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/dejavu-sans-mono/index.css">
+</head>
   <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-tui-bg text-tui-fg select-none">
     <div class="flex flex-1 gap-2 overflow-hidden">
       <!-- Single Navigation Panel -->
@@ -173,15 +174,7 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
           <button class="tui-btn" data-set-theme="frappe">Frappe</button>
           <button class="tui-btn" data-set-theme="latte">Latte</button>
         </div>
-        <div class="h-3 w-px bg-tui-bg-hl mx-1"></div>
-        <div class="flex gap-2 items-center">
-          <span class="opacity-50">FONT:</span>
-          <button class="tui-btn" data-set-font="neon">Neon</button>
-          <button class="tui-btn" data-set-font="argon">Argon</button>
-          <button class="tui-btn" data-set-font="xenon">Xenon</button>
-          <button class="tui-btn" data-set-font="radon">Radon</button>
-          <button class="tui-btn" data-set-font="krypton">Krypton</button>
-        </div>
+        
       </div>
       <div class="text-tui-border-inactive">
         Lore <span class="text-tui-accent">0.24.4</span>
@@ -195,12 +188,12 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
       // Theme logic
       const html = document.documentElement;
       const themeBtns = document.querySelectorAll('[data-set-theme]');
-      const fontBtns = document.querySelectorAll('[data-set-font]');
+
       
       const savedTheme = localStorage.getItem('tui-theme') || 'solarized';
       setTheme(savedTheme);
 
-      const savedFont = localStorage.getItem('tui-font') || 'neon';
+      
       setFont(savedFont);
 
       themeBtns.forEach(btn => {
