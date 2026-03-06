@@ -49,23 +49,26 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
       .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
       .tui-btn {
-        padding-left: 0.25rem;
-        padding-right: 0.25rem;
-        border: 1px solid transparent;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
         cursor: pointer;
-        transition: all 0.1s;
         font-size: 10px;
         background: transparent;
         color: inherit;
-        opacity: 0.6;
+        opacity: 0.5;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
       }
-      .tui-btn:hover { opacity: 1; color: var(--tui-accent); }
+      .tui-btn:hover { opacity: 0.8; }
       .tui-btn.active {
         opacity: 1;
-        color: var(--tui-accent);
-        border-color: var(--tui-accent);
-        background-color: var(--tui-bg-hl);
+        color: var(--tui-fg-em);
+        font-weight: bold;
       }
+      .tui-btn.active::before { content: "["; color: var(--tui-accent); margin-right: 0.4rem; }
+      .tui-btn.active::after { content: "]"; color: var(--tui-accent); margin-left: 0.4rem; }
     </style>
   </head>
   <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-tui-bg text-tui-fg select-none">
