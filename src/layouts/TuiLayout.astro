@@ -69,18 +69,35 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
       }
       .tui-btn.active::before { content: "["; color: var(--tui-accent); margin-right: 0.4rem; }
       .tui-btn.active::after { content: "]"; color: var(--tui-accent); margin-left: 0.4rem; }
+      .tui-tab {
+        opacity: 0.5;
+        color: var(--tui-fg);
+        text-decoration: none;
+        padding: 0 0.5rem;
+        transition: all 0.1s;
+      }
+      .tui-tab:hover { opacity: 0.8; }
+      .tui-tab.active {
+        opacity: 1;
+        color: var(--tui-accent);
+        font-weight: bold;
+      }
+      .tui-tab.active::before { content: "[ "; }
+      .tui-tab.active::after { content: " ]"; }
     </style>
   </head>
   <body class="h-screen w-screen p-2 box-border flex flex-col gap-2 overflow-hidden bg-tui-bg text-tui-fg select-none">
+        <header class="h-8 flex items-center px-4 gap-4 text-xs">
+      <a href="/lore/" class={`tui-tab ${title === 'About' ? 'active' : ''}`}>Home</a>
+      <a href="/lore/reference/databank" class={`tui-tab ${title === 'Databank' ? 'active' : ''}`}>Installation</a>
+    </header>
     <div class="flex flex-1 gap-2 overflow-hidden">
       <!-- Navigation Panel -->
       <aside class="relative border border-tui-border-inactive w-80 flex flex-col mt-3">
         <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[10px] text-tui-border-inactive">Navigation</span>
 
         <nav class="flex-1 overflow-y-auto p-2 pt-4 flex flex-col gap-4 scrollbar-hide text-xs">
-          <div>
-            <a href="/lore/" class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block transition-none">Home</a>
-          </div>
+          
 
           <div>
             <div class="opacity-70 text-[11px] px-2 uppercase mb-1 font-bold text-tui-accent">Architecture</div>
