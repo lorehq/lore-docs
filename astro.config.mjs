@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://lorehq.github.io',
-  base: '/lore/',
+  base: '/lore-docs/',
   devToolbar: {
     enabled: false
   },

@@ -2,7 +2,7 @@
 
 Public documentation for the [Lore](https://github.com/lorehq/lore) agentic coding tool harness.
 
-**Live Site:** [https://lorehq.github.io/lore/](https://lorehq.github.io/lore/)
+**Live Site:** [https://lorehq.github.io/lore-docs/](https://lorehq.github.io/lore-docs/)
 
 ## Tech Stack
 
