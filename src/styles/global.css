@@ -23,7 +23,6 @@
   --tui-font: 'DejaVu Sans Mono', monospace;
 }
 
-
 :root, [data-theme="solarized"] {
   --tui-mode: dark;
   --tui-bg: #002b36;
@@ -31,10 +30,10 @@
   --tui-fg: #839496;
   --tui-fg-em: #93a1a1;
   --tui-border-inactive: #586e75;
-  --tui-border-active: #268bd2;
+  --tui-border-active: #2aa198;
   --tui-selected-bg: #073642;
   --tui-selected-fg: #93a1a1;
-  --tui-accent: #268bd2;
+  --tui-accent: #2aa198;
   --tui-yellow: #b58900;
   --tui-cyan: #2aa198;
   --tui-green: #859900;
@@ -48,10 +47,10 @@
   --tui-fg: #657b83;
   --tui-fg-em: #586e75;
   --tui-border-inactive: #93a1a1;
-  --tui-border-active: #268bd2;
+  --tui-border-active: #2aa198;
   --tui-selected-bg: #eee8d5;
   --tui-selected-fg: #586e75;
-  --tui-accent: #268bd2;
+  --tui-accent: #2aa198;
   --tui-yellow: #b58900;
   --tui-cyan: #2aa198;
   --tui-green: #859900;
@@ -138,6 +137,21 @@ body {
 * { font-family: inherit; }
 code, pre, kbd, samp { font-family: var(--tui-font) !important; }
 
+.tui-figlet {
+  all: initial !important;
+  display: block !important;
+  line-height: 1.1 !important;
+  white-space: pre !important;
+  font-family: 'DejaVu Sans Mono', monospace !important;
+  letter-spacing: -0.05em !important;
+  word-spacing: 0 !important;
+  margin-bottom: 3rem !important;
+  user-select: none !important;
+  font-weight: 400 !important;
+  font-size: 24px !important;
+  color: var(--tui-accent) !important;
+}
+
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { @apply bg-tui-bg; }
 ::-webkit-scrollbar-thumb { @apply bg-tui-border-inactive; }
@@ -160,18 +174,3 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
 .prose table { @apply w-full border-collapse border border-tui-border-inactive my-3; }
 .prose th, .prose td { @apply border border-tui-border-inactive p-1 px-2 text-xs; }
 .prose th { @apply text-tui-accent bg-tui-bg-hl text-left uppercase; }
-
-.tui-figlet {
-  all: initial !important;
-  display: block !important;
-  line-height: 1.0 !important;
-  white-space: pre !important;
-  font-family: 'DejaVu Sans Mono', monospace !important;
-  letter-spacing: 0 !important;
-  word-spacing: 0 !important;
-  margin-bottom: 3rem !important;
-  user-select: none !important;
-  font-weight: 400 !important;
-  font-size: 24px !important;
-  color: var(--tui-accent) !important;
-}
