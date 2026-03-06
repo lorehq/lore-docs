@@ -2,7 +2,7 @@ import Layout from '../layouts/TuiLayout.astro';
 
 <Layout title="About">
 
-<pre class="tui-figlet">{
+<pre class="tui-figlet text-tui-accent">{
 String.raw` _                
 | |               
 | | ___  _ __ ___ 
@@ -22,25 +22,5 @@ String.raw` _
   <div><span class="text-tui-border-inactive w-16 inline-block">GitHub:</span> <a href="https://github.com/lorehq/lore">https://github.com/lorehq/lore</a></div>
   <div><span class="text-tui-border-inactive w-16 inline-block">Issues:</span> <a href="https://github.com/lorehq/lore/issues">https://github.com/lorehq/lore/issues</a></div>
 </div>
-
-<div class="text-tui-fg italic opacity-80 mb-12">
-</div>
-
-## Architecture
-
-- [Architecture](/lore/explanation/architecture) — global directory, projects, memory engine, hooks
-- [Global Directory](/lore/explanation/global-directory) — global vs. project-local knowledge
-- [Agentic System](/lore/explanation/agentic-system) — rules, skills, agents, projection
-- [Memory Model](/lore/explanation/memory) — hot/cold knowledge tiering
-- [Hooks](/lore/explanation/hooks) — lifecycle events and capture nudges
-- [Security](/lore/explanation/security) — guards, colors, credential protection
-- [Topology](/lore/explanation/topology) — multi-project shared memory engine
-
-## Reference
-
-- [Databank](/lore/reference/databank) — fieldnotes, runbooks, environment
-- [Configuration](/lore/reference/configuration) — config.json fields, profiles, merge behavior
-- [Hooks](/lore/reference/hooks) — lifecycle hooks with I/O schemas
-- [Commands](/lore/reference/commands) — slash commands and internal skills
 
 </Layout>
