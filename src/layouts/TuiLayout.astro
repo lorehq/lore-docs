@@ -1,0 +1,170 @@
+---
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+const explanationRaw = await getCollection('explanation');
+const referenceRaw = await getCollection('reference');
+
+const explanationOrder = ['architecture', 'global-directory', 'agentic-system', 'memory', 'hooks', 'security', 'topology'];
+const referenceOrder = ['databank', 'configuration', 'hooks', 'commands'];
+
+const sortByOrder = (entries: typeof explanationRaw, order: string[]) => {
+  return [...entries].sort((a, b) => {
+    const ai = order.indexOf(a.id.replace(/\.[^/.]+$/, ""));
+    const bi = order.indexOf(b.id.replace(/\.[^/.]+$/, ""));
+    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+  });
+};
+
+const explanation = sortByOrder(explanationRaw.filter(e => !e.id.includes('/')), explanationOrder);
+const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), referenceOrder);
+---
+
+<!doctype html>
+<html lang="en" class="h-full w-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} | Lore</title>
+    
+    <!-- Universal Font: DejaVu Sans Mono -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/dejavu-sans-mono/index.css">
+
+    <script is:inline>
+      // Blocking script to prevent theme flashing
+      (function() {
+        const savedTheme = localStorage.getItem('tui-theme') || 'mocha';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      })();
+    </script>
+    <style is:global>
+      .scrollbar-hide::-webkit-scrollbar { display: none; }
+      .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+      .tui-btn {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        cursor: pointer;
+        font-size: 10px;
+        background: transparent;
+        color: inherit;
+        opacity: 0.5;
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+      }
+      .tui-btn:hover { opacity: 0.8; }
+      .tui-btn.active {
+        opacity: 1;
+        color: var(--tui-fg-em);
+        font-weight: bold;
+      }
+      .tui-btn.active::before { content: "["; color: var(--tui-accent); margin-right: 0.4rem; }
+      .tui-btn.active::after { content: "]"; color: var(--tui-accent); margin-left: 0.4rem; }
+      .tui-tab {
+        opacity: 0.5;
+        color: var(--tui-fg);
+        text-decoration: none;
+        padding: 0 0.5rem;
+        transition: all 0.1s;
+      }
+      .tui-tab:hover { opacity: 0.8; }
+      .tui-tab.active {
+        opacity: 1;
+        color: var(--tui-accent);
+        font-weight: bold;
+      }
+      .tui-tab.active::before { content: "[ "; }
+      .tui-tab.active::after { content: " ]"; }
+    </style>
+  </head>
+  <body class="h-screen w-screen p-1 box-border flex flex-col gap-0 overflow-hidden bg-tui-bg text-tui-fg select-none">
+        <header class="h-5 flex items-center px-0 gap-2 text-xs">
+      <a href="/lore-docs/" class={`tui-tab ${title === 'About' ? 'active' : ''}`}>Home</a>
+      <a href="/lore-docs/reference/databank" class={`tui-tab ${title === 'Databank' ? 'active' : ''}`}>Installation</a>
+    </header>
+    <div class="flex flex-1 gap-2 overflow-hidden">
+      <!-- Navigation Panel -->
+      <aside class="w-80 flex flex-col gap-2 mt-2">
+        <!-- Architecture Section -->
+        <div class="relative border border-tui-border-inactive p-2 pt-4 flex flex-col gap-1 w-full">
+          <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[11px] font-bold text-tui-accent tracking-tighter">Architecture</span>
+          {explanation.map(entry => (
+            <a href={`/lore-docs/explanation/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
+          ))}
+        </div>
+
+        <!-- Reference Section -->
+        <div class="relative border border-tui-border-inactive p-2 pt-4 flex flex-col gap-1 w-full">
+          <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[11px] font-bold text-tui-accent tracking-tighter">Reference</span>
+          {topReference.map(entry => (
+            <a href={`/lore-docs/reference/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
+          ))}
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="relative border border-tui-border-active flex-1 flex flex-col mt-2">
+        <span class="absolute -top-2.5 left-4 bg-tui-bg px-1 text-[10px] text-tui-border-active">{title}</span>
+
+        <article class="flex-1 overflow-y-auto p-8 pt-10 prose text-tui-fg max-w-none scrollbar-hide">
+          <slot />
+        </article>
+      </main>
+    </div>
+
+    <!-- Bottom Status Bar -->
+    <footer class="h-6 flex items-center px-0 text-[10px] text-tui-border-inactive border-t border-tui-bg-hl justify-between">
+      <div class="flex gap-4 items-center">
+        
+        
+        <div class="flex gap-2 items-center">
+          
+          <button class="tui-btn" data-set-theme="mocha">Mocha</button>
+          <button class="tui-btn" data-set-theme="macchiato">Macchiato</button>
+          <button class="tui-btn" data-set-theme="frappe">Frappe</button>
+          <button class="tui-btn" data-set-theme="latte">Latte</button>
+          <button class="tui-btn" data-set-theme="solarized">Solarized Dark</button>
+          <button class="tui-btn" data-set-theme="solarized-light">Solarized Light</button>
+        </div>
+      </div>
+      <div class="text-tui-border-inactive">
+        Lore <span class="text-tui-accent">0.24.5-BLUE</span>
+      </div>
+    </footer>
+
+    <script is:inline>
+      const html = document.documentElement;
+      const themeBtns = document.querySelectorAll('[data-set-theme]');
+
+      function updateActiveButton(theme) {
+        themeBtns.forEach(btn => {
+          if (btn.getAttribute('data-set-theme') === theme) btn.classList.add('active');
+          else btn.classList.remove('active');
+        });
+      }
+
+      themeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const theme = btn.getAttribute('data-set-theme');
+          html.setAttribute('data-theme', theme);
+          localStorage.setItem('tui-theme', theme);
+          updateActiveButton(theme);
+          // Reload to refresh Shiki/Mermaid theme context
+          window.location.reload();
+        });
+      });
+
+      // Init UI state
+      updateActiveButton(html.getAttribute('data-theme'));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/TuiLayout.astro';
+
+const reference = await getCollection('reference');
+const topLevel = reference.filter(e => !e.id.includes('/'));
+---
+
+<Layout title="Reference">
+  <h1>Reference</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+    {topLevel.map(entry => (
+      <a href={`/reference/${entry.id}`} class="border border-tui-border-inactive p-4 hover:border-tui-border-active group">
+        <div class="text-tui-accent group-hover:text-tui-border-active font-bold">
+          {entry.data.title}
+        </div>
+        {entry.data.description && <p class="text-xs mt-2 opacity-60">{entry.data.description}</p>}
+      </a>
+    ))}
+  </div>
+</Layout>

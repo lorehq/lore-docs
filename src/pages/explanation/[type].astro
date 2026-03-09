@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/TuiLayout.astro';
+
+export async function getStaticPaths() {
+  return [];
+}
+
+const { type } = Astro.params;
+const allExplanation = await getCollection('explanation');
+const entries = allExplanation.filter(e => e.id.startsWith(`${type}/`));
+
+const typeTitle = type.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+---
+
+<Layout title={typeTitle}>
+  <div class="flex flex-col gap-0.5">
+    {entries.map(entry => (
+      <a href={`/explanation/${entry.id}`} class="group flex items-center gap-3 px-2 py-1 hover:bg-tui-selected-bg hover:text-white transition-none">
+        <span class="text-tui-border-inactive group-hover:text-white font-mono opacity-50">#</span>
+        <div class="flex-1 min-w-0">
+          <span class="text-tui-accent group-hover:text-white font-bold text-xs uppercase tracking-wider">{entry.data.title || entry.id.split('/').pop()}</span>
+          {entry.data.description && <span class="ml-4 text-[10px] text-tui-fg opacity-40 group-hover:opacity-100 group-hover:text-white italic">{entry.data.description}</span>}
+        </div>
+      </a>
+    ))}
+  </div>
+</Layout>

@@ -1,0 +1,26 @@
+import Layout from '../layouts/TuiLayout.astro';
+
+<Layout title="About">
+
+<pre class="tui-figlet text-tui-accent">{
+String.raw` _                
+| |               
+| | ___  _ __ ___ 
+| |/ _ \| '__/ _ \
+| | (_) | | |  __/
+|_|\___/|_|  \___|`}</pre>
+
+<div class="mb-8">
+  <div class="text-tui-fg">Lore — The agentic coding tool harness</div>
+  <div class="text-tui-fg text-[11px] mt-2">
+    Copyright (c) 2026 LoreHQ<br/>
+    License: Apache-2.0
+  </div>
+</div>
+
+<div class="flex flex-col gap-1 mb-8 text-[12px]">
+  <div class="text-tui-fg"><span class="w-16 inline-block">GitHub:</span> <a href="https://github.com/lorehq/lore" class="text-tui-accent">https://github.com/lorehq/lore</a></div>
+  <div class="text-tui-fg"><span class="w-16 inline-block">Issues:</span> <a href="https://github.com/lorehq/lore-docs/issues" class="text-tui-accent">https://github.com/lorehq/lore-docs/issues</a></div>
+</div>
+
+</Layout>
