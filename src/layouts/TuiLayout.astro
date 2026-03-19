@@ -1,29 +1,14 @@
 ---
 import '../styles/global.css';
-import { getCollection } from 'astro:content';
+import { isTabActive, sectionNav, sectionTitles, topTabs, type DocsSection } from '../lib/docs-nav';
 
 interface Props {
   title: string;
+  section?: DocsSection;
 }
 
-const { title } = Astro.props;
-
-const explanationRaw = await getCollection('explanation');
-const referenceRaw = await getCollection('reference');
-
-const explanationOrder = ['architecture', 'global-directory', 'agentic-system', 'memory', 'hooks', 'security', 'topology'];
-const referenceOrder = ['databank', 'configuration', 'hooks', 'commands'];
-
-const sortByOrder = (entries: typeof explanationRaw, order: string[]) => {
-  return [...entries].sort((a, b) => {
-    const ai = order.indexOf(a.id.replace(/\.[^/.]+$/, ""));
-    const bi = order.indexOf(b.id.replace(/\.[^/.]+$/, ""));
-    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
-  });
-};
-
-const explanation = sortByOrder(explanationRaw.filter(e => !e.id.includes('/')), explanationOrder);
-const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), referenceOrder);
+const { title, section = 'home' } = Astro.props;
+const sidebarGroups = sectionNav[section];
 ---
 
 <!doctype html>
@@ -86,34 +71,28 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
       .tui-tab.active::after { content: " ]"; }
     </style>
   </head>
-  <body class="h-screen w-screen p-1 box-border flex flex-col gap-0 overflow-hidden bg-tui-bg text-tui-fg select-none">
+  <body class="h-screen w-screen p-1 box-border flex flex-col gap-0 overflow-hidden bg-tui-bg text-tui-fg">
         <header class="h-5 flex items-center px-0 gap-2 text-xs">
-      <a href="/lore-docs/" class={`tui-tab ${title === 'About' ? 'active' : ''}`}>Home</a>
-      <a href="/lore-docs/reference/databank" class={`tui-tab ${title === 'Databank' ? 'active' : ''}`}>Installation</a>
+      {topTabs.map(tab => (
+        <a href={`/lore-docs${tab.href === '/' ? '/' : tab.href}`} class={`tui-tab ${isTabActive(section, tab.href) ? 'active' : ''}`}>{tab.label}</a>
+      ))}
     </header>
     <div class="flex flex-1 gap-2 overflow-hidden">
       <!-- Navigation Panel -->
       <aside class="w-80 flex flex-col gap-2 mt-2">
-        <!-- Architecture Section -->
-        <div class="relative border border-tui-border-inactive p-2 pt-4 flex flex-col gap-1 w-full">
-          <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[11px] font-bold text-tui-accent tracking-tighter">Architecture</span>
-          {explanation.map(entry => (
-            <a href={`/lore-docs/explanation/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
-          ))}
-        </div>
-
-        <!-- Reference Section -->
-        <div class="relative border border-tui-border-inactive p-2 pt-4 flex flex-col gap-1 w-full">
-          <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[11px] font-bold text-tui-accent tracking-tighter">Reference</span>
-          {topReference.map(entry => (
-            <a href={`/lore-docs/reference/${entry.id.replace(/\.[^/.]+$/, "")}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{entry.data.title}</a>
-          ))}
-        </div>
+        {sidebarGroups.map(group => (
+          <div class="relative border border-tui-border-inactive p-2 pt-4 flex flex-col gap-1 w-full">
+            <span class="absolute -top-2.5 left-2 bg-tui-bg px-1 text-[11px] font-bold text-tui-accent tracking-tighter">{group.label}</span>
+            {group.items.map(item => (
+              <a href={`/lore-docs${item.href === '/' ? '/' : item.href}`} class="py-0.5 px-2 hover:bg-tui-selected-bg hover:text-white block truncate transition-none">{item.label}</a>
+            ))}
+          </div>
+        ))}
       </aside>
 
       <!-- Main Content -->
       <main class="relative border border-tui-border-active flex-1 flex flex-col mt-2">
-        <span class="absolute -top-2.5 left-4 bg-tui-bg px-1 text-[10px] text-tui-border-active">{title}</span>
+        <span class="absolute -top-2.5 left-4 bg-tui-bg px-1 text-[10px] text-tui-border-active">{title || sectionTitles[section]}</span>
 
         <article class="flex-1 overflow-y-auto p-8 pt-10 prose text-tui-fg max-w-none scrollbar-hide">
           <slot />
@@ -141,9 +120,20 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
       </div>
     </footer>
 
+    <div class="image-lightbox" id="image-lightbox" aria-hidden="true">
+      <div class="image-lightbox__frame">
+        <button class="image-lightbox__close" id="image-lightbox-close" aria-label="Close image zoom">x</button>
+        <img class="image-lightbox__img" id="image-lightbox-img" alt="" />
+      </div>
+    </div>
+
     <script is:inline>
       const html = document.documentElement;
       const themeBtns = document.querySelectorAll('[data-set-theme]');
+      const lightbox = document.getElementById('image-lightbox');
+      const lightboxImg = document.getElementById('image-lightbox-img');
+      const lightboxClose = document.getElementById('image-lightbox-close');
+      const article = document.querySelector('article');
 
       function updateActiveButton(theme) {
         themeBtns.forEach(btn => {
@@ -165,6 +155,63 @@ const topReference = sortByOrder(referenceRaw.filter(e => !e.id.includes('/')), 
 
       // Init UI state
       updateActiveButton(html.getAttribute('data-theme'));
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        lightboxImg.removeAttribute('src');
+        lightboxImg.alt = '';
+      }
+
+      article?.addEventListener('click', (event) => {
+        const img = event.target.closest('img');
+        if (!img) return;
+        lightboxImg.setAttribute('src', img.getAttribute('src'));
+        lightboxImg.alt = img.getAttribute('alt') || '';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+      });
+
+      article?.querySelectorAll('pre').forEach((pre) => {
+        const code = pre.querySelector('code');
+        if (!code) return;
+
+        pre.classList.add('copy-ready');
+
+        const button = document.createElement('button');
+        button.className = 'code-copy-btn';
+        button.type = 'button';
+        button.textContent = 'Copy';
+        button.setAttribute('aria-label', 'Copy code to clipboard');
+
+        button.addEventListener('click', async () => {
+          const text = code.innerText;
+          try {
+            await navigator.clipboard.writeText(text);
+            button.textContent = 'Copied';
+            button.classList.add('copied');
+            window.setTimeout(() => {
+              button.textContent = 'Copy';
+              button.classList.remove('copied');
+            }, 1600);
+          } catch {
+            button.textContent = 'Error';
+            window.setTimeout(() => {
+              button.textContent = 'Copy';
+            }, 1600);
+          }
+        });
+
+        pre.appendChild(button);
+      });
+
+      lightboxClose?.addEventListener('click', closeLightbox);
+      lightbox?.addEventListener('click', (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+      });
     </script>
   </body>
 </html>

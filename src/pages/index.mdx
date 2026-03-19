@@ -1,6 +1,6 @@
 import Layout from '../layouts/TuiLayout.astro';
 
-<Layout title="About">
+<Layout title="Lore" section="home">
 
 <pre class="tui-figlet text-tui-accent">{
 String.raw` _                
@@ -11,16 +11,50 @@ String.raw` _
 |_|\___/|_|  \___|`}</pre>
 
 <div class="mb-8">
-  <div class="text-tui-fg">Lore — The agentic coding tool harness</div>
+  <div class="text-tui-fg">Lore keeps your AI coding setup consistent across supported tools.</div>
   <div class="text-tui-fg text-[11px] mt-2">
-    Copyright (c) 2026 LoreHQ<br/>
-    License: Apache-2.0
+    Reuse skills, rules, agents, MCPs, and hooks without redoing the same setup in every tool or project.
   </div>
 </div>
 
-<div class="flex flex-col gap-1 mb-8 text-[12px]">
-  <div class="text-tui-fg"><span class="w-16 inline-block">GitHub:</span> <a href="https://github.com/lorehq/lore" class="text-tui-accent">https://github.com/lorehq/lore</a></div>
-  <div class="text-tui-fg"><span class="w-16 inline-block">Issues:</span> <a href="https://github.com/lorehq/lore-docs/issues" class="text-tui-accent">https://github.com/lorehq/lore-docs/issues</a></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-[12px] not-prose">
+  <a href="/lore-docs/getting-started" class="border border-tui-border-inactive p-4 hover:border-tui-border-active">
+    <div class="text-tui-accent font-bold">Get Started</div>
+    <div class="text-tui-fg mt-2">Install Lore, open the welcome flow, and set up your first project in a few steps.</div>
+  </a>
+  <a href="/lore-docs/concepts" class="border border-tui-border-inactive p-4 hover:border-tui-border-active">
+    <div class="text-tui-accent font-bold">How Lore Works</div>
+    <div class="text-tui-fg mt-2">See what Lore does, how global and project setup works, and what the TUI gives you.</div>
+  </a>
 </div>
+
+## Manage Your Setup
+
+- skills
+- rules
+- agents
+- MCPs
+- hooks
+
+## Built For Daily Use
+
+- global and project setup
+- reusable bundles
+- a rich TUI with mouse support
+- built-in discovery for bundles, skills, and MCP servers
+
+## Start In Minutes
+
+1. Install Lore
+2. Launch `lore`
+3. Choose `Create new project directory` or `Initialize current directory`
+4. If needed, enter a project name
+5. Select at least one supported tool
+6. Confirm the path and selection
+7. Finish the flow and enter the TUI
+
+![Lore welcome flow starts with project creation or initialization.](/lore-docs/screenshots/welcome-choice.png)
+
+The welcome flow walks you through naming, tool selection, confirmation, and the final handoff into the full TUI.
 
 </Layout>

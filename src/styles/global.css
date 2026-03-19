@@ -167,6 +167,35 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
   @apply border border-tui-border-inactive p-3 my-3;
   background-color: var(--tui-bg) !important;
 }
+.prose pre.copy-ready {
+  position: relative;
+  padding-top: 2.25rem;
+}
+.prose pre.copy-ready code {
+  background: transparent !important;
+  padding: 0 !important;
+  font-weight: 400 !important;
+}
+.code-copy-btn {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.5rem;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--tui-border-active);
+  background: var(--tui-bg-hl);
+  color: var(--tui-accent);
+  font-size: 11px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.code-copy-btn:hover {
+  background: var(--tui-selected-bg);
+  color: var(--tui-fg-em);
+}
+.code-copy-btn.copied {
+  color: var(--tui-green);
+  border-color: var(--tui-green);
+}
 
 .prose a { @apply text-tui-accent no-underline hover:bg-tui-selected-bg hover:text-white; }
 .prose ul { @apply list-none pl-0 my-2; }
@@ -174,3 +203,60 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
 .prose table { @apply w-full border-collapse border border-tui-border-inactive my-3; }
 .prose th, .prose td { @apply border border-tui-border-inactive p-1 px-2 text-xs; }
 .prose th { @apply text-tui-accent bg-tui-bg-hl text-left uppercase; }
+.prose img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 1rem 0 0.75rem;
+  padding: 0.6rem;
+  border: 1px solid var(--tui-border-active);
+  background: color-mix(in srgb, var(--tui-bg-hl) 78%, black 22%);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--tui-bg) 45%, var(--tui-border-inactive) 55%);
+  cursor: zoom-in;
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: color-mix(in srgb, black 82%, var(--tui-bg) 18%);
+  z-index: 50;
+}
+
+.image-lightbox.open {
+  display: flex;
+}
+
+.image-lightbox__frame {
+  position: relative;
+  max-width: min(96vw, 1600px);
+  max-height: 92vh;
+  padding: 0.75rem;
+  border: 1px solid var(--tui-border-active);
+  background: color-mix(in srgb, var(--tui-bg-hl) 78%, black 22%);
+  box-shadow: 0 0 0 1px var(--tui-border-inactive);
+}
+
+.image-lightbox__img {
+  display: block;
+  max-width: min(94vw, 1580px);
+  max-height: calc(92vh - 2rem);
+  width: auto;
+  height: auto;
+}
+
+.image-lightbox__close {
+  position: absolute;
+  top: -0.8rem;
+  right: -0.8rem;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--tui-border-active);
+  background: var(--tui-bg);
+  color: var(--tui-fg-em);
+  cursor: pointer;
+  font: inherit;
+}

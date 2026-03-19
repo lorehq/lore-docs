@@ -1,20 +1,22 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-const reference = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/reference" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-  }),
+const pageSchema = z.object({
+  title: z.string(),
+  description: z.string().optional(),
+  navGroup: z.string().optional(),
+  navLabel: z.string().optional(),
+  order: z.number().optional(),
 });
 
-const explanation = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/explanation" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-  }),
+const gettingStarted = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/getting-started" }),
+  schema: pageSchema,
 });
 
-export const collections = { reference, explanation };
+const concepts = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/concepts" }),
+  schema: pageSchema,
+});
+
+export const collections = { gettingStarted, concepts };

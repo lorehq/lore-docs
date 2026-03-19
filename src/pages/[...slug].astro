@@ -1,21 +1,36 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../layouts/TuiLayout.astro';
+import type { DocsSection } from '../lib/docs-nav';
 
 export async function getStaticPaths() {
-  const reference = await getCollection('reference');
-  const explanation = await getCollection('explanation');
+  const collections = ['gettingStarted', 'concepts'] as const;
+  const sectionMap: Record<(typeof collections)[number], DocsSection> = {
+    gettingStarted: 'getting-started',
+    concepts: 'concepts',
+  };
+  const toRoute = (section: DocsSection, id: string) => (id === 'index' ? section : `${section}/${id}`);
+  const paths = [];
 
-  return [
-    ...reference.map(entry => ({ params: { slug: `reference/${entry.id.replace(/\.[^/.]+$/, "")}` }, props: { entry } })),
-    ...explanation.map(entry => ({ params: { slug: `explanation/${entry.id.replace(/\.[^/.]+$/, "")}` }, props: { entry } })),
-  ];
+  for (const collection of collections) {
+    const entries = await getCollection(collection);
+    const section = sectionMap[collection];
+
+    for (const entry of entries) {
+      paths.push({
+        params: { slug: toRoute(section, entry.id) },
+        props: { entry, section },
+      });
+    }
+  }
+
+  return paths;
 }
 
-const { entry } = Astro.props;
+const { entry, section } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<Layout title={entry.data.title}>
+<Layout title={entry.data.title} section={section}>
   <Content />
 </Layout>

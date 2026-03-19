@@ -1,8 +1,0 @@
----
-import { getCollection } from 'astro:content';
-const explanation = await getCollection('explanation');
-const reference = await getCollection('reference');
-console.log('DEBUG_IDS_EXP', explanation.map(e => e.id));
-console.log('DEBUG_IDS_REF', reference.map(e => e.id));
----
-<html><body>Check console logs</body></html>
