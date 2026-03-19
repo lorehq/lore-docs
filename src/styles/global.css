@@ -129,10 +129,152 @@ body {
   background-color: var(--tui-bg);
   color: var(--tui-fg);
   font-family: var(--tui-font);
-  overflow: hidden;
-  font-size: 13px;
+  font-size: 14px;
   transition: background-color 0.2s, color 0.2s;
 }
+
+.site-body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 0.75rem 1.25rem 0;
+  background: var(--tui-bg);
+  border-bottom: 1px solid color-mix(in srgb, var(--tui-border-inactive) 45%, transparent 55%);
+}
+
+.site-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.site-tab {
+  padding: 0.7rem 0.95rem;
+  color: var(--tui-fg);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  opacity: 0.8;
+}
+
+.site-tab:hover {
+  opacity: 1;
+  color: var(--tui-fg-em);
+}
+
+.site-tab.active {
+  opacity: 1;
+  color: var(--tui-fg-em);
+  border-bottom-color: var(--tui-accent);
+}
+
+.docs-shell {
+  display: grid;
+  grid-template-columns: 17rem minmax(0, 1fr);
+  gap: 2rem;
+  width: 100%;
+  max-width: 96rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+  flex: 1;
+}
+
+.sidebar {
+  align-self: start;
+  position: sticky;
+  top: 4.5rem;
+  padding-right: 0.5rem;
+}
+
+.sidebar-group + .sidebar-group {
+  margin-top: 1.5rem;
+}
+
+.sidebar-group-title {
+  margin: 0 0 0.6rem;
+  color: var(--tui-accent);
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+}
+
+.sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 0.45rem 0.65rem;
+  color: var(--tui-fg);
+  text-decoration: none;
+  border-radius: 0.35rem;
+}
+
+.sidebar-link:hover {
+  background: color-mix(in srgb, var(--tui-selected-bg) 65%, transparent 35%);
+  color: var(--tui-fg-em);
+}
+
+.sidebar-link.active {
+  background: color-mix(in srgb, var(--tui-selected-bg) 85%, transparent 15%);
+  color: var(--tui-fg-em);
+}
+
+.docs-main {
+  min-width: 0;
+}
+
+.docs-article {
+  max-width: 52rem;
+  padding: 0.5rem 0 3rem;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 1.25rem 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--tui-border-inactive) 45%, transparent 55%);
+  color: var(--tui-border-inactive);
+  font-size: 0.85rem;
+}
+
+.site-footer-version {
+  white-space: nowrap;
+}
+
+.theme-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+}
+
+.theme-btn {
+  background: transparent;
+  border: none;
+  color: var(--tui-border-inactive);
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
+.theme-btn:hover {
+  color: var(--tui-fg-em);
+}
+
+.theme-btn.active {
+  color: var(--tui-fg-em);
+  font-weight: 700;
+}
+
+.theme-btn.active::before { content: '['; color: var(--tui-accent); margin-right: 0.35rem; }
+.theme-btn.active::after { content: ']'; color: var(--tui-accent); margin-left: 0.35rem; }
 
 * { font-family: inherit; }
 code, pre, kbd, samp { font-family: var(--tui-font) !important; }
@@ -148,7 +290,7 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
   margin-bottom: 3rem !important;
   user-select: none !important;
   font-weight: 400 !important;
-  font-size: 24px !important;
+  font-size: 19px !important;
   color: var(--tui-accent) !important;
 }
 
@@ -158,18 +300,31 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
 ::-webkit-scrollbar-thumb:hover { @apply bg-tui-border-active; }
 
 .prose { @apply text-tui-fg; }
+.prose p, .prose li { line-height: 1.55; }
 .prose h1, .prose h2, .prose h3, .prose h4 {
-  @apply text-tui-accent font-normal mt-4 mb-2 pb-1 border-b border-dashed border-tui-border-inactive uppercase text-sm tracking-widest;
+  @apply text-tui-accent font-normal mt-8 mb-3 text-base tracking-wide;
 }
-.prose h1 { @apply hidden; }
+.prose h1 {
+  @apply block text-2xl mb-6 mt-0 tracking-normal text-tui-fg-em;
+}
+.prose h2 {
+  @apply text-lg mt-10 mb-4 border-b border-tui-border-inactive/40 pb-2;
+}
+.prose h3 {
+  @apply text-base mt-8 mb-3 text-tui-fg-em;
+}
+.prose h4 {
+  @apply text-sm mt-6 mb-2 text-tui-fg-em;
+}
 .prose code { @apply text-tui-border-active bg-tui-bg-hl px-1 py-0.5 font-bold; }
 .prose pre {
-  @apply border border-tui-border-inactive p-3 my-3;
+  @apply border border-tui-border-inactive/60 p-3 my-4 rounded-md;
   background-color: var(--tui-bg) !important;
 }
 .prose pre.copy-ready {
   position: relative;
-  padding-top: 2.25rem;
+  padding-top: 1rem;
+  padding-right: 5.25rem;
 }
 .prose pre.copy-ready code {
   background: transparent !important;
@@ -178,8 +333,9 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
 }
 .code-copy-btn {
   position: absolute;
-  top: 0.45rem;
+  top: 50%;
   right: 0.5rem;
+  transform: translateY(-50%);
   padding: 0.15rem 0.45rem;
   border: 1px solid var(--tui-border-active);
   background: var(--tui-bg-hl);
@@ -198,7 +354,7 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
 }
 
 .prose a { @apply text-tui-accent no-underline hover:bg-tui-selected-bg hover:text-white; }
-.prose ul { @apply list-none pl-0 my-2; }
+.prose ul { @apply list-none pl-0 my-3; }
 .prose ul > li::before { content: "> "; @apply text-tui-border-inactive opacity-50; }
 .prose table { @apply w-full border-collapse border border-tui-border-inactive my-3; }
 .prose th, .prose td { @apply border border-tui-border-inactive p-1 px-2 text-xs; }
@@ -226,12 +382,16 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
   z-index: 50;
 }
 
-.image-lightbox.open {
-  display: flex;
+.image-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in srgb, black 82%, var(--tui-bg) 18%);
 }
 
-.image-lightbox__frame {
-  position: relative;
+.image-lightbox-content {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
   max-width: min(96vw, 1600px);
   max-height: 92vh;
   padding: 0.75rem;
@@ -259,4 +419,22 @@ code, pre, kbd, samp { font-family: var(--tui-font) !important; }
   color: var(--tui-fg-em);
   cursor: pointer;
   font: inherit;
+}
+
+@media (max-width: 900px) {
+  .docs-shell {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .sidebar {
+    position: static;
+    padding-right: 0;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

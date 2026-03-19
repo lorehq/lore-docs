@@ -1,0 +1,19 @@
+---
+import { isTabActive, topTabs, type DocsSection } from '../lib/docs-nav';
+
+interface Props {
+  section: DocsSection;
+}
+
+const { section } = Astro.props;
+---
+
+<header class="site-header">
+  <nav class="site-nav" aria-label="Primary">
+    {topTabs.map((tab) => (
+      <a href={`${import.meta.env.BASE_URL}${tab.href === '/' ? '' : tab.href.slice(1)}`} class:list={['site-tab', { active: isTabActive(section, tab.href) }]}>
+        {tab.label}
+      </a>
+    ))}
+  </nav>
+</header>

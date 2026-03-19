@@ -1,0 +1,25 @@
+---
+title: MCPs
+description: Lore aggregates enabled MCP server definitions and writes them into each tool's config.
+---
+
+# MCPs
+
+Lore manages MCP server declarations as part of your setup.
+
+## Aggregation
+
+Lore aggregates enabled MCP server definitions from bundle, global, and project layers, then writes them into each tool's config.
+
+That means you do not hand-edit every tool's MCP config separately.
+
+## Why It Works This Way
+
+MCPs can come from more than one place in Lore.
+
+Aggregation gives you one final MCP view before Lore writes the native config each tool expects.
+
+## Read Next
+
+- [How Lore Works](/lore-docs/concepts/how-lore-works)
+- [Hooks](/lore-docs/concepts/how-lore-works/hooks)

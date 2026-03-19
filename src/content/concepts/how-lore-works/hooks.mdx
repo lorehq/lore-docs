@@ -1,0 +1,29 @@
+---
+title: Hooks
+description: Lore gives hooks one common interface, then adapts that interface to each tool's native hook system.
+---
+
+# Hooks
+
+Lore gives hooks one common interface across supported tools.
+
+## Adapter Layer
+
+Each tool still has its own hook system, but Lore adapts one common hook interface to each tool's native format through tool-specific forwarders.
+
+In practice, that means:
+
+- you think in Lore hook events
+- Lore translates those events into each tool's native hook format
+- the tool-specific forwarder hands control back to Lore
+
+## Why It Works This Way
+
+Tools do not expose hooks in the same way.
+
+The adapter layer lets Lore stay consistent without forcing every tool into the same hook format.
+
+## Read Next
+
+- [How Lore Works](/lore-docs/concepts/how-lore-works)
+- [Agentic Content](/lore-docs/concepts/how-lore-works/agentic-content)

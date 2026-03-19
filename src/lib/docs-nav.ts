@@ -37,8 +37,7 @@ export const sectionNav: Record<DocsSection, NavGroup[]> = {
     {
       label: 'Quickstart',
       items: [
-        { label: 'Overview', href: '/getting-started' },
-        { label: 'Get Up and Running', href: '/getting-started/get-up-and-running' },
+        { label: 'Getting Started', href: '/getting-started' },
       ],
     },
   ],
@@ -48,9 +47,18 @@ export const sectionNav: Record<DocsSection, NavGroup[]> = {
       items: [
         { label: 'Overview', href: '/concepts' },
         { label: 'What Lore Is', href: '/concepts/what-lore-is' },
-        { label: 'Scopes and Bundles', href: '/concepts/scopes-and-bundles' },
+        { label: 'How Lore Works', href: '/concepts/how-lore-works' },
         { label: 'The TUI Experience', href: '/concepts/the-tui-experience' },
         { label: 'Explore and Discovery', href: '/concepts/explore-and-discovery' },
+      ],
+    },
+    {
+      label: 'Mechanisms',
+      items: [
+        { label: 'Agentic Content', href: '/concepts/how-lore-works/agentic-content' },
+        { label: 'MCPs', href: '/concepts/how-lore-works/mcps' },
+        { label: 'Hooks', href: '/concepts/how-lore-works/hooks' },
+        { label: 'Scopes and Bundles', href: '/concepts/scopes-and-bundles' },
       ],
     },
   ],

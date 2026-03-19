@@ -1,0 +1,54 @@
+---
+title: How Lore Works
+description: Lore keeps one source of truth, then applies it to each supported tool in the format that tool expects.
+---
+
+# How Lore Works
+
+Lore keeps one source of truth, then applies it to each supported tool in the format that tool expects.
+
+## Harness Features
+
+These are the shared harness features Lore exposes across supported tools.
+
+## Agentic Content
+
+**Projection**
+
+Lore projects skills, rules, and agents into the native files each supported tool expects.
+
+Read more: [Agentic Content](/lore-docs/concepts/how-lore-works/agentic-content)
+
+## MCPs
+
+**Aggregation**
+
+Lore aggregates enabled MCP server definitions from bundle, global, and project layers, then writes them into each tool's config.
+
+Read more: [MCPs](/lore-docs/concepts/how-lore-works/mcps)
+
+## Hooks
+
+**Adapter Layer**
+
+Lore gives hooks one common interface, then adapts that interface to each tool's native hook system through tool-specific forwarders.
+
+Read more: [Hooks](/lore-docs/concepts/how-lore-works/hooks)
+
+## Composition Layer
+
+**Scoping and Bundling**
+
+Lore composes content from bundle, global, and project layers before it writes anything to a tool.
+
+That composition model is what makes one shared setup still flexible across projects.
+
+Read more: [Scopes and Bundles](/lore-docs/concepts/scopes-and-bundles)
+
+## Read Next
+
+- [Agentic Content](/lore-docs/concepts/how-lore-works/agentic-content)
+- [Scopes and Bundles](/lore-docs/concepts/scopes-and-bundles)
+- [MCPs](/lore-docs/concepts/how-lore-works/mcps)
+- [Hooks](/lore-docs/concepts/how-lore-works/hooks)
+- [The TUI Experience](/lore-docs/concepts/the-tui-experience)

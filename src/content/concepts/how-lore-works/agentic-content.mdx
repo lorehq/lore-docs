@@ -1,0 +1,44 @@
+---
+title: Agentic Content
+description: Lore projects skills, rules, and agents into each tool's native format.
+---
+
+# Agentic Content
+
+Lore handles three kinds of agentic content directly:
+
+- skills
+- rules
+- agents
+
+## Projection
+
+Lore projects these into the native files each supported tool expects.
+
+That is what keeps one Lore setup usable across multiple tools.
+
+## Skills
+
+Lore supports the open Agent Skills standard for skills.
+
+Skills keep the standard `SKILL.md` structure, and Lore projects them into the location each tool expects.
+
+Lore also passes through tool-specific frontmatter when it needs to stay with the skill.
+
+## Agents
+
+Agents are projected per tool too.
+
+When a tool supports explicit skill references, Lore keeps those links in the projected output.
+
+## Rules
+
+Rules are projected differently depending on the tool.
+
+Some tools expect different filenames, different frontmatter fields, or different rule formats. Lore handles those differences for you.
+
+## Read Next
+
+- [How Lore Works](/lore-docs/concepts/how-lore-works)
+- [MCPs](/lore-docs/concepts/how-lore-works/mcps)
+- [Hooks](/lore-docs/concepts/how-lore-works/hooks)

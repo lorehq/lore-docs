@@ -1,0 +1,33 @@
+---
+import { sectionNav, type DocsSection } from '../lib/docs-nav';
+
+interface Props {
+  section: DocsSection;
+  currentPath: string;
+}
+
+const { section, currentPath } = Astro.props;
+const groups = sectionNav[section];
+const normalize = (href: string) => `${import.meta.env.BASE_URL}${href === '/' ? '' : href.slice(1)}`;
+---
+
+<aside class="sidebar" aria-label="Section navigation">
+  {groups.map((group) => (
+    <section class="sidebar-group">
+      <h2 class="sidebar-group-title">{group.label}</h2>
+      <ul class="sidebar-list">
+        {group.items.map((item) => {
+          const href = normalize(item.href);
+          const active = currentPath === href || (item.href === '/' && currentPath === `${import.meta.env.BASE_URL}`);
+          return (
+            <li>
+              <a href={href} class:list={['sidebar-link', { active }]} aria-current={active ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  ))}
+</aside>
